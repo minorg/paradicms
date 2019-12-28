@@ -7,15 +7,15 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: gui-core-dependency-cache-v1-{{ checksum "gui/core/package.json" }}
+          key: gui-generic-dependency-cache-v1-{{ checksum "gui/generic/package.json" }}
       - run:
-          command: cd gui/core && npm install
+          command: cd gui/generic && npm install
       - save_cache:
-          key: gui-core-dependency-cache-v1-{{ checksum "gui/core/package.json" }}
+          key: gui-generic-dependency-cache-v1-{{ checksum "gui/generic/package.json" }}
           paths:
-            - ./gui/core/node_modules
+            - ./gui/generic/node_modules
       - run:
-          command: cd gui/core && npm run build
+          command: cd gui/generic && npm run build
   service:
     working_directory: ~/project
     docker:
@@ -31,7 +31,7 @@ jobs:
           name: Test
           command: |
             sbt clean update package test
-            cp service/core/target/test-reports/*.xml ~/project/test-results/scala
+            cp service/generic/target/test-reports/*.xml ~/project/test-results/scala
             cp service/lib/target/test-reports/*.xml ~/project/test-results/scala
       - save_cache:
           key: sbt-cache-v1
