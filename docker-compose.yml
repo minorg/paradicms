@@ -6,7 +6,7 @@ networks:
 services:
   core-gui:
     build:
-      context: gui/core
+      context: gui/generic
     container_name: core-gui
   core-service:
     build:
