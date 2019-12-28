@@ -4,13 +4,14 @@ networks:
     external:
       name: minorgordon.net
 services:
-  core-gui:
+  generic-gui:
     build:
       context: gui/generic
     container_name: generic-gui
-  core-service:
+  generic-service:
     build:
-      context: service/generic
+      context: .
+      dockerfile: service/generic/Dockerfile
     container_name: generic-service
     stdin_open: true
   fuseki:
