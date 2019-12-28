@@ -28,11 +28,11 @@ jobs:
           name: Create test-results directory
           command: mkdir -p test-results/scala
       - run:
-          name: Test service/core
+          name: Test
           command: |
-            cd service/core
             sbt clean update package test
-            cp target/test-reports/*.xml ~/project/test-results/scala
+            cp service/core/target/test-reports/*.xml ~/project/test-results/scala
+            cp service/lib/target/test-reports/*.xml ~/project/test-results/scala
       - save_cache:
           key: sbt-cache-v1
           paths:

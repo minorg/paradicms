@@ -41,7 +41,8 @@ lazy val serviceLib =
       "org.sangria-graphql" %% "sangria" % "1.4.2",
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
-      "org.scalatest" %% "scalatest" % "3.0.8" % "test"
+      "org.scalatest" %% "scalatest" % "3.0.8" % Test,
+      "org.slf4j" % "slf4j-simple" % "1.7.25" % Test
     ),
     name := "service-lib"
   )
