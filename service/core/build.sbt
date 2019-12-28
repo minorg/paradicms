@@ -1,6 +1,6 @@
 name := """core"""
 organization := "org.paradicms"
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val core = (project in file(".")).enablePlugins(PlayScala)
 version := "1.0.0-SNAPSHOT"
 
 val jenaVersion = "3.13.1"
