@@ -1,8 +1,7 @@
 name := """core"""
-organization := "org.dressdiscover.cms"
+organization := "org.paradicms"
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 version := "1.0.0-SNAPSHOT"
-val projectName = "cms"
 
 val jenaVersion = "3.13.1"
 scalaVersion := "2.12.10"
