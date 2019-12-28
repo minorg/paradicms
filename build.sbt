@@ -23,7 +23,7 @@ if ((Path.userHome / ".m2").isDirectory) {
 
 // Projects
 lazy val root = project
-  .aggregate(coreService, serviceLib)
+  .aggregate(core, serviceLib)
   .settings(
     skip in publish := true
   )
@@ -46,7 +46,7 @@ lazy val serviceLib =
     name := "service-lib"
   )
 
-lazy val coreService = (project in file("service/core"))
+lazy val core = (project in file("service/core"))
   .dependsOn(serviceLib)
   .enablePlugins(PlayScala)
   .settings(
