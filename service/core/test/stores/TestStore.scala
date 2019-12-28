@@ -1,7 +1,7 @@
 package stores
 
 import io.lemonlabs.uri.Uri
-import models.domain.{Collection, Institution, Object, ObjectSearchResult}
+import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult}
 
 object TestStore extends Store {
   override def collectionByUri(collectionUri: Uri): Collection = if (collectionUri == TestData.collection.uri) TestData.collection else throw new NoSuchElementException

@@ -1,8 +1,8 @@
 package stores
 
 import io.lemonlabs.uri.{Uri, Url}
-import models.domain.vocabulary.CMS
-import models.domain.{Collection, Institution, Object, ObjectSearchResult}
+import org.paradicms.service.lib.models.domain.vocabulary.CMS
+import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult}
 import org.apache.jena.query._
 import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.sparql.vocabulary.FOAF

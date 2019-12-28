@@ -1,7 +1,7 @@
-package models.domain
+package org.paradicms.service.lib.models.domain
 
 import io.lemonlabs.uri.Url
-import models.domain.vocabulary.EXIF
+import org.paradicms.service.lib.models.domain.vocabulary.EXIF
 
 final case class Image(
                         height: Option[Int] = None,

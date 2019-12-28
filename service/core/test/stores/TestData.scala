@@ -1,7 +1,7 @@
 package stores
 
 import io.lemonlabs.uri.Uri
-import models.domain.{Collection, Institution, Object}
+import org.paradicms.service.lib.models.domain.{Collection, Institution, Object}
 
 object TestData {
   val institution = Institution(uri = Uri.parse("http://example.com/institution"), name = "Test institution")

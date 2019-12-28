@@ -1,4 +1,4 @@
-package models.domain
+package org.paradicms.service.lib.models.domain
 
 case class ObjectSearchResult(
                                collection: Collection,
