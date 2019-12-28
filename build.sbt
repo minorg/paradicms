@@ -40,7 +40,8 @@ lazy val serviceLib =
       "org.apache.jena" % "jena-core" % jenaVersion,
       "org.sangria-graphql" %% "sangria" % "1.4.2",
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
-      "org.sangria-graphql" %% "sangria-play-json" % "1.0.4"
+      "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
+      "org.scalatest" %% "scalatest" % "3.0.8" % "test"
     ),
     name := "service-lib"
   )
@@ -51,8 +52,7 @@ lazy val core = (project in file("service/core"))
   .settings(
     libraryDependencies ++= Seq(
       organization.value %% "service-lib" % version.value,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
-      "org.scalatest" %% "scalatest" % "3.0.8" % "test",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
     ),
     routesGenerator := InjectedRoutesGenerator,
     // Adds additional packages into Twirl
