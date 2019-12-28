@@ -1,0 +1,49 @@
+version: 2
+jobs:
+  gui:
+    working_directory: ~/project
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          key: gui-core-dependency-cache-v1-{{ checksum "gui/core/package.json" }}
+      - run:
+          command: cd cms/gui/core && npm install
+      - save_cache:
+          key: gui-core-dependency-cache-v1-{{ checksum "gui/core/package.json" }}
+          paths:
+            - ./gui/core/node_modules
+      - run:
+          command: cd gui/core && npm run build
+  service:
+    working_directory: ~/project
+    docker:
+      - image: circleci/openjdk:11
+    steps:
+      - checkout
+      - restore_cache:
+          key: sbt-cache-v1
+      - run:
+          name: Create test-results directory
+          command: mkdir -p test-results/scala
+      - run:
+          name: Test service/core
+          command: |
+            cd service/core
+            sbt clean update package test
+            cp target/test-reports/*.xml ~/project/test-results/scala
+      - save_cache:
+          key: sbt-cache-v1
+          paths:
+            - "~/.ivy2/cache"
+            - "~/.sbt"
+            - "~/.m2"
+      - store_test_results:
+          path: test-results
+workflows:
+  version: 2
+  build-and-test-cms:
+    jobs:
+      - gui
+      - service
