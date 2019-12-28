@@ -4,6 +4,7 @@ import java.net.UnknownHostException
 
 import io.lemonlabs.uri.Url
 import org.apache.jena.query.QueryException
+import org.paradicms.service.lib.stores.SparqlStore
 import org.scalatest.{Assertion, Matchers, WordSpec}
 
 // The SparqlStore is populated out-of-band. These tests are meant to be run on a populated store.

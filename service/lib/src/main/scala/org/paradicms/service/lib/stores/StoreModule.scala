@@ -1,4 +1,4 @@
-package stores
+package org.paradicms.service.lib.stores
 
 import com.google.inject.AbstractModule
 import io.lemonlabs.uri.Url

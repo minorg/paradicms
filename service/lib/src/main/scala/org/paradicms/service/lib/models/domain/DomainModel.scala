@@ -1,4 +1,4 @@
-package models.domain
+package org.paradicms.service.lib.models.domain
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.{Literal, Property, RDFNode, Resource}

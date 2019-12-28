@@ -1,7 +1,7 @@
 package models.graphql
 
 import io.lemonlabs.uri.{Uri, Url}
-import models.domain.{Collection, DerivedImageSet, Image, Institution, Object, ObjectSearchResult, Rights}
+import org.paradicms.service.lib.models.domain.{Collection, DerivedImageSet, Image, Institution, Object, ObjectSearchResult, Rights}
 import sangria.macros.derive._
 import sangria.schema.{Argument, Field, IntType, ListType, OptionType, ScalarAlias, Schema, StringType, fields}
 
