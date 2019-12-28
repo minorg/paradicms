@@ -1,0 +1,21 @@
+version: "3"
+networks:
+  default:
+    external:
+      name: minorgordon.net
+services:
+  core-gui:
+    build:
+      context: gui/core
+    container_name: core-gui
+  core-service:
+    build:
+      context: service/core
+    container_name: core-service
+    stdin_open: true
+  fuseki:
+    build:
+      context: fuseki
+    container_name: fuseki
+    ports:
+      - 127.0.0.1:3030:3030
