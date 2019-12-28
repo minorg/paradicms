@@ -1,7 +1,7 @@
 package models.graphql
 
 import javax.inject.Inject
-import stores.Store
+import org.paradicms.service.lib.stores.Store
 
 class GraphQlSchemaContext @Inject()(val store: Store) {
 }
