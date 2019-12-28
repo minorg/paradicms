@@ -7,11 +7,11 @@ services:
   core-gui:
     build:
       context: gui/generic
-    container_name: core-gui
+    container_name: generic-gui
   core-service:
     build:
-      context: service/core
-    container_name: core-service
+      context: service/generic
+    container_name: generic-service
     stdin_open: true
   fuseki:
     build:
