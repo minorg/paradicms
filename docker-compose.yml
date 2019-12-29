@@ -7,7 +7,7 @@ services:
   generic-gui:
     build:
       context: .
-      dockerfile: gui/generic/Dockerfile
+      dockerfile: gui/packages/generic/Dockerfile
     container_name: generic-gui
   generic-service:
     build:
