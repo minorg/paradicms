@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "outDir": "out"
+  },
+  "extends": "./tsconfig.base.json"
+}
