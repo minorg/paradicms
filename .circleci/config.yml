@@ -9,7 +9,10 @@ jobs:
       - restore_cache:
           key: gui-dependency-cache-v1-{{ checksum "gui/package.json" }}-{{ checksum "gui/packages/generic/package.json" }}-{{ checksum "gui/packages/lib/package.json" }}
       - run:
-          command: cd gui/generic && npm install
+          command: |
+            cd gui
+            npm install
+            npm run lerna:bootstrap
       - save_cache:
           key: gui-dependency-cache-v1-{{ checksum "gui/package.json" }}-{{ checksum "gui/packages/generic/package.json" }}-{{ checksum "gui/packages/lib/package.json" }}
           paths:
@@ -18,10 +21,7 @@ jobs:
             - ./gui/packages/lib/node_modules
       - run:
           command: |
-            cd gui
-            npm install
-            npm run lerna:bootstrap
-            cd packages/generic
+            cd gui/packages/generic
             npm run build
   service:
     working_directory: ~/project
