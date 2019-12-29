@@ -6,7 +6,8 @@ networks:
 services:
   generic-gui:
     build:
-      context: gui/generic
+      context: .
+      dockerfile: gui/generic/Dockerfile
     container_name: generic-gui
   generic-service:
     build:
