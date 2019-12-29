@@ -7,15 +7,22 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: gui-generic-dependency-cache-v1-{{ checksum "gui/generic/package.json" }}
+          key: gui-dependency-cache-v1-{{ checksum "gui/package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "gui/lib/package.json" }}
       - run:
           command: cd gui/generic && npm install
       - save_cache:
-          key: gui-generic-dependency-cache-v1-{{ checksum "gui/generic/package.json" }}
+          key: gui-dependency-cache-v1-{{ checksum "gui/package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "gui/lib/package.json" }}
           paths:
-            - ./gui/generic/node_modules
+            - ./gui/node_modules
+            - ./gui/packages/generic/node_modules
+            - ./gui/packages/lib/node_modules
       - run:
-          command: cd gui/generic && npm run build
+          command: |
+            cd gui
+            npm install
+            npm run lerna:bootstrap
+            cd packages/generic
+            npm run build
   service:
     working_directory: ~/project
     docker:
