@@ -21,6 +21,8 @@ jobs:
             - ./gui/packages/lib/node_modules
       - run:
           command: |
+            cd gui/packages/lib
+            npm run build
             cd gui/packages/generic
             npm run build
   service:
