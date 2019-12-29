@@ -23,7 +23,7 @@ jobs:
           command: |
             cd gui/packages/lib
             npm run build
-            cd gui/packages/generic
+            cd ../generic
             npm run build
   service:
     working_directory: ~/project
