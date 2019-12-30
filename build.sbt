@@ -33,6 +33,7 @@ lazy val serviceLib =
     libraryDependencies ++= Seq(
       filters,
       guice,
+      ws,
       "com.typesafe.play" %% "play" % playVersion,
       "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
       "io.lemonlabs" %% "scala-uri" % "1.5.1",
