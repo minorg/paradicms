@@ -55,25 +55,25 @@ class Auth0Controller @Inject() (ws: WSClient, configuration: Configuration) ext
     userResponse.flatMap(response => Future.successful(response.json))
   }
 
-  final def login: Action[AnyContent] = Action {
+  final def login(returnTo: String): Action[AnyContent] = Action {
     // Generate random state parameter
-//    object RandomUtil {
-//      private val random = new SecureRandom()
-//
-//      def alphanumeric(nrChars: Int = 24): String = {
-//        new BigInteger(nrChars * 5, random).toString(32)
-//      }
-//    }
-//    val state = RandomUtil.alphanumeric()
-    val state = "unused"
+    //    object RandomUtil {
+    //      private val random = new SecureRandom()
+    //
+    //      def alphanumeric(nrChars: Int = 24): String = {
+    //        new BigInteger(nrChars * 5, random).toString(32)
+    //      }
+    //    }
+    //    val state = RandomUtil.alphanumeric()
+    val state = returnTo // "unused"
 
     var audience = config.audience
-    if (config.audience == ""){
+    if (config.audience == "") {
       audience = String.format("https://%s/userinfo", config.domain)
     }
 
     val userUUID = randomUUID().toString
-//    cache.set(id + "state", state)
+    //    cache.set(id + "state", state)
     val query = String.format(
       "authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid profile&audience=%s&state=%s",
       config.clientId,
@@ -93,7 +93,7 @@ class Auth0Controller @Inject() (ws: WSClient, configuration: Configuration) ext
       getToken(code, sessionId).flatMap { case (idToken, accessToken) =>
         getUserinfo(accessToken).map { user =>
           //            cache.set(request.session.get("id").get + "profile", user)
-          Redirect("/loginCallback")
+          Redirect(stateOpt.get)
         }
       }.recover {
         case ex: IllegalStateException => Unauthorized(ex.getMessage)
@@ -104,13 +104,13 @@ class Auth0Controller @Inject() (ws: WSClient, configuration: Configuration) ext
     //    }
   }
 
-  final def logout: Action[AnyContent] = Action { request =>
-    val host = request.host
-    var scheme = "http"
-    if (request.secure) {
-      scheme = "https"
-    }
-    val returnTo = scheme + "://" + host
+  final def logout(returnTo: String): Action[AnyContent] = Action { request =>
+    //    val host = request.host
+    //    var scheme = "http"
+    //    if (request.secure) {
+    //      scheme = "https"
+    //    }
+    //    val returnTo = scheme + "://" + host
     Redirect(String.format(
       "https://%s/v2/logout?client_id=%s&returnTo=%s",
       config.domain,
