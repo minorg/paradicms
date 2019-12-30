@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.controllers
+package org.paradicms.service.lib.controllers.graphql
 
 import akka.actor.ActorSystem
 import play.api.libs.json._

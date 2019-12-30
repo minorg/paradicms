@@ -4,6 +4,6 @@
 # ~~~~
 
 # GraphQL
-GET        /graphql              controllers.GraphQlController.graphql(query: String, variables: Option[String], operation: Option[String])
-POST       /graphql              controllers.GraphQlController.graphqlBody
-GET        /render-schema        controllers.GraphQlController.renderSchema
+GET         /graphql              controllers.graphql.GraphQlController.graphql(query: String, variables: Option[String], operation: Option[String])
+POST        /graphql              controllers.graphql.GraphQlController.graphqlBody
+GET         /render-schema        controllers.graphql.GraphQlController.renderSchema
