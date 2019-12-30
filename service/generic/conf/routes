@@ -3,7 +3,13 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
+# Auth0
+GET         /api/auth0/login                org.paradicms.service.lib.controllers.auth0.Auth0Controller.login
+GET         /api/auth0/logout               org.paradicms.service.lib.controllers.auth0.Auth0Controller.logout
+GET         /api/auth0/loginCallback        org.paradicms.service.lib.controllers.auth0.Auth0Controller.loginCallback(code: Option[String], state: Option[String])
+
+
 # GraphQL
-GET         /graphql              controllers.graphql.GraphQlController.graphql(query: String, variables: Option[String], operation: Option[String])
-POST        /graphql              controllers.graphql.GraphQlController.graphqlBody
-GET         /render-schema        controllers.graphql.GraphQlController.renderSchema
+GET         /api/graphql                    controllers.graphql.GraphQlController.graphql(query: String, variables: Option[String], operation: Option[String])
+POST        /api/graphql                    controllers.graphql.GraphQlController.graphqlBody
+GET         /api/graphql-schema             controllers.graphql.GraphQlController.renderSchema
