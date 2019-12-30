@@ -23,46 +23,46 @@ class SparqlStoreSpec extends WordSpec with Matchers {
 
     "list all institutions" in {
       withUnknownHostExceptionCatch { () =>
-        val institutions = store.institutions()
+        val institutions = store.institutions(currentUserUri = None)
         institutions.size should be > 0
       }
     }
 
     "return an institution by URI" in {
       withUnknownHostExceptionCatch { () =>
-        val leftInstitution = store.institutions()(0)
-        val rightInstitution = store.institutionByUri(leftInstitution.uri)
+        val leftInstitution = store.institutions(currentUserUri = None)(0)
+        val rightInstitution = store.institutionByUri(currentUserUri = None, institutionUri = leftInstitution.uri)
         leftInstitution should equal(rightInstitution)
       }
     }
 
     "list institution collections" in {
       withUnknownHostExceptionCatch { () =>
-        val collections = store.institutionCollections(store.institutions()(0).uri)
+        val collections = store.institutionCollections(currentUserUri = None, institutionUri = store.institutions(currentUserUri = None)(0).uri)
         collections.size should be > 0
       }
     }
 
     "return collection by URI" in {
       withUnknownHostExceptionCatch { () =>
-        val institution = store.institutions()(0)
-        val leftCollection = store.institutionCollections(institution.uri)(0)
-        val rightCollection = store.collectionByUri(leftCollection.uri)
+        val institution = store.institutions(currentUserUri = None)(0)
+        val leftCollection = store.institutionCollections(currentUserUri = None, institutionUri = institution.uri)(0)
+        val rightCollection = store.collectionByUri(currentUserUri = None, collectionUri = leftCollection.uri)
         leftCollection should equal(rightCollection)
       }
     }
 
     "list collection objects" in {
       withUnknownHostExceptionCatch { () =>
-        val institution = store.institutions()(0)
-        val collection = store.institutionCollections(institution.uri)(0)
-        val objects = store.collectionObjects(collection.uri, limit = 10, offset = 0)
+        val institution = store.institutions(currentUserUri = None)(0)
+        val collection = store.institutionCollections(currentUserUri = None, institutionUri = institution.uri)(0)
+        val objects = store.collectionObjects(collectionUri = collection.uri, currentUserUri = None, limit = 10, offset = 0)
         val objectWithImages = objects.find(object_ => !object_.images.isEmpty)
         objectWithImages should not be (null)
         val objectWithThumbnail = objects.find(object_ => object_.images.exists(image => image.thumbnail.isDefined))
         objectWithThumbnail should not be (null)
         objects.size should be(10)
-        val nextObjects = store.collectionObjects(collection.uri, limit = 10, offset = 10)
+        val nextObjects = store.collectionObjects(collectionUri = collection.uri, currentUserUri = None, limit = 10, offset = 10)
         nextObjects.size should be(10)
         nextObjects.map(object_ => object_.uri).toSet.intersect(objects.map(object_ => object_.uri).toSet).size should be(0)
       }
@@ -70,34 +70,34 @@ class SparqlStoreSpec extends WordSpec with Matchers {
 
     "count collection objects" in {
       withUnknownHostExceptionCatch { () =>
-        val institution = store.institutions()(0)
-        val collection = store.institutionCollections(institution.uri)(0)
-        store.collectionObjectsCount(collection.uri) should be > 0
+        val institution = store.institutions(currentUserUri = None)(0)
+        val collection = store.institutionCollections(currentUserUri = None, institutionUri = institution.uri)(0)
+        store.collectionObjectsCount(currentUserUri = None, collectionUri = collection.uri) should be > 0
       }
     }
 
     "get an object by URI" in {
       withUnknownHostExceptionCatch { () =>
-        val institution = store.institutions()(0)
-        val collection = store.institutionCollections(institution.uri)(0)
-        val objects = store.collectionObjects(collection.uri, limit = 1, offset = 0)
+        val institution = store.institutions(currentUserUri = None)(0)
+        val collection = store.institutionCollections(currentUserUri = None, institutionUri = institution.uri)(0)
+        val objects = store.collectionObjects(collectionUri = collection.uri, currentUserUri = None, limit = 1, offset = 0)
         objects.size should be(1)
         val expected = objects(0)
-        val actual = store.objectByUri(expected.uri)
+        val actual = store.objectByUri(currentUserUri = None, objectUri = expected.uri)
         actual should equal(expected)
       }
     }
 
     "matching objects" in {
       withUnknownHostExceptionCatch { () =>
-        val objects = store.matchingObjects(limit = 10, offset = 0, "back")
+        val objects = store.matchingObjects(limit = 10, offset = 0, text = "back", currentUserUri = None)
         objects.size should be > 1
       }
     }
 
     "matching objects count" in {
       withUnknownHostExceptionCatch { () =>
-        val count = store.matchingObjectsCount("back")
+        val count = store.matchingObjectsCount(text = "back", currentUserUri = None)
         count should be > 1
       }
     }
