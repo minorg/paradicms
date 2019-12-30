@@ -21,11 +21,11 @@ class SparqlStore(endpointUrl: Url) extends Store {
        |}
        |""".stripMargin)
 
-  override def collectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
-    collectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
+  override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
+    getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
   }
 
-  private def collectionsByUris(collectionUris: List[Uri], currentUserUri: Option[Uri]): List[Collection] = {
+  private def getCollectionsByUris(collectionUris: List[Uri], currentUserUri: Option[Uri]): List[Collection] = {
     // Should be safe to inject collectionUris since they've already been parsed as URIs
     val query = QueryFactory.create(
       s"""
@@ -45,11 +45,11 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  override def collectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Object] = {
-    objectsByUris(currentUserUri = currentUserUri, objectUris = collectionObjectUris(collectionUri = collectionUri, currentUserUri = currentUserUri, limit = limit, offset = offset))
+  override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Object] = {
+    getObjectsByUris(currentUserUri = currentUserUri, objectUris = getCollectionObjectUris(collectionUri = collectionUri, currentUserUri = currentUserUri, limit = limit, offset = offset))
   }
 
-  override def collectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int = {
+  override def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int = {
     // Should be safe to inject collectionUri since it's already been parsed as a URI
     val query = QueryFactory.create(
       s"""
@@ -66,7 +66,7 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  private def collectionObjectUris(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Uri] = {
+  private def getCollectionObjectUris(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Uri] = {
     // Should be safe to inject collectionUri since it's already been parsed as a URI
     val query = QueryFactory.create(
       s"""
@@ -82,7 +82,7 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  override def institutionByUri(currentUserUri: Option[Uri], institutionUri: Uri): Institution = {
+  override def getInstitutionByUri(currentUserUri: Option[Uri], institutionUri: Uri): Institution = {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
     val query = QueryFactory.create(
       s"""
@@ -100,7 +100,7 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  override def institutionCollections(currentUserUri: Option[Uri], institutionUri: Uri): List[Collection] = {
+  override def getInstitutionCollections(currentUserUri: Option[Uri], institutionUri: Uri): List[Collection] = {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
     val query = QueryFactory.create(
       s"""
@@ -118,14 +118,14 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  override def institutions(currentUserUri: Option[Uri]): List[Institution] = {
+  override def getInstitutions(currentUserUri: Option[Uri]): List[Institution] = {
     withQueryExecution(institutionsQuery) { queryExecution =>
       val model = queryExecution.execConstruct()
       model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
     }
   }
 
-  private def institutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution] = {
+  private def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution] = {
     // Should be safe to inject institutionUris since they've already been parsed as URIs
     val query = QueryFactory.create(
       s"""
@@ -145,7 +145,7 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  override def matchingObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, text: String): List[ObjectSearchResult] = {
+  override def getMatchingObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, text: String): List[ObjectSearchResult] = {
     val queryString = new ParameterizedSparqlString(
       s"""
          |PREFIX cms: <${CMS.URI}>
@@ -172,9 +172,9 @@ class SparqlStore(endpointUrl: Url) extends Store {
       val institutionUris = querySolutions.map(querySolution => querySolution._2)
       val objectUris = querySolutions.map(querySolution => querySolution._3)
 
-      val collectionsByUri = collectionsByUris(collectionUris = collectionUris.toSet.toList, currentUserUri = currentUserUri).map(collection => collection.uri -> collection).toMap
-      val institutionsByUri = institutionsByUris(institutionUris = institutionUris.toSet.toList, currentUserUri = currentUserUri).map(institution => institution.uri -> institution).toMap
-      val objectsByUri: Map[Uri, Object] = objectsByUris(objectUris = objectUris, currentUserUri = currentUserUri).map(object_ => object_.uri -> object_).toMap
+      val collectionsByUri = getCollectionsByUris(collectionUris = collectionUris.toSet.toList, currentUserUri = currentUserUri).map(collection => collection.uri -> collection).toMap
+      val institutionsByUri = getInstitutionsByUris(institutionUris = institutionUris.toSet.toList, currentUserUri = currentUserUri).map(institution => institution.uri -> institution).toMap
+      val objectsByUri: Map[Uri, Object] = getObjectsByUris(objectUris = objectUris, currentUserUri = currentUserUri).map(object_ => object_.uri -> object_).toMap
 
       querySolutions.map(querySolution => ObjectSearchResult(
         collection = collectionsByUri(querySolution._1),
@@ -184,7 +184,7 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  override def matchingObjectsCount(currentUserUri: Option[Uri], text: String): Int = {
+  override def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String): Int = {
     // Should be safe to inject collectionUri since it's already been parsed as a URI
     val queryString = new ParameterizedSparqlString(
       s"""
@@ -203,11 +203,11 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  override def objectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object = {
-    objectsByUris(currentUserUri = currentUserUri, objectUris = List(objectUri)).head
+  override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object = {
+    getObjectsByUris(currentUserUri = currentUserUri, objectUris = List(objectUri)).head
   }
 
-  private def objectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[Object] = {
+  private def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[Object] = {
     // Should be safe to inject objectUris since they've already been parsed as URIs
     val query = QueryFactory.create(
       s"""
@@ -243,19 +243,10 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
-  private def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
-    val queryExecution = QueryExecutionFactory.sparqlService(endpointUrl.toString(), query)
-    try {
-      f(queryExecution)
-    } finally {
-      queryExecution.close()
-    }
-  }
+  override def getUserByUri(userUri: Uri): Option[User] =
+    getUsersByUris(List(userUri)).headOption
 
-  override def userByUri(userUri: Uri): Option[User] =
-    usersByUris(List(userUri)).headOption
-
-  private def usersByUris(userUris: List[Uri]): List[User] = {
+  private def getUsersByUris(userUris: List[Uri]): List[User] = {
     // Should be safe to inject userUris since they've already been parsed as URIs
     val query = QueryFactory.create(
       s"""
@@ -272,6 +263,15 @@ class SparqlStore(endpointUrl: Url) extends Store {
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
       model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => User(resource))
+    }
+  }
+
+  private def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
+    val queryExecution = QueryExecutionFactory.sparqlService(endpointUrl.toString(), query)
+    try {
+      f(queryExecution)
+    } finally {
+      queryExecution.close()
     }
   }
 }
