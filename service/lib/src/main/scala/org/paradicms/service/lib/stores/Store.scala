@@ -1,7 +1,7 @@
 package org.paradicms.service.lib.stores
 
 import io.lemonlabs.uri.Uri
-import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult}
+import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
 
 trait Store {
   def collectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection
@@ -21,4 +21,6 @@ trait Store {
   def matchingObjectsCount(currentUserUri: Option[Uri], text: String): Int
 
   def objectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object
+
+  def userByUri(userUri: Uri): Option[User]
 }

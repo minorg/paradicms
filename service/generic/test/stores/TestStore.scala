@@ -1,7 +1,7 @@
 package stores
 
 import io.lemonlabs.uri.Uri
-import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult}
+import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
 import org.paradicms.service.lib.stores.Store
 
 object TestStore extends Store {
@@ -22,4 +22,6 @@ object TestStore extends Store {
   override def matchingObjectsCount(currentUserUri: Option[Uri], text: String) = 1
 
   override def objectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object = if (objectUri == TestData.object_.uri) TestData.object_ else throw new NoSuchElementException
+
+  override def userByUri(userUri: Uri): Option[User] = if (userUri == TestData.user.uri) Some(TestData.user) else None
 }

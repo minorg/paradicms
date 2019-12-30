@@ -6,7 +6,7 @@ import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.RDF
 import org.paradicms.service.lib.models.domain.vocabulary.CMS
-import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult}
+import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
 
 import scala.collection.JavaConverters._
 
@@ -249,6 +249,29 @@ class SparqlStore(endpointUrl: Url) extends Store {
       f(queryExecution)
     } finally {
       queryExecution.close()
+    }
+  }
+
+  override def userByUri(userUri: Uri): Option[User] =
+    usersByUris(List(userUri)).headOption
+
+  private def usersByUris(userUris: List[Uri]): List[User] = {
+    // Should be safe to inject userUris since they've already been parsed as URIs
+    val query = QueryFactory.create(
+      s"""
+         |PREFIX cms: <${CMS.URI}>
+         |PREFIX rdf: <${RDF.getURI}>
+         |CONSTRUCT {
+         |  ?user ?p ?o .
+         |} WHERE {
+         |  VALUES ?user { ${userUris.map(userUri => "<" + userUri.toString() + ">").mkString(" ")} }
+         |  ?user rdf:type cms:User .
+         |  ?user ?p ?o .
+         |}
+         |""".stripMargin)
+    withQueryExecution(query) { queryExecution =>
+      val model = queryExecution.execConstruct()
+      model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => User(resource))
     }
   }
 }
