@@ -266,6 +266,10 @@ class SparqlStore(endpointUrl: Url) extends Store {
     }
   }
 
+  override def putUser(user: User) = {
+    throw new UnsupportedOperationException
+  }
+
   private def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
     val queryExecution = QueryExecutionFactory.sparqlService(endpointUrl.toString(), query)
     try {

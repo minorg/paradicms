@@ -24,4 +24,6 @@ object TestStore extends Store {
   override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object = if (objectUri == TestData.object_.uri) TestData.object_ else throw new NoSuchElementException
 
   override def getUserByUri(userUri: Uri): Option[User] = if (userUri == TestData.user.uri) Some(TestData.user) else None
+
+  override def putUser(user: User): Unit = throw new UnsupportedOperationException
 }

@@ -23,4 +23,6 @@ trait Store {
   def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object
 
   def getUserByUri(userUri: Uri): Option[User]
+
+  def putUser(user: User)
 }
