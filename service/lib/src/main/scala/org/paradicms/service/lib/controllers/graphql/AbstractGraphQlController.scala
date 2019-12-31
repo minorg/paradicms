@@ -13,35 +13,35 @@ import sangria.slowlog.SlowLog
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-abstract class AbstractGraphQlController[ContextT](context: ContextT, schema: Schema[ContextT, Unit], system: ActorSystem) extends InjectedController {
+abstract class AbstractGraphQlController[ContextT](schema: Schema[ContextT, Unit], system: ActorSystem) extends InjectedController {
+
   import system.dispatcher
 
   lazy val exceptionHandler = ExceptionHandler {
-    case (_, error @ TooComplexQueryError) ⇒ HandledException(error.getMessage)
-    case (_, error @ MaxQueryDepthReachedError(_)) ⇒ HandledException(error.getMessage)
+    case (_, error@TooComplexQueryError) ⇒ HandledException(error.getMessage)
+    case (_, error@MaxQueryDepthReachedError(_)) ⇒ HandledException(error.getMessage)
   }
 
   final def graphql(query: String, variables: Option[String], operation: Option[String]) = Action.async { request ⇒
-    executeQuery(query, variables map parseVariables, operation, isTracingEnabled(request))
+    executeQuery(query, variables map parseVariables, operation, request)
   }
 
   private def parseVariables(variables: String) =
     if (variables.trim == "" || variables.trim == "null") Json.obj() else Json.parse(variables).as[JsObject]
 
-  private def executeQuery(query: String, variables: Option[JsObject], operation: Option[String], tracing: Boolean) =
+  private def executeQuery(query: String, variables: Option[JsObject], operation: Option[String], request: Request[_]) =
     QueryParser.parse(query) match {
-
       // query parsed successfully, time to execute it!
       case Success(queryAst) ⇒
-        Executor.execute(schema, queryAst, context,
+        Executor.execute(schema, queryAst, getContext(request),
           operationName = operation,
           variables = variables getOrElse Json.obj(),
-//          deferredResolver = DeferredResolver.fetchers(SangriaPlaygroundSchemaDefinition.characters),
+          //          deferredResolver = DeferredResolver.fetchers(SangriaPlaygroundSchemaDefinition.characters),
           exceptionHandler = exceptionHandler,
           queryReducers = List(
             QueryReducer.rejectMaxDepth[ContextT](15),
             QueryReducer.rejectComplexQueries[ContextT](4000, (_, _) ⇒ TooComplexQueryError)),
-          middleware = if (tracing) SlowLog.apolloTracing :: Nil else Nil)
+          middleware = if (request.headers.get("X-Apollo-Tracing").isDefined) SlowLog.apolloTracing :: Nil else Nil)
           .map(Ok(_))
           .recover {
             case error: QueryAnalysisError ⇒ BadRequest(error.resolveError)
@@ -60,8 +60,6 @@ abstract class AbstractGraphQlController[ContextT](context: ContextT, schema: Sc
         throw error
     }
 
-  final def isTracingEnabled(request: Request[_]) = request.headers.get("X-Apollo-Tracing").isDefined
-
   final def graphqlBody = Action.async(parse.json) { request ⇒
     val query = (request.body \ "query").as[String]
     val operation = (request.body \ "operationName").asOpt[String]
@@ -72,12 +70,15 @@ abstract class AbstractGraphQlController[ContextT](context: ContextT, schema: Sc
       case _ ⇒ None
     }
 
-    executeQuery(query, variables, operation, isTracingEnabled(request))
+    executeQuery(query, variables, operation, request)
   }
+
+  protected def getContext(request: Request[_]): ContextT;
 
   final def renderSchema = Action {
     Ok(SchemaRenderer.renderSchema(schema))
   }
 
   case object TooComplexQueryError extends Exception("Query is too expensive.")
+
 }

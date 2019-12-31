@@ -83,8 +83,7 @@ class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, stor
         getUserinfo(accessToken).map { userinfo =>
           val userOpt = parseUserinfo(userinfo)
           if (userOpt.isDefined) {
-            store.putUser(userOpt.get)
-            Redirect(returnTo).withSession("userUri" -> userOpt.get.uri.toString())
+            Redirect(returnTo).withSession(new CurrentUser(store).put(userOpt.get))
           } else {
             Redirect(returnTo)
           }
