@@ -109,6 +109,7 @@ class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, stor
       return None
     }
     val userinfoObj = userinfo.asInstanceOf[JsObject].value
+    val email = userinfoObj.get("email")
     val sub = userinfoObj.get("sub")
     val name = userinfoObj.get("name")
     if (!name.isDefined || !name.get.isInstanceOf[JsString]) {
@@ -118,6 +119,7 @@ class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, stor
       return None
     }
     Some(User(
+      email = email.flatMap(value => if (value.isInstanceOf[JsString]) Some(value.asInstanceOf[JsString].value) else None),
       name = name.get.asInstanceOf[JsString].value,
       uri = Uri.parse("http://www.paradicms.org/user/" + URLEncoder.encode(sub.get.asInstanceOf[JsString].value, "UTF-8"))
     ))

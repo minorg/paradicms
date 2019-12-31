@@ -51,6 +51,10 @@ trait DomainModelCompanion {
     }
 
     object foaf {
+      def mbox(): Option[Uri] = mboxes.headOption
+
+      def mboxes(): List[Uri] = getPropertyObjects(FOAF.mbox).flatMap(object_ => if (object_.isURIResource) Some(Uri.parse(object_.asResource().getURI)) else None)
+
       def name(): Option[String] = getPropertyObjectString(FOAF.name)
     }
 

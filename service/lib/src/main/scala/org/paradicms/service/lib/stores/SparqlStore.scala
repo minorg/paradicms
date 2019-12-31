@@ -3,14 +3,21 @@ package org.paradicms.service.lib.stores
 import io.lemonlabs.uri.{Uri, Url}
 import org.apache.jena.query._
 import org.apache.jena.rdf.model.ResourceFactory
+import org.apache.jena.rdfconnection.{RDFConnection, RDFConnectionFactory}
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.RDF
 import org.paradicms.service.lib.models.domain.vocabulary.CMS
 import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
+import play.api.Configuration
 
 import scala.collection.JavaConverters._
 
-class SparqlStore(endpointUrl: Url) extends Store {
+class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
+  def this(configuration: Configuration) = this(
+    sparqlQueryUrl = Url.parse(configuration.get[String]("sparqlQueryUrl")),
+    sparqlUpdateUrl = Url.parse(configuration.get[String]("sparqlUpdateUrl"))
+  )
+
   private val institutionsQuery = QueryFactory.create(
     s"""
        |PREFIX cms: <${CMS.URI}>
@@ -267,15 +274,42 @@ class SparqlStore(endpointUrl: Url) extends Store {
   }
 
   override def putUser(user: User) = {
-    throw new UnsupportedOperationException
+    val emailStatement = if (user.email.isDefined) s"<${user.uri.toString()}> foaf:mbox <mailto:${user.email.get}> ." else ""
+    val update =
+      new ParameterizedSparqlString(
+        s"""
+           |PREFIX cms: <${CMS.URI}>
+           |PREFIX foaf: <${FOAF.getURI}>
+           |PREFIX rdf: <${RDF.getURI}>
+           |INSERT DATA {
+           |  GRAPH <urn:system:user> {
+           |    <${user.uri.toString()}> rdf:type cms:User .
+           |    ${emailStatement}
+           |    <${user.uri.toString()}> foaf:name ?name .
+           |  }
+           |}
+           |""".stripMargin)
+    update.setLiteral("name", user.name)
+    withRdfConnection() { rdfConnection =>
+      rdfConnection.update(update.asUpdate())
+    }
   }
 
   private def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
-    val queryExecution = QueryExecutionFactory.sparqlService(endpointUrl.toString(), query)
+    val queryExecution = QueryExecutionFactory.sparqlService(sparqlQueryUrl.toString(), query)
     try {
       f(queryExecution)
     } finally {
       queryExecution.close()
+    }
+  }
+
+  private def withRdfConnection[T]()(f: (RDFConnection) => T): T = {
+    val rdfConnection = RDFConnectionFactory.connectFuseki(sparqlUpdateUrl.toString())
+    try {
+      f(rdfConnection)
+    } finally {
+      rdfConnection.close()
     }
   }
 }

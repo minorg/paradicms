@@ -9,7 +9,7 @@ import org.scalatest.{Assertion, Matchers, WordSpec}
 // The SparqlStore is populated out-of-band. These tests are meant to be run on a populated store.
 class SparqlStoreSpec extends WordSpec with Matchers {
   "SPARQL store" should {
-    val store = new SparqlStore(Url.parse("http://fuseki:3030/ds/sparql"))
+    val store = new SparqlStore(sparqlQueryUrl = Url.parse("http://fuseki:3030/ds/sparql"), sparqlUpdateUrl = Url.parse("http://fuseki:3030/ds/update"))
 
     def withUnknownHostExceptionCatch(test: () => Assertion): Assertion =
       try {
@@ -28,7 +28,7 @@ class SparqlStoreSpec extends WordSpec with Matchers {
       }
     }
 
-    "return an institution by URI" in {
+    "get an institution by URI" in {
       withUnknownHostExceptionCatch { () =>
         val leftInstitution = store.getInstitutions(currentUserUri = None)(0)
         val rightInstitution = store.getInstitutionByUri(currentUserUri = None, institutionUri = leftInstitution.uri)
@@ -43,7 +43,7 @@ class SparqlStoreSpec extends WordSpec with Matchers {
       }
     }
 
-    "return collection by URI" in {
+    "get collection by URI" in {
       withUnknownHostExceptionCatch { () =>
         val institution = store.getInstitutions(currentUserUri = None)(0)
         val leftCollection = store.getInstitutionCollections(currentUserUri = None, institutionUri = institution.uri)(0)
@@ -88,17 +88,24 @@ class SparqlStoreSpec extends WordSpec with Matchers {
       }
     }
 
-    "matching objects" in {
+    "list matching objects" in {
       withUnknownHostExceptionCatch { () =>
         val objects = store.getMatchingObjects(limit = 10, offset = 0, text = "back", currentUserUri = None)
         objects.size should be > 1
       }
     }
 
-    "matching objects count" in {
+    "get matching objects count" in {
       withUnknownHostExceptionCatch { () =>
         val count = store.getMatchingObjectsCount(text = "back", currentUserUri = None)
         count should be > 1
+      }
+    }
+
+    "put and get a user" in {
+      withUnknownHostExceptionCatch { () =>
+        store.putUser(TestData.user)
+        store.getUserByUri(TestData.user.uri).get should equal(TestData.user)
       }
     }
   }
