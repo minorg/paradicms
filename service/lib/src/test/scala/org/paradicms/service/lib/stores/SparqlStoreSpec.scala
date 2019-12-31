@@ -3,6 +3,7 @@ package org.paradicms.service.lib.stores
 import java.net.UnknownHostException
 
 import io.lemonlabs.uri.Url
+import org.apache.jena.atlas.web.HttpException
 import org.apache.jena.query.QueryException
 import org.scalatest.{Assertion, Matchers, WordSpec}
 
@@ -15,6 +16,10 @@ class SparqlStoreSpec extends WordSpec with Matchers {
       try {
         test()
       } catch {
+        case e: HttpException => e.getCause match {
+          case _: UnknownHostException => assert(true)
+          case _ => throw e
+        }
         case e: QueryException => e.getCause match {
           case _: UnknownHostException => assert(true)
           case _ => throw e
