@@ -33,11 +33,13 @@ lazy val serviceLib =
     libraryDependencies ++= Seq(
       filters,
       guice,
+      ws,
       "com.typesafe.play" %% "play" % playVersion,
       "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
       "io.lemonlabs" %% "scala-uri" % "1.5.1",
       "org.apache.jena" % "jena-arq" % jenaVersion,
       "org.apache.jena" % "jena-core" % jenaVersion,
+      "org.apache.jena" % "jena-rdfconnection" % jenaVersion,
       "org.sangria-graphql" %% "sangria" % "1.4.2",
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
