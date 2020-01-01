@@ -1,7 +1,7 @@
 package models.graphql
 
 import io.lemonlabs.uri.{Uri, Url}
-import org.paradicms.service.lib.models.domain.{Collection, DerivedImageSet, Image, Institution, Object, ObjectSearchResult, Rights}
+import org.paradicms.service.lib.models.domain.{Collection, DerivedImageSet, Image, Institution, Object, ObjectSearchResult, Rights, User}
 import sangria.macros.derive._
 import sangria.schema.{Argument, Field, IntType, ListType, OptionType, ScalarAlias, Schema, StringType, fields}
 
@@ -67,9 +67,15 @@ object GraphQlSchemaDefinition {
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
 
+  // Intentionally limit the fields exposed on User
+  implicit val CurrentUserType = sangria.schema.ObjectType("CurrentUser", fields[GraphQlSchemaContext, User](
+    Field("name", StringType, resolve = _.value.name)
+  ))
+
   // Query types
   val RootQueryType = sangria.schema.ObjectType("RootQuery", fields[GraphQlSchemaContext, Unit](
     Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(collectionUri = ctx.args.arg("uri"), currentUserUri = ctx.ctx.currentUserUri)),
+    Field("currentUser", OptionType(CurrentUserType), resolve = _.ctx.currentUser),
     Field("institutionByUri", InstitutionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getInstitutionByUri(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.args.arg("uri"))),
     Field("institutions", ListType(InstitutionType), resolve = ctx => ctx.ctx.store.getInstitutions(currentUserUri = ctx.ctx.currentUserUri)),
     Field("matchingObjects", ListType(ObjectSearchResultType), arguments = LimitArgument :: OffsetArgument :: TextArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getMatchingObjects(currentUserUri = ctx.ctx.currentUserUri, limit = ctx.args.arg("limit"), offset = ctx.args.arg("offset"), text = ctx.args.arg("text"))),
