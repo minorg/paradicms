@@ -1,0 +1,5 @@
+application.auth0.conf
+.circleci
+.git
+.gitignore
+*.md
