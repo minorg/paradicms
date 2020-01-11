@@ -78,7 +78,8 @@ class SparqlStoreSpec extends WordSpec with Matchers {
       withUnknownHostExceptionCatch { () =>
         val institution = store.getInstitutions(currentUserUri = currentUserUri)(0)
         val collection = store.getInstitutionCollections(currentUserUri = currentUserUri, institutionUri = institution.uri)(0)
-        store.getCollectionObjectsCount(currentUserUri = currentUserUri, collectionUri = collection.uri) should be > 0
+        val collectionObjectsCount = store.getCollectionObjectsCount(currentUserUri = currentUserUri, collectionUri = collection.uri)
+        collectionObjectsCount should be > 0
       }
     }
 
