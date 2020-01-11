@@ -28,6 +28,12 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
        |}
        |""".stripMargin)
 
+  private def collectionAccessCheck(collectionVariable: String, currentUserUri: Option[Uri]): String =
+    if (currentUserUri.isDefined)
+      s"{ ${collectionVariable} cms:collectionOwner cms:public } UNION { ${collectionVariable} cms:collectionOwner <${currentUserUri.get.toString()}> }"
+    else
+      s"${collectionVariable} cms:collectionOwner cms:public"
+
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
     getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
   }
@@ -43,6 +49,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |} WHERE {
          |  VALUES ?collection { ${collectionUris.map(collectionUri => "<" + collectionUri.toString() + ">").mkString(" ")} }
          |  ?collection rdf:type cms:Collection .
+         |  ${collectionAccessCheck("?collection", currentUserUri)}
          |  ?collection ?p ?o .
          |}
          |""".stripMargin)
@@ -64,6 +71,8 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |PREFIX rdf: <${RDF.getURI}>
          |SELECT (COUNT(DISTINCT ?object) AS ?count)
          |WHERE {
+         |  <${collectionUri.toString()}> rdf:type cms:Collection .
+         |  ${collectionAccessCheck("<" + collectionUri.toString() + ">", currentUserUri)}
          |  <${collectionUri.toString()}> cms:object ?object .
          |  ?object rdf:type cms:Object .
          |}
@@ -80,6 +89,8 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |PREFIX cms: <${CMS.URI}>
          |PREFIX rdf: <${RDF.getURI}>
          |SELECT DISTINCT ?object WHERE {
+         |  <${collectionUri.toString()}> rdf:type cms:Collection .
+         |  ${collectionAccessCheck("<" + collectionUri.toString() + ">", currentUserUri)}
          |  <${collectionUri.toString()}> cms:object ?object .
          |  ?object rdf:type cms:Object .
          |} LIMIT ${limit} OFFSET ${offset}
@@ -116,6 +127,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |CONSTRUCT WHERE {
          |  <${institutionUri.toString()}> cms:collection ?collection .
          |  ?collection rdf:type cms:Collection .
+         |  ${collectionAccessCheck("?collection", currentUserUri)}
          |  ?collection ?p ?o .
          |}
          |""".stripMargin)
@@ -159,6 +171,8 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |PREFIX rdf: <${RDF.getURI}>
          |PREFIX text: <http://jena.apache.org/text#>
          |SELECT ?collection ?institution ?object WHERE {
+         |  ?collection rdf:type cms:Collection .
+         |  ${collectionAccessCheck("?collection", currentUserUri)}
          |  ?collection cms:object ?object .
          |  ?institution cms:collection ?collection .
          |  ?object rdf:type cms:Object .
@@ -199,6 +213,9 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |PREFIX rdf: <${RDF.getURI}>
          |PREFIX text: <http://jena.apache.org/text#>
          |SELECT (COUNT(DISTINCT ?object) AS ?count) WHERE {
+         |  ?collection rdf:type cms:Collection .
+         |  ${collectionAccessCheck("?collection", currentUserUri)}
+         |  ?collection cms:object ?object .
          |  ?object rdf:type cms:Object .
          |  ?object text:query ?text
          |}
@@ -230,6 +247,9 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |} WHERE {
          |  VALUES ?object { ${objectUris.map(objectUri => "<" + objectUri.toString() + ">").mkString(" ")} }
          |  ?object rdf:type cms:Object .
+         |  ?collection rdf:type cms:Collection .
+         |  ${collectionAccessCheck("?collection", currentUserUri)}
+         |  ?collection cms:object ?object .
          |  ?object ?objectP ?objectO .
          |  OPTIONAL {
          |    ?object foaf:depiction ?originalImage .
