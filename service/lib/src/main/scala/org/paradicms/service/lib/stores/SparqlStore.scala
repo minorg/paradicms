@@ -36,7 +36,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
    * See institutionAccessChecks description.
    */
   private def collectionAccessCheckGraphPatterns(collectionVariable: String, currentUserUri: Option[Uri], unionPatterns: List[List[String]]): List[List[String]] =
-    unionPatterns
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = collectionVariable, unionPatterns = unionPatterns)
 
   private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
     accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
@@ -60,6 +60,16 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
+  private def inheritableAccessCheckGraphPatterns(currentUserUri: Option[Uri], modelVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
+    val public = s"$modelVariable cms:owner cms:inherit ."
+    if (currentUserUri.isDefined) {
+      val private_ = s"$modelVariable cms:owner <${currentUserUri.get}> ."
+      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
+    } else {
+      unionPatterns.map(unionPattern => public +: unionPattern)
+    }
+  }
+
   private def matchingObjectsGraphPatterns(currentUserUri: Option[Uri]): String =
     accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
       "?institution rdf:type cms:Institution .",
@@ -71,7 +81,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     ))
 
   private def objectAccessCheckGraphPatterns(currentUserUri: Option[Uri], objectVariable: String, unionPatterns: List[List[String]]): List[List[String]] =
-    unionPatterns
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = objectVariable, unionPatterns = unionPatterns)
 
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
     getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
