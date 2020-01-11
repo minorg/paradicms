@@ -18,21 +18,70 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     sparqlUpdateUrl = Url.parse(configuration.get[String]("sparqlUpdateUrl"))
   )
 
-  private val institutionsQuery = QueryFactory.create(
-    s"""
-       |PREFIX cms: <${CMS.URI}>
-       |PREFIX rdf: <${RDF.getURI}>
-       |CONSTRUCT WHERE {
-       |  ?institution rdf:type cms:Institution .
-       |  ?institution ?p ?o .
-       |}
-       |""".stripMargin)
+  /**
+   * Create ready-to-use WHERE block contents that wrap common query-specific patterns in access check UNION blocks
+   */
+  private def accessCheckGraphPatterns(collectionVariable: Option[String], currentUserUri: Option[Uri], institutionVariable: String, objectVariable: Option[String], queryPatterns: List[String]): String = {
+    var unionPatterns: List[List[String]] = institutionAccessCheckGraphPatterns(currentUserUri = currentUserUri, institutionVariable = institutionVariable, unionPatterns = List(queryPatterns))
+    if (collectionVariable.isDefined) {
+      unionPatterns = collectionAccessCheckGraphPatterns(collectionVariable = collectionVariable.get, currentUserUri = currentUserUri, unionPatterns = unionPatterns)
+    }
+    if (objectVariable.isDefined) {
+      unionPatterns = objectAccessCheckGraphPatterns(currentUserUri = currentUserUri, objectVariable = objectVariable.get, unionPatterns = unionPatterns)
+    }
+    unionPatterns.map(unionPattern => s"{ ${unionPattern.mkString("\n")} }").mkString("\nUNION\n")
+  }
 
-  private def collectionAccessCheck(collectionVariable: String, currentUserUri: Option[Uri]): String =
-    if (currentUserUri.isDefined)
-      s"{ ${collectionVariable} cms:collectionOwner cms:public } UNION { ${collectionVariable} cms:collectionOwner <${currentUserUri.get.toString()}> }"
-    else
-      s"${collectionVariable} cms:collectionOwner cms:public"
+  /**
+   * See institutionAccessChecks description.
+   */
+  private def collectionAccessCheckGraphPatterns(collectionVariable: String, currentUserUri: Option[Uri], unionPatterns: List[List[String]]): List[List[String]] =
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = collectionVariable, unionPatterns = unionPatterns)
+
+  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
+    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      s"<${collectionUri.toString}> rdf:type cms:Collection .",
+      "?institution cms:collection ?collection .",
+      "?institution rdf:type cms:Institution .",
+      "?collection cms:object ?object .",
+      "?object rdf:type cms:Object ."
+    ))
+
+  /**
+   * Given a list of union patterns (a list of lists of graph patterns), add permutations for an institution access check and return a new list of union patterns
+   */
+  private def institutionAccessCheckGraphPatterns(currentUserUri: Option[Uri], institutionVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
+    val public = s"$institutionVariable cms:owner cms:public ."
+    if (currentUserUri.isDefined) {
+      val private_ = s"$institutionVariable cms:owner <${currentUserUri.get}> ."
+      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
+    } else {
+      unionPatterns.map(unionPattern => public +: unionPattern)
+    }
+  }
+
+  private def inheritableAccessCheckGraphPatterns(currentUserUri: Option[Uri], modelVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
+    val public = s"$modelVariable cms:owner cms:inherit ."
+    if (currentUserUri.isDefined) {
+      val private_ = s"$modelVariable cms:owner <${currentUserUri.get}> ."
+      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
+    } else {
+      unionPatterns.map(unionPattern => public +: unionPattern)
+    }
+  }
+
+  private def matchingObjectsGraphPatterns(currentUserUri: Option[Uri]): String =
+    accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      "?institution rdf:type cms:Institution .",
+      "?institution cms:collection ?collection .",
+      "?collection rdf:type cms:Collection .",
+      "?collection cms:object ?object .",
+      "?object rdf:type cms:Object .",
+      "?object text:query ?text ."
+    ))
+
+  private def objectAccessCheckGraphPatterns(currentUserUri: Option[Uri], objectVariable: String, unionPatterns: List[List[String]]): List[List[String]] =
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = objectVariable, unionPatterns = unionPatterns)
 
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
     getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
@@ -40,6 +89,17 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
 
   private def getCollectionsByUris(collectionUris: List[Uri], currentUserUri: Option[Uri]): List[Collection] = {
     // Should be safe to inject collectionUris since they've already been parsed as URIs
+    val queryWhere =
+      accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
+        s"VALUES ?collection { ${
+          collectionUris.map(collectionUri => "<" + collectionUri.toString() + ">").mkString(" ")
+        } }",
+        "?collection rdf:type cms:Collection .",
+        "?institution cms:collection ?collection .",
+        "?institution rdf:type cms:Institution .",
+        "?collection ?p ?o ."
+      ))
+
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
@@ -47,15 +107,13 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |CONSTRUCT {
          |  ?collection ?p ?o .
          |} WHERE {
-         |  VALUES ?collection { ${collectionUris.map(collectionUri => "<" + collectionUri.toString() + ">").mkString(" ")} }
-         |  ?collection rdf:type cms:Collection .
-         |  ${collectionAccessCheck("?collection", currentUserUri)}
-         |  ?collection ?p ?o .
+         |$queryWhere
          |}
          |""".stripMargin)
-    withQueryExecution(query) { queryExecution =>
-      val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.Collection).asScala.toList.map(resource => Collection(resource))
+    withQueryExecution(query) {
+      queryExecution =>
+        val model = queryExecution.execConstruct()
+        model.listSubjectsWithProperty(RDF.`type`, CMS.Collection).asScala.toList.map(resource => Collection(resource))
     }
   }
 
@@ -64,51 +122,53 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
   }
 
   override def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int = {
-    // Should be safe to inject collectionUri since it's already been parsed as a URI
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
          |PREFIX rdf: <${RDF.getURI}>
          |SELECT (COUNT(DISTINCT ?object) AS ?count)
          |WHERE {
-         |  <${collectionUri.toString()}> rdf:type cms:Collection .
-         |  ${collectionAccessCheck("<" + collectionUri.toString() + ">", currentUserUri)}
-         |  <${collectionUri.toString()}> cms:object ?object .
-         |  ?object rdf:type cms:Object .
+         |${collectionObjectsGraphPatterns(collectionUri, currentUserUri)}
          |}
          |""".stripMargin)
-    withQueryExecution(query) { queryExecution =>
-      queryExecution.execSelect().next().get("count").asLiteral().getInt
+    withQueryExecution(query) {
+      queryExecution =>
+        queryExecution.execSelect().next().get("count").asLiteral().getInt
     }
   }
 
   private def getCollectionObjectUris(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Uri] = {
-    // Should be safe to inject collectionUri since it's already been parsed as a URI
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
          |PREFIX rdf: <${RDF.getURI}>
          |SELECT DISTINCT ?object WHERE {
-         |  <${collectionUri.toString()}> rdf:type cms:Collection .
-         |  ${collectionAccessCheck("<" + collectionUri.toString() + ">", currentUserUri)}
-         |  <${collectionUri.toString()}> cms:object ?object .
-         |  ?object rdf:type cms:Object .
-         |} LIMIT ${limit} OFFSET ${offset}
+         |${collectionObjectsGraphPatterns(collectionUri, currentUserUri)}
+         |} LIMIT $limit OFFSET $offset
          |""".stripMargin)
-    withQueryExecution(query) { queryExecution =>
-      queryExecution.execSelect().asScala.toList.map(querySolution => Uri.parse(querySolution.get("object").asResource().getURI))
+    withQueryExecution(query) {
+      queryExecution =>
+        queryExecution.execSelect().asScala.toList.map(querySolution => Uri.parse(querySolution.get("object").asResource().getURI))
     }
   }
 
   override def getInstitutionByUri(currentUserUri: Option[Uri], institutionUri: Uri): Institution = {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
+    val institutionVariable = "<" + institutionUri.toString() + ">"
+    val queryWhere =
+      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = institutionVariable, objectVariable = None, queryPatterns = List(
+        s"$institutionVariable rdf:type cms:Institution .",
+        s"$institutionVariable ?p ?o ."
+      ))
+
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
          |PREFIX rdf: <${RDF.getURI}>
-         |CONSTRUCT WHERE {
-         |  <${institutionUri.toString()}> rdf:type cms:Institution .
-         |  <${institutionUri.toString()}> ?p ?o .
+         |CONSTRUCT {
+         |  $institutionVariable ?p ?o
+         |} WHERE {
+         |$queryWhere
          |}
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
@@ -120,15 +180,23 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
 
   override def getInstitutionCollections(currentUserUri: Option[Uri], institutionUri: Uri): List[Collection] = {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
+    val institutionVariable = "<" + institutionUri.toString() + ">"
+    val queryWhere =
+      accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = institutionVariable, objectVariable = None, queryPatterns = List(
+        s"$institutionVariable rdf:type cms:Institution .",
+        s"$institutionVariable cms:collection ?collection .",
+        "?collection rdf:type cms:Collection .",
+        "?collection ?p ?o ."
+      ))
+
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
          |PREFIX rdf: <${RDF.getURI}>
-         |CONSTRUCT WHERE {
-         |  <${institutionUri.toString()}> cms:collection ?collection .
-         |  ?collection rdf:type cms:Collection .
-         |  ${collectionAccessCheck("?collection", currentUserUri)}
-         |  ?collection ?p ?o .
+         |CONSTRUCT {
+         |  ?collection ?p ?o
+         |} WHERE {
+         |$queryWhere
          |}
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
@@ -138,7 +206,25 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
   }
 
   override def getInstitutions(currentUserUri: Option[Uri]): List[Institution] = {
-    withQueryExecution(institutionsQuery) { queryExecution =>
+    val queryWhere =
+      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
+        "?institution rdf:type cms:Institution .",
+        "?institution ?p ?o ."
+      ))
+
+    val query = QueryFactory.create(
+      s"""
+         |PREFIX cms: <${CMS.URI}>
+         |PREFIX rdf: <${RDF.getURI}>
+         |CONSTRUCT {
+         |  ?institution ?p ?o
+         |} WHERE {
+         |$queryWhere
+         |}
+         |""".stripMargin
+    )
+
+    withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
       model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
     }
@@ -146,6 +232,13 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
 
   private def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution] = {
     // Should be safe to inject institutionUris since they've already been parsed as URIs
+    val queryWhere =
+      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
+        s"VALUES ?institution { ${institutionUris.map(institutionUri => "<" + institutionUri.toString() + ">").mkString(" ")} }",
+        "?institution rdf:type cms:Institution .",
+        "?institution ?p ?o ."
+      ))
+
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
@@ -153,9 +246,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |CONSTRUCT {
          |  ?institution ?p ?o .
          |} WHERE {
-         |  VALUES ?institution { ${institutionUris.map(institutionUri => "<" + institutionUri.toString() + ">").mkString(" ")} }
-         |  ?institution rdf:type cms:Institution .
-         |  ?institution ?p ?o .
+         |$queryWhere
          |}
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
@@ -171,12 +262,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |PREFIX rdf: <${RDF.getURI}>
          |PREFIX text: <http://jena.apache.org/text#>
          |SELECT ?collection ?institution ?object WHERE {
-         |  ?collection rdf:type cms:Collection .
-         |  ${collectionAccessCheck("?collection", currentUserUri)}
-         |  ?collection cms:object ?object .
-         |  ?institution cms:collection ?collection .
-         |  ?object rdf:type cms:Object .
-         |  ?object text:query ?text
+         |${matchingObjectsGraphPatterns(currentUserUri)}
          |}
          |LIMIT ${limit}
          |OFFSET ${offset}
@@ -206,20 +292,14 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
   }
 
   override def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String): Int = {
-    // Should be safe to inject collectionUri since it's already been parsed as a URI
     val queryString = new ParameterizedSparqlString(
       s"""
          |PREFIX cms: <${CMS.URI}>
          |PREFIX rdf: <${RDF.getURI}>
          |PREFIX text: <http://jena.apache.org/text#>
          |SELECT (COUNT(DISTINCT ?object) AS ?count) WHERE {
-         |  ?collection rdf:type cms:Collection .
-         |  ${collectionAccessCheck("?collection", currentUserUri)}
-         |  ?collection cms:object ?object .
-         |  ?object rdf:type cms:Object .
-         |  ?object text:query ?text
-         |}
-         |""".stripMargin)
+         |${matchingObjectsGraphPatterns(currentUserUri)}
+         |}""".stripMargin)
     queryString.setParam("text", ResourceFactory.createPlainLiteral(text))
     val query = queryString.asQuery()
     withQueryExecution(query) { queryExecution =>
@@ -233,6 +313,17 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
 
   private def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[Object] = {
     // Should be safe to inject objectUris since they've already been parsed as URIs
+    val queryWhere = accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      "?institution rdf:type cms:Institution .",
+      "?institution cms:collection ?collection .",
+      "?collection rdf:type cms:Collection .",
+      "?collection cms:object ?object .",
+      s"VALUES ?object { ${objectUris.map(objectUri => "<" + objectUri.toString() + ">").mkString(" ")} }",
+      "?object rdf:type cms:Object .",
+      "?object ?objectP ?objectO .",
+      "OPTIONAL { ?object foaf:depiction ?originalImage . ?originalImage rdf:type cms:Image . ?originalImage ?originalImageP ?originalImageO . OPTIONAL { ?originalImage foaf:thumbnail ?thumbnailImage . ?thumbnailImage rdf:type cms:Image . ?thumbnailImage ?thumbnailImageP ?thumbnailImageO . } }"
+    ))
+
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
@@ -245,22 +336,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |  ?originalImage foaf:thumbnail ?thumbnailImage .
          |  ?thumbnailImage ?thumbnailImageP ?thumbnailImageO .
          |} WHERE {
-         |  VALUES ?object { ${objectUris.map(objectUri => "<" + objectUri.toString() + ">").mkString(" ")} }
-         |  ?object rdf:type cms:Object .
-         |  ?collection rdf:type cms:Collection .
-         |  ${collectionAccessCheck("?collection", currentUserUri)}
-         |  ?collection cms:object ?object .
-         |  ?object ?objectP ?objectO .
-         |  OPTIONAL {
-         |    ?object foaf:depiction ?originalImage .
-         |    ?originalImage rdf:type cms:Image .
-         |    ?originalImage ?originalImageP ?originalImageO .
-         |    OPTIONAL {
-         |      ?originalImage foaf:thumbnail ?thumbnailImage .
-         |      ?thumbnailImage rdf:type cms:Image .
-         |      ?thumbnailImage ?thumbnailImageP ?thumbnailImageO .
-         |    }
-         |  }
+         |$queryWhere
          |}
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
