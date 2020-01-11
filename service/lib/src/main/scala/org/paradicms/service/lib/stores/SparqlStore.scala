@@ -29,7 +29,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     if (objectVariable.isDefined) {
       unionPatterns = objectAccessCheckGraphPatterns(currentUserUri = currentUserUri, objectVariable = objectVariable.get, unionPatterns = unionPatterns)
     }
-    unionPatterns.map(unionPattern => s"UNION { ${unionPattern.mkString("\n")} }").mkString("\n")
+    unionPatterns.map(unionPattern => s"{ ${unionPattern.mkString("\n")} }").mkString("\nUNION\n")
   }
 
   /**
@@ -51,9 +51,9 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
    * Given a list of union patterns (a list of lists of graph patterns), add permutations for an institution access check and return a new list of union patterns
    */
   private def institutionAccessCheckGraphPatterns(currentUserUri: Option[Uri], institutionVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
-    val public = s"$institutionVariable cms:owner cms:public"
+    val public = s"$institutionVariable cms:owner cms:public ."
     if (currentUserUri.isDefined) {
-      val private_ = s"$institutionVariable cms:owner <${currentUserUri.get}>"
+      val private_ = s"$institutionVariable cms:owner <${currentUserUri.get}> ."
       List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
     } else {
       unionPatterns.map(unionPattern => public +: unionPattern)
@@ -289,7 +289,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
          |PREFIX text: <http://jena.apache.org/text#>
          |SELECT (COUNT(DISTINCT ?object) AS ?count) WHERE {
          |${matchingObjectsGraphPatterns(currentUserUri)}
-         |""".stripMargin)
+         |}""".stripMargin)
     queryString.setParam("text", ResourceFactory.createPlainLiteral(text))
     val query = queryString.asQuery()
     withQueryExecution(query) { queryExecution =>
