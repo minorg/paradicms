@@ -1,6 +1,7 @@
 package org.paradicms.service.lib.controllers.graphql
 
 import akka.actor.ActorSystem
+import org.paradicms.service.lib.models.graphql.AbstractGraphQlSchemaContext
 import play.api.libs.json._
 import play.api.mvc._
 import sangria.execution._
@@ -13,7 +14,7 @@ import sangria.slowlog.SlowLog
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-abstract class AbstractGraphQlController[ContextT](schema: Schema[ContextT, Unit], system: ActorSystem) extends InjectedController {
+abstract class AbstractGraphQlController[ContextT <: AbstractGraphQlSchemaContext](schema: Schema[ContextT, Unit], system: ActorSystem) extends InjectedController {
 
   import system.dispatcher
 
