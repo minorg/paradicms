@@ -164,9 +164,9 @@ class GraphQlSchemaDefinitionSpec extends PlaySpec {
   }
 
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
-    val futureResult = Executor.execute(GraphQlSchemaDefinition.schema, query,
+    val futureResult = Executor.execute(GenericGraphQlSchemaDefinition.schema, query,
       variables = vars,
-      userContext = new GraphQlSchemaContext(FakeRequest(), TestStore)
+      userContext = new GenericGraphQlSchemaContext(FakeRequest(), TestStore)
     )
     Await.result(futureResult, 10.seconds)
   }
