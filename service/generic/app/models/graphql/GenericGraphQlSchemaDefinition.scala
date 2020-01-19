@@ -5,7 +5,7 @@ import org.paradicms.service.lib.models.domain.{Collection, DerivedImageSet, Ima
 import sangria.macros.derive._
 import sangria.schema.{Argument, Field, IntType, ListType, OptionType, ScalarAlias, Schema, StringType, fields}
 
-object GraphQlSchemaDefinition {
+object GenericGraphQlSchemaDefinition {
   // Scalar aliases
   implicit val UriType = ScalarAlias[Uri, String](
     StringType, _.toString, uri => Right(Uri.parse(uri))
@@ -22,23 +22,23 @@ object GraphQlSchemaDefinition {
   val UriArgument = Argument("uri", UriType, description = "URI")
 
   // Domain model types, in dependence order
-  implicit val ImageType = deriveObjectType[GraphQlSchemaContext, Image](
+  implicit val ImageType = deriveObjectType[GenericGraphQlSchemaContext, Image](
     ReplaceField("url", Field("url", UrlType, resolve = _.value.url))
   )
 
-  implicit val RightsType = deriveObjectType[GraphQlSchemaContext, Rights](
+  implicit val RightsType = deriveObjectType[GenericGraphQlSchemaContext, Rights](
     ReplaceField("license", Field("license", OptionType(UriType), resolve = _.value.license))
   )
 
-  implicit val DerivedImageSetType = deriveObjectType[GraphQlSchemaContext, DerivedImageSet](
+  implicit val DerivedImageSetType = deriveObjectType[GenericGraphQlSchemaContext, DerivedImageSet](
   )
 
-  implicit val ObjectType = deriveObjectType[GraphQlSchemaContext, Object](
+  implicit val ObjectType = deriveObjectType[GenericGraphQlSchemaContext, Object](
     AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
     ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )
 
-  implicit val CollectionType = deriveObjectType[GraphQlSchemaContext, Collection](
+  implicit val CollectionType = deriveObjectType[GenericGraphQlSchemaContext, Collection](
     AddFields(
       Field(
         "objects",
@@ -55,7 +55,7 @@ object GraphQlSchemaDefinition {
     ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )
 
-  implicit val InstitutionType = deriveObjectType[GraphQlSchemaContext, Institution](
+  implicit val InstitutionType = deriveObjectType[GenericGraphQlSchemaContext, Institution](
     AddFields(
       Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(currentUserUri = ctx.ctx.currentUserUri, collectionUri = ctx.args.arg("uri"))),
       Field("collections", ListType(CollectionType), resolve = ctx => ctx.ctx.store.getInstitutionCollections(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.value.uri))
@@ -63,17 +63,17 @@ object GraphQlSchemaDefinition {
     ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )
 
-  implicit val ObjectSearchResultType = deriveObjectType[GraphQlSchemaContext, ObjectSearchResult](
+  implicit val ObjectSearchResultType = deriveObjectType[GenericGraphQlSchemaContext, ObjectSearchResult](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
 
   // Intentionally limit the fields exposed on User
-  implicit val CurrentUserType = sangria.schema.ObjectType("CurrentUser", fields[GraphQlSchemaContext, User](
+  implicit val CurrentUserType = sangria.schema.ObjectType("CurrentUser", fields[GenericGraphQlSchemaContext, User](
     Field("name", StringType, resolve = _.value.name)
   ))
 
   // Query types
-  val RootQueryType = sangria.schema.ObjectType("RootQuery", fields[GraphQlSchemaContext, Unit](
+  val RootQueryType = sangria.schema.ObjectType("RootQuery", fields[GenericGraphQlSchemaContext, Unit](
     Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(collectionUri = ctx.args.arg("uri"), currentUserUri = ctx.ctx.currentUserUri)),
     Field("currentUser", OptionType(CurrentUserType), resolve = _.ctx.currentUser),
     Field("institutionByUri", InstitutionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getInstitutionByUri(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.args.arg("uri"))),

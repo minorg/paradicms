@@ -6,7 +6,7 @@ import org.paradicms.service.lib.models.domain.User
 import org.paradicms.service.lib.stores.Store
 import play.api.mvc.Request
 
-class GraphQlSchemaContext(request: Request[_], val store: Store) {
+class GenericGraphQlSchemaContext(request: Request[_], val store: Store) {
   private val currentUser_ = new CurrentUser(store)
 
   def currentUser(): Option[User] = currentUser_.get(request)
