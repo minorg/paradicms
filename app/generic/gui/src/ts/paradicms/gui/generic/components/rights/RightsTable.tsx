@@ -1,6 +1,6 @@
 import {CollectionOverviewQuery_collectionByUri_rights} from "paradicms/gui/generic/api/queries/types/CollectionOverviewQuery";
 import * as React from "react";
-import {Uris} from "paradicms-gui-lib";
+import {Uris} from "paradicms-lib-generic";
 
 type Rights = CollectionOverviewQuery_collectionByUri_rights;
 
