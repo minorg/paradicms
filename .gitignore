@@ -1,4 +1,7 @@
+/lerna-debug.log
+node_modules/
 /null/
+package-lock.json
 /project/project/
 /project/target/
 /root/
