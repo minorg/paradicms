@@ -24,7 +24,7 @@ FROM ubuntu:18.04
 
 COPY /app/generic/nginx.conf /etc/nginx/sites-available/default
 
-COPY --from=build-app /app/generic/target/universal/generic-app-1.0.0-SNAPSHOT.zip /
+COPY --from=build-app /app/app/generic/target/universal/generic-app-1.0.0-SNAPSHOT.zip /
 RUN unzip -q generic-app-1.0.0-SNAPSHOT.zip && mv /generic-app-1.0.0-SNAPSHOT /app && chmod +x /app/bin/generic-app
 
 COPY --from=build-gui /app/generic/gui/dist /usr/share/nginx/html
