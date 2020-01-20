@@ -41,7 +41,7 @@ module.exports = function (env, argv) {
     resolve: {
       alias: {
         // https://github.com/facebook/react/issues/13991
-        react: path.resolve("..", "..", "node_modules", "react")
+        react: path.resolve("..", "..", "..", "node_modules", "react")
       }
     }
   });
