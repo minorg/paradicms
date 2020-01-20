@@ -4,5 +4,5 @@
     "declaration": true,
     "outDir": "out"
   },
-  "extends": "./tsconfig.base.json"
+  "extends": "../tsconfig.base.json"
 }
