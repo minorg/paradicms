@@ -33,4 +33,5 @@ COPY --from=build-gui /app/app/generic/gui/dist /usr/share/nginx/html
 
 EXPOSE 80
 
-CMD ["/app/bin/generic-app", "-Dhttp.port=80"]
+COPY /app/generic/docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
