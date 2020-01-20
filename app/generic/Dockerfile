@@ -22,6 +22,8 @@ RUN cd app/generic/gui && npm run build
 # Deployment
 FROM ubuntu:18.04
 
+RUN apt-get update && apt-get install -y unzip
+
 COPY /app/generic/nginx.conf /etc/nginx/sites-available/default
 
 COPY --from=build-app /app/app/generic/target/universal/generic-app-1.0.0-SNAPSHOT.zip /
