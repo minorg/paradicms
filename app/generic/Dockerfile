@@ -31,6 +31,6 @@ RUN unzip -q generic-app-1.0.0-SNAPSHOT.zip && mv /generic-app-1.0.0-SNAPSHOT /a
 
 COPY --from=build-gui /app/app/generic/gui/dist /usr/share/nginx/html
 
-EXPOSE 9000
+EXPOSE 80
 
-CMD ["/app/bin/generic-app"]
+CMD ["/app/bin/generic-app", "-Dhttp.port=80"]
