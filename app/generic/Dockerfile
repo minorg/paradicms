@@ -22,7 +22,7 @@ RUN cd app/generic/gui && npm run build
 # Deployment
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y unzip
+RUN apt-get update && apt-get install -y default-jre-headless nginx-full unzip
 
 COPY /app/generic/nginx.conf /etc/nginx/sites-available/default
 
