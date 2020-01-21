@@ -4,19 +4,14 @@ networks:
     external:
       name: minorgordon.net
 services:
-  generic-gui:
+  generic-app:
     build:
       context: .
-      dockerfile: gui/packages/generic/Dockerfile
-    container_name: generic-gui
-  generic-service:
-    build:
-      context: .
-      dockerfile: service/generic/Dockerfile
-    container_name: generic-service
+      dockerfile: app/generic/Dockerfile
+    container_name: generic-app
     stdin_open: true
     volumes:
-      - ./service/generic/conf/application.auth0.conf:/app/conf/application.auth0.conf:ro
+      - ./app/generic/conf/application.auth0.conf:/app/conf/application.auth0.conf:ro
   fuseki:
     build:
       context: fuseki

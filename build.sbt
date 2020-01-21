@@ -13,23 +13,19 @@ parallelExecution in ThisBuild := false
 
 
 // Resolvers
-if ((Path.userHome / ".m2").isDirectory) {
-  resolvers in ThisBuild += Resolver.mavenLocal
-} else {
-  resolvers in ThisBuild += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-  // updateOptions := updateOptions.value.withLatestSnapshots(false)
-}
+resolvers in ThisBuild += Resolver.mavenLocal
+resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 
 
 // Projects
 lazy val root = project
-  .aggregate(generic, serviceLib)
+  .aggregate(genericApp, genericLib)
   .settings(
     skip in publish := true
   )
 
-lazy val serviceLib =
-  (project in file("service/lib")).settings(
+lazy val genericLib =
+  (project in file("lib/scala/generic")).settings(
     libraryDependencies ++= Seq(
       filters,
       guice,
@@ -46,17 +42,18 @@ lazy val serviceLib =
       "org.scalatest" %% "scalatest" % "3.0.8" % Test,
       "org.slf4j" % "slf4j-simple" % "1.7.25" % Test
     ),
-    name := "service-lib"
+    name := "generic-lib"
   )
 
-lazy val generic = (project in file("service/generic"))
-  .dependsOn(serviceLib)
+lazy val genericApp = (project in file("app/generic"))
+  .dependsOn(genericLib)
   .enablePlugins(PlayScala)
   .settings(
     libraryDependencies ++= Seq(
-      organization.value %% "service-lib" % version.value,
+      organization.value %% "generic-lib" % version.value,
       "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
     ),
+    name := "generic-app",
     routesGenerator := InjectedRoutesGenerator,
     // Adds additional packages into Twirl
     //TwirlKeys.templateImports += "com.example.controllers._"

@@ -1,5 +1,11 @@
-/null/
+application.auth0.conf
+dist/
+/lerna-debug.log
+logs/
+node_modules/
+null/
+out/
+package-lock.json
 /project/project/
-/project/target/
 /root/
-/target/
+target/
