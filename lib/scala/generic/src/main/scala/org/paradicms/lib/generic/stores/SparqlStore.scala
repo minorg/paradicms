@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.generic.stores
+package org.paradicms.lib.generic.stores
 
 import io.lemonlabs.uri.{Uri, Url}
 import org.apache.jena.query._

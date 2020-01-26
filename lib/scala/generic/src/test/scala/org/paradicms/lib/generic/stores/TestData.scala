@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.generic.stores
+package org.paradicms.lib.generic.stores
 
 import io.lemonlabs.uri.Uri
 import org.paradicms.service.lib.generic.models.domain.{Collection, Institution, Object, User}

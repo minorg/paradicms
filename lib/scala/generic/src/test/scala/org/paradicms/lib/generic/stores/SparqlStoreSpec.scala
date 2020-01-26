@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.generic.stores
+package org.paradicms.lib.generic.stores
 
 import java.net.UnknownHostException
 
