@@ -4,9 +4,9 @@
 # ~~~~
 
 # Auth0
-GET         /api/auth0/login                org.paradicms.service.lib.controllers.auth0.Auth0Controller.login(returnTo: String)
-GET         /api/auth0/logout               org.paradicms.service.lib.controllers.auth0.Auth0Controller.logout(returnTo: String)
-GET         /api/auth0/loginCallback        org.paradicms.service.lib.controllers.auth0.Auth0Controller.loginCallback(code: Option[String], state: Option[String])
+GET         /api/auth0/login                org.paradicms.service.lib.generic.controllers.auth0.Auth0Controller.login(returnTo: String)
+GET         /api/auth0/logout               org.paradicms.service.lib.generic.controllers.auth0.Auth0Controller.logout(returnTo: String)
+GET         /api/auth0/loginCallback        org.paradicms.service.lib.generic.controllers.auth0.Auth0Controller.loginCallback(code: Option[String], state: Option[String])
 
 
 # GraphQL
