@@ -6,6 +6,7 @@ version in ThisBuild := "1.0.0-SNAPSHOT"
 // Constants
 val jenaVersion = "3.13.1"
 val playVersion = "2.8.0"
+val slf4jVersion = "1.7.25"
 
 
 // Test settings
@@ -19,18 +20,18 @@ resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 
 // Projects
 lazy val root = project
-  .aggregate(genericApp, genericLib)
+  .aggregate(bookApp, genericApp, genericLib, testLib)
   .settings(
     skip in publish := true
   )
 
 lazy val bookApp = (project in file("app/book"))
-  .dependsOn(genericLib)
+  .dependsOn(genericLib, testLib)
   .enablePlugins(PlayScala)
   .settings(
     libraryDependencies ++= Seq(
       organization.value %% "generic-lib" % version.value,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
+      organization.value %% "test-lib" % version.value % Test
     ),
     name := "book-app",
     routesGenerator := InjectedRoutesGenerator,
@@ -43,12 +44,12 @@ lazy val bookApp = (project in file("app/book"))
   )
 
 lazy val genericApp = (project in file("app/generic"))
-  .dependsOn(genericLib)
+  .dependsOn(genericLib, testLib)
   .enablePlugins(PlayScala)
   .settings(
     libraryDependencies ++= Seq(
       organization.value %% "generic-lib" % version.value,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
+      organization.value %% "test-lib" % version.value,
     ),
     name := "generic-app",
     routesGenerator := InjectedRoutesGenerator,
@@ -76,7 +77,19 @@ lazy val genericLib =
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
       "org.scalatest" %% "scalatest" % "3.0.8" % Test,
-      "org.slf4j" % "slf4j-simple" % "1.7.25" % Test
+      "org.slf4j" % "slf4j-simple" % slf4jVersion % Test
     ),
     name := "generic-lib"
   )
+
+lazy val testLib =
+  (project in file("lib/scala/test"))
+    .dependsOn(genericLib)
+    .settings(
+      libraryDependencies ++= Seq(
+        organization.value %% "generic-lib" % version.value,
+        "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3",
+        "org.slf4j" % "slf4j-simple" % slf4jVersion
+      ),
+      name := "test-lib"
+    )
