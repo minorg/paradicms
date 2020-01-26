@@ -26,7 +26,7 @@ lazy val root = project
   )
 
 lazy val bookApp = (project in file("app/book"))
-  .dependsOn(genericLib, testLib)
+  .dependsOn(genericLib, testLib % "test->compile")
   .enablePlugins(PlayScala)
   .settings(
     libraryDependencies ++= Seq(
@@ -44,12 +44,12 @@ lazy val bookApp = (project in file("app/book"))
   )
 
 lazy val genericApp = (project in file("app/generic"))
-  .dependsOn(genericLib, testLib)
+  .dependsOn(genericLib, testLib % "test->compile")
   .enablePlugins(PlayScala)
   .settings(
     libraryDependencies ++= Seq(
       organization.value %% "generic-lib" % version.value,
-      organization.value %% "test-lib" % version.value,
+      organization.value %% "test-lib" % version.value % Test,
     ),
     name := "generic-app",
     routesGenerator := InjectedRoutesGenerator,

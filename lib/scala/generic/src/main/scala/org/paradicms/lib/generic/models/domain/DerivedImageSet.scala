@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.generic.models.domain
+package org.paradicms.lib.generic.models.domain
 
 import org.apache.jena.sparql.vocabulary.FOAF
 

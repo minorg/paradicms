@@ -1,7 +1,7 @@
-package org.paradicms.service.lib.generic.controllers.graphql
+package org.paradicms.lib.generic.controllers.graphql
 
 import akka.actor.ActorSystem
-import org.paradicms.service.lib.generic.models.graphql.AbstractGraphQlSchemaContext
+import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaContext
 import play.api.libs.json._
 import play.api.mvc._
 import sangria.execution._

@@ -1,16 +1,15 @@
 package org.paradicms.lib.test.stores
 
 import io.lemonlabs.uri.Uri
+import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
 import org.paradicms.lib.generic.stores.Store
-import org.paradicms.service.lib.generic.models.domain
-import org.paradicms.service.lib.generic.models.domain.{Collection, Institution, ObjectSearchResult, User}
 
 class TestStore extends Store {
   private val testData = new GenericTestData
 
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = if (collectionUri == testData.collection.uri) testData.collection else throw new NoSuchElementException
 
-  override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[domain.Object] = if (offset == 0) List(testData.object_) else List()
+  override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Object] = if (offset == 0) List(testData.object_) else List()
 
   override def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int = 1
 
@@ -24,7 +23,7 @@ class TestStore extends Store {
 
   override def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String) = 1
 
-  override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): domain.Object = if (objectUri == testData.object_.uri) testData.object_ else throw new NoSuchElementException
+  override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object = if (objectUri == testData.object_.uri) testData.object_ else throw new NoSuchElementException
 
   override def getUserByUri(userUri: Uri): Option[User] = if (userUri == testData.user.uri) Some(testData.user) else None
 

@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.generic.controllers.auth0
+package org.paradicms.lib.generic.controllers.auth0
 
 import play.api.Configuration
 

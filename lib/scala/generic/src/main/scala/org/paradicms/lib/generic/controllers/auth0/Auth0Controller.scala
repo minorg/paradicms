@@ -1,11 +1,11 @@
-package org.paradicms.service.lib.generic.controllers.auth0
+package org.paradicms.lib.generic.controllers.auth0
 
 import java.net.URLEncoder
 
 import io.lemonlabs.uri.Uri
 import javax.inject.Inject
+import org.paradicms.lib.generic.models.domain.User
 import org.paradicms.lib.generic.stores.Store
-import org.paradicms.service.lib.generic.models.domain.User
 import play.api.Configuration
 import play.api.http.{HeaderNames, MimeTypes}
 import play.api.libs.json.Json.toJsFieldJsValueWrapper

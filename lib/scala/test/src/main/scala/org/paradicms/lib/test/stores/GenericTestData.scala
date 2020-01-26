@@ -1,7 +1,7 @@
 package org.paradicms.lib.test.stores
 
 import io.lemonlabs.uri.Uri
-import org.paradicms.service.lib.generic.models.domain.{Collection, Institution, Object, User}
+import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, User}
 
 class GenericTestData {
   val institution = Institution(uri = Uri.parse("http://example.com/institution"), name = "Test institution")

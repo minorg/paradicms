@@ -1,13 +1,12 @@
 package org.paradicms.lib.generic.stores
 
 import io.lemonlabs.uri.Uri
-import org.paradicms.service.lib.generic.models.domain
-import org.paradicms.service.lib.generic.models.domain.{Collection, Institution, ObjectSearchResult, User}
+import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
 
 trait Store {
   def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection
 
-  def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[domain.Object]
+  def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Object]
 
   def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int
 
@@ -21,7 +20,7 @@ trait Store {
 
   def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String): Int
 
-  def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): domain.Object
+  def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object
 
   def getUserByUri(userUri: Uri): Option[User]
 
