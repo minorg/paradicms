@@ -13,7 +13,7 @@ import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
-class GraphQlSchemaDefinitionSpec extends PlaySpec {
+class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
   "GraphQL schema" must {
     "return a list of institutions" in {
       val query =
