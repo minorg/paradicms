@@ -1,5 +1,6 @@
 package models.graphql
 
+import org.paradicms.lib.test.stores.{GenericTestData, TestStore}
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.test.FakeRequest
@@ -7,13 +8,14 @@ import sangria.ast.Document
 import sangria.execution.Executor
 import sangria.macros._
 import sangria.marshalling.playJson._
-import stores.{TestData, TestStore}
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
 class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
+  val testData = new GenericTestData
+
   "GraphQL schema" must {
     "return a list of institutions" in {
       val query =
@@ -40,7 +42,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      val collections = executeQuery(query, vars = Json.obj("institutionUri" -> TestData.institution.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("institutionByUri").result.get.as[JsObject].value("collections").result.get.as[JsArray].value
+      val collections = executeQuery(query, vars = Json.obj("institutionUri" -> testData.institution.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("institutionByUri").result.get.as[JsObject].value("collections").result.get.as[JsArray].value
       collections.size must equal(1)
     }
 
@@ -55,7 +57,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      val objects = executeQuery(query, vars = Json.obj("collectionUri" -> TestData.collection.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("collectionByUri").result.get.as[JsObject].value.get("objects").get.as[JsArray].value
+      val objects = executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("collectionByUri").result.get.as[JsObject].value.get("objects").get.as[JsArray].value
       objects.size must equal(1)
     }
 
@@ -68,9 +70,9 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      executeQuery(query, vars = Json.obj("collectionUri" -> TestData.collection.uri.toString())) must be(Json.parse(
+      executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString())) must be(Json.parse(
         s"""
-           |{"data":{"collectionByUri":{"uri":"${TestData.collection.uri.toString()}"}}}
+           |{"data":{"collectionByUri":{"uri":"${testData.collection.uri.toString()}"}}}
            |""".stripMargin))
     }
 
@@ -83,9 +85,9 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      executeQuery(query, vars = Json.obj("institutionUri" -> TestData.institution.uri.toString())) must be(Json.parse(
+      executeQuery(query, vars = Json.obj("institutionUri" -> testData.institution.uri.toString())) must be(Json.parse(
         s"""
-           |{"data":{"institutionByUri":{"uri":"${TestData.institution.uri.toString()}"}}}
+           |{"data":{"institutionByUri":{"uri":"${testData.institution.uri.toString()}"}}}
            |""".stripMargin))
     }
 
@@ -98,9 +100,9 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      executeQuery(query, vars = Json.obj("objectUri" -> TestData.object_.uri.toString())) must be(Json.parse(
+      executeQuery(query, vars = Json.obj("objectUri" -> testData.object_.uri.toString())) must be(Json.parse(
         s"""
-           |{"data":{"objectByUri":{"uri":"${TestData.object_.uri.toString()}"}}}
+           |{"data":{"objectByUri":{"uri":"${testData.object_.uri.toString()}"}}}
            |""".stripMargin))
     }
 
@@ -117,7 +119,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
        """
       executeQuery(query, vars = Json.obj("text" -> "irrelevant")) must be(Json.parse(
         s"""
-           |{"data":{"matchingObjects":[{"object":{"uri":"${TestData.object_.uri.toString()}"}}]}}
+           |{"data":{"matchingObjects":[{"object":{"uri":"${testData.object_.uri.toString()}"}}]}}
            |""".stripMargin))
     }
 
@@ -166,8 +168,9 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
     val futureResult = Executor.execute(GenericGraphQlSchemaDefinition.schema, query,
       variables = vars,
-      userContext = new GenericGraphQlSchemaContext(FakeRequest(), TestStore)
+      userContext = new GenericGraphQlSchemaContext(FakeRequest(), new TestStore())
     )
     Await.result(futureResult, 10.seconds)
   }
 }
+

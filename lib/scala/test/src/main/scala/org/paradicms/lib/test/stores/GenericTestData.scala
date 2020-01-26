@@ -1,9 +1,9 @@
-package stores
+package org.paradicms.lib.test.stores
 
 import io.lemonlabs.uri.Uri
 import org.paradicms.service.lib.generic.models.domain.{Collection, Institution, Object, User}
 
-object TestData {
+class GenericTestData {
   val institution = Institution(uri = Uri.parse("http://example.com/institution"), name = "Test institution")
   val collection = Collection(uri = Uri.parse("http://example.com/collection"), name = "Test collection")
   val object_ = Object(uri = Uri.parse("http://example.com/object"), title = "Test object", titles = List("Test object"))

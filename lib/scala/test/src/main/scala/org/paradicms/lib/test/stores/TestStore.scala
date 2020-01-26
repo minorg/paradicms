@@ -1,11 +1,11 @@
-package stores
+package org.paradicms.lib.test.stores
 
 import io.lemonlabs.uri.Uri
 import org.paradicms.service.lib.generic.models.domain
 import org.paradicms.service.lib.generic.models.domain.{Collection, Institution, ObjectSearchResult, User}
 import org.paradicms.service.lib.generic.stores.Store
 
-object TestStore extends Store {
+class TestStore extends Store {
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = if (collectionUri == TestData.collection.uri) TestData.collection else throw new NoSuchElementException
 
   override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[domain.Object] = if (offset == 0) List(TestData.object_) else List()
