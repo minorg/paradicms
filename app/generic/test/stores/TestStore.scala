@@ -1,13 +1,14 @@
 package stores
 
 import io.lemonlabs.uri.Uri
-import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
-import org.paradicms.service.lib.stores.Store
+import org.paradicms.service.lib.generic.models.domain
+import org.paradicms.service.lib.generic.models.domain.{Collection, Institution, ObjectSearchResult, User}
+import org.paradicms.service.lib.generic.stores.Store
 
 object TestStore extends Store {
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = if (collectionUri == TestData.collection.uri) TestData.collection else throw new NoSuchElementException
 
-  override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Object] = if (offset == 0) List(TestData.object_) else List()
+  override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[domain.Object] = if (offset == 0) List(TestData.object_) else List()
 
   override def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int = 1
 
@@ -21,7 +22,7 @@ object TestStore extends Store {
 
   override def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String) = 1
 
-  override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object = if (objectUri == TestData.object_.uri) TestData.object_ else throw new NoSuchElementException
+  override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): domain.Object = if (objectUri == TestData.object_.uri) TestData.object_ else throw new NoSuchElementException
 
   override def getUserByUri(userUri: Uri): Option[User] = if (userUri == TestData.user.uri) Some(TestData.user) else None
 

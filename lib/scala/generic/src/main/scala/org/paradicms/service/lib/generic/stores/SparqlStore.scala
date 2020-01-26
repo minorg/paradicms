@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.stores
+package org.paradicms.service.lib.generic.stores
 
 import io.lemonlabs.uri.{Uri, Url}
 import org.apache.jena.query._
@@ -6,8 +6,9 @@ import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.rdfconnection.{RDFConnection, RDFConnectionFactory}
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.RDF
-import org.paradicms.service.lib.models.domain.vocabulary.CMS
-import org.paradicms.service.lib.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
+import org.paradicms.service.lib.generic.models.domain
+import org.paradicms.service.lib.generic.models.domain.vocabulary.CMS
+import org.paradicms.service.lib.generic.models.domain._
 import play.api.Configuration
 
 import scala.collection.JavaConverters._
@@ -117,7 +118,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
-  override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Object] = {
+  override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[domain.Object] = {
     getObjectsByUris(currentUserUri = currentUserUri, objectUris = getCollectionObjectUris(collectionUri = collectionUri, currentUserUri = currentUserUri, limit = limit, offset = offset))
   }
 
@@ -281,7 +282,7 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
 
       val collectionsByUri = getCollectionsByUris(collectionUris = collectionUris.toSet.toList, currentUserUri = currentUserUri).map(collection => collection.uri -> collection).toMap
       val institutionsByUri = getInstitutionsByUris(institutionUris = institutionUris.toSet.toList, currentUserUri = currentUserUri).map(institution => institution.uri -> institution).toMap
-      val objectsByUri: Map[Uri, Object] = getObjectsByUris(objectUris = objectUris, currentUserUri = currentUserUri).map(object_ => object_.uri -> object_).toMap
+      val objectsByUri: Map[Uri, domain.Object] = getObjectsByUris(objectUris = objectUris, currentUserUri = currentUserUri).map(object_ => object_.uri -> object_).toMap
 
       querySolutions.map(querySolution => ObjectSearchResult(
         collection = collectionsByUri(querySolution._1),
@@ -307,11 +308,11 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
-  override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object = {
+  override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): domain.Object = {
     getObjectsByUris(currentUserUri = currentUserUri, objectUris = List(objectUri)).head
   }
 
-  private def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[Object] = {
+  private def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[domain.Object] = {
     // Should be safe to inject objectUris since they've already been parsed as URIs
     val queryWhere = accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
       "?institution rdf:type cms:Institution .",

@@ -1,4 +1,4 @@
-package org.paradicms.service.lib.models.domain
+package org.paradicms.service.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
 
