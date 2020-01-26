@@ -7,16 +7,16 @@ import org.apache.jena.rdfconnection.{RDFConnection, RDFConnectionFactory}
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.RDF
 import org.paradicms.service.lib.generic.models.domain
-import org.paradicms.service.lib.generic.models.domain.vocabulary.CMS
 import org.paradicms.service.lib.generic.models.domain._
+import org.paradicms.service.lib.generic.models.domain.vocabulary.CMS
 import play.api.Configuration
 
 import scala.collection.JavaConverters._
 
 class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
   def this(configuration: Configuration) = this(
-    sparqlQueryUrl = Url.parse(configuration.get[String]("sparqlQueryUrl")),
-    sparqlUpdateUrl = Url.parse(configuration.get[String]("sparqlUpdateUrl"))
+    sparqlQueryUrl = Url.parse(configuration.getOptional[String]("sparqlQueryUrl").getOrElse("http://fuseki:3030/ds/sparql")),
+    sparqlUpdateUrl = Url.parse(configuration.getOptional[String]("sparqlUpdateUrl").getOrElse("http://fuseki:3030/ds/update"))
   )
 
   /**
