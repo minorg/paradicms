@@ -1,23 +1,12 @@
 package models.graphql
 
-import org.paradicms.lib.generic.models.domain.{Collection, DerivedImageSet, Image, Institution, Object, ObjectSearchResult, Rights}
+import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult}
 import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
 import sangria.macros.derive._
 import sangria.schema.{Field, IntType, ListType, OptionType, Schema, fields}
 
 object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Domain model types, in dependence order
-  implicit val ImageType = deriveObjectType[GenericGraphQlSchemaContext, Image](
-    ReplaceField("url", Field("url", UrlType, resolve = _.value.url))
-  )
-
-  implicit val RightsType = deriveObjectType[GenericGraphQlSchemaContext, Rights](
-    ReplaceField("license", Field("license", OptionType(UriType), resolve = _.value.license))
-  )
-
-  implicit val DerivedImageSetType = deriveObjectType[GenericGraphQlSchemaContext, DerivedImageSet](
-  )
-
   implicit val ObjectType = deriveObjectType[GenericGraphQlSchemaContext, Object](
     AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
     ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
