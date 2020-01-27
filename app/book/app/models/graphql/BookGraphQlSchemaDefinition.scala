@@ -1,26 +1,11 @@
 package models.graphql
 
-import io.lemonlabs.uri.{Uri, Url}
-import org.paradicms.lib.generic.models.domain.{Collection, DerivedImageSet, Image, Institution, Object, ObjectSearchResult, Rights, User}
+import org.paradicms.lib.generic.models.domain.{Collection, DerivedImageSet, Image, Institution, Object, ObjectSearchResult, Rights}
+import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
 import sangria.macros.derive._
-import sangria.schema.{Argument, Field, IntType, ListType, OptionType, ScalarAlias, Schema, StringType, fields}
+import sangria.schema.{Field, IntType, ListType, OptionType, Schema, fields}
 
-object BookGraphQlSchemaDefinition {
-  // Scalar aliases
-  implicit val UriType = ScalarAlias[Uri, String](
-    StringType, _.toString, uri => Right(Uri.parse(uri))
-  )
-
-  implicit val UrlType = ScalarAlias[Url, String](
-    StringType, _.toString, uri => Right(Url.parse(uri))
-  )
-
-  // Scalar argument types
-  val LimitArgument = Argument("limit", IntType, description = "Limit")
-  val OffsetArgument = Argument("offset", IntType, description = "Offset")
-  val TextArgument = Argument("text", StringType, description = "Text")
-  val UriArgument = Argument("uri", UriType, description = "URI")
-
+object BookGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Domain model types, in dependence order
   implicit val ImageType = deriveObjectType[BookGraphQlSchemaContext, Image](
     ReplaceField("url", Field("url", UrlType, resolve = _.value.url))
@@ -66,11 +51,6 @@ object BookGraphQlSchemaDefinition {
   implicit val ObjectSearchResultType = deriveObjectType[BookGraphQlSchemaContext, ObjectSearchResult](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
-
-  // Intentionally limit the fields exposed on User
-  implicit val CurrentUserType = sangria.schema.ObjectType("CurrentUser", fields[BookGraphQlSchemaContext, User](
-    Field("name", StringType, resolve = _.value.name)
-  ))
 
   // Query types
   val RootQueryType = sangria.schema.ObjectType("RootQuery", fields[BookGraphQlSchemaContext, Unit](
