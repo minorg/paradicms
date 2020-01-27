@@ -29,10 +29,10 @@ lazy val bookApp = (project in file("app/book"))
   .dependsOn(genericLib, testLib % "test->compile")
   .enablePlugins(PlayScala)
   .settings(
-    libraryDependencies ++= Seq(
-      organization.value %% "generic-lib" % version.value,
-      organization.value %% "test-lib" % version.value % Test
-    ),
+    //    libraryDependencies ++= Seq(
+    //      organization.value %% "generic-lib" % version.value,
+    //      organization.value %% "test-lib" % version.value % Test
+    //    ),
     name := "book-app",
     routesGenerator := InjectedRoutesGenerator,
     // Adds additional packages into Twirl
@@ -47,10 +47,10 @@ lazy val genericApp = (project in file("app/generic"))
   .dependsOn(genericLib, testLib % "test->compile")
   .enablePlugins(PlayScala)
   .settings(
-    libraryDependencies ++= Seq(
-      organization.value %% "generic-lib" % version.value,
-      organization.value %% "test-lib" % version.value % Test,
-    ),
+    //    libraryDependencies ++= Seq(
+    //      organization.value %% "generic-lib" % version.value,
+    //      organization.value %% "test-lib" % version.value % Test,
+    //    ),
     name := "generic-app",
     routesGenerator := InjectedRoutesGenerator,
     // Adds additional packages into Twirl
@@ -87,7 +87,7 @@ lazy val testLib =
     .dependsOn(genericLib)
     .settings(
       libraryDependencies ++= Seq(
-        organization.value %% "generic-lib" % version.value,
+        //        organization.value %% "generic-lib" % version.value,
         "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3",
         "org.slf4j" % "slf4j-simple" % slf4jVersion
       ),
