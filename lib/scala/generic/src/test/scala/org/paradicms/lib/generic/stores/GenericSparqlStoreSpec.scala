@@ -8,10 +8,10 @@ import org.apache.jena.query.QueryException
 import org.scalatest.{Assertion, Matchers, WordSpec}
 
 // The SparqlStore is populated out-of-band. These tests are meant to be run on a populated store.
-class SparqlStoreSpec extends WordSpec with Matchers {
+class GenericSparqlStoreSpec extends WordSpec with Matchers {
   "SPARQL store" should {
     val currentUserUri = Option(TestData.user.uri)
-    val store = new GenericSparqlStore(sparqlQueryUrl = Url.parse("http://fuseki:3030/ds/sparql"), sparqlUpdateUrl = Url.parse("http://fuseki:3030/ds/update"))
+    val store = new GenericSparqlStore(SparqlStoreConfiguration(sparqlQueryUrl = Url.parse("http://fuseki:3030/ds/sparql"), sparqlUpdateUrl = Url.parse("http://fuseki:3030/ds/update")))
 
     def withUnknownHostExceptionCatch(test: () => Assertion): Assertion =
       try {

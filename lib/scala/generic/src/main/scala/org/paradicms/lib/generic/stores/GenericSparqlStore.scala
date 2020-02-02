@@ -1,10 +1,9 @@
 package org.paradicms.lib.generic.stores
 
-import io.lemonlabs.uri.{Uri, Url}
+import io.lemonlabs.uri.Uri
 import javax.inject.Inject
 import org.apache.jena.query._
 import org.apache.jena.rdf.model.ResourceFactory
-import org.apache.jena.rdfconnection.{RDFConnection, RDFConnectionFactory}
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.RDF
 import org.paradicms.lib.generic.models
@@ -14,7 +13,7 @@ import play.api.Configuration
 
 import scala.collection.JavaConverters._
 
-class GenericSparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends GenericStore {
+class GenericSparqlStore(configuration: SparqlStoreConfiguration) extends AbstractSparqlStore(configuration) with GenericStore {
   override final def getUserByUri(userUri: Uri): Option[User] =
     getUsersByUris(List(userUri)).headOption
 
@@ -60,20 +59,8 @@ class GenericSparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Gene
     }
   }
 
-  protected final def withRdfConnection[T]()(f: (RDFConnection) => T): T = {
-    val rdfConnection = RDFConnectionFactory.connectFuseki(sparqlUpdateUrl.toString())
-    try {
-      f(rdfConnection)
-    } finally {
-      rdfConnection.close()
-    }
-  }
-
   @Inject
-  def this(configuration: Configuration) = this(
-    sparqlQueryUrl = Url.parse(configuration.getOptional[String]("sparqlQueryUrl").getOrElse("http://fuseki:3030/ds/sparql")),
-    sparqlUpdateUrl = Url.parse(configuration.getOptional[String]("sparqlUpdateUrl").getOrElse("http://fuseki:3030/ds/update"))
-  )
+  def this(configuration: Configuration) = this(SparqlStoreConfiguration(configuration))
 
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
     getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
@@ -106,61 +93,6 @@ class GenericSparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Gene
       queryExecution =>
         val model = queryExecution.execConstruct()
         model.listSubjectsWithProperty(RDF.`type`, CMS.Collection).asScala.toList.map(resource => Collection(resource))
-    }
-  }
-
-  /**
-   * Create ready-to-use WHERE block contents that wrap common query-specific patterns in access check UNION blocks
-   */
-  private def accessCheckGraphPatterns(collectionVariable: Option[String], currentUserUri: Option[Uri], institutionVariable: String, objectVariable: Option[String], queryPatterns: List[String]): String = {
-    var unionPatterns: List[List[String]] = institutionAccessCheckGraphPatterns(currentUserUri = currentUserUri, institutionVariable = institutionVariable, unionPatterns = List(queryPatterns))
-    if (collectionVariable.isDefined) {
-      unionPatterns = collectionAccessCheckGraphPatterns(collectionVariable = collectionVariable.get, currentUserUri = currentUserUri, unionPatterns = unionPatterns)
-    }
-    if (objectVariable.isDefined) {
-      unionPatterns = objectAccessCheckGraphPatterns(currentUserUri = currentUserUri, objectVariable = objectVariable.get, unionPatterns = unionPatterns)
-    }
-    unionPatterns.map(unionPattern => s"{ ${unionPattern.mkString("\n")} }").mkString("\nUNION\n")
-  }
-
-  /**
-   * See institutionAccessChecks description.
-   */
-  private def collectionAccessCheckGraphPatterns(collectionVariable: String, currentUserUri: Option[Uri], unionPatterns: List[List[String]]): List[List[String]] =
-    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = collectionVariable, unionPatterns = unionPatterns)
-
-  private def inheritableAccessCheckGraphPatterns(currentUserUri: Option[Uri], modelVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
-    val public = s"$modelVariable cms:owner cms:inherit ."
-    if (currentUserUri.isDefined) {
-      val private_ = s"$modelVariable cms:owner <${currentUserUri.get}> ."
-      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
-    } else {
-      unionPatterns.map(unionPattern => public +: unionPattern)
-    }
-  }
-
-  /**
-   * Given a list of union patterns (a list of lists of graph patterns), add permutations for an institution access check and return a new list of union patterns
-   */
-  private def institutionAccessCheckGraphPatterns(currentUserUri: Option[Uri], institutionVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
-    val public = s"$institutionVariable cms:owner cms:public ."
-    if (currentUserUri.isDefined) {
-      val private_ = s"$institutionVariable cms:owner <${currentUserUri.get}> ."
-      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
-    } else {
-      unionPatterns.map(unionPattern => public +: unionPattern)
-    }
-  }
-
-  private def objectAccessCheckGraphPatterns(currentUserUri: Option[Uri], objectVariable: String, unionPatterns: List[List[String]]): List[List[String]] =
-    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = objectVariable, unionPatterns = unionPatterns)
-
-  private def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
-    val queryExecution = QueryExecutionFactory.sparqlService(sparqlQueryUrl.toString(), query)
-    try {
-      f(queryExecution)
-    } finally {
-      queryExecution.close()
     }
   }
 
@@ -270,6 +202,52 @@ class GenericSparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Gene
       model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
     }
   }
+
+  /**
+   * Create ready-to-use WHERE block contents that wrap common query-specific patterns in access check UNION blocks
+   */
+  private def accessCheckGraphPatterns(collectionVariable: Option[String], currentUserUri: Option[Uri], institutionVariable: String, objectVariable: Option[String], queryPatterns: List[String]): String = {
+    var unionPatterns: List[List[String]] = institutionAccessCheckGraphPatterns(currentUserUri = currentUserUri, institutionVariable = institutionVariable, unionPatterns = List(queryPatterns))
+    if (collectionVariable.isDefined) {
+      unionPatterns = collectionAccessCheckGraphPatterns(collectionVariable = collectionVariable.get, currentUserUri = currentUserUri, unionPatterns = unionPatterns)
+    }
+    if (objectVariable.isDefined) {
+      unionPatterns = objectAccessCheckGraphPatterns(currentUserUri = currentUserUri, objectVariable = objectVariable.get, unionPatterns = unionPatterns)
+    }
+    unionPatterns.map(unionPattern => s"{ ${unionPattern.mkString("\n")} }").mkString("\nUNION\n")
+  }
+
+  /**
+   * See institutionAccessChecks description.
+   */
+  private def collectionAccessCheckGraphPatterns(collectionVariable: String, currentUserUri: Option[Uri], unionPatterns: List[List[String]]): List[List[String]] =
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = collectionVariable, unionPatterns = unionPatterns)
+
+  private def inheritableAccessCheckGraphPatterns(currentUserUri: Option[Uri], modelVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
+    val public = s"$modelVariable cms:owner cms:inherit ."
+    if (currentUserUri.isDefined) {
+      val private_ = s"$modelVariable cms:owner <${currentUserUri.get}> ."
+      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
+    } else {
+      unionPatterns.map(unionPattern => public +: unionPattern)
+    }
+  }
+
+  /**
+   * Given a list of union patterns (a list of lists of graph patterns), add permutations for an institution access check and return a new list of union patterns
+   */
+  private def institutionAccessCheckGraphPatterns(currentUserUri: Option[Uri], institutionVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
+    val public = s"$institutionVariable cms:owner cms:public ."
+    if (currentUserUri.isDefined) {
+      val private_ = s"$institutionVariable cms:owner <${currentUserUri.get}> ."
+      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
+    } else {
+      unionPatterns.map(unionPattern => public +: unionPattern)
+    }
+  }
+
+  private def objectAccessCheckGraphPatterns(currentUserUri: Option[Uri], objectVariable: String, unionPatterns: List[List[String]]): List[List[String]] =
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = objectVariable, unionPatterns = unionPatterns)
 
   override def getMatchingObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, text: String): List[ObjectSearchResult] = {
     val queryString = new ParameterizedSparqlString(
