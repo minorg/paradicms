@@ -7,7 +7,7 @@ import sangria.schema.{Field, IntType, ListType, OptionType, Schema, fields}
 
 object BookGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Domain model types, in dependence order
-  implicit val ObjectType = deriveObjectType[BookGraphQlSchemaContext, Object](
+  implicit val BookType = deriveObjectType[BookGraphQlSchemaContext, Object](
     AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
     ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )

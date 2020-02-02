@@ -4,6 +4,7 @@ import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.{Literal, Property, RDFNode, Resource}
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.{DCTerms, DC_11}
+import org.paradicms.lib.generic.models.domain.vocabulary.CONTACT
 
 import scala.collection.JavaConverters._
 
@@ -14,6 +15,33 @@ trait DomainModel {
 trait DomainModelCompanion {
 
   implicit class ResourceWrapper(val resource: Resource) {
+
+    def getPropertyObjectInt(property: Property): Option[Int] =
+      getPropertyObjectLiteral(property).map(literal => literal.getInt)
+
+    def getPropertyObjectLiteral(property: Property): Option[Literal] =
+      getPropertyObject(property).flatMap(object_ => if (object_.isLiteral) Some(object_.asLiteral()) else None)
+
+    def getPropertyObject(property: Property): Option[RDFNode] =
+      Option(resource.getProperty(property)).map(statement => statement.getObject)
+
+    def getPropertyObjectString(property: Property): Option[String] =
+      getPropertyObjectLiteral(property).map(literal => literal.getString)
+
+    def getPropertyObjectStrings(property: Property): List[String] =
+      getPropertyObjectLiterals(property).map(literal => literal.getString)
+
+    def getPropertyObjectLiterals(property: Property): List[Literal] =
+      getPropertyObjects(property).flatMap(object_ => if (object_.isLiteral) Some(object_.asLiteral()) else None)
+
+    def getPropertyObjects(property: Property): List[RDFNode] =
+      resource.listProperties(property).asScala.toList.map(statement => statement.getObject)
+
+    def uri: Uri = Uri.parse(resource.getURI)
+
+    object contact {
+      def sortName(): Option[String] = getPropertyObjectString(CONTACT.sortName)
+    }
 
     object dublinCore {
       def alternativeTitles(): List[String] = getPropertyObjectStrings(DCTerms.alternative)
@@ -27,6 +55,8 @@ trait DomainModelCompanion {
       def extents(): List[String] = getPropertyObjectStrings(DCTerms.extent)
 
       def identifiers(): List[String] = getPropertyObjectStrings(DCTerms.identifier) ::: getPropertyObjectStrings(DC_11.identifier)
+
+      def formats(): List[String] = getPropertyObjectStrings(DCTerms.format) ::: getPropertyObjectStrings(DC_11.format)
 
       def languages(): List[String] = getPropertyObjectStrings(DCTerms.language) ::: getPropertyObjectStrings(DC_11.language)
 
@@ -51,35 +81,16 @@ trait DomainModelCompanion {
     }
 
     object foaf {
+      def familyName(): Option[String] = getPropertyObjectString(FOAF.familyName)
+
+      def givenName(): Option[String] = getPropertyObjectString(FOAF.givenName)
+
       def mbox(): Option[Uri] = mboxes.headOption
 
       def mboxes(): List[Uri] = getPropertyObjects(FOAF.mbox).flatMap(object_ => if (object_.isURIResource) Some(Uri.parse(object_.asResource().getURI)) else None)
 
       def name(): Option[String] = getPropertyObjectString(FOAF.name)
     }
-
-    def getPropertyObject(property: Property): Option[RDFNode] =
-      Option(resource.getProperty(property)).map(statement => statement.getObject)
-
-    def getPropertyObjects(property: Property): List[RDFNode] =
-      resource.listProperties(property).asScala.toList.map(statement => statement.getObject)
-
-    def getPropertyObjectInt(property: Property): Option[Int] =
-      getPropertyObjectLiteral(property).map(literal => literal.getInt)
-
-    def getPropertyObjectLiteral(property: Property): Option[Literal] =
-      getPropertyObject(property).flatMap(object_ => if (object_.isLiteral) Some(object_.asLiteral()) else None)
-
-    def getPropertyObjectLiterals(property: Property): List[Literal] =
-      getPropertyObjects(property).flatMap(object_ => if (object_.isLiteral) Some(object_.asLiteral()) else None)
-
-    def getPropertyObjectString(property: Property): Option[String] =
-      getPropertyObjectLiteral(property).map(literal => literal.getString)
-
-    def getPropertyObjectStrings(property: Property): List[String] =
-      getPropertyObjectLiterals(property).map(literal => literal.getString)
-
-    def uri: Uri = Uri.parse(resource.getURI)
   }
 
 }
