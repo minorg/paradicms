@@ -1,9 +1,11 @@
 package org.paradicms.lib.generic.stores
 
+import com.google.inject.ImplementedBy
 import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
 
-trait Store {
+@ImplementedBy(classOf[GenericSparqlStore])
+trait GenericStore {
   def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection
 
   def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Object]

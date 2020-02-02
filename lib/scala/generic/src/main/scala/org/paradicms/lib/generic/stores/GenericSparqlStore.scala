@@ -1,88 +1,79 @@
 package org.paradicms.lib.generic.stores
 
 import io.lemonlabs.uri.{Uri, Url}
+import javax.inject.Inject
 import org.apache.jena.query._
 import org.apache.jena.rdf.model.ResourceFactory
 import org.apache.jena.rdfconnection.{RDFConnection, RDFConnectionFactory}
 import org.apache.jena.sparql.vocabulary.FOAF
 import org.apache.jena.vocabulary.RDF
 import org.paradicms.lib.generic.models
-import org.paradicms.lib.generic.models.domain.vocabulary.CMS
 import org.paradicms.lib.generic.models.domain._
+import org.paradicms.lib.generic.models.domain.vocabulary.CMS
 import play.api.Configuration
 
 import scala.collection.JavaConverters._
 
-class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
+class GenericSparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends GenericStore {
+  override final def getUserByUri(userUri: Uri): Option[User] =
+    getUsersByUris(List(userUri)).headOption
+
+  protected final def getUsersByUris(userUris: List[Uri]): List[User] = {
+    // Should be safe to inject userUris since they've already been parsed as URIs
+    val query = QueryFactory.create(
+      s"""
+         |PREFIX cms: <${CMS.URI}>
+         |PREFIX rdf: <${RDF.getURI}>
+         |CONSTRUCT {
+         |  ?user ?p ?o .
+         |} WHERE {
+         |  VALUES ?user { ${userUris.map(userUri => "<" + userUri.toString() + ">").mkString(" ")} }
+         |  ?user rdf:type cms:User .
+         |  ?user ?p ?o .
+         |}
+         |""".stripMargin)
+    withQueryExecution(query) { queryExecution =>
+      val model = queryExecution.execConstruct()
+      model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => User(resource))
+    }
+  }
+
+  override final def putUser(user: User) = {
+    val emailStatement = if (user.email.isDefined) s"<${user.uri.toString()}> foaf:mbox <mailto:${user.email.get}> ." else ""
+    val update =
+      new ParameterizedSparqlString(
+        s"""
+           |PREFIX cms: <${CMS.URI}>
+           |PREFIX foaf: <${FOAF.getURI}>
+           |PREFIX rdf: <${RDF.getURI}>
+           |INSERT DATA {
+           |  GRAPH <urn:system:user> {
+           |    <${user.uri.toString()}> rdf:type cms:User .
+           |    ${emailStatement}
+           |    <${user.uri.toString()}> foaf:name ?name .
+           |  }
+           |}
+           |""".stripMargin)
+    update.setLiteral("name", user.name)
+    withRdfConnection() { rdfConnection =>
+      rdfConnection.update(update.asUpdate())
+    }
+  }
+
+  protected final def withRdfConnection[T]()(f: (RDFConnection) => T): T = {
+    val rdfConnection = RDFConnectionFactory.connectFuseki(sparqlUpdateUrl.toString())
+    try {
+      f(rdfConnection)
+    } finally {
+      rdfConnection.close()
+    }
+  }
+
+  @Inject
   def this(configuration: Configuration) = this(
     sparqlQueryUrl = Url.parse(configuration.getOptional[String]("sparqlQueryUrl").getOrElse("http://fuseki:3030/ds/sparql")),
     sparqlUpdateUrl = Url.parse(configuration.getOptional[String]("sparqlUpdateUrl").getOrElse("http://fuseki:3030/ds/update"))
   )
-
-  /**
-   * Create ready-to-use WHERE block contents that wrap common query-specific patterns in access check UNION blocks
-   */
-  private def accessCheckGraphPatterns(collectionVariable: Option[String], currentUserUri: Option[Uri], institutionVariable: String, objectVariable: Option[String], queryPatterns: List[String]): String = {
-    var unionPatterns: List[List[String]] = institutionAccessCheckGraphPatterns(currentUserUri = currentUserUri, institutionVariable = institutionVariable, unionPatterns = List(queryPatterns))
-    if (collectionVariable.isDefined) {
-      unionPatterns = collectionAccessCheckGraphPatterns(collectionVariable = collectionVariable.get, currentUserUri = currentUserUri, unionPatterns = unionPatterns)
-    }
-    if (objectVariable.isDefined) {
-      unionPatterns = objectAccessCheckGraphPatterns(currentUserUri = currentUserUri, objectVariable = objectVariable.get, unionPatterns = unionPatterns)
-    }
-    unionPatterns.map(unionPattern => s"{ ${unionPattern.mkString("\n")} }").mkString("\nUNION\n")
-  }
-
-  /**
-   * See institutionAccessChecks description.
-   */
-  private def collectionAccessCheckGraphPatterns(collectionVariable: String, currentUserUri: Option[Uri], unionPatterns: List[List[String]]): List[List[String]] =
-    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = collectionVariable, unionPatterns = unionPatterns)
-
-  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
-    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      s"<${collectionUri.toString}> rdf:type cms:Collection .",
-      "?institution cms:collection ?collection .",
-      "?institution rdf:type cms:Institution .",
-      "?collection cms:object ?object .",
-      "?object rdf:type cms:Object ."
-    ))
-
-  /**
-   * Given a list of union patterns (a list of lists of graph patterns), add permutations for an institution access check and return a new list of union patterns
-   */
-  private def institutionAccessCheckGraphPatterns(currentUserUri: Option[Uri], institutionVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
-    val public = s"$institutionVariable cms:owner cms:public ."
-    if (currentUserUri.isDefined) {
-      val private_ = s"$institutionVariable cms:owner <${currentUserUri.get}> ."
-      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
-    } else {
-      unionPatterns.map(unionPattern => public +: unionPattern)
-    }
-  }
-
-  private def inheritableAccessCheckGraphPatterns(currentUserUri: Option[Uri], modelVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
-    val public = s"$modelVariable cms:owner cms:inherit ."
-    if (currentUserUri.isDefined) {
-      val private_ = s"$modelVariable cms:owner <${currentUserUri.get}> ."
-      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
-    } else {
-      unionPatterns.map(unionPattern => public +: unionPattern)
-    }
-  }
-
-  private def matchingObjectsGraphPatterns(currentUserUri: Option[Uri]): String =
-    accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      "?institution rdf:type cms:Institution .",
-      "?institution cms:collection ?collection .",
-      "?collection rdf:type cms:Collection .",
-      "?collection cms:object ?object .",
-      "?object rdf:type cms:Object .",
-      "?object text:query ?text ."
-    ))
-
-  private def objectAccessCheckGraphPatterns(currentUserUri: Option[Uri], objectVariable: String, unionPatterns: List[List[String]]): List[List[String]] =
-    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = objectVariable, unionPatterns = unionPatterns)
 
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
     getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
@@ -118,6 +109,61 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
+  /**
+   * Create ready-to-use WHERE block contents that wrap common query-specific patterns in access check UNION blocks
+   */
+  private def accessCheckGraphPatterns(collectionVariable: Option[String], currentUserUri: Option[Uri], institutionVariable: String, objectVariable: Option[String], queryPatterns: List[String]): String = {
+    var unionPatterns: List[List[String]] = institutionAccessCheckGraphPatterns(currentUserUri = currentUserUri, institutionVariable = institutionVariable, unionPatterns = List(queryPatterns))
+    if (collectionVariable.isDefined) {
+      unionPatterns = collectionAccessCheckGraphPatterns(collectionVariable = collectionVariable.get, currentUserUri = currentUserUri, unionPatterns = unionPatterns)
+    }
+    if (objectVariable.isDefined) {
+      unionPatterns = objectAccessCheckGraphPatterns(currentUserUri = currentUserUri, objectVariable = objectVariable.get, unionPatterns = unionPatterns)
+    }
+    unionPatterns.map(unionPattern => s"{ ${unionPattern.mkString("\n")} }").mkString("\nUNION\n")
+  }
+
+  /**
+   * See institutionAccessChecks description.
+   */
+  private def collectionAccessCheckGraphPatterns(collectionVariable: String, currentUserUri: Option[Uri], unionPatterns: List[List[String]]): List[List[String]] =
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = collectionVariable, unionPatterns = unionPatterns)
+
+  private def inheritableAccessCheckGraphPatterns(currentUserUri: Option[Uri], modelVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
+    val public = s"$modelVariable cms:owner cms:inherit ."
+    if (currentUserUri.isDefined) {
+      val private_ = s"$modelVariable cms:owner <${currentUserUri.get}> ."
+      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
+    } else {
+      unionPatterns.map(unionPattern => public +: unionPattern)
+    }
+  }
+
+  /**
+   * Given a list of union patterns (a list of lists of graph patterns), add permutations for an institution access check and return a new list of union patterns
+   */
+  private def institutionAccessCheckGraphPatterns(currentUserUri: Option[Uri], institutionVariable: String, unionPatterns: List[List[String]]): List[List[String]] = {
+    val public = s"$institutionVariable cms:owner cms:public ."
+    if (currentUserUri.isDefined) {
+      val private_ = s"$institutionVariable cms:owner <${currentUserUri.get}> ."
+      List(public, private_).flatMap(accessCheckPattern => unionPatterns.map(unionPattern => accessCheckPattern +: unionPattern))
+    } else {
+      unionPatterns.map(unionPattern => public +: unionPattern)
+    }
+  }
+
+  private def objectAccessCheckGraphPatterns(currentUserUri: Option[Uri], objectVariable: String, unionPatterns: List[List[String]]): List[List[String]] =
+    inheritableAccessCheckGraphPatterns(currentUserUri = currentUserUri, modelVariable = objectVariable, unionPatterns = unionPatterns)
+
+  private def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
+    val queryExecution = QueryExecutionFactory.sparqlService(sparqlQueryUrl.toString(), query)
+    try {
+      f(queryExecution)
+    } finally {
+      queryExecution.close()
+    }
+  }
+
   override def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[models.domain.Object] = {
     getObjectsByUris(currentUserUri = currentUserUri, objectUris = getCollectionObjectUris(collectionUri = collectionUri, currentUserUri = currentUserUri, limit = limit, offset = offset))
   }
@@ -138,20 +184,14 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
-  private def getCollectionObjectUris(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Uri] = {
-    val query = QueryFactory.create(
-      s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
-         |SELECT DISTINCT ?object WHERE {
-         |${collectionObjectsGraphPatterns(collectionUri, currentUserUri)}
-         |} LIMIT $limit OFFSET $offset
-         |""".stripMargin)
-    withQueryExecution(query) {
-      queryExecution =>
-        queryExecution.execSelect().asScala.toList.map(querySolution => Uri.parse(querySolution.get("object").asResource().getURI))
-    }
-  }
+  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
+    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      s"<${collectionUri.toString}> rdf:type cms:Collection .",
+      "?institution cms:collection ?collection .",
+      "?institution rdf:type cms:Institution .",
+      "?collection cms:object ?object .",
+      "?object rdf:type cms:Object ."
+    ))
 
   override def getInstitutionByUri(currentUserUri: Option[Uri], institutionUri: Uri): Institution = {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
@@ -231,31 +271,6 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
-  private def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution] = {
-    // Should be safe to inject institutionUris since they've already been parsed as URIs
-    val queryWhere =
-      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
-        s"VALUES ?institution { ${institutionUris.map(institutionUri => "<" + institutionUri.toString() + ">").mkString(" ")} }",
-        "?institution rdf:type cms:Institution .",
-        "?institution ?p ?o ."
-      ))
-
-    val query = QueryFactory.create(
-      s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
-         |CONSTRUCT {
-         |  ?institution ?p ?o .
-         |} WHERE {
-         |$queryWhere
-         |}
-         |""".stripMargin)
-    withQueryExecution(query) { queryExecution =>
-      val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
-    }
-  }
-
   override def getMatchingObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, text: String): List[ObjectSearchResult] = {
     val queryString = new ParameterizedSparqlString(
       s"""
@@ -308,6 +323,16 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
+  private def matchingObjectsGraphPatterns(currentUserUri: Option[Uri]): String =
+    accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      "?institution rdf:type cms:Institution .",
+      "?institution cms:collection ?collection .",
+      "?collection rdf:type cms:Collection .",
+      "?collection cms:object ?object .",
+      "?object rdf:type cms:Object .",
+      "?object text:query ?text ."
+    ))
+
   override def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): models.domain.Object = {
     getObjectsByUris(currentUserUri = currentUserUri, objectUris = List(objectUri)).head
   }
@@ -347,66 +372,43 @@ class SparqlStore(sparqlQueryUrl: Url, sparqlUpdateUrl: Url) extends Store {
     }
   }
 
-  override def getUserByUri(userUri: Uri): Option[User] =
-    getUsersByUris(List(userUri)).headOption
+  protected final def getCollectionObjectUris(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): List[Uri] = {
+    val query = QueryFactory.create(
+      s"""
+         |PREFIX cms: <${CMS.URI}>
+         |PREFIX rdf: <${RDF.getURI}>
+         |SELECT DISTINCT ?object WHERE {
+         |${collectionObjectsGraphPatterns(collectionUri, currentUserUri)}
+         |} LIMIT $limit OFFSET $offset
+         |""".stripMargin)
+    withQueryExecution(query) {
+      queryExecution =>
+        queryExecution.execSelect().asScala.toList.map(querySolution => Uri.parse(querySolution.get("object").asResource().getURI))
+    }
+  }
 
-  private def getUsersByUris(userUris: List[Uri]): List[User] = {
-    // Should be safe to inject userUris since they've already been parsed as URIs
+  protected final def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution] = {
+    // Should be safe to inject institutionUris since they've already been parsed as URIs
+    val queryWhere =
+      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
+        s"VALUES ?institution { ${institutionUris.map(institutionUri => "<" + institutionUri.toString() + ">").mkString(" ")} }",
+        "?institution rdf:type cms:Institution .",
+        "?institution ?p ?o ."
+      ))
+
     val query = QueryFactory.create(
       s"""
          |PREFIX cms: <${CMS.URI}>
          |PREFIX rdf: <${RDF.getURI}>
          |CONSTRUCT {
-         |  ?user ?p ?o .
+         |  ?institution ?p ?o .
          |} WHERE {
-         |  VALUES ?user { ${userUris.map(userUri => "<" + userUri.toString() + ">").mkString(" ")} }
-         |  ?user rdf:type cms:User .
-         |  ?user ?p ?o .
+         |$queryWhere
          |}
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => User(resource))
-    }
-  }
-
-  override def putUser(user: User) = {
-    val emailStatement = if (user.email.isDefined) s"<${user.uri.toString()}> foaf:mbox <mailto:${user.email.get}> ." else ""
-    val update =
-      new ParameterizedSparqlString(
-        s"""
-           |PREFIX cms: <${CMS.URI}>
-           |PREFIX foaf: <${FOAF.getURI}>
-           |PREFIX rdf: <${RDF.getURI}>
-           |INSERT DATA {
-           |  GRAPH <urn:system:user> {
-           |    <${user.uri.toString()}> rdf:type cms:User .
-           |    ${emailStatement}
-           |    <${user.uri.toString()}> foaf:name ?name .
-           |  }
-           |}
-           |""".stripMargin)
-    update.setLiteral("name", user.name)
-    withRdfConnection() { rdfConnection =>
-      rdfConnection.update(update.asUpdate())
-    }
-  }
-
-  private def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
-    val queryExecution = QueryExecutionFactory.sparqlService(sparqlQueryUrl.toString(), query)
-    try {
-      f(queryExecution)
-    } finally {
-      queryExecution.close()
-    }
-  }
-
-  private def withRdfConnection[T]()(f: (RDFConnection) => T): T = {
-    val rdfConnection = RDFConnectionFactory.connectFuseki(sparqlUpdateUrl.toString())
-    try {
-      f(rdfConnection)
-    } finally {
-      rdfConnection.close()
+      model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
     }
   }
 }

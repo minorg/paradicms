@@ -3,13 +3,13 @@ package org.paradicms.lib.generic.models.graphql
 import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.controllers.auth0.CurrentUser
 import org.paradicms.lib.generic.models.domain.User
-import org.paradicms.lib.generic.stores.Store
+import org.paradicms.lib.generic.stores.GenericStore
 import play.api.mvc.Request
 
-abstract class AbstractGraphQlSchemaContext(request: Request[_], store: Store) {
+abstract class AbstractGraphQlSchemaContext(request: Request[_], store: GenericStore) {
   private val currentUser_ = new CurrentUser(store)
 
-  def currentUser(): Option[User] = currentUser_.get(request)
-
   def currentUserUri(): Option[Uri] = currentUser().map(user => user.uri)
+
+  def currentUser(): Option[User] = currentUser_.get(request)
 }

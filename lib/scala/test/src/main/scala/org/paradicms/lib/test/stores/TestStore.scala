@@ -2,9 +2,9 @@ package org.paradicms.lib.test.stores
 
 import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
-import org.paradicms.lib.generic.stores.Store
+import org.paradicms.lib.generic.stores.GenericStore
 
-class TestStore extends Store {
+class TestStore extends GenericStore {
   private val testData = new GenericTestData
 
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = if (collectionUri == testData.collection.uri) testData.collection else throw new NoSuchElementException
