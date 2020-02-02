@@ -1,9 +1,11 @@
 package org.paradicms.lib.generic.stores
 
-import org.apache.jena.query._
+import org.apache.jena.query.{Query, QueryExecution, QueryExecutionFactory}
 import org.apache.jena.rdfconnection.{RDFConnection, RDFConnectionFactory}
 
-abstract class AbstractSparqlStore(protected val configuration: SparqlStoreConfiguration) {
+trait SparqlConnectionLoanPatterns {
+  protected val configuration: SparqlStoreConfiguration
+
   protected def withQueryExecution[T](query: Query)(f: (QueryExecution) => T): T = {
     val queryExecution = QueryExecutionFactory.sparqlService(configuration.sparqlQueryUrl.toString(), query)
     try {

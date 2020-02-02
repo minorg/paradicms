@@ -1,6 +1,6 @@
 package models.graphql
 
-import org.paradicms.lib.test.stores.{GenericTestData, TestStore}
+import org.paradicms.lib.test.stores.{GenericTestData, TestGenericStore}
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.test.FakeRequest
@@ -168,7 +168,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
     val futureResult = Executor.execute(GenericGraphQlSchemaDefinition.schema, query,
       variables = vars,
-      userContext = new GenericGraphQlSchemaContext(FakeRequest(), new TestStore())
+      userContext = new GenericGraphQlSchemaContext(FakeRequest(), new TestGenericStore())
     )
     Await.result(futureResult, 10.seconds)
   }

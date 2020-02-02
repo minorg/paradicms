@@ -4,7 +4,7 @@ import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult, User}
 import org.paradicms.lib.generic.stores.GenericStore
 
-class TestStore extends GenericStore {
+class TestGenericStore extends GenericStore {
   private val testData = new GenericTestData
 
   override def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = if (collectionUri == testData.collection.uri) testData.collection else throw new NoSuchElementException
@@ -28,4 +28,32 @@ class TestStore extends GenericStore {
   override def getUserByUri(userUri: Uri): Option[User] = if (userUri == testData.user.uri) Some(testData.user) else None
 
   override def putUser(user: User): Unit = throw new UnsupportedOperationException
+
+  override def getCollectionsByUris(collectionUris: List[Uri], currentUserUri: Option[Uri]): List[Collection] = {
+    if (collectionUris.isEmpty) {
+      List()
+    } else if (collectionUris.size == 1) {
+      if (collectionUris(0) == testData.collection.uri) {
+        List(testData.collection)
+      } else {
+        throw new NoSuchElementException
+      }
+    } else {
+      throw new NoSuchElementException
+    }
+  }
+
+  override def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution] = {
+    if (institutionUris.isEmpty) {
+      List()
+    } else if (institutionUris.size == 1) {
+      if (institutionUris(0) == testData.institution.uri) {
+        List(testData.institution)
+      } else {
+        throw new NoSuchElementException
+      }
+    } else {
+      throw new NoSuchElementException
+    }
+  }
 }
