@@ -1,7 +1,7 @@
 package models.graphql
 
 import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaContext
-import org.paradicms.lib.generic.stores.GenericStore
 import play.api.mvc.Request
+import stores.BookStore
 
-class BookGraphQlSchemaContext(request: Request[_], val store: GenericStore) extends AbstractGraphQlSchemaContext(request, store)
+class BookGraphQlSchemaContext(request: Request[_], val store: BookStore) extends AbstractGraphQlSchemaContext(request, store)

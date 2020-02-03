@@ -1,8 +1,8 @@
 package stores
 
 import com.google.inject.ImplementedBy
-import org.paradicms.lib.generic.stores.GenericStore
+import org.paradicms.lib.generic.stores.{CollectionStore, UserStore}
 
 @ImplementedBy(classOf[BookSparqlStore])
-trait BookStore extends GenericStore {
+trait BookStore extends CollectionStore with UserStore {
 }

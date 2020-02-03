@@ -5,7 +5,7 @@ import java.net.URLEncoder
 import io.lemonlabs.uri.Uri
 import javax.inject.Inject
 import org.paradicms.lib.generic.models.domain.User
-import org.paradicms.lib.generic.stores.GenericStore
+import org.paradicms.lib.generic.stores.UserStore
 import play.api.Configuration
 import play.api.http.{HeaderNames, MimeTypes}
 import play.api.libs.json.Json.toJsFieldJsValueWrapper
@@ -16,7 +16,7 @@ import play.api.mvc.{Action, _}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, store: GenericStore) extends InjectedController {
+class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, userStore: UserStore) extends InjectedController {
   private val config = Auth0Configuration(configuration)
 
   final def login(returnTo: String): Action[AnyContent] = Action {
@@ -47,7 +47,7 @@ class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, stor
         getUserinfo(accessToken).map { userinfo =>
           val userOpt = parseUserinfo(userinfo)
           if (userOpt.isDefined) {
-            Redirect(returnTo).withSession(new CurrentUser(store).put(userOpt.get))
+            Redirect(returnTo).withSession(new CurrentUser(userStore).put(userOpt.get))
           } else {
             Redirect(returnTo)
           }
