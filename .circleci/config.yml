@@ -16,7 +16,7 @@ jobs:
           command: |
             sbt clean update package test
             cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
-            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
+#            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
       - save_cache:
           key: sbt-cache-v1
           paths:
