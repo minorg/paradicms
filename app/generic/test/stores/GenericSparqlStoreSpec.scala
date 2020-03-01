@@ -1,8 +1,7 @@
 package stores
 
 import io.lemonlabs.uri.Url
-import org.paradicms.lib.generic.stores.SparqlStoreConfiguration
-import org.paradicms.lib.test.stores.GenericTestData
+import org.paradicms.lib.generic.stores.{GenericTestData, SparqlStoreConfiguration}
 import org.scalatest.{Matchers, WordSpec}
 
 // The SparqlStore is populated out-of-band. These tests are meant to be run on a populated store.

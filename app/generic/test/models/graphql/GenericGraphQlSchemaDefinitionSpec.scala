@@ -1,6 +1,6 @@
 package models.graphql
 
-import org.paradicms.lib.test.stores.GenericTestData
+import org.paradicms.lib.generic.stores.GenericTestData
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.test.FakeRequest

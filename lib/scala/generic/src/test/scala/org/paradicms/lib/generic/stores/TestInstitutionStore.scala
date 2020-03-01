@@ -1,8 +1,7 @@
-package org.paradicms.lib.test.stores
+package org.paradicms.lib.generic.stores
 
 import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.Institution
-import org.paradicms.lib.generic.stores.InstitutionStore
 
 trait TestInstitutionStore extends InstitutionStore {
   protected val testData: GenericTestData

@@ -1,8 +1,7 @@
-package org.paradicms.lib.test.stores
+package org.paradicms.lib.generic.stores
 
 import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.Collection
-import org.paradicms.lib.generic.stores.CollectionStore
 
 trait TestCollectionStore extends CollectionStore {
   protected val testData: GenericTestData
