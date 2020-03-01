@@ -1,11 +1,11 @@
 package org.paradicms.lib.generic.stores
 
 final class SparqlCollectionStoreSpec extends AbstractSparqlStoreSpec {
+
+  private final class TestSparqlCollectionStore(protected val configuration: SparqlStoreConfiguration) extends SparqlCollectionStore with SparqlInstitutionStore
+
   "SPARQL store" should {
-    val store = new SparqlCollectionStore with SparqlInstitutionStore {
-      override protected val configuration: SparqlStoreConfiguration = configuration
-    }
-    ()
+    val store = new TestSparqlCollectionStore(configuration)
 
     "list institution collections" in {
       withUnknownHostExceptionCatch { () =>

@@ -8,21 +8,6 @@ class GenericSparqlStoreSpec extends AbstractSparqlStoreSpec {
   "SPARQL store" should {
     val store = new GenericSparqlStore(SparqlStoreConfiguration(sparqlQueryUrl = Url.parse("http://fuseki:3030/ds/sparql"), sparqlUpdateUrl = Url.parse("http://fuseki:3030/ds/update")))
 
-    "list all institutions" in {
-      withUnknownHostExceptionCatch { () =>
-        val institutions = store.getInstitutions(currentUserUri = currentUserUri)
-        institutions.size should be > 0
-      }
-    }
-
-    "get an institution by URI" in {
-      withUnknownHostExceptionCatch { () =>
-        val leftInstitution = store.getInstitutions(currentUserUri = currentUserUri)(0)
-        val rightInstitution = store.getInstitutionByUri(currentUserUri = currentUserUri, institutionUri = leftInstitution.uri)
-        leftInstitution should equal(rightInstitution)
-      }
-    }
-    
     "list collection objects" in {
       withUnknownHostExceptionCatch { () =>
         val institution = store.getInstitutions(currentUserUri = currentUserUri)(0)
