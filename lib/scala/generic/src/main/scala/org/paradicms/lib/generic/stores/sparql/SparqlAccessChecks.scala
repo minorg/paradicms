@@ -1,4 +1,4 @@
-package org.paradicms.lib.generic.stores
+package org.paradicms.lib.generic.stores.sparql
 
 import io.lemonlabs.uri.Uri
 

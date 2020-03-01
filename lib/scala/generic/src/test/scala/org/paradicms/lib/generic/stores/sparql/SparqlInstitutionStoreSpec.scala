@@ -1,6 +1,7 @@
-package org.paradicms.lib.generic.stores
+package org.paradicms.lib.generic.stores.sparql
 
 final class SparqlInstitutionStoreSpec extends AbstractSparqlStoreSpec {
+
   private final class TestSparqlInstitutionStore(protected val configuration: SparqlStoreConfiguration) extends SparqlInstitutionStore
 
   "SPARQL store" should {

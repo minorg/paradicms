@@ -1,10 +1,11 @@
-package org.paradicms.lib.generic.stores
+package org.paradicms.lib.generic.stores.sparql
 
 import java.net.UnknownHostException
 
 import io.lemonlabs.uri.Url
 import org.apache.jena.atlas.web.HttpException
 import org.apache.jena.query.QueryException
+import org.paradicms.lib.generic.stores.GenericTestData
 import org.scalatest.{Assertion, Matchers, WordSpec}
 
 abstract class AbstractSparqlStoreSpec extends WordSpec with Matchers {

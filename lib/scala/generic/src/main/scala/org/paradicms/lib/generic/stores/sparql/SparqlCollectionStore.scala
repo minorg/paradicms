@@ -1,10 +1,11 @@
-package org.paradicms.lib.generic.stores
+package org.paradicms.lib.generic.stores.sparql
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.vocabulary.RDF
 import org.paradicms.lib.generic.models.domain.Collection
 import org.paradicms.lib.generic.models.domain.vocabulary.CMS
+import org.paradicms.lib.generic.stores.CollectionStore
 
 import scala.collection.JavaConverters._
 

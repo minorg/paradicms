@@ -1,7 +1,8 @@
-package org.paradicms.lib.generic.stores
+package org.paradicms.lib.generic.stores.test
 
 import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Object, ObjectSearchResult}
+import org.paradicms.lib.generic.stores.{GenericTestData, ObjectStore}
 
 trait TestObjectStore extends ObjectStore {
   protected val testData: GenericTestData

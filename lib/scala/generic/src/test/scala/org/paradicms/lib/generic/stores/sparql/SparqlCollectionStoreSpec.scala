@@ -1,4 +1,4 @@
-package org.paradicms.lib.generic.stores
+package org.paradicms.lib.generic.stores.sparql
 
 final class SparqlCollectionStoreSpec extends AbstractSparqlStoreSpec {
 

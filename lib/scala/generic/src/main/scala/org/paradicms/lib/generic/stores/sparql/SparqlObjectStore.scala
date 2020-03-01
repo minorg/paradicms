@@ -1,4 +1,4 @@
-package org.paradicms.lib.generic.stores
+package org.paradicms.lib.generic.stores.sparql
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.query.{ParameterizedSparqlString, QueryFactory}
@@ -8,6 +8,7 @@ import org.apache.jena.vocabulary.RDF
 import org.paradicms.lib.generic.models
 import org.paradicms.lib.generic.models.domain.vocabulary.CMS
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult}
+import org.paradicms.lib.generic.stores.ObjectStore
 
 import scala.collection.JavaConverters._
 
@@ -31,40 +32,14 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
-  protected final def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[models.domain.Object] = {
-    // Should be safe to inject objectUris since they've already been parsed as URIs
-    val queryWhere = accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      "?institution rdf:type cms:Institution .",
+  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
+    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      s"<${collectionUri.toString}> rdf:type cms:Collection .",
       "?institution cms:collection ?collection .",
-      "?collection rdf:type cms:Collection .",
+      "?institution rdf:type cms:Institution .",
       "?collection cms:object ?object .",
-      s"VALUES ?object { ${objectUris.map(objectUri => "<" + objectUri.toString() + ">").mkString(" ")} }",
-      "?object rdf:type cms:Object .",
-      "?object ?objectP ?objectO .",
-      "OPTIONAL { ?object foaf:depiction ?originalImage . ?originalImage rdf:type cms:Image . ?originalImage ?originalImageP ?originalImageO . OPTIONAL { ?originalImage foaf:thumbnail ?thumbnailImage . ?thumbnailImage rdf:type cms:Image . ?thumbnailImage ?thumbnailImageP ?thumbnailImageO . } }"
+      "?object rdf:type cms:Object ."
     ))
-
-    val query = QueryFactory.create(
-      s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX foaf: <${FOAF.getURI}>
-         |PREFIX rdf: <${RDF.getURI}>
-         |CONSTRUCT {
-         |  ?object ?objectP ?objectO .
-         |  ?object foaf:depiction ?originalImage .
-         |  ?originalImage ?originalImageP ?originalImageO .
-         |  ?originalImage foaf:thumbnail ?thumbnailImage .
-         |  ?thumbnailImage ?thumbnailImageP ?thumbnailImageO .
-         |} WHERE {
-         |$queryWhere
-         |}
-         |""".stripMargin)
-    withQueryExecution(query) { queryExecution =>
-      val model = queryExecution.execConstruct()
-      //      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.foreach(resource => model.listStatements(resource, null, null).asScala.foreach(System.out.println(_)))
-      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.map(resource => Object(resource))
-    }
-  }
 
   override final def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int = {
     val query = QueryFactory.create(
@@ -81,15 +56,6 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
         queryExecution.execSelect().next().get("count").asLiteral().getInt
     }
   }
-
-  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
-    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      s"<${collectionUri.toString}> rdf:type cms:Collection .",
-      "?institution cms:collection ?collection .",
-      "?institution rdf:type cms:Institution .",
-      "?collection cms:object ?object .",
-      "?object rdf:type cms:Object ."
-    ))
 
   override final def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String): Int = {
     val queryString = new ParameterizedSparqlString(
@@ -140,6 +106,41 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
         institution = institutionsByUri(querySolution._2),
         object_ = objectsByUri(querySolution._3)
       ))
+    }
+  }
+
+  protected final def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[models.domain.Object] = {
+    // Should be safe to inject objectUris since they've already been parsed as URIs
+    val queryWhere = accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      "?institution rdf:type cms:Institution .",
+      "?institution cms:collection ?collection .",
+      "?collection rdf:type cms:Collection .",
+      "?collection cms:object ?object .",
+      s"VALUES ?object { ${objectUris.map(objectUri => "<" + objectUri.toString() + ">").mkString(" ")} }",
+      "?object rdf:type cms:Object .",
+      "?object ?objectP ?objectO .",
+      "OPTIONAL { ?object foaf:depiction ?originalImage . ?originalImage rdf:type cms:Image . ?originalImage ?originalImageP ?originalImageO . OPTIONAL { ?originalImage foaf:thumbnail ?thumbnailImage . ?thumbnailImage rdf:type cms:Image . ?thumbnailImage ?thumbnailImageP ?thumbnailImageO . } }"
+    ))
+
+    val query = QueryFactory.create(
+      s"""
+         |PREFIX cms: <${CMS.URI}>
+         |PREFIX foaf: <${FOAF.getURI}>
+         |PREFIX rdf: <${RDF.getURI}>
+         |CONSTRUCT {
+         |  ?object ?objectP ?objectO .
+         |  ?object foaf:depiction ?originalImage .
+         |  ?originalImage ?originalImageP ?originalImageO .
+         |  ?originalImage foaf:thumbnail ?thumbnailImage .
+         |  ?thumbnailImage ?thumbnailImageP ?thumbnailImageO .
+         |} WHERE {
+         |$queryWhere
+         |}
+         |""".stripMargin)
+    withQueryExecution(query) { queryExecution =>
+      val model = queryExecution.execConstruct()
+      //      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.foreach(resource => model.listStatements(resource, null, null).asScala.foreach(System.out.println(_)))
+      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.map(resource => Object(resource))
     }
   }
 
