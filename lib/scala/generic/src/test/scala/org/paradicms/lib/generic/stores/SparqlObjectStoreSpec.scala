@@ -1,12 +1,11 @@
-package stores
+package org.paradicms.lib.generic.stores
 
-import io.lemonlabs.uri.Url
-import org.paradicms.lib.generic.stores.{AbstractSparqlStoreSpec, SparqlStoreConfiguration}
+final class SparqlObjectStoreSpec extends AbstractSparqlStoreSpec {
 
-// The SparqlStore is populated out-of-band. These tests are meant to be run on a populated store.
-class GenericSparqlStoreSpec extends AbstractSparqlStoreSpec {
+  private final class TestSparqlObjectStore(protected val configuration: SparqlStoreConfiguration) extends SparqlCollectionStore with SparqlInstitutionStore with SparqlObjectStore
+
   "SPARQL store" should {
-    val store = new GenericSparqlStore(SparqlStoreConfiguration(sparqlQueryUrl = Url.parse("http://fuseki:3030/ds/sparql"), sparqlUpdateUrl = Url.parse("http://fuseki:3030/ds/update")))
+    val store = new TestSparqlObjectStore(configuration)
 
     "list collection objects" in {
       withUnknownHostExceptionCatch { () =>
@@ -56,13 +55,6 @@ class GenericSparqlStoreSpec extends AbstractSparqlStoreSpec {
       withUnknownHostExceptionCatch { () =>
         val count = store.getMatchingObjectsCount(text = "back", currentUserUri = currentUserUri)
         count should be > 1
-      }
-    }
-
-    "put and get a user" in {
-      withUnknownHostExceptionCatch { () =>
-        store.putUser(testData.user)
-        store.getUserByUri(testData.user.uri).get should equal(testData.user)
       }
     }
   }
