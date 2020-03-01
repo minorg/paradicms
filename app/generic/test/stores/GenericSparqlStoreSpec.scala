@@ -1,13 +1,9 @@
 package stores
 
-import java.net.UnknownHostException
-
 import io.lemonlabs.uri.Url
-import org.apache.jena.atlas.web.HttpException
-import org.apache.jena.query.QueryException
 import org.paradicms.lib.generic.stores.SparqlStoreConfiguration
 import org.paradicms.lib.test.stores.GenericTestData
-import org.scalatest.{Assertion, Matchers, WordSpec}
+import org.scalatest.{Matchers, WordSpec}
 
 // The SparqlStore is populated out-of-band. These tests are meant to be run on a populated store.
 class GenericSparqlStoreSpec extends WordSpec with Matchers {
@@ -15,20 +11,6 @@ class GenericSparqlStoreSpec extends WordSpec with Matchers {
     val testData = new GenericTestData
     val currentUserUri = Option(testData.user.uri)
     val store = new GenericSparqlStore(SparqlStoreConfiguration(sparqlQueryUrl = Url.parse("http://fuseki:3030/ds/sparql"), sparqlUpdateUrl = Url.parse("http://fuseki:3030/ds/update")))
-
-    def withUnknownHostExceptionCatch(test: () => Assertion): Assertion =
-      try {
-        test()
-      } catch {
-        case e: HttpException => e.getCause match {
-          case _: UnknownHostException => assert(true)
-          case _ => throw e
-        }
-        case e: QueryException => e.getCause match {
-          case _: UnknownHostException => assert(true)
-          case _ => throw e
-        }
-      }
 
     "list all institutions" in {
       withUnknownHostExceptionCatch { () =>
