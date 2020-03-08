@@ -3,9 +3,46 @@ scalaVersion in ThisBuild := "2.12.10"
 version in ThisBuild := "1.0.0-SNAPSHOT"
 
 
-// Constants
-val jenaVersion = "3.13.1"
-val playVersion = "2.8.0"
+// Projects
+lazy val root = project
+  .aggregate(bookApp, genericApp, genericLib)
+  .settings(
+    skip in publish := true
+  )
+lazy val bookApp = (project in file("app/book"))
+  .dependsOn(genericLib % "compile->compile;test->test")
+  .enablePlugins(PlayScala)
+  .settings(
+    //    libraryDependencies ++= Seq(
+    //      organization.value %% "generic-lib" % version.value,
+    //      organization.value %% "test-lib" % version.value % Test
+    //    ),
+    name := "book-app",
+    routesGenerator := InjectedRoutesGenerator,
+    // Adds additional packages into Twirl
+    //TwirlKeys.templateImports += "com.example.controllers._"
+
+    // Adds additional packages into conf/routes
+    // play.sbt.routes.RoutesKeys.routesImport += "com.example.binders._"
+    skip in publish := true
+  )
+lazy val genericApp = (project in file("app/generic"))
+  .dependsOn(genericLib % "compile->compile;test->test")
+  .enablePlugins(PlayScala)
+  .settings(
+    //    libraryDependencies ++= Seq(
+    //      organization.value %% "generic-lib" % version.value,
+    //      organization.value %% "test-lib" % version.value % Test,
+    //    ),
+    name := "generic-app",
+    routesGenerator := InjectedRoutesGenerator,
+    // Adds additional packages into Twirl
+    //TwirlKeys.templateImports += "com.example.controllers._"
+
+    // Adds additional packages into conf/routes
+    // play.sbt.routes.RoutesKeys.routesImport += "com.example.binders._"
+    skip in publish := true
+  )
 
 
 // Test settings
@@ -15,15 +52,6 @@ parallelExecution in ThisBuild := false
 // Resolvers
 resolvers in ThisBuild += Resolver.mavenLocal
 resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
-
-
-// Projects
-lazy val root = project
-  .aggregate(genericApp, genericLib)
-  .settings(
-    skip in publish := true
-  )
-
 lazy val genericLib =
   (project in file("lib/scala/generic")).settings(
     libraryDependencies ++= Seq(
@@ -39,26 +67,14 @@ lazy val genericLib =
       "org.sangria-graphql" %% "sangria" % "1.4.2",
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
+      "org.slf4j" % "slf4j-simple" % slf4jVersion,
       "org.scalatest" %% "scalatest" % "3.0.8" % Test,
-      "org.slf4j" % "slf4j-simple" % "1.7.25" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
+      "org.slf4j" % "slf4j-simple" % slf4jVersion % Test
     ),
     name := "generic-lib"
   )
-
-lazy val genericApp = (project in file("app/generic"))
-  .dependsOn(genericLib)
-  .enablePlugins(PlayScala)
-  .settings(
-    libraryDependencies ++= Seq(
-      organization.value %% "generic-lib" % version.value,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
-    ),
-    name := "generic-app",
-    routesGenerator := InjectedRoutesGenerator,
-    // Adds additional packages into Twirl
-    //TwirlKeys.templateImports += "com.example.controllers._"
-
-    // Adds additional packages into conf/routes
-    // play.sbt.routes.RoutesKeys.routesImport += "com.example.binders._"
-    skip in publish := true
-  )
+// Constants
+val jenaVersion = "3.13.1"
+val playVersion = "2.8.0"
+val slf4jVersion = "1.7.25"

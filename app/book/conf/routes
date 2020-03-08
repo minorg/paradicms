@@ -10,6 +10,6 @@ GET         /api/auth0/loginCallback        org.paradicms.lib.generic.controller
 
 
 # GraphQL
-GET         /api/graphql                    controllers.graphql.GenericGraphQlController.graphql(query: String, variables: Option[String], operation: Option[String])
-POST        /api/graphql                    controllers.graphql.GenericGraphQlController.graphqlBody
-GET         /api/graphql-schema             controllers.graphql.GenericGraphQlController.renderSchema
+GET         /api/graphql                    controllers.graphql.BookGraphQlController.graphql(query: String, variables: Option[String], operation: Option[String])
+POST        /api/graphql                    controllers.graphql.BookGraphQlController.graphqlBody
+GET         /api/graphql-schema             controllers.graphql.BookGraphQlController.renderSchema
