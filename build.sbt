@@ -1,8 +1,3 @@
-organization in ThisBuild := "org.paradicms"
-scalaVersion in ThisBuild := "2.12.10"
-version in ThisBuild := "1.0.0-SNAPSHOT"
-
-
 // Projects
 lazy val root = project
   .aggregate(bookApp, genericApp, genericLib)
@@ -43,15 +38,6 @@ lazy val genericApp = (project in file("app/generic"))
     // play.sbt.routes.RoutesKeys.routesImport += "com.example.binders._"
     skip in publish := true
   )
-
-
-// Test settings
-parallelExecution in ThisBuild := false
-
-
-// Resolvers
-resolvers in ThisBuild += Resolver.mavenLocal
-resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 lazy val genericLib =
   (project in file("lib/scala/generic")).settings(
     libraryDependencies ++= Seq(
@@ -74,7 +60,41 @@ lazy val genericLib =
     ),
     name := "generic-lib"
   )
+
 // Constants
 val jenaVersion = "3.13.1"
 val playVersion = "2.8.0"
 val slf4jVersion = "1.7.25"
+
+
+// Test settings
+parallelExecution in ThisBuild := false
+
+
+// Build settings
+organization in ThisBuild := "org.paradicms"
+scalaVersion in ThisBuild := "2.12.10"
+version in ThisBuild := "1.0.0-SNAPSHOT"
+resolvers in ThisBuild += Resolver.mavenLocal
+resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
+
+// Publish settings
+// Adapted from https://leonard.io/blog/2017/01/an-in-depth-guide-to-deploying-to-maven-central/ and
+// https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html
+developers in ThisBuild := List(
+  Developer("gordom6",
+    "Minor Gordon",
+    "sonatype@minorgordon.net",
+    url("https://github.com/minorg"))
+)
+homepage in ThisBuild := Some(url("https://github.com/minorg/paradicms"))
+licenses in ThisBuild += ("GPL-3.0", url("https://opensource.org/licenses/GPL-3.0"))
+publishMavenStyle in ThisBuild := true
+publishTo in ThisBuild := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
+scmInfo in ThisBuild := Some(ScmInfo(url("https://github.com/minorg/paradicms"), "git@github.com:minorg/paradicms.git"))
+skip in publish := true // Don't publish the default project ('paradicms')
