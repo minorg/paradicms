@@ -8,7 +8,7 @@ import sangria.ast.Document
 import sangria.execution.Executor
 import sangria.macros._
 import sangria.marshalling.playJson._
-import stores.TestGenericStore
+import stores.test.TestGenericStore
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
