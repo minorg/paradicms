@@ -37,9 +37,9 @@ jobs:
       - run:
           name: Publish (master branch only)
           command: |
-            #            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-                     sbt publishSigned
-      #            fi
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              sbt publishSigned
+            fi
       - run:
           name: Clear secret data before caching
           command: |
