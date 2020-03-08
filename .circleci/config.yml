@@ -9,22 +9,48 @@ jobs:
       - restore_cache:
           key: sbt-cache-v1
       - run:
+          name: Set up GPG and sbt-pgp
+          command: |
+            # See https://discuss.circleci.com/t/gpg-keys-as-environment-variables/28641/3
+            echo -e "$OSSRH_GPG_KEY" | gpg --import
+            mkdir -p ~/.sbt/gpg
+            gpg -a --export-secret-keys >~/.sbt/gpg/secring.asc
+            mkdir -p ~/.sbt/1.0/plugins
+            echo 'addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.0")' >~/.sbt/1.0/plugins/pgp.sbt
+      - run:
+          name: Write OSSRH credentials
+          command: |
+            mkdir -p ~/.sbt/1.0
+            echo "credentials += Credentials(\"Sonatype Nexus Repository Manager\", \"oss.sonatype.org\", \"$SONATYPE_USERNAME\", \"$SONATYPE_PASSWORD\")" >>~/.sbt/1.0/sonatype.sbt
+            echo "pgpPassphrase := Some(Array[Char]())" >>~/.sbt/1.0/sonatype.sbt
+      - run:
           name: Create test-results directory
           command: mkdir -p test-results/scala
       - run:
-          name: Test
+          name: Build and test
           command: |
             sbt clean update package test
             cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
-#            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
+      #            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
+      - store_test_results:
+          path: test-results
+      - run:
+          name: Publish (master branch only)
+          command: |
+            #            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                     sbt publishSigned
+      #            fi
+      - run:
+          name: Clear secret data before caching
+          command: |
+            rm -fr ~/.sbt/gpg
+            rm ~/.sbt/1.0/sonatype.sbt
       - save_cache:
           key: sbt-cache-v1
           paths:
             - "~/.ivy2/cache"
             - "~/.sbt"
             - "~/.m2"
-      - store_test_results:
-          path: test-results
   ts:
     working_directory: ~/project
     docker:
@@ -32,17 +58,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: gui-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/generic/package.json" }}
+          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/generic/package.json" }}
       - run:
           command: |
             npm install
             npm run lerna:bootstrap
       - save_cache:
-          key: gui-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/generic/package.json" }}
+          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/generic/package.json" }}
           paths:
             - ./node_modules
             - ./lib/ts/generic/node_modules
       - run:
+          name: Build
           command: |
             cd lib/ts/generic
             npm run build
