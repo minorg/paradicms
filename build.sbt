@@ -58,7 +58,7 @@ lazy val genericLib =
       "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
       "org.slf4j" % "slf4j-simple" % slf4jVersion % Test
     ),
-    name := "generic-lib"
+    name := "paradicms-generic-lib"
   )
 
 // Constants
