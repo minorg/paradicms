@@ -1,1 +1,1 @@
-export * from "./FatalErrorModal"
+export * from "./FatalErrorModal";

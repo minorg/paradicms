@@ -10,10 +10,10 @@ export class ApolloException extends Exception {
 
   get httpStatusCode(): number | undefined {
     for (const graphQlError of this.apolloError.graphQLErrors) {
-      if (typeof (graphQlError.extensions) === "undefined") {
+      if (typeof graphQlError.extensions === "undefined") {
         continue;
       }
-      if (typeof (graphQlError.extensions.httpStatusCode) === "undefined") {
+      if (typeof graphQlError.extensions.httpStatusCode === "undefined") {
         continue;
       }
       return graphQlError.extensions.httpStatusCode;

@@ -1,2 +1,2 @@
-export * from "./DefaultPagination"
-export * from "./DefaultPaginationProps"
+export * from "./DefaultPagination";
+export * from "./DefaultPaginationProps";

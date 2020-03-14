@@ -1,65 +1,96 @@
 import * as React from "react";
-import {Card, CardBody, CardHeader, CardTitle, Col, Container, Row} from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  Col,
+  Container,
+  Row,
+} from "reactstrap";
 import {Hrefs} from "paradicms/app/generic/Hrefs";
 import {Link} from "react-router-dom";
 import {ObjectSummary} from "paradicms/app/generic/components/object/ObjectSummary";
 import {TextDisclosurePanel} from "paradicms-lib-generic";
 
-export const ObjectCard: React.FunctionComponent<{ object: ObjectSummary }> = ({object}) => {
-    const objectHref = Hrefs.object({
-        collectionUri: object.collectionUri,
-        institutionUri: object.institutionUri,
-        objectUri: object.uri
-    });
+export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
+  object,
+}) => {
+  const objectHref = Hrefs.object({
+    collectionUri: object.collectionUri,
+    institutionUri: object.institutionUri,
+    objectUri: object.uri,
+  });
 
-    return (
-        <Card>
-            <CardHeader>
-                <CardTitle><strong><Link to={objectHref}>{object.title}</Link></strong></CardTitle>
-            </CardHeader>
-            <CardBody>
-                <Container fluid>
-                    <Row>
-                        {object.thumbnail ?
-                            <figure className="figure text-center w-100">
-                                <Link to={objectHref}>
-                                    <img className="figure-img rounded" src={object.thumbnail!.url}
-                                         style={{height: "200px", width: "200px"}}/>
-                                </Link>
-                            </figure> : null}
-                    </Row>
-                </Container>
-                {object.institutionName ?
-                    <Row className="pt-1">
-                        <Col xs="12">
-                            Institution: <Link
-                            to={Hrefs.institution(object.institutionUri)}>{object.institutionName}</Link>
-                        </Col>
-                    </Row> : null}
-                {object.collectionName ?
-                    <Row className="pt-1">
-                        <Col xs="12">
-                            Collection: <Link to={Hrefs.collection(object)}>{object.collectionName}</Link>
-                        </Col>
-                    </Row> : null}
-                {object.description ?
-                    <Row className="pt-1">
-                        <Col xs="12">
-                            <TextDisclosurePanel text={object.description}
-                                                 textStyle={{fontSize: "x-small", maxWidth: "16em"}}
-                                                 title="Description"/>
-                        </Col>
-                    </Row> : null}
-                {object.rights ?
-                    <Row className="pt-1">
-                        <Col xs="12">
-                            <TextDisclosurePanel text={object.rights}
-                                                 textStyle={{fontSize: "x-small", maxWidth: "16em"}} title="Rights"/>
-                        </Col>
-                    </Row> : null}
-            </CardBody>
-        </Card>);
-}
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <strong>
+            <Link to={objectHref}>{object.title}</Link>
+          </strong>
+        </CardTitle>
+      </CardHeader>
+      <CardBody>
+        <Container fluid>
+          <Row>
+            {object.thumbnail ? (
+              <figure className="figure text-center w-100">
+                <Link to={objectHref}>
+                  <img
+                    className="figure-img rounded"
+                    src={object.thumbnail!.url}
+                    style={{height: "200px", width: "200px"}}
+                  />
+                </Link>
+              </figure>
+            ) : null}
+          </Row>
+        </Container>
+        {object.institutionName ? (
+          <Row className="pt-1">
+            <Col xs="12">
+              Institution:{" "}
+              <Link to={Hrefs.institution(object.institutionUri)}>
+                {object.institutionName}
+              </Link>
+            </Col>
+          </Row>
+        ) : null}
+        {object.collectionName ? (
+          <Row className="pt-1">
+            <Col xs="12">
+              Collection:{" "}
+              <Link to={Hrefs.collection(object)}>{object.collectionName}</Link>
+            </Col>
+          </Row>
+        ) : null}
+        {object.description ? (
+          <Row className="pt-1">
+            <Col xs="12">
+              <TextDisclosurePanel
+                text={object.description}
+                textStyle={{fontSize: "x-small", maxWidth: "16em"}}
+                title="Description"
+              />
+            </Col>
+          </Row>
+        ) : null}
+        {object.rights ? (
+          <Row className="pt-1">
+            <Col xs="12">
+              <TextDisclosurePanel
+                text={object.rights}
+                textStyle={{fontSize: "x-small", maxWidth: "16em"}}
+                title="Rights"
+              />
+            </Col>
+          </Row>
+        ) : null}
+      </CardBody>
+    </Card>
+  );
+};
 
 // <figure className="figure">
 //     <a onClick={this.onToggleSelected}>

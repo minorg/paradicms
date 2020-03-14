@@ -5,20 +5,25 @@ import {ObjectSummary} from "paradicms/app/generic/components/object/ObjectSumma
 import {DefaultPagination, DefaultPaginationProps} from "paradicms-lib-generic";
 
 interface Props extends DefaultPaginationProps {
-    objects: ObjectSummary[];
+  objects: ObjectSummary[];
 }
 
-export const ObjectsGallery: React.FunctionComponent<Props> = ({objects, ...paginationProps}) => (
-    <Container fluid>
-        <Row>
-            {objects.map(object =>
-                <div className="mr-4 mb-4" key={object.uri}>
-                    <ObjectCard object={object}/>
-                </div>)}
-        </Row>
-        <Row>
-            <Col className="p-0" xs="12">
-                <DefaultPagination {...paginationProps}/>
-            </Col>
-        </Row>
-    </Container>);
+export const ObjectsGallery: React.FunctionComponent<Props> = ({
+  objects,
+  ...paginationProps
+}) => (
+  <Container fluid>
+    <Row>
+      {objects.map(object => (
+        <div className="mr-4 mb-4" key={object.uri}>
+          <ObjectCard object={object} />
+        </div>
+      ))}
+    </Row>
+    <Row>
+      <Col className="p-0" xs="12">
+        <DefaultPagination {...paginationProps} />
+      </Col>
+    </Row>
+  </Container>
+);
