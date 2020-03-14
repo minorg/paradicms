@@ -17,7 +17,7 @@ module.exports = function (env, argv) {
   return merge(configBase(env, argv), configDevServer(distPath), {
     context: srcPath,
     entry: {
-      "generic-gui": './ts/paradicms/gui/generic/main.tsx'
+      "generic-gui": './ts/paradicms/app/generic/main.tsx'
     },
     output: {
       path: distPath,
