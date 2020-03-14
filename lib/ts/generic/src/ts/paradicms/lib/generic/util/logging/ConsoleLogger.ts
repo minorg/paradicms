@@ -1,4 +1,4 @@
-import {Logger} from './Logger';
+import {Logger} from "./Logger";
 
 export class ConsoleLogger implements Logger {
   debug(msg: any) {
@@ -6,14 +6,14 @@ export class ConsoleLogger implements Logger {
   }
 
   info(msg: any) {
-    console.info(msg)
+    console.info(msg);
   }
 
   warn(msg: any) {
-    console.warn(msg)
+    console.warn(msg);
   }
 
   error(msg: any) {
-    console.error(msg)
+    console.error(msg);
   }
 }

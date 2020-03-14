@@ -1,5 +1,5 @@
 query FrameQuery {
-    currentUser {
-        name
-    }
+  currentUser {
+    name
+  }
 }

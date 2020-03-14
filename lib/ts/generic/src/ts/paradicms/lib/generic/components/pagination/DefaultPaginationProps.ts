@@ -1,5 +1,5 @@
 export interface DefaultPaginationProps {
-    currentPage: number;
-    maxPage: number;
-    onPageRequest: (page: number) => void;
+  currentPage: number;
+  maxPage: number;
+  onPageRequest: (page: number) => void;
 }
