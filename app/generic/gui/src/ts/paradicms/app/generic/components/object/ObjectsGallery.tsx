@@ -1,7 +1,7 @@
 import * as React from "react";
-import {ObjectCard} from "paradicms/gui/generic/components/object/ObjectCard";
+import {ObjectCard} from "paradicms/app/generic/components/object/ObjectCard";
 import {Col, Container, Row} from "reactstrap";
-import {ObjectSummary} from "paradicms/gui/generic/components/object/ObjectSummary";
+import {ObjectSummary} from "paradicms/app/generic/components/object/ObjectSummary";
 import {DefaultPagination, DefaultPaginationProps} from "paradicms-lib-generic";
 
 interface Props extends DefaultPaginationProps {

@@ -1,4 +1,4 @@
-import {Hrefs} from 'paradicms/gui/generic/Hrefs';
+import {Hrefs} from 'paradicms/app/generic/Hrefs';
 import * as React from 'react';
 import {Redirect} from 'react-router';
 

@@ -1,15 +1,15 @@
 import './Frame.scss';
 
 import * as classnames from 'classnames';
-import {Footer} from 'paradicms/gui/generic/components/footer/Footer';
-import {ActiveNavbarItem} from 'paradicms/gui/generic/components/navbar/ActiveNavbarItem';
-import Navbar from 'paradicms/gui/generic/components/navbar/Navbar';
+import {Footer} from 'paradicms/app/generic/components/footer/Footer';
+import {ActiveNavbarItem} from 'paradicms/app/generic/components/navbar/ActiveNavbarItem';
+import Navbar from 'paradicms/app/generic/components/navbar/Navbar';
 import * as React from 'react';
 import {useEffect} from 'react';
 import {Breadcrumb, Card, CardBody, CardHeader, CardTitle, Col, Container, Row} from "reactstrap";
-import {ApolloQueryWrapper} from "paradicms/gui/generic/api/ApolloQueryWrapper";
-import {FrameQuery} from "paradicms/gui/generic/api/queries/types/FrameQuery";
-import * as frameQuery from "paradicms/gui/generic/api/queries/frameQuery.graphql";
+import {ApolloQueryWrapper} from "paradicms/app/generic/api/ApolloQueryWrapper";
+import {FrameQuery} from "paradicms/app/generic/api/queries/types/FrameQuery";
+import * as frameQuery from "paradicms/app/generic/api/queries/frameQuery.graphql";
 
 export const Frame: React.FunctionComponent<{
     activeNavItem?: ActiveNavbarItem;

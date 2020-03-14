@@ -9,7 +9,7 @@ import {
     NavLink,
     UncontrolledDropdown
 } from "reactstrap";
-import {CurrentUser} from "paradicms/gui/generic/components/navbar/CurrentUser";
+import {CurrentUser} from "paradicms/app/generic/components/navbar/CurrentUser";
 
 export const NavbarUserDropdown: React.FunctionComponent<{
     className?: string,

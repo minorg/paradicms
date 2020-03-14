@@ -1,4 +1,4 @@
-import {CollectionOverviewQuery_collectionByUri_rights} from "paradicms/gui/generic/api/queries/types/CollectionOverviewQuery";
+import {CollectionOverviewQuery_collectionByUri_rights} from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
 import * as React from "react";
 import {Uris} from "paradicms-lib-generic";
 

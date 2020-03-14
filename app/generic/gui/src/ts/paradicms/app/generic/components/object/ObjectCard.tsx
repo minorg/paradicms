@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Card, CardBody, CardHeader, CardTitle, Col, Container, Row} from "reactstrap";
-import {Hrefs} from "paradicms/gui/generic/Hrefs";
+import {Hrefs} from "paradicms/app/generic/Hrefs";
 import {Link} from "react-router-dom";
-import {ObjectSummary} from "paradicms/gui/generic/components/object/ObjectSummary";
+import {ObjectSummary} from "paradicms/app/generic/components/object/ObjectSummary";
 import {TextDisclosurePanel} from "paradicms-lib-generic";
 
 export const ObjectCard: React.FunctionComponent<{ object: ObjectSummary }> = ({object}) => {

@@ -1,3 +1,3 @@
-import {FrameQuery_currentUser} from "paradicms/gui/generic/api/queries/types/FrameQuery";
+import {FrameQuery_currentUser} from "paradicms/app/generic/api/queries/types/FrameQuery";
 
 export type CurrentUser = FrameQuery_currentUser;
