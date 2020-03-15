@@ -1,5 +1,5 @@
 {
-  "name": "paradicms-lib-generic",
+  "name": "paradicms-generic",
   "version": "1.0.0",
   "description": "Paradicms GUI library",
   "devDependencies": {
