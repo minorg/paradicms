@@ -53,7 +53,6 @@ lazy val genericLib =
       "org.sangria-graphql" %% "sangria" % "1.4.2",
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
-      "org.slf4j" % "slf4j-simple" % slf4jVersion,
       "org.scalatest" %% "scalatest" % "3.0.8" % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
       "org.slf4j" % "slf4j-simple" % slf4jVersion % Test
