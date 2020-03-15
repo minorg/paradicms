@@ -1,13 +1,16 @@
 package org.paradicms.lib.generic.models.domain
 
-import org.apache.jena.sparql.vocabulary.FOAF
+import org.apache.jena.rdf.model.Resource
+import org.paradicms.lib.base.models.domain.FoafResourceProperties
 
 final case class DerivedImageSet(original: Image, thumbnail: Option[Image])
 
-object DerivedImageSet extends DomainModelCompanion {
-  def apply(originalResource: ResourceWrapper): DerivedImageSet =
+object DerivedImageSet {
+  implicit class DerivedImageSetResource(val resource: Resource) extends FoafResourceProperties
+
+  def apply(resource: DerivedImageSetResource): DerivedImageSet =
     DerivedImageSet(
-      original = Image(originalResource.resource),
-      thumbnail = originalResource.getPropertyObject(FOAF.thumbnail).flatMap(object_ => if (object_.isResource()) Some(Image(object_.asResource())) else None)
+      original = Image(resource.resource),
+      thumbnail = resource.thumbnails.headOption.map(resource => Image(resource))
     )
 }

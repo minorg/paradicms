@@ -32,15 +32,6 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
-  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
-    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      s"<${collectionUri.toString}> rdf:type cms:Collection .",
-      "?institution cms:collection ?collection .",
-      "?institution rdf:type cms:Institution .",
-      "?collection cms:object ?object .",
-      "?object rdf:type cms:Object ."
-    ))
-
   override final def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int = {
     val query = QueryFactory.create(
       s"""
@@ -57,6 +48,15 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
+  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri]): String =
+    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      s"<${collectionUri.toString}> rdf:type cms:Collection .",
+      "?institution cms:collection ?collection .",
+      "?institution rdf:type cms:Institution .",
+      "?collection cms:object ?object .",
+      "?object rdf:type cms:Object ."
+    ))
+
   override final def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String): Int = {
     val queryString = new ParameterizedSparqlString(
       s"""
@@ -72,6 +72,16 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
       queryExecution.execSelect().next().get("count").asLiteral().getInt
     }
   }
+
+  private def matchingObjectsGraphPatterns(currentUserUri: Option[Uri]): String =
+    accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+      "?institution rdf:type cms:Institution .",
+      "?institution cms:collection ?collection .",
+      "?collection rdf:type cms:Collection .",
+      "?collection cms:object ?object .",
+      "?object rdf:type cms:Object .",
+      "?object text:query ?text ."
+    ))
 
   override final def getMatchingObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, text: String): List[ObjectSearchResult] = {
     val queryString = new ParameterizedSparqlString(
@@ -109,6 +119,10 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
+  override final def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): models.domain.Object = {
+    getObjectsByUris(currentUserUri = currentUserUri, objectUris = List(objectUri)).head
+  }
+
   protected final def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[models.domain.Object] = {
     // Should be safe to inject objectUris since they've already been parsed as URIs
     val queryWhere = accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
@@ -142,20 +156,6 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
       //      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.foreach(resource => model.listStatements(resource, null, null).asScala.foreach(System.out.println(_)))
       model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.map(resource => Object(resource))
     }
-  }
-
-  private def matchingObjectsGraphPatterns(currentUserUri: Option[Uri]): String =
-    accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      "?institution rdf:type cms:Institution .",
-      "?institution cms:collection ?collection .",
-      "?collection rdf:type cms:Collection .",
-      "?collection cms:object ?object .",
-      "?object rdf:type cms:Object .",
-      "?object text:query ?text ."
-    ))
-
-  override final def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): models.domain.Object = {
-    getObjectsByUris(currentUserUri = currentUserUri, objectUris = List(objectUri)).head
   }
 
   def getCollectionsByUris(collectionUris: List[Uri], currentUserUri: Option[Uri]): List[Collection]

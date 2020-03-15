@@ -1,14 +1,18 @@
 package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
+import org.apache.jena.rdf.model.Resource
+import org.paradicms.lib.base.models.domain.FoafResourceProperties
 
-final case class User(email: Option[String], name: String, uri: Uri) extends DomainModel
+final case class User(email: Option[String], name: String, uri: Uri)
 
-object User extends DomainModelCompanion {
-  def apply(resource: ResourceWrapper): User =
+object User {
+  implicit class UserResource(val resource: Resource) extends FoafResourceProperties
+
+  def apply(resource: UserResource): User =
     User(
-      email = resource.foaf.mbox.map(uri => uri.path.toString()),
-      name = resource.foaf.name.get,
+      email = resource.mboxes.map(uri => uri.path.toString()).headOption,
+      name = resource.names.head,
       uri = resource.uri
     )
 }
