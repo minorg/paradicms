@@ -4,8 +4,7 @@ import io.lemonlabs.uri.Uri
 import models.domain.vocabulary.SCHEMA
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.vocabulary.DCTerms
-import org.paradicms.lib.generic.models.Person
-import org.paradicms.lib.generic.models.domain.{DomainModel, DomainModelCompanion}
+import org.paradicms.lib.generic.models.domain.{DomainModel, DomainModelCompanion, Person}
 
 final case class Book(
                      creators: List[Person] = List(),

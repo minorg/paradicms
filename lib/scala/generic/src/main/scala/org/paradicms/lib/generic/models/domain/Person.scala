@@ -1,7 +1,6 @@
-package org.paradicms.lib.generic.models
+package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
-import org.paradicms.lib.generic.models.domain.{DomainModel, DomainModelCompanion}
 
 final case class Person(
                          familyName: Option[String],
