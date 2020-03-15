@@ -4,7 +4,8 @@ import io.lemonlabs.uri.Uri
 import models.domain.vocabulary.SCHEMA
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.vocabulary.DCTerms
-import org.paradicms.lib.generic.models.domain.{DomainModel, DomainModelCompanion, Person}
+import org.paradicms.lib.base.models.domain.DublinCoreResourceProperties
+import org.paradicms.lib.generic.models.domain.Person
 
 final case class Book(
                      creators: List[Person] = List(),
@@ -17,20 +18,25 @@ final case class Book(
                      subjects: List[String] = List(),
                      title: String,
                      uri: Uri
-                   ) extends DomainModel
+                   )
 
-object Book extends DomainModelCompanion {
-  def apply(resource: ResourceWrapper): Book =
+object Book {
+  implicit class BookResource(val resource: Resource) extends DublinCoreResourceProperties {
+    def creatorResources: List[Resource] = getPropertyObjects(DCTerms.creator).flatMap(object_ => if (object_.isURIResource) Some(object_.asResource()) else None)
+    def pageCount: Option[Int] = getPropertyObjectInts(SCHEMA.pageCount).headOption
+  }
+
+  def apply(resource: BookResource): Book =
     Book(
-      creators=resource.getPropertyObjects(DCTerms.creator).flatMap(object_ => if (object_.isURIResource) Some(Person(object_.asInstanceOf[Resource])) else None),
-      description=resource.dublinCore.descriptions().headOption,
-      format=resource.dublinCore.formats().headOption,
-      isbn=resource.dublinCore.identifiers().headOption,
-      pageCount=resource.getPropertyObjectLiteral(SCHEMA.pageCount).map(literal => literal.getInt),
-      publicationDate=resource.dublinCore.dates().headOption,
-      publisher=resource.dublinCore.publishers().headOption,
-      subjects=resource.dublinCore.subjects(),
-      title=resource.dublinCore.titles().head,
+      creators=resource.creatorResources.map(resource => Person(resource)),
+      description=resource.descriptions().headOption,
+      format=resource.formats().headOption,
+      isbn=resource.identifiers().headOption,
+      pageCount=resource.pageCount,
+      publicationDate=resource.dates().headOption,
+      publisher=resource.publishers().headOption,
+      subjects=resource.subjects(),
+      title=resource.titles().head,
       uri=resource.uri
     )
 }

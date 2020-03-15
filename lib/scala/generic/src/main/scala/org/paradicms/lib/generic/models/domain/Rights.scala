@@ -1,7 +1,8 @@
 package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
-import org.apache.jena.vocabulary.DCTerms
+import org.apache.jena.rdf.model.Resource
+import org.paradicms.lib.base.models.domain.DublinCoreResourceProperties
 
 final case class Rights(
                          holder: Option[String] = None,
@@ -9,15 +10,17 @@ final case class Rights(
                          text: String
                        )
 
-object Rights extends DomainModelCompanion {
-  def apply(resource: ResourceWrapper): Option[Rights] = {
-    val texts = resource.dublinCore.rights()
+object Rights {
+  implicit class RightsResource(val resource: Resource) extends DublinCoreResourceProperties
+
+  def apply(resource: RightsResource): Option[Rights] = {
+    val texts = resource.rights()
     if (texts.isEmpty) {
       return None
     }
     Some(Rights(
-      holder = resource.dublinCore.rightsHolder(),
-      license = resource.getPropertyObject(DCTerms.license).flatMap(object_ => if (object_.isURIResource) Some(Uri.parse(object_.asResource().getURI)) else None),
+      holder = resource.rightsHolders.headOption,
+      license = resource.licenses().headOption,
       text = texts.mkString("\n"),
     ))
   }
