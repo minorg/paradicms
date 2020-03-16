@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Paradicms generic GUI",
   "dependencies": {
-    "paradicms-lib-generic": "1.0.0"
+    "paradicms-base": "1.0.0"
   },
   "license": "GPLv3",
   "scripts": {

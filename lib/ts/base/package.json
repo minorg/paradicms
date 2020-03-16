@@ -1,7 +1,7 @@
 {
-  "name": "paradicms-generic",
+  "name": "paradicms-base",
   "version": "1.0.0",
-  "description": "Paradicms GUI library",
+  "description": "Paradicms base library",
   "devDependencies": {
     "@graphql-codegen/cli": "1.2.0",
     "@graphql-codegen/fragment-matcher": "1.2.0",
