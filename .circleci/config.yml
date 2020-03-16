@@ -58,20 +58,20 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/generic/package.json" }}
+          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
       - run:
           command: |
             npm install
             npm run lerna:bootstrap
       - save_cache:
-          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/generic/package.json" }}
+          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
           paths:
             - ./node_modules
-            - ./lib/ts/generic/node_modules
+            - ./lib/ts/base/node_modules
       - run:
           name: Build
           command: |
-            cd lib/ts/generic
+            cd lib/ts/base
             npm run build
             cd ../../../app/generic/gui
             npm run build
