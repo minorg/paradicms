@@ -1,9 +1,9 @@
 {
   "name": "paradicms-app-generic",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Paradicms generic GUI",
   "dependencies": {
-    "paradicms-base": "1.0.0",
+    "paradicms-base": "^1.0.1",
     "react-medium-image-zoom": "3.1.2"
   },
   "license": "GPLv3",

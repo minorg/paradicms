@@ -1,6 +1,6 @@
 {
   "name": "paradicms-base",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Paradicms base library",
   "devDependencies": {
     "@graphql-codegen/cli": "1.2.0",
