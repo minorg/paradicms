@@ -7,5 +7,5 @@
       ]
     }
   },
-  "extends": "../../../lib/ts/tsconfig.base.json"
+  "extends": "../../../lib/ts/base/tsconfig.base.json"
 }

@@ -15,7 +15,7 @@ lazy val baseLib =
       "org.scalatest" %% "scalatest" % "3.0.8" % Test,
       "org.slf4j" % "slf4j-simple" % slf4jVersion % Test
     ),
-    name := "paradicms-base-lib"
+    name := "paradicms-base"
   )
 lazy val bookApp = (project in file("app/book"))
   .dependsOn(genericLib % "compile->compile;test->test")
@@ -65,7 +65,7 @@ lazy val genericLib =
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
       "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
     ),
-    name := "paradicms-generic-lib"
+    name := "paradicms-generic"
   )
 
 // Constants
@@ -81,7 +81,7 @@ parallelExecution in ThisBuild := false
 // Build settings
 organization in ThisBuild := "org.paradicms"
 scalaVersion in ThisBuild := "2.12.10"
-version in ThisBuild := "1.0.0-SNAPSHOT"
+version in ThisBuild := "1.0.1-SNAPSHOT"
 resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 
 // Publish settings

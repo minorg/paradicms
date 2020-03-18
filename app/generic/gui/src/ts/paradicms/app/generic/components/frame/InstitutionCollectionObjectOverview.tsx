@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {Hrefs} from "paradicms/app/generic/Hrefs";
 import * as React from "react";
 import {Frame} from "paradicms/app/generic/components/frame/Frame";
-import {stripHtml} from "paradicms-lib-generic";
+import {stripHtml} from "paradicms-base";
 
 export const InstitutionCollectionObjectOverview: React.FunctionComponent<{
   children: React.ReactNode;

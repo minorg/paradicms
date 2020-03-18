@@ -1,5 +1,5 @@
-var configBase = require("../../../lib/ts/webpack.config.base");
-var configDevServer = require("../../../lib/ts/webpack.config.devServer");
+var configBase = require("../../../lib/ts/base/webpack.config.base");
+var configDevServer = require("../../../lib/ts/base/webpack.config.devServer");
 var path = require('path');
 var merge = require("webpack-merge");
 var webpack = require('webpack');

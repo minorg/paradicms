@@ -2,7 +2,7 @@ import {Hrefs} from "paradicms/app/generic/Hrefs";
 import * as React from "react";
 import {Redirect} from "react-router";
 
-import {Exception, FatalErrorModal} from "paradicms-lib-generic";
+import {Exception, FatalErrorModal} from "paradicms-base";
 
 interface Props {
   error?: any;

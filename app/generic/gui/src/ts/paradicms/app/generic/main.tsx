@@ -11,7 +11,7 @@ import * as ReactDOM from "react-dom";
 import {ApolloProvider} from "react-apollo";
 import {ApolloProvider as ApolloHooksProvider} from "@apollo/react-hooks";
 import {Route, Router, Switch} from "react-router";
-import {ConsoleLogger, LoggerContext} from "paradicms-lib-generic";
+import {ConsoleLogger, LoggerContext} from "paradicms-base";
 import {CollectionOverview} from "paradicms/app/generic/components/collection/CollectionOverview";
 import {InstitutionOverview} from "paradicms/app/generic/components/institution/InstitutionOverview";
 import {ObjectOverview} from "paradicms/app/generic/components/object/ObjectOverview";

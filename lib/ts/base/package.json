@@ -1,7 +1,7 @@
 {
-  "name": "paradicms-lib-generic",
-  "version": "1.0.0",
-  "description": "Paradicms GUI library",
+  "name": "paradicms-base",
+  "version": "1.0.1",
+  "description": "Paradicms base library",
   "devDependencies": {
     "@graphql-codegen/cli": "1.2.0",
     "@graphql-codegen/fragment-matcher": "1.2.0",
@@ -66,7 +66,6 @@
     "react-apollo": "2.5.7",
     "react-dom": "16.8.1",
     "react-loader": "2.4.5",
-    "react-medium-image-zoom": "3.1.2",
     "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
     "reactstrap": "^8.2.0"
