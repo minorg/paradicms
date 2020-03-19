@@ -67,6 +67,7 @@
   "files": [
     "dist",
     "README.md",
+    ".prettierrc",
     "tsconfig.base.json",
     "tslint.json",
     "webpack.config.base.js",
