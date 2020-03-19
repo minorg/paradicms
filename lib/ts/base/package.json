@@ -65,7 +65,12 @@
   },
   "license": "GPLv3",
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "tsconfig.base.json",
+    "tslint.json",
+    "webpack.config.base.js",
+    "webpack.config.devServer.js"
   ],
   "main": "dist/index.js",
   "scripts": {
