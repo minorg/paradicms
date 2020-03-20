@@ -1,7 +1,8 @@
 // Projects
-lazy val root = project
+lazy val root = (project in file ("."))
   .aggregate(bookApp, genericApp, genericLib)
   .settings(
+    name := "paradicms",
     skip in publish := true
   )
 lazy val baseLib =
