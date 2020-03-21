@@ -1,5 +1,0 @@
-{
-  "extends": [
-    "../../../lib/ts/base/tslint.json"
-  ]
-}

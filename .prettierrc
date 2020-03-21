@@ -1,5 +1,1 @@
-{
-  "bracketSpacing": false,
-  "endOfLine": "lf",
-  "trailingComma": "es5"
-}
+lib/ts/base/.prettierrc
