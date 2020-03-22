@@ -9,7 +9,9 @@ query CollectionOverviewQuery(
     description
     name
     objects(limit: 20, offset: 0) {
-      ...ObjectSummaryFragment
+      objects {
+        ...ObjectSummaryFragment
+      }
     }
     objectsCount
     rights {

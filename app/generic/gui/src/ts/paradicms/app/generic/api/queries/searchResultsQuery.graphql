@@ -2,24 +2,28 @@
 
 query SearchResultsQuery($limit: Int!, $offset: Int!, $text: String!) {
   matchingObjects(limit: $limit, offset: $offset, text: $text) {
-    collection {
+    collections {
       name
       rights {
         text
       }
       uri
     }
-    institution {
+    institutions {
       name
       rights {
         text
       }
       uri
     }
-    object {
-      ...ObjectSummaryFragment
-      rights {
-        text
+    objects {
+      collectionUri
+      institutionUri
+      object {
+        ...ObjectSummaryFragment
+        rights {
+          text
+        }
       }
     }
   }
