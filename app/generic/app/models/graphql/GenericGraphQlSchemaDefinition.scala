@@ -1,23 +1,26 @@
 package models.graphql
 
+import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
 import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
-import org.paradicms.lib.generic.stores.MatchingObject
+import org.paradicms.lib.generic.stores.{CollectionObjects, MatchingObject, MatchingObjects, ObjectFacets}
 import sangria.macros.derive._
-import sangria.schema.{Field, IntType, ListType, OptionType, Schema, fields}
+import sangria.schema.{Field, IntType, ListType, OptionType, ScalarAlias, Schema, StringType, fields}
 
 object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Domain model types, in dependence order
   implicit val ObjectType = deriveObjectType[GenericGraphQlSchemaContext, Object](
     AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
-    ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )
+
+  implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets]()
+  implicit val CollectionObjectsType = deriveObjectType[GenericGraphQlSchemaContext, CollectionObjects]()
 
   implicit val CollectionType = deriveObjectType[GenericGraphQlSchemaContext, Collection](
     AddFields(
       Field(
         "objects",
-        ListType(ObjectType),
+        CollectionObjectsType,
         arguments = LimitArgument :: OffsetArgument :: Nil,
         resolve = ctx => ctx.ctx.store.getCollectionObjects(collectionUri = ctx.value.uri, currentUserUri = ctx.ctx.currentUserUri, limit = ctx.args.arg("limit"), offset = ctx.args.arg("offset"))
       ),
@@ -26,21 +29,20 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
         IntType,
         resolve = ctx => ctx.ctx.store.getCollectionObjectsCount(currentUserUri = ctx.ctx.currentUserUri, collectionUri = ctx.value.uri)
       )
-    ),
-    ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
+    )
   )
 
   implicit val InstitutionType = deriveObjectType[GenericGraphQlSchemaContext, Institution](
     AddFields(
       Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(currentUserUri = ctx.ctx.currentUserUri, collectionUri = ctx.args.arg("uri"))),
       Field("collections", ListType(CollectionType), resolve = ctx => ctx.ctx.store.getInstitutionCollections(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.value.uri))
-    ),
-    ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
+    )
   )
 
-  implicit val ObjectSearchResultType = deriveObjectType[GenericGraphQlSchemaContext, MatchingObject](
+  implicit val MatchingObjectType = deriveObjectType[GenericGraphQlSchemaContext, MatchingObject](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
+  implicit val MatchingObjectsType = deriveObjectType[GenericGraphQlSchemaContext, MatchingObjects]()
 
   // Query types
   val RootQueryType = sangria.schema.ObjectType("RootQuery", fields[GenericGraphQlSchemaContext, Unit](
@@ -48,7 +50,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     Field("currentUser", OptionType(CurrentUserType), resolve = _.ctx.currentUser),
     Field("institutionByUri", InstitutionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getInstitutionByUri(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.args.arg("uri"))),
     Field("institutions", ListType(InstitutionType), resolve = ctx => ctx.ctx.store.getInstitutions(currentUserUri = ctx.ctx.currentUserUri)),
-    Field("matchingObjects", ListType(ObjectSearchResultType), arguments = LimitArgument :: OffsetArgument :: TextArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getMatchingObjects(currentUserUri = ctx.ctx.currentUserUri, limit = ctx.args.arg("limit"), offset = ctx.args.arg("offset"), text = ctx.args.arg("text"))),
+    Field("matchingObjects", MatchingObjectsType, arguments = LimitArgument :: OffsetArgument :: TextArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getMatchingObjects(currentUserUri = ctx.ctx.currentUserUri, limit = ctx.args.arg("limit"), offset = ctx.args.arg("offset"), text = ctx.args.arg("text"))),
     Field("matchingObjectsCount", IntType, arguments = TextArgument :: Nil, resolve = ctx => ctx.ctx.store.getMatchingObjectsCount(currentUserUri = ctx.ctx.currentUserUri, text = ctx.args.arg("text"))),
     Field("objectByUri", ObjectType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getObjectByUri(currentUserUri = ctx.ctx.currentUserUri, objectUri = ctx.args.arg("uri"))),
   ))

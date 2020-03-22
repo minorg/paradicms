@@ -4,8 +4,8 @@ import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Collection, Institution}
 
 final case class MatchingObjects(
-                                  collectionsByUri: Map[Uri, Collection],
+                                  collections: List[Collection],
                                   facets: ObjectFacets,
-                                  institutionsByUri: Map[Uri, Institution],
+                                  institutions: List[Institution],
                                   objects: List[MatchingObject]
                                 )

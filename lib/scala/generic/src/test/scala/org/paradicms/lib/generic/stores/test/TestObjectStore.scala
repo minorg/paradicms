@@ -17,9 +17,9 @@ trait TestObjectStore extends ObjectStore {
 
   override def getMatchingObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, text: String): MatchingObjects =
     MatchingObjects(
-      collectionsByUri = Map(testData.collection.uri -> testData.collection),
+      collections = List(testData.collection),
       facets = testData.objectFacets,
-      institutionsByUri = Map(testData.institution.uri -> testData.institution),
+      institutions = List(testData.institution),
       objects =   if (offset == 0) List(new MatchingObject(collectionUri = testData.collection.uri, institutionUri = testData.institution.uri, object_ = testData.object_)) else List()
     )
 

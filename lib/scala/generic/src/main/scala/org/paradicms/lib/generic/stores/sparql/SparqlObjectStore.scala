@@ -101,14 +101,14 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
       val institutionUris = querySolutions.map(querySolution => querySolution._2)
       val objectUris = querySolutions.map(querySolution => querySolution._3)
 
-      val collectionsByUri = getCollectionsByUris(collectionUris = collectionUris.toSet.toList, currentUserUri = currentUserUri).map(collection => collection.uri -> collection).toMap
-      val institutionsByUri = getInstitutionsByUris(institutionUris = institutionUris.toSet.toList, currentUserUri = currentUserUri).map(institution => institution.uri -> institution).toMap
+      val collections = getCollectionsByUris(collectionUris = collectionUris.toSet.toList, currentUserUri = currentUserUri)
+      val institutions = getInstitutionsByUris(institutionUris = institutionUris.toSet.toList, currentUserUri = currentUserUri)//.map(institution => institution.uri -> institution).toMap
       val objectsByUri: Map[Uri, models.domain.Object] = getObjectsByUris(objectUris = objectUris, currentUserUri = currentUserUri).map(object_ => object_.uri -> object_).toMap
 
       MatchingObjects(
-        collectionsByUri=collectionsByUri,
+        collections=collections,
         facets=getObjectFacets(objectsByUri.values),
-        institutionsByUri=institutionsByUri,
+        institutions=institutions,
         objects=querySolutions.map(querySolution => MatchingObject(
           collectionUri = querySolution._1,
           institutionUri = querySolution._2,
