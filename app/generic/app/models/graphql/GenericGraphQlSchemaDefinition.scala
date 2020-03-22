@@ -1,7 +1,8 @@
 package models.graphql
 
-import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, ObjectSearchResult}
+import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
 import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
+import org.paradicms.lib.generic.stores.MatchingObject
 import sangria.macros.derive._
 import sangria.schema.{Field, IntType, ListType, OptionType, Schema, fields}
 
@@ -37,7 +38,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )
 
-  implicit val ObjectSearchResultType = deriveObjectType[GenericGraphQlSchemaContext, ObjectSearchResult](
+  implicit val ObjectSearchResultType = deriveObjectType[GenericGraphQlSchemaContext, MatchingObject](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
 
