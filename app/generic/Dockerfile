@@ -26,8 +26,8 @@ RUN apt-get update && apt-get install -y default-jre-headless nginx-full unzip
 
 COPY /app/generic/nginx.conf /etc/nginx/sites-available/default
 
-COPY --from=build-app /app/app/generic/target/universal/generic-app-1.0.0-SNAPSHOT.zip /
-RUN unzip -q generic-app-1.0.0-SNAPSHOT.zip && mv /generic-app-1.0.0-SNAPSHOT /app && chmod +x /app/bin/generic-app
+COPY --from=build-app /app/app/generic/target/universal/generic-app-1.0.1-SNAPSHOT.zip /
+RUN unzip -q generic-app-1.0.1-SNAPSHOT.zip && mv /generic-app-1.0.1-SNAPSHOT /app && chmod +x /app/bin/generic-app
 
 COPY --from=build-gui /app/app/generic/gui/dist /usr/share/nginx/html
 
