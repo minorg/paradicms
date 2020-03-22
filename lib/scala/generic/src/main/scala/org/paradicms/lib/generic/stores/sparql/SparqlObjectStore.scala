@@ -120,7 +120,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
 
   private def getObjectFacets(objects: Iterable[models.domain.Object]): ObjectFacets =
     ObjectFacets(
-      subjects=List()
+      subjects=objects.flatMap(object_ => object_.subjects).toSet
     )
 
   private def matchingObjectsGraphPatterns(currentUserUri: Option[Uri]): String =

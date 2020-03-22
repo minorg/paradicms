@@ -13,7 +13,9 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
   )
 
-  implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets]()
+  implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets](
+    ReplaceField("subjects", Field("subjects", ListType(StringType), resolve = _.value.subjects.toList))
+  )
   implicit val CollectionObjectsType = deriveObjectType[GenericGraphQlSchemaContext, CollectionObjects]()
 
   implicit val CollectionType = deriveObjectType[GenericGraphQlSchemaContext, Collection](
