@@ -1,11 +1,11 @@
 package org.paradicms.lib.generic.models.graphql
 
 import org.paradicms.lib.generic.models.domain.{DerivedImageSet, Image, Rights, User}
-import sangria.macros.derive.{ReplaceField, deriveObjectType}
+import sangria.macros.derive.{ExcludeFields, ReplaceField, deriveObjectType}
 import sangria.schema.{Argument, Field, IntType, OptionType, StringType, fields}
 
 abstract class AbstractGraphQlSchemaDefinition {
-  implicit val urlType = UrlType
+  implicit val uriType = UriType
 
   // Scalar argument types
   val LimitArgument = Argument("limit", IntType, description = "Limit")
@@ -20,6 +20,7 @@ abstract class AbstractGraphQlSchemaDefinition {
 
   // Image
   implicit val ImageType = deriveObjectType[Unit, Image](
+    ReplaceField("url", Field("url", UrlType, resolve = _.value.url))
   )
 
   implicit val DerivedImageSetType = deriveObjectType[Unit, DerivedImageSet](
