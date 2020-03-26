@@ -1,5 +1,6 @@
 fragment RightsFragment on Rights {
   holder
   license
+  statementUri
   text
 }

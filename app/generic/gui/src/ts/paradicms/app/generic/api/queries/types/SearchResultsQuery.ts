@@ -8,7 +8,7 @@
 
 export interface SearchResultsQuery_matchingObjects_collections_rights {
   __typename: "Rights";
-  text: string;
+  text: string | null;
 }
 
 export interface SearchResultsQuery_matchingObjects_collections {
@@ -20,7 +20,7 @@ export interface SearchResultsQuery_matchingObjects_collections {
 
 export interface SearchResultsQuery_matchingObjects_institutions_rights {
   __typename: "Rights";
-  text: string;
+  text: string | null;
 }
 
 export interface SearchResultsQuery_matchingObjects_institutions {
@@ -37,7 +37,7 @@ export interface SearchResultsQuery_matchingObjects_objects_object_thumbnail {
 
 export interface SearchResultsQuery_matchingObjects_objects_object_rights {
   __typename: "Rights";
-  text: string;
+  text: string | null;
 }
 
 export interface SearchResultsQuery_matchingObjects_objects_object {
