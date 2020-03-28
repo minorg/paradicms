@@ -23,6 +23,15 @@ final class SparqlObjectStoreSpec extends AbstractSparqlStoreSpec {
       }
     }
 
+    "get collection object facets" in {
+      withUnknownHostExceptionCatch { () =>
+        val institution = store.getInstitutions(currentUserUri = currentUserUri)(0)
+        val collection = store.getInstitutionCollections(currentUserUri = currentUserUri, institutionUri = institution.uri)(0)
+        val facets = store.getCollectionObjects(collectionUri = collection.uri, currentUserUri = currentUserUri, limit = 10, offset = 0).facets
+        facets.subjects.size should be > 0
+      }
+    }
+
     "count collection objects" in {
       withUnknownHostExceptionCatch { () =>
         val institution = store.getInstitutions(currentUserUri = currentUserUri)(0)
@@ -51,13 +60,13 @@ final class SparqlObjectStoreSpec extends AbstractSparqlStoreSpec {
       }
     }
 
-    "get matching object facets" in {
-      withUnknownHostExceptionCatch { () => {
-        val facets = store.getMatchingObjects(limit = 10, offset = 0, text = "back", currentUserUri = currentUserUri).facets
-        facets.subjects.size should be > 1
-      }
-      }
-    }
+//    "get matching object facets" in {
+//      withUnknownHostExceptionCatch { () => {
+//        val facets = store.getMatchingObjects(limit = 10, offset = 0, text = "back", currentUserUri = currentUserUri).facets
+//        facets.subjects.size should be > 1
+//      }
+//      }
+//    }
 
     "get matching objects count" in {
       withUnknownHostExceptionCatch { () =>
