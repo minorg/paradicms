@@ -10,7 +10,7 @@ import org.paradicms.lib.generic.stores.UserStore
 
 import scala.collection.JavaConverters._
 
-trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns {
+trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns with SparqlPrefixes {
   override final def getUserByUri(userUri: Uri): Option[User] =
     getUsersByUris(List(userUri)).headOption
 
@@ -18,8 +18,7 @@ trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns {
     // Should be safe to inject userUris since they've already been parsed as URIs
     val query = QueryFactory.create(
       s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
+         |${PREFIXES}
          |CONSTRUCT {
          |  ?user ?p ?o .
          |} WHERE {
@@ -39,9 +38,7 @@ trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns {
     val update =
       new ParameterizedSparqlString(
         s"""
-           |PREFIX cms: <${CMS.URI}>
-           |PREFIX foaf: <${FOAF.getURI}>
-           |PREFIX rdf: <${RDF.getURI}>
+           |${PREFIXES}
            |INSERT DATA {
            |  GRAPH <urn:system:user> {
            |    <${user.uri.toString()}> rdf:type cms:User .

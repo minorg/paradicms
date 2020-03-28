@@ -51,6 +51,14 @@ final class SparqlObjectStoreSpec extends AbstractSparqlStoreSpec {
       }
     }
 
+    "get matching object facets" in {
+      withUnknownHostExceptionCatch { () => {
+        val facets = store.getMatchingObjects(limit = 10, offset = 0, text = "back", currentUserUri = currentUserUri).facets
+        facets.subjects.size should be > 1
+      }
+      }
+    }
+
     "get matching objects count" in {
       withUnknownHostExceptionCatch { () =>
         val count = store.getMatchingObjectsCount(text = "back", currentUserUri = currentUserUri)
