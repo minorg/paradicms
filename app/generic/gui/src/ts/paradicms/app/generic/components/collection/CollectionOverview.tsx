@@ -36,11 +36,11 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   });
 
   const setObjects = (
-    objects: CollectionOverviewQuery_collectionByUri_objects[]
+    objects: CollectionOverviewQuery_collectionByUri_objects
   ) => {
     setState(prevState =>
       Object.assign({}, prevState, {
-        objects: objects.map(object_ => ({
+        objects: objects.objects.map(object_ => ({
           collectionUri,
           institutionUri,
           ...object_,

@@ -5,7 +5,9 @@ import * as searchResultsQuery from "paradicms/app/generic/api/queries/searchRes
 import {
   SearchResultsQuery,
   SearchResultsQuery_matchingObjects,
-  SearchResultsQueryVariables,
+  SearchResultsQuery_matchingObjects_collections,
+  SearchResultsQuery_matchingObjects_institutions,
+  SearchResultsQueryVariables
 } from "paradicms/app/generic/api/queries/types/SearchResultsQuery";
 import {ObjectsGallery} from "paradicms/app/generic/components/object/ObjectsGallery";
 import {Frame} from "paradicms/app/generic/components/frame/Frame";
@@ -33,15 +35,20 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps<{
   console.info("State is ", JSON.stringify(state));
 
   const setObjects = (
-    objects: SearchResultsQuery_matchingObjects[],
+    objects: SearchResultsQuery_matchingObjects,
     objectsCount: number
   ) => {
+    const collectionsByUri: {[index: string]: SearchResultsQuery_matchingObjects_collections} = {};
+    objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
+    const institutionsByUri: {[index: string]: SearchResultsQuery_matchingObjects_institutions} = {};
+    objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
     setState(prevState =>
       Object.assign({}, prevState, {
         maxPage: Math.ceil(objectsCount / 10),
-        objects: objects.map(result => {
-          const {collection, institution, object} = result;
-          const {rights: objectRights, ...otherObjectProps} = object;
+        objects: objects.objects.map(result => {
+          const collection = collectionsByUri[result.collectionUri]!;
+          const institution = institutionsByUri[result.institutionUri]!;
+          const {rights: objectRights, ...otherObjectProps} = result.object;
           const rights = objectRights
             ? objectRights
             : collection.rights
@@ -56,8 +63,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps<{
             ...otherObjectProps,
           };
         }),
-      })
-    );
+      }));
   };
 
   const {loading, data, refetch} = useQuery<

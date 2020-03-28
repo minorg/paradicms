@@ -21,8 +21,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessChecks {
 
     val query = QueryFactory.create(
       s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
+         |${PREFIXES}
          |CONSTRUCT {
          |  $institutionVariable ?p ?o
          |} WHERE {
@@ -45,8 +44,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessChecks {
 
     val query = QueryFactory.create(
       s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
+         |${PREFIXES}
          |CONSTRUCT {
          |  ?institution ?p ?o
          |} WHERE {
@@ -72,8 +70,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessChecks {
 
     val query = QueryFactory.create(
       s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
+         |${PREFIXES}
          |CONSTRUCT {
          |  ?institution ?p ?o .
          |} WHERE {

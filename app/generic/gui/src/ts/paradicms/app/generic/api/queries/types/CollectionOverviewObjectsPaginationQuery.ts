@@ -6,22 +6,27 @@
 // GraphQL query operation: CollectionOverviewObjectsPaginationQuery
 // ====================================================
 
-export interface CollectionOverviewObjectsPaginationQuery_collectionByUri_objects_thumbnail {
+export interface CollectionOverviewObjectsPaginationQuery_collectionByUri_objects_objects_thumbnail {
   __typename: "Image";
   url: string;
 }
 
-export interface CollectionOverviewObjectsPaginationQuery_collectionByUri_objects {
+export interface CollectionOverviewObjectsPaginationQuery_collectionByUri_objects_objects {
   __typename: "Object";
   description: string | null;
   title: string;
-  thumbnail: CollectionOverviewObjectsPaginationQuery_collectionByUri_objects_thumbnail | null;
+  thumbnail: CollectionOverviewObjectsPaginationQuery_collectionByUri_objects_objects_thumbnail | null;
   uri: string;
+}
+
+export interface CollectionOverviewObjectsPaginationQuery_collectionByUri_objects {
+  __typename: "CollectionObjects";
+  objects: CollectionOverviewObjectsPaginationQuery_collectionByUri_objects_objects[];
 }
 
 export interface CollectionOverviewObjectsPaginationQuery_collectionByUri {
   __typename: "Collection";
-  objects: CollectionOverviewObjectsPaginationQuery_collectionByUri_objects[];
+  objects: CollectionOverviewObjectsPaginationQuery_collectionByUri_objects;
 }
 
 export interface CollectionOverviewObjectsPaginationQuery {

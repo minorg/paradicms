@@ -1,19 +1,11 @@
 package org.paradicms.lib.generic.models.graphql
 
-import io.lemonlabs.uri.{Uri, Url}
 import org.paradicms.lib.generic.models.domain.{DerivedImageSet, Image, Rights, User}
-import sangria.macros.derive.{ReplaceField, deriveObjectType}
-import sangria.schema.{Argument, Field, IntType, OptionType, ScalarAlias, StringType, fields}
+import sangria.macros.derive.{ExcludeFields, ReplaceField, deriveObjectType}
+import sangria.schema.{Argument, Field, IntType, OptionType, StringType, fields}
 
 abstract class AbstractGraphQlSchemaDefinition {
-  // Scalar aliases
-  implicit val UriType = ScalarAlias[Uri, String](
-    StringType, _.toString, uri => Right(Uri.parse(uri))
-  )
-
-  implicit val UrlType = ScalarAlias[Url, String](
-    StringType, _.toString, uri => Right(Url.parse(uri))
-  )
+  implicit val uriType = UriType
 
   // Scalar argument types
   val LimitArgument = Argument("limit", IntType, description = "Limit")
@@ -36,6 +28,5 @@ abstract class AbstractGraphQlSchemaDefinition {
 
   // Rights
   implicit val RightsType = deriveObjectType[Unit, Rights](
-    ReplaceField("license", Field("license", OptionType(UriType), resolve = _.value.license))
   )
 }

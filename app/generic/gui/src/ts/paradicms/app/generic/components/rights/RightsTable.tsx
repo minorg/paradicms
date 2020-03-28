@@ -9,12 +9,13 @@ export const RightsTable: React.FunctionComponent<{rights: Rights}> = ({
 }) => (
   <table className="table-bordered w-100">
     <tbody>
+    {(rights.text || rights.statementUri) ?
       <tr>
         <td className="px-2">
           <strong>Rights</strong>
         </td>
-        <td className="px-2">{rights.text}</td>
-      </tr>
+        <td className="px-2">{(rights.text && rights.statementUri) ? <a href={rights.statementUri}>{rights.text}</a> : <React.Fragment>{rights.text}</React.Fragment>}</td>
+      </tr> : null}
       {rights.holder ? (
         <tr>
           <td className="px-2">

@@ -10,7 +10,8 @@ export interface ObjectOverviewQuery_collectionByUri_rights {
   __typename: "Rights";
   holder: string | null;
   license: string | null;
-  text: string;
+  statementUri: string | null;
+  text: string | null;
 }
 
 export interface ObjectOverviewQuery_collectionByUri {
@@ -23,7 +24,8 @@ export interface ObjectOverviewQuery_institutionByUri_rights {
   __typename: "Rights";
   holder: string | null;
   license: string | null;
-  text: string;
+  statementUri: string | null;
+  text: string | null;
 }
 
 export interface ObjectOverviewQuery_institutionByUri {
@@ -56,7 +58,8 @@ export interface ObjectOverviewQuery_objectByUri_rights {
   __typename: "Rights";
   holder: string | null;
   license: string | null;
-  text: string;
+  statementUri: string | null;
+  text: string | null;
 }
 
 export interface ObjectOverviewQuery_objectByUri {

@@ -7,21 +7,28 @@ import org.paradicms.lib.base.models.domain.DublinCoreResourceProperties
 final case class Rights(
                          holder: Option[String] = None,
                          license: Option[Uri] = None,
-                         text: String
+                         statementUri: Option[Uri] = None,
+                         text: Option[String] = None
                        )
 
 object Rights {
   implicit class RightsResource(val resource: Resource) extends DublinCoreResourceProperties
 
   def apply(resource: RightsResource): Option[Rights] = {
-    val texts = resource.rights()
-    if (texts.isEmpty) {
+    val rights = resource.rights()
+    if (rights.isEmpty) {
+      return None
+    }
+    val statementUris = rights.filter(node => node.isURIResource).map(node => Uri.parse(node.asResource().getURI))
+    val texts = rights.filter(node => node.isLiteral).map(node => node.asLiteral().getString)
+    if (statementUris.isEmpty && texts.isEmpty) {
       return None
     }
     Some(Rights(
       holder = resource.rightsHolders.headOption,
       license = resource.licenses().headOption,
-      text = texts.mkString("\n"),
+      statementUri = statementUris.headOption,
+      text = if (!texts.isEmpty) Some(texts.mkString("\n")) else None
     ))
   }
 }

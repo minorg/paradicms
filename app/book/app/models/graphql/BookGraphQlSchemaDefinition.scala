@@ -9,7 +9,6 @@ object BookGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Domain model types, in dependence order
   implicit val BookType = deriveObjectType[BookGraphQlSchemaContext, Object](
     AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
-    ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )
 
   implicit val CollectionType = deriveObjectType[BookGraphQlSchemaContext, Collection](
@@ -26,7 +25,6 @@ object BookGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     //        resolve = ctx => ctx.ctx.store.getCollectionObjectsCount(currentUserUri = ctx.ctx.currentUserUri, collectionUri = ctx.value.uri)
     //      )
     //    ),
-    ReplaceField("uri", Field("uri", UriType, resolve = _.value.uri))
   )
 
   //  implicit val InstitutionType = deriveObjectType[BookGraphQlSchemaContext, Institution](

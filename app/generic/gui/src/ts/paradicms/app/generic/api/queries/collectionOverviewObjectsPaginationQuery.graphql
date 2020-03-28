@@ -7,7 +7,9 @@ query CollectionOverviewObjectsPaginationQuery(
 ) {
   collectionByUri(uri: $collectionUri) {
     objects(limit: $limit, offset: $offset) {
-      ...ObjectSummaryFragment
+      objects {
+        ...ObjectSummaryFragment
+      }
     }
   }
 }

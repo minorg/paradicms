@@ -1,6 +1,7 @@
 package org.paradicms.lib.base.models.domain
 
 import io.lemonlabs.uri.Uri
+import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.vocabulary.{DCTerms, DC_11}
 
 trait DublinCoreResourceProperties extends ResourceProperties {
@@ -28,8 +29,8 @@ trait DublinCoreResourceProperties extends ResourceProperties {
 
   def publishers(): List[String] = getPropertyObjectStrings(DCTerms.publisher) ::: getPropertyObjectStrings(DC_11.publisher)
 
-  def rights(): List[String] =
-    getPropertyObjectStrings(DCTerms.rights) ::: getPropertyObjectStrings(DC_11.rights)
+  def rights(): List[RDFNode] =
+    getPropertyObjects(DCTerms.rights) ::: getPropertyObjects(DC_11.rights)
 
   def rightsHolders(): List[String] = getPropertyObjectStrings(DCTerms.rightsHolder)
 

@@ -10,5 +10,6 @@ export interface RightsFragment {
   __typename: "Rights";
   holder: string | null;
   license: string | null;
-  text: string;
+  statementUri: string | null;
+  text: string | null;
 }

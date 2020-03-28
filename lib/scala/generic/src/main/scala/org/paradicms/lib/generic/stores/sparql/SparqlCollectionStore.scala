@@ -29,8 +29,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessChecks {
 
     val query = QueryFactory.create(
       s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
+         |${PREFIXES}
          |CONSTRUCT {
          |  ?collection ?p ?o .
          |} WHERE {
@@ -57,8 +56,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessChecks {
 
     val query = QueryFactory.create(
       s"""
-         |PREFIX cms: <${CMS.URI}>
-         |PREFIX rdf: <${RDF.getURI}>
+         |${PREFIXES}
          |CONSTRUCT {
          |  ?collection ?p ?o
          |} WHERE {

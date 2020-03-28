@@ -2,7 +2,7 @@ package org.paradicms.lib.generic.stores.sparql
 
 import io.lemonlabs.uri.Uri
 
-trait SparqlAccessChecks extends SparqlConnectionLoanPatterns {
+trait SparqlAccessChecks extends SparqlConnectionLoanPatterns with SparqlPrefixes {
   /**
    * Create ready-to-use WHERE block contents that wrap common query-specific patterns in access check UNION blocks
    */
