@@ -12,6 +12,10 @@
     paradicms:owner paradicms:public ;
     foaf:name "Test institution" .
 
+<http://example.com/user> a paradicms:User ;
+    foaf:mbox "test@example.com" ;
+    foaf:name "Test user" .
+
 <http://example.com/collection> a paradicms:Collection ;
     dcterms:title "Test collection" ;
     paradicms:object <http://example.com/object0>,
