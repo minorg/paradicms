@@ -53,12 +53,14 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
          query ObjectsQuery($$collectionUri: String!) {
            collectionByUri(uri: $$collectionUri) {
              objects(limit: 1, offset: 0) {
-               uri
+               objects {
+                 uri
+               }
              }
            }
          }
        """
-      val objects = executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("collectionByUri").result.get.as[JsObject].value.get("objects").get.as[JsArray].value
+      val objects = executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("collectionByUri").result.get.as[JsObject].value.get("objects").get.as[JsObject].value.get("objects").get.as[JsArray].value
       objects.size must equal(1)
     }
 
@@ -112,16 +114,16 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
         graphql"""
          query SearchObjectsQuery($$text: String!) {
            matchingObjects(limit: 10, offset: 0, text: $$text) {
-               object {
-                   uri
+               objects {
+                 object {
+                     uri
+                 }
                }
            }
          }
        """
-      executeQuery(query, vars = Json.obj("text" -> "irrelevant")) must be(Json.parse(
-        s"""
-           |{"data":{"matchingObjects":[{"object":{"uri":"${testData.object_.uri.toString()}"}}]}}
-           |""".stripMargin))
+      val result = Json.stringify(executeQuery(query, vars = Json.obj("text" -> testData.object_.title)))
+      result must include(testData.object_.uri.toString())
     }
 
 
