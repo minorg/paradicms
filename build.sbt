@@ -61,6 +61,8 @@ lazy val genericLib =
       guice,
       ws,
       "com.typesafe.play" %% "play" % playVersion,
+      // Include jena-text for the test store
+      "org.apache.jena" % "jena-text" % jenaVersion % Test,
       "org.sangria-graphql" %% "sangria" % "1.4.2",
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
@@ -70,7 +72,7 @@ lazy val genericLib =
   )
 
 // Constants
-val jenaVersion = "3.13.1"
+val jenaVersion = "3.14.0"
 val playVersion = "2.8.0"
 val slf4jVersion = "1.7.25"
 
