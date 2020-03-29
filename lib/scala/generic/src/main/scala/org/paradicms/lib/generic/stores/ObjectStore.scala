@@ -4,13 +4,9 @@ import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.Object
 
 trait ObjectStore {
-  def getCollectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], limit: Int, offset: Int): CollectionObjects
+  def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectsQuery): GetObjectsResult
 
-  def getCollectionObjectsCount(collectionUri: Uri, currentUserUri: Option[Uri]): Int
-
-  def getMatchingObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, text: String): MatchingObjects
-
-  def getMatchingObjectsCount(currentUserUri: Option[Uri], text: String): Int
+  def getObjectsCount(currentUserUri: Option[Uri], query: ObjectsQuery): Int
 
   def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): Object
 }
