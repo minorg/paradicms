@@ -1,6 +1,6 @@
 package org.paradicms.lib.generic.stores.sparql
 
-import org.paradicms.lib.generic.UnitSpec
+import org.paradicms.lib.generic.{GenericTestData, UnitSpec}
 
 final class SparqlInstitutionStoreSpec extends UnitSpec {
 
@@ -9,10 +9,11 @@ final class SparqlInstitutionStoreSpec extends UnitSpec {
   "SPARQL store" should {
     val store = new TestSparqlInstitutionStore
     val currentUserUri = store.currentUserUri
+    val testData = GenericTestData
 
     "list all institutions" in {
-      val institutions = store.getInstitutions(currentUserUri = currentUserUri)
-      institutions.size should be > 0
+      val institutions = store.getInstitutions(currentUserUri = currentUserUri).sortBy(institution => institution.uri.toString())
+      institutions should equal(testData.institutions)
     }
 
     "get an institution by URI" in {
