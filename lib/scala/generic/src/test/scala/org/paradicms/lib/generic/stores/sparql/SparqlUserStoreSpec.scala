@@ -1,17 +1,18 @@
 package org.paradicms.lib.generic.stores.sparql
 
-final class SparqlUserStoreSpec extends AbstractSparqlStoreSpec {
+import org.paradicms.lib.generic.{GenericTestData, UnitSpec}
 
-  private final class TestSparqlUserStore(protected val configuration: SparqlStoreConfiguration) extends SparqlUserStore
+final class SparqlUserStoreSpec extends UnitSpec {
+
+  private final class TestSparqlUserStore extends TestSparqlStore with SparqlUserStore
 
   "SPARQL store" should {
-    val store = new TestSparqlUserStore(configuration)
+    val store = new TestSparqlUserStore
+    val testData = GenericTestData
 
     "put and get a user" in {
-      withUnknownHostExceptionCatch { () =>
-        store.putUser(testData.user)
-        store.getUserByUri(testData.user.uri).get should equal(testData.user)
-      }
+      store.putUser(testData.user)
+      store.getUserByUri(testData.user.uri).get should equal(testData.user)
     }
   }
 }

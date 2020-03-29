@@ -1,6 +1,6 @@
 package models.graphql
 
-import org.paradicms.lib.generic.stores.GenericTestData
+import org.paradicms.lib.generic.GenericTestData
 import org.scalatestplus.play.PlaySpec
 import play.api.libs.json.{JsArray, JsObject, Json}
 import play.api.test.FakeRequest
@@ -8,14 +8,14 @@ import sangria.ast.Document
 import sangria.execution.Executor
 import sangria.macros._
 import sangria.marshalling.playJson._
-import stores.test.TestGenericStore
+import stores.TestGenericStore
 
 import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
 class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
-  val testData = new GenericTestData
+  val testData = GenericTestData
 
   "GraphQL schema" must {
     "return a list of institutions" in {

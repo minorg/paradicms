@@ -1,25 +1,24 @@
 package org.paradicms.lib.generic.stores.sparql
 
-final class SparqlInstitutionStoreSpec extends AbstractSparqlStoreSpec {
+import org.paradicms.lib.generic.UnitSpec
 
-  private final class TestSparqlInstitutionStore(protected val configuration: SparqlStoreConfiguration) extends SparqlInstitutionStore
+final class SparqlInstitutionStoreSpec extends UnitSpec {
+
+  private final class TestSparqlInstitutionStore extends TestSparqlStore with SparqlInstitutionStore
 
   "SPARQL store" should {
-    val store = new TestSparqlInstitutionStore(configuration)
+    val store = new TestSparqlInstitutionStore
+    val currentUserUri = store.currentUserUri
 
     "list all institutions" in {
-      withUnknownHostExceptionCatch { () =>
-        val institutions = store.getInstitutions(currentUserUri = currentUserUri)
-        institutions.size should be > 0
-      }
+      val institutions = store.getInstitutions(currentUserUri = currentUserUri)
+      institutions.size should be > 0
     }
 
     "get an institution by URI" in {
-      withUnknownHostExceptionCatch { () =>
-        val leftInstitution = store.getInstitutions(currentUserUri = currentUserUri)(0)
-        val rightInstitution = store.getInstitutionByUri(currentUserUri = currentUserUri, institutionUri = leftInstitution.uri)
-        leftInstitution should equal(rightInstitution)
-      }
+      val leftInstitution = store.getInstitutions(currentUserUri = currentUserUri)(0)
+      val rightInstitution = store.getInstitutionByUri(currentUserUri = currentUserUri, institutionUri = leftInstitution.uri)
+      leftInstitution should equal(rightInstitution)
     }
   }
 }
