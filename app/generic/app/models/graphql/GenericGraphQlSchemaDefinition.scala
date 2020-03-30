@@ -1,9 +1,11 @@
 package models.graphql
 
+import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
 import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
 import org.paradicms.lib.generic.stores.{GetObjectsResult, ObjectFacets, ObjectWithContext, ObjectsQuery}
 import sangria.macros.derive._
+import sangria.marshalling.{CoercedScalaResultMarshaller, FromInput}
 import sangria.schema.{Argument, Field, IntType, ListType, OptionType, Schema, StringType, fields}
 
 final case class CollectionObjects(facets: ObjectFacets, objects: List[Object])
@@ -34,7 +36,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
               currentUserUri = ctx.ctx.currentUserUri,
               limit = ctx.args.arg("limit"),
               offset = ctx.args.arg("offset"),
-              query = ObjectsQuery(collectionUri = Some(ctx.value.uri))
+              query = ObjectsQuery.collection(ctx.value.uri)
             )
           CollectionObjects(
             facets = result.facets,
@@ -45,7 +47,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
       Field(
         "objectsCount",
         IntType,
-        resolve = ctx => ctx.ctx.store.getObjectsCount(currentUserUri = ctx.ctx.currentUserUri, query = ObjectsQuery(collectionUri = Some(ctx.value.uri)))
+        resolve = ctx => ctx.ctx.store.getObjectsCount(currentUserUri = ctx.ctx.currentUserUri, query = ObjectsQuery.collection(ctx.value.uri))
       )
     )
   )
@@ -60,6 +62,18 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   val GetObjectsResultType = deriveObjectType[GenericGraphQlSchemaContext, GetObjectsResult]()
 
   // Input types
+  implicit val objectsQueryFromInput = new FromInput[ObjectsQuery] {
+    val marshaller = CoercedScalaResultMarshaller.default
+    def fromResult(node: marshaller.Node) = {
+      val ad = node.asInstanceOf[Map[String, Any]]
+
+      ObjectsQuery(
+        collectionUri = ad.get("collectionUri").flatMap(_.asInstanceOf[Option[Uri]]),
+        institutionUri = ad.get("institutionUri").flatMap(_.asInstanceOf[Option[Uri]]),
+        text = ad.get("text").flatMap(_.asInstanceOf[Option[String]])
+      )
+    }
+  }
   val ObjectsQueryInputType = deriveInputObjectType[ObjectsQuery]()
 
   // Argument types

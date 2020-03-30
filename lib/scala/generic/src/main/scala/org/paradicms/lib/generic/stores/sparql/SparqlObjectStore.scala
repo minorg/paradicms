@@ -113,16 +113,12 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
       "?collection rdf:type cms:Collection .",
       "?collection cms:object ?object .",
       "?object rdf:type cms:Object .",
-    ) ++ query.text.map(_ => List("?object text:query ?text .")).getOrElse(List())
+    ) ++ query.collectionUri.map(collectionUri => List(s"VALUES ?collection { <${collectionUri}> }")).getOrElse(List())
+      ++ query.text.map(_ => List("?object text:query ?text .")).getOrElse(List())
       ++ additionalGraphPatterns)
 
-  private def objectsQueryParams(currentUserUri: Option[Uri], query: ObjectsQuery): Map[String, RDFNode] = {
-    (
-      query.collectionUri.flatMap(collectionUri => Some(("collection", ResourceFactory.createResource(collectionUri.toString())))) ++
-        query.text.flatMap(text => Some(("text", ResourceFactory.createStringLiteral(text)))) ++
-        List()
-      ).toMap
-  }
+  private def objectsQueryParams(currentUserUri: Option[Uri], query: ObjectsQuery): Map[String, RDFNode] =
+      query.text.flatMap(text => Some(("text", ResourceFactory.createStringLiteral(text)))).toMap
 
   override final def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): models.domain.Object = {
     getObjectsByUris(currentUserUri = currentUserUri, objectUris = List(objectUri)).head
