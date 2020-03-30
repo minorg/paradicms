@@ -36,7 +36,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
-  override final def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectsQuery): GetObjectsResult = {
+  override final def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectsQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map()): GetObjectsResult = {
     val queryString = new ParameterizedSparqlString(
       s"""
          |${PREFIXES}
@@ -55,13 +55,16 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
         Uri.parse(querySolution.get("institution").asResource().getURI),
         Uri.parse(querySolution.get("object").asResource().getURI)
       ))
-      val collectionUris = querySolutions.map(querySolution => querySolution._1)
-      val institutionUris = querySolutions.map(querySolution => querySolution._2)
-      val objectUris = querySolutions.map(querySolution => querySolution._3)
+      val collectionUris = querySolutions.map(querySolution => querySolution._1).toSet
+      val institutionUris = querySolutions.map(querySolution => querySolution._2).toSet
+      val objectUris = querySolutions.map(querySolution => querySolution._3).toSet
 
-      val collections = getCollectionsByUris(collectionUris = collectionUris.toSet.toList, currentUserUri = currentUserUri)
-      val institutions = getInstitutionsByUris(institutionUris = institutionUris.toSet.toList, currentUserUri = currentUserUri) //.map(institution => institution.uri -> institution).toMap
-      val objectsByUri: Map[Uri, models.domain.Object] = getObjectsByUris(objectUris = objectUris, currentUserUri = currentUserUri).map(object_ => object_.uri -> object_).toMap
+      val (cachedCollectionUris, missingCollectionUris) = collectionUris.partition(collectionUri => cachedCollectionsByUri.contains(collectionUri))
+      val collections =
+        cachedCollectionUris.toList.map(collectionUri => cachedCollectionsByUri(collectionUri)) ++
+        getCollectionsByUris(collectionUris = missingCollectionUris.toList, currentUserUri = currentUserUri)
+      val institutions = getInstitutionsByUris(institutionUris = institutionUris.toList, currentUserUri = currentUserUri) //.map(institution => institution.uri -> institution).toMap
+      val objectsByUri: Map[Uri, models.domain.Object] = getObjectsByUris(objectUris = objectUris.toList, currentUserUri = currentUserUri).map(object_ => object_.uri -> object_).toMap
 
       GetObjectsResult(
         collections = collections,
@@ -125,6 +128,9 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
   }
 
   protected final def getObjectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): List[models.domain.Object] = {
+    if (objectUris.isEmpty) {
+      return List()
+    }
     // Should be safe to inject objectUris since they've already been parsed as URIs
     val queryWhere = accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
       "?institution rdf:type cms:Institution .",

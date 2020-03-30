@@ -60,6 +60,10 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessChecks {
   }
 
   override final def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution] = {
+    if (institutionUris.isEmpty) {
+      return List()
+    }
+
     // Should be safe to inject institutionUris since they've already been parsed as URIs
     val queryWhere =
       accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(

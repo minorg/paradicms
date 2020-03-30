@@ -33,9 +33,10 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
         resolve = ctx => {
           val result =
             ctx.ctx.store.getObjects(
+              cachedCollectionsByUri = Map(ctx.value.uri -> ctx.value),
               currentUserUri = ctx.ctx.currentUserUri,
-              limit = ctx.args.arg("limit"),
-              offset = ctx.args.arg("offset"),
+              limit = ctx.args.arg("limit").asInstanceOf[Integer],
+              offset = ctx.args.arg("offset").asInstanceOf[Integer],
               query = ObjectsQuery.collection(ctx.value.uri)
             )
           CollectionObjects(
