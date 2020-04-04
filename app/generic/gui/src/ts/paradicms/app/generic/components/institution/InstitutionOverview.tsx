@@ -1,13 +1,13 @@
-import {RouteComponentProps} from "react-router";
+import { RouteComponentProps } from "react-router";
 import * as React from "react";
-import {CollectionsList} from "paradicms/app/generic/components/collection/CollectionsList";
-import {ApolloQueryWrapper} from "paradicms/app/generic/api/ApolloQueryWrapper";
-import * as institutionOverviewQuery from "paradicms/app/generic/api/queries/institutionOverviewQuery.graphql";
+import { CollectionsList } from "paradicms/app/generic/components/collection/CollectionsList";
+import { ApolloQueryWrapper } from "paradicms/app/generic/api/ApolloQueryWrapper";
+import * as InstitutionOverviewQueryDocument from "paradicms/app/generic/api/queries/InstitutionOverviewQuery.graphql";
 import {
   InstitutionOverviewQuery,
-  InstitutionOverviewQueryVariables,
+  InstitutionOverviewQueryVariables
 } from "paradicms/app/generic/api/queries/types/InstitutionOverviewQuery";
-import {InstitutionCollectionObjectOverview} from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
+import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
 
 export const InstitutionOverview: React.FunctionComponent<RouteComponentProps<{
   institutionUri: string;
@@ -18,7 +18,7 @@ export const InstitutionOverview: React.FunctionComponent<RouteComponentProps<{
       InstitutionOverviewQuery,
       InstitutionOverviewQueryVariables
     >
-      query={institutionOverviewQuery}
+      query={InstitutionOverviewQueryDocument}
       variables={{institutionUri}}
     >
       {({data}) => (

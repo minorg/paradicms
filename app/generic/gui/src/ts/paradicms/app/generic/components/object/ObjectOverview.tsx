@@ -1,24 +1,15 @@
-import {RouteComponentProps} from "react-router";
+import { RouteComponentProps } from "react-router";
 import * as React from "react";
-import {InstitutionCollectionObjectOverview} from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
-import {ApolloQueryWrapper} from "paradicms/app/generic/api/ApolloQueryWrapper";
+import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
+import { ApolloQueryWrapper } from "paradicms/app/generic/api/ApolloQueryWrapper";
 import {
   ObjectOverviewQuery,
-  ObjectOverviewQueryVariables,
+  ObjectOverviewQueryVariables
 } from "paradicms/app/generic/api/queries/types/ObjectOverviewQuery";
-import * as objectOverviewQuery from "paradicms/app/generic/api/queries/objectOverviewQuery.graphql";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Container,
-  ListGroup,
-  ListGroupItem,
-  Row,
-} from "reactstrap";
-import {ObjectImagesCarousel} from "paradicms/app/generic/components/object/ObjectImagesCarousel";
-import {RightsTable} from "paradicms/app/generic/components/rights/RightsTable";
+import * as ObjectOverviewQueryDocument from "paradicms/app/generic/api/queries/ObjectOverviewQuery.graphql";
+import { Card, CardBody, CardHeader, CardTitle, Container, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { ObjectImagesCarousel } from "paradicms/app/generic/components/object/ObjectImagesCarousel";
+import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
 
 // type Object = ObjectCardObject;
 
@@ -63,7 +54,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
 
   return (
     <ApolloQueryWrapper<ObjectOverviewQuery, ObjectOverviewQueryVariables>
-      query={objectOverviewQuery}
+      query={ObjectOverviewQueryDocument}
       variables={{collectionUri, institutionUri, objectUri}}
     >
       {({data}) => {

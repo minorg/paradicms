@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "react-router";
 import * as React from "react";
 import { useState } from "react";
-import * as searchResultsQuery from "paradicms/app/generic/api/queries/searchResultsQuery.graphql";
+import * as SearchResultsQueryDocument from "paradicms/app/generic/api/queries/SearchResultsQuery.graphql";
 import {
   SearchResultsQuery,
   SearchResultsQuery_objects,
@@ -69,7 +69,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps<{
   const {loading, data, refetch} = useQuery<
     SearchResultsQuery,
     SearchResultsQueryVariables
-  >(searchResultsQuery, {
+  >(SearchResultsQueryDocument, {
     variables: {
       limit: 10,
       offset: 0,

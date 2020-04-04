@@ -1,0 +1,1 @@
+// export const ObjectFacets: React.FunctionComponent<{ objectFacets: SearchResults}>
