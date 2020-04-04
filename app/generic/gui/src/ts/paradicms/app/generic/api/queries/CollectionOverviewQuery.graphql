@@ -1,5 +1,5 @@
-#import "./objectSummaryFragment.graphql"
-#import "./rightsFragment.graphql"
+#import "./ObjectSummaryFragment.graphql"
+#import "./RightsFragment.graphql"
 
 query CollectionOverviewQuery(
   $collectionUri: String!

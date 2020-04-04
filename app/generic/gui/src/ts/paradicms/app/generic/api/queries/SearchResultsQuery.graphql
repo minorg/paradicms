@@ -1,4 +1,4 @@
-#import "./objectSummaryFragment.graphql"
+#import "./ObjectSummaryFragment.graphql"
 
 query SearchResultsQuery($limit: Int!, $offset: Int!, $text: String!) {
   objects(limit: $limit, offset: $offset, query: { text: $text }) {
