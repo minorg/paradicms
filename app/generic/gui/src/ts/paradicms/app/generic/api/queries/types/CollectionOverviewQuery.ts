@@ -9,6 +9,7 @@
 export interface CollectionOverviewQuery_collectionByUri_objects_facets {
   __typename: "ObjectFacets";
   subjects: string[];
+  types: string[];
 }
 
 export interface CollectionOverviewQuery_collectionByUri_objects_objects_thumbnail {

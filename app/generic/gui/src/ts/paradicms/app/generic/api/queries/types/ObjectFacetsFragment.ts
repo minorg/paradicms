@@ -9,4 +9,5 @@
 export interface ObjectFacetsFragment {
   __typename: "ObjectFacets";
   subjects: string[];
+  types: string[];
 }

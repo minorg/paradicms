@@ -126,7 +126,6 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
           <Col className="border-left border-top" xs={2}>
             <ObjectFacets
               facets={initialData!.collectionByUri.objects.facets}
-              onChange={(query) => { return; }}
               query={{collectionUri}}
             />
           </Col>

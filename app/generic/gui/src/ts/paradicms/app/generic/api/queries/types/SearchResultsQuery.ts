@@ -23,6 +23,7 @@ export interface SearchResultsQuery_objects_collections {
 export interface SearchResultsQuery_objects_facets {
   __typename: "ObjectFacets";
   subjects: string[];
+  types: string[];
 }
 
 export interface SearchResultsQuery_objects_institutions_rights {

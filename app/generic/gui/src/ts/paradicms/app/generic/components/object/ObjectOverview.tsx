@@ -187,7 +187,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
                 </CardTitle>
               </CardHeader>
               <CardBody>
-                <RightsTable rights={rights}/>
+                <RightsTable className="table-bordered" rights={rights}/>
               </CardBody>
             </Card>
           </Row>

@@ -133,7 +133,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
             />
           </Col>
           <Col>
-            <ObjectFacets facets={state.objectFacets!} onChange={() => {return;}} query={query}/>
+            <ObjectFacets facets={state.objectFacets!} query={query}/>
           </Col>
         </Row>
       </Container>
