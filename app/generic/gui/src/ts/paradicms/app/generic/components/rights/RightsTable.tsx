@@ -1,13 +1,14 @@
-import {CollectionOverviewQuery_collectionByUri_rights} from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
+import { CollectionOverviewQuery_collectionByUri_rights } from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
 import * as React from "react";
-import {Uris} from "paradicms-base";
+import { Uris } from "paradicms-base";
 
 type Rights = CollectionOverviewQuery_collectionByUri_rights;
 
-export const RightsTable: React.FunctionComponent<{rights: Rights}> = ({
+export const RightsTable: React.FunctionComponent<{className?: string; rights: Rights}> = ({
+  className,
   rights,
 }) => (
-  <table className="table-bordered w-100">
+  <table className={className + " w-100"}>
     <tbody>
     {(rights.text || rights.statementUri) ?
       <tr>

@@ -15,6 +15,10 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessChecks {
   }
 
   override final def getCollectionsByUris(collectionUris: List[Uri], currentUserUri: Option[Uri]): List[Collection] = {
+    if (collectionUris.isEmpty) {
+      return List()
+    }
+
     // Should be safe to inject collectionUris since they've already been parsed as URIs
     val queryWhere =
       accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(

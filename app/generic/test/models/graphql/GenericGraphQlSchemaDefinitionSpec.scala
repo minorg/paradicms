@@ -113,8 +113,8 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
       val query =
         graphql"""
          query SearchObjectsQuery($$text: String!) {
-           matchingObjects(limit: 10, offset: 0, text: $$text) {
-               objects {
+           objects(limit: 10, offset: 0, query: { text: $$text }) {
+               objectsWithContext {
                  object {
                      uri
                  }

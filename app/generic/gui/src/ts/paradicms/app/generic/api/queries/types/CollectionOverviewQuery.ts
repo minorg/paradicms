@@ -6,6 +6,12 @@
 // GraphQL query operation: CollectionOverviewQuery
 // ====================================================
 
+export interface CollectionOverviewQuery_collectionByUri_objects_facets {
+  __typename: "ObjectFacets";
+  subjects: string[];
+  types: string[];
+}
+
 export interface CollectionOverviewQuery_collectionByUri_objects_objects_thumbnail {
   __typename: "Image";
   url: string;
@@ -21,6 +27,7 @@ export interface CollectionOverviewQuery_collectionByUri_objects_objects {
 
 export interface CollectionOverviewQuery_collectionByUri_objects {
   __typename: "CollectionObjects";
+  facets: CollectionOverviewQuery_collectionByUri_objects_facets;
   objects: CollectionOverviewQuery_collectionByUri_objects_objects[];
 }
 

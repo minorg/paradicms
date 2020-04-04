@@ -1,8 +1,8 @@
 package org.paradicms.lib.generic.models.graphql
 
 import org.paradicms.lib.generic.models.domain.{DerivedImageSet, Image, Rights, User}
-import sangria.macros.derive.{ExcludeFields, ReplaceField, deriveObjectType}
-import sangria.schema.{Argument, Field, IntType, OptionType, StringType, fields}
+import sangria.macros.derive.{ReplaceField, deriveObjectType}
+import sangria.schema.{Argument, Field, IntType, StringType, fields}
 
 abstract class AbstractGraphQlSchemaDefinition {
   implicit val uriType = UriType
@@ -10,7 +10,6 @@ abstract class AbstractGraphQlSchemaDefinition {
   // Scalar argument types
   val LimitArgument = Argument("limit", IntType, description = "Limit")
   val OffsetArgument = Argument("offset", IntType, description = "Offset")
-  val TextArgument = Argument("text", StringType, description = "Text")
   val UriArgument = Argument("uri", UriType, description = "URI")
 
   // Intentionally limit the fields exposed on User

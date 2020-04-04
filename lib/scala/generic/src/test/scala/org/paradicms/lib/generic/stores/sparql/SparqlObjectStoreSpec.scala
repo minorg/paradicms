@@ -1,5 +1,6 @@
 package org.paradicms.lib.generic.stores.sparql
 
+import org.paradicms.lib.generic.stores.ObjectsQuery
 import org.paradicms.lib.generic.{GenericTestData, UnitSpec}
 
 final class SparqlObjectStoreSpec extends UnitSpec {
@@ -12,7 +13,10 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     val testData = GenericTestData
 
     "list collection objects" in {
-      val objects = store.getCollectionObjects(collectionUri = testData.collection.uri, currentUserUri = currentUserUri, limit = 10, offset = 0).objects.sortBy(object_ => object_.uri.toString())
+      val objects =
+        store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectsQuery.collection(testData.collection.uri))
+          .objectsWithContext.map(objectWithContext => objectWithContext.object_)
+          .sortBy(object_ => object_.uri.toString())
       objects should equal(testData.objects)
 //      val objectWithImages = objects.find(object_ => !object_.images.isEmpty)
 //      objectWithImages should not be (null)
@@ -25,14 +29,14 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     }
 
     "get collection object facets" in {
-      val facets = store.getCollectionObjects(collectionUri = testData.collection.uri, currentUserUri = currentUserUri, limit = 10, offset = 0).facets
+      val facets = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectsQuery.collection(testData.collection.uri)).facets
       val actualSubjects = facets.subjects.toList.sortBy(subject => subject)
       val expectedSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
       actualSubjects should equal(expectedSubjects)
     }
 
     "count collection objects" in {
-      val collectionObjectsCount = store.getCollectionObjectsCount(currentUserUri = currentUserUri, collectionUri = testData.collection.uri)
+      val collectionObjectsCount = store.getObjectsCount(currentUserUri = currentUserUri, query = ObjectsQuery.collection(testData.collection.uri))
       collectionObjectsCount should equal(testData.objects.size)
     }
 
@@ -42,22 +46,15 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     }
 
     "list matching objects" in {
-      val objects = store.getMatchingObjects(limit = 10, offset = 0, text = testData.object_.title, currentUserUri = currentUserUri).objects.map(object_ => object_.object_)
+      val objects = store.getObjects(limit = 10, offset = 0, query = ObjectsQuery.text(testData.object_.title), currentUserUri = currentUserUri)
+        .objectsWithContext.map(objectWithContext => objectWithContext.object_)
       // Will return all objects, but the exact match should be first
-      objects(0) should equal(testData.object_)
+//      objects(0) should equal(testData.object_)
       objects.sortBy(object_ => object_.uri.toString) should equal(testData.objects)
     }
 
-//    "get matching object facets" in {
-//      withUnknownHostExceptionCatch { () => {
-//        val facets = store.getMatchingObjects(limit = 10, offset = 0, text = "back", currentUserUri = currentUserUri).facets
-//        facets.subjects.size should be > 1
-//      }
-//      }
-//    }
-
     "get matching objects count" in {
-      val count = store.getMatchingObjectsCount(text = testData.object_.title, currentUserUri = currentUserUri)
+      val count = store.getObjectsCount(query = ObjectsQuery.text(testData.object_.title), currentUserUri = currentUserUri)
       // Will return all objects
       count should equal(10)
     }

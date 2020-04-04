@@ -1,0 +1,4 @@
+fragment ObjectFacetsFragment on ObjectFacets {
+  subjects
+  types
+}

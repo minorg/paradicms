@@ -1,3 +1,6 @@
+import * as queryString from "query-string";
+import { ObjectsQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+
 export class Hrefs {
   static collection(kwds: {collectionUri: string; institutionUri: string}) {
     return (
@@ -63,7 +66,7 @@ export class Hrefs {
     return "/privacy";
   }
 
-  static search(text: string) {
-    return "/search/" + encodeURIComponent(encodeURIComponent(text));
+  static search(query: ObjectsQuery) {
+    return "/search?" + queryString.stringify(query);
   }
 }

@@ -1,4 +1,4 @@
-#import "./rightsFragment.graphql"
+#import "./RightsFragment.graphql"
 
 query ObjectOverviewQuery(
   $collectionUri: String!

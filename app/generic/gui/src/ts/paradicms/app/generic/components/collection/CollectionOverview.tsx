@@ -1,24 +1,26 @@
-import {RouteComponentProps} from "react-router";
+import { RouteComponentProps } from "react-router";
 import * as React from "react";
-import {useState} from "react";
-import * as collectionOverviewQuery from "paradicms/app/generic/api/queries/collectionOverviewQuery.graphql";
+import { useState } from "react";
+import * as CollectionOverviewQueryDocument from "paradicms/app/generic/api/queries/CollectionOverviewQuery.graphql";
 import {
   CollectionOverviewQuery,
-  CollectionOverviewQuery_collectionByUri_objects,
-  CollectionOverviewQueryVariables,
+  CollectionOverviewQueryVariables
 } from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
-import {ObjectsGallery} from "paradicms/app/generic/components/object/ObjectsGallery";
+import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
 import {
   CollectionOverviewObjectsPaginationQuery,
-  CollectionOverviewObjectsPaginationQueryVariables,
+  CollectionOverviewObjectsPaginationQuery_collectionByUri_objects,
+  CollectionOverviewObjectsPaginationQueryVariables
 } from "paradicms/app/generic/api/queries/types/CollectionOverviewObjectsPaginationQuery";
-import * as collectionOverviewObjectsPaginationQuery from "paradicms/app/generic/api/queries/collectionOverviewObjectsPaginationQuery.graphql";
-import {useLazyQuery, useQuery} from "@apollo/react-hooks";
-import {ObjectSummary} from "paradicms/app/generic/components/object/ObjectSummary";
+import * as CollectionOverviewObjectsPaginationQueryDocument
+  from "paradicms/app/generic/api/queries/CollectionOverviewObjectsPaginationQuery.graphql";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
 import * as ReactLoader from "react-loader";
-import {InstitutionCollectionObjectOverview} from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
-import {RightsTable} from "paradicms/app/generic/components/rights/RightsTable";
-import {Container, Row} from "reactstrap";
+import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
+import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
+import { Col, Container, Row } from "reactstrap";
+import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
 
 export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   collectionUri: string;
@@ -36,7 +38,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   });
 
   const setObjects = (
-    objects: CollectionOverviewQuery_collectionByUri_objects
+    objects: CollectionOverviewObjectsPaginationQuery_collectionByUri_objects
   ) => {
     setState(prevState =>
       Object.assign({}, prevState, {
@@ -52,7 +54,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   const {loading: initialLoading, data: initialData} = useQuery<
     CollectionOverviewQuery,
     CollectionOverviewQueryVariables
-  >(collectionOverviewQuery, {
+  >(CollectionOverviewQueryDocument, {
     variables: {
       collectionUri,
       institutionUri,
@@ -65,7 +67,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   ] = useLazyQuery<
     CollectionOverviewObjectsPaginationQuery,
     CollectionOverviewObjectsPaginationQueryVariables
-  >(collectionOverviewObjectsPaginationQuery);
+  >(CollectionOverviewObjectsPaginationQueryDocument);
 
   if (initialLoading || moreObjectsLoading) {
     return <ReactLoader loaded={false} />;
@@ -86,7 +88,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       Object.assign({}, prevState, {currentObjectsPage: page, objects: null})
     );
     getMoreObjects({
-      variables: {collectionUri: collectionUri, limit: 20, offset: page * 20},
+      variables: {collectionUri, limit: 20, offset: page * 20},
     });
   };
 
@@ -107,16 +109,26 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       <Container fluid>
         {rights ? (
           <Row className="pb-4">
-            <RightsTable rights={rights} />
+            <Col xs="10">
+              <RightsTable rights={rights} />
+            </Col>
           </Row>
         ) : null}
         <Row>
-          <ObjectsGallery
-            currentPage={state.currentObjectsPage}
-            maxPage={Math.ceil(initialData!.collectionByUri.objectsCount / 20)}
-            objects={state.objects}
-            onPageRequest={onObjectsPageRequest}
-          />
+          <Col xs={10}>
+            <ObjectsGallery
+              currentPage={state.currentObjectsPage}
+              maxPage={Math.ceil(initialData!.collectionByUri.objectsCount / 20)}
+              objects={state.objects}
+              onPageRequest={onObjectsPageRequest}
+            />
+          </Col>
+          <Col className="border-left border-top" xs={2}>
+            <ObjectFacets
+              facets={initialData!.collectionByUri.objects.facets}
+              query={{collectionUri}}
+            />
+          </Col>
         </Row>
       </Container>
     </InstitutionCollectionObjectOverview>

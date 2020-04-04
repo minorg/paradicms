@@ -41,4 +41,7 @@ trait DublinCoreResourceProperties extends ResourceProperties {
   def subjects(): List[String] = getPropertyObjectStrings(DCTerms.subject)
 
   def titles(): List[String] = getPropertyObjectStrings(DCTerms.title) ::: getPropertyObjectStrings(DC_11.title)
+
+  def types(): List[RDFNode] =
+    getPropertyObjects(DCTerms.`type`) ::: getPropertyObjects(DC_11.`type`)
 }

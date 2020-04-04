@@ -6,6 +6,12 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface ObjectsQuery {
+  collectionUri?: string | null;
+  institutionUri?: string | null;
+  text?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

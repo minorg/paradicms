@@ -1,4 +1,4 @@
-#import "./objectSummaryFragment.graphql"
+#import "./ObjectSummaryFragment.graphql"
 
 query CollectionOverviewObjectsPaginationQuery(
   $collectionUri: String!

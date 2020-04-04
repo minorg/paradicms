@@ -1,0 +1,35 @@
+#import "./ObjectFacetsFragment.graphql"
+#import "./ObjectSummaryFragment.graphql"
+
+query SearchResultsQuery($limit: Int!, $offset: Int!, $query: ObjectsQuery! ) {
+  objects(limit: $limit, offset: $offset, query: $query ) {
+    collections {
+      name
+      rights {
+        text
+      }
+      uri
+    }
+    facets {
+      ...ObjectFacetsFragment
+    }
+    institutions {
+      name
+      rights {
+        text
+      }
+      uri
+    }
+    objectsWithContext {
+      collectionUri
+      institutionUri
+      object {
+        ...ObjectSummaryFragment
+        rights {
+          text
+        }
+      }
+    }
+  }
+  objectsCount(query: $query)
+}
