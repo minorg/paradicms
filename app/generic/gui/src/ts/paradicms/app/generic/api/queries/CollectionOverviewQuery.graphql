@@ -1,3 +1,4 @@
+#import "./ObjectFacetsFragment.graphql"
 #import "./ObjectSummaryFragment.graphql"
 #import "./RightsFragment.graphql"
 
@@ -9,6 +10,9 @@ query CollectionOverviewQuery(
     description
     name
     objects(limit: 20, offset: 0) {
+      facets {
+        ...ObjectFacetsFragment
+      }
       objects {
         ...ObjectSummaryFragment
       }

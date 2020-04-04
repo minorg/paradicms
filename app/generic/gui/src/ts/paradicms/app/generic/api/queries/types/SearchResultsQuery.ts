@@ -18,6 +18,11 @@ export interface SearchResultsQuery_objects_collections {
   uri: string;
 }
 
+export interface SearchResultsQuery_objects_facets {
+  __typename: "ObjectFacets";
+  subjects: string[];
+}
+
 export interface SearchResultsQuery_objects_institutions_rights {
   __typename: "Rights";
   text: string | null;
@@ -59,6 +64,7 @@ export interface SearchResultsQuery_objects_objectsWithContext {
 export interface SearchResultsQuery_objects {
   __typename: "GetObjectsResult";
   collections: SearchResultsQuery_objects_collections[];
+  facets: SearchResultsQuery_objects_facets;
   institutions: SearchResultsQuery_objects_institutions[];
   objectsWithContext: SearchResultsQuery_objects_objectsWithContext[];
 }

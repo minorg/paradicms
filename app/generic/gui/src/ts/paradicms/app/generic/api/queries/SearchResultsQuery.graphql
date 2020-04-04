@@ -1,3 +1,4 @@
+#import "./ObjectFacetsFragment.graphql"
 #import "./ObjectSummaryFragment.graphql"
 
 query SearchResultsQuery($limit: Int!, $offset: Int!, $text: String!) {
@@ -8,6 +9,9 @@ query SearchResultsQuery($limit: Int!, $offset: Int!, $text: String!) {
         text
       }
       uri
+    }
+    facets {
+      ...ObjectFacetsFragment
     }
     institutions {
       name
