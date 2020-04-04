@@ -1,22 +1,22 @@
-import {RouteComponentProps} from "react-router";
+import { RouteComponentProps } from "react-router";
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import * as searchResultsQuery from "paradicms/app/generic/api/queries/searchResultsQuery.graphql";
 import {
   SearchResultsQuery,
-  SearchResultsQuery_matchingObjects,
-  SearchResultsQuery_matchingObjects_collections,
-  SearchResultsQuery_matchingObjects_institutions,
+  SearchResultsQuery_objects,
+  SearchResultsQuery_objects_collections,
+  SearchResultsQuery_objects_institutions,
   SearchResultsQueryVariables
 } from "paradicms/app/generic/api/queries/types/SearchResultsQuery";
-import {ObjectsGallery} from "paradicms/app/generic/components/object/ObjectsGallery";
-import {Frame} from "paradicms/app/generic/components/frame/Frame";
-import {ObjectSummary} from "paradicms/app/generic/components/object/ObjectSummary";
-import {useQuery} from "@apollo/react-hooks";
+import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
+import { Frame } from "paradicms/app/generic/components/frame/Frame";
+import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
+import { useQuery } from "@apollo/react-hooks";
 import * as ReactLoader from "react-loader";
-import {BreadcrumbItem} from "reactstrap";
-import {Link} from "react-router-dom";
-import {Hrefs} from "paradicms/app/generic/Hrefs";
+import { BreadcrumbItem } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
 
 export const SearchResults: React.FunctionComponent<RouteComponentProps<{
   text: string;
@@ -35,20 +35,20 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps<{
   console.info("State is ", JSON.stringify(state));
 
   const setObjects = (
-    objects: SearchResultsQuery_matchingObjects,
+    objects: SearchResultsQuery_objects,
     objectsCount: number
   ) => {
-    const collectionsByUri: {[index: string]: SearchResultsQuery_matchingObjects_collections} = {};
+    const collectionsByUri: {[index: string]: SearchResultsQuery_objects_collections} = {};
     objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
-    const institutionsByUri: {[index: string]: SearchResultsQuery_matchingObjects_institutions} = {};
+    const institutionsByUri: {[index: string]: SearchResultsQuery_objects_institutions} = {};
     objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
     setState(prevState =>
       Object.assign({}, prevState, {
         maxPage: Math.ceil(objectsCount / 10),
-        objects: objects.objects.map(result => {
-          const collection = collectionsByUri[result.collectionUri]!;
-          const institution = institutionsByUri[result.institutionUri]!;
-          const {rights: objectRights, ...otherObjectProps} = result.object;
+        objects: objects.objectsWithContext.map(objectWithContext => {
+          const collection = collectionsByUri[objectWithContext.collectionUri]!;
+          const institution = institutionsByUri[objectWithContext.institutionUri]!;
+          const {rights: objectRights, ...otherObjectProps} = objectWithContext.object;
           const rights = objectRights
             ? objectRights
             : collection.rights
@@ -82,7 +82,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps<{
   }
 
   if (state.objects == null) {
-    setObjects(data!.matchingObjects, data!.matchingObjectsCount);
+    setObjects(data!.objects, data!.objectsCount);
   }
 
   const onPageRequest = (page: number) => {
