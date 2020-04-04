@@ -1,3 +1,4 @@
 fragment ObjectFacetsFragment on ObjectFacets {
   subjects
+  ty
 }

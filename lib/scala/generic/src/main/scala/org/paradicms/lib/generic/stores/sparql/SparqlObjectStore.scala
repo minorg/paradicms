@@ -84,6 +84,10 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
       subjects = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query)
         .filter(node => node.isLiteral)
         .map(node => node.asLiteral().getString)
+        .toSet,
+      types = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.`type`, DC_11.`type`), query = query)
+        .filter(node => node.isLiteral)
+        .map(node => node.asLiteral().getString)
         .toSet
     )
 

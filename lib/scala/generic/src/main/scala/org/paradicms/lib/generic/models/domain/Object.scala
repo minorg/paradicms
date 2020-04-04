@@ -26,6 +26,7 @@ final case class Object(
                          subjects: List[String] = List(),
                          title: String,
                          titles: List[String],
+                         types: List[String],
                          uri: Uri
                        )
 
@@ -53,6 +54,7 @@ object Object {
       subjects = resource.subjects(),
       title = (resource.titles() ::: resource.alternativeTitles()) (0),
       titles = resource.titles,
+      types = resource.types.filter(`type` => `type`.isLiteral).map(typeLiteral => typeLiteral.asLiteral().getString),
       uri = resource.uri
     )
   }

@@ -19,7 +19,8 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
   implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets](
-    ReplaceField("subjects", Field("subjects", ListType(StringType), resolve = _.value.subjects.toList))
+    ReplaceField("subjects", Field("subjects", ListType(StringType), resolve = _.value.subjects.toList)),
+    ReplaceField("types", Field("types", ListType(StringType), resolve = _.value.types.toList))
   )
   val CollectionObjectsType = deriveObjectType[GenericGraphQlSchemaContext, CollectionObjects]()
 
