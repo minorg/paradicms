@@ -17,6 +17,8 @@ import * as ReactLoader from "react-loader";
 import { BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
+import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
+import { ApolloException } from "paradicms-base";
 
 export const SearchResults: React.FunctionComponent<RouteComponentProps<{
   text: string;
@@ -66,7 +68,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps<{
       }));
   };
 
-  const {loading, data, refetch} = useQuery<
+  const {loading, data, error, refetch} = useQuery<
     SearchResultsQuery,
     SearchResultsQueryVariables
   >(SearchResultsQueryDocument, {
@@ -77,7 +79,9 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps<{
     },
   });
 
-  if (loading) {
+  if (error) {
+    return <GenericErrorHandler exception={new ApolloException(error)}/>;
+  } else if (loading) {
     return <ReactLoader loaded={false} />;
   }
 
