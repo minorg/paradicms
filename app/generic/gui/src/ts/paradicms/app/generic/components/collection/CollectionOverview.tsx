@@ -109,19 +109,25 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       <Container fluid>
         {rights ? (
           <Row className="pb-4">
-            <RightsTable rights={rights} />
+            <Col xs="10">
+              <RightsTable rights={rights} />
+            </Col>
           </Row>
         ) : null}
         <Row>
-          <Col xs={2}>
-            <ObjectFacets objectFacets={initialData!.collectionByUri.objects.facets}/>
-          </Col>
-          <Col>
+          <Col xs={10}>
             <ObjectsGallery
               currentPage={state.currentObjectsPage}
               maxPage={Math.ceil(initialData!.collectionByUri.objectsCount / 20)}
               objects={state.objects}
               onPageRequest={onObjectsPageRequest}
+            />
+          </Col>
+          <Col className="border-left border-top" xs={2}>
+            <ObjectFacets
+              facets={initialData!.collectionByUri.objects.facets}
+              onChange={(query) => { return; }}
+              query={{collectionUri}}
             />
           </Col>
         </Row>

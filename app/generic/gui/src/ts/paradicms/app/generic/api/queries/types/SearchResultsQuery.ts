@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ObjectsQuery } from "./../../graphqlGlobalTypes";
+
 // ====================================================
 // GraphQL query operation: SearchResultsQuery
 // ====================================================
@@ -77,5 +79,5 @@ export interface SearchResultsQuery {
 export interface SearchResultsQueryVariables {
   limit: number;
   offset: number;
-  text: string;
+  query: ObjectsQuery;
 }

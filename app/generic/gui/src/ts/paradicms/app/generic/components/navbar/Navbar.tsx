@@ -1,23 +1,12 @@
-import {ActiveNavbarItem} from "paradicms/app/generic/components/navbar/ActiveNavbarItem";
-import {Hrefs} from "paradicms/app/generic/Hrefs";
+import { ActiveNavbarItem } from "paradicms/app/generic/components/navbar/ActiveNavbarItem";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
 import * as React from "react";
-import {useState} from "react";
-import {
-  Link,
-  Redirect,
-  RouteComponentProps,
-  withRouter,
-} from "react-router-dom";
-import {
-  Nav,
-  Navbar as BootstrapNavbar,
-  NavbarBrand,
-  NavItem,
-  NavLink,
-} from "reactstrap";
-import {NavbarSearchForm} from "paradicms/app/generic/components/navbar/NavbarSearchForm";
-import {NavbarUserDropdown} from "paradicms/app/generic/components/navbar/NavbarUserDropdown";
-import {CurrentUser} from "paradicms/app/generic/components/navbar/CurrentUser";
+import { useState } from "react";
+import { Link, Redirect, RouteComponentProps, withRouter } from "react-router-dom";
+import { Nav, Navbar as BootstrapNavbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
+import { NavbarSearchForm } from "paradicms/app/generic/components/navbar/NavbarSearchForm";
+import { NavbarUserDropdown } from "paradicms/app/generic/components/navbar/NavbarUserDropdown";
+import { CurrentUser } from "paradicms/app/generic/components/navbar/CurrentUser";
 
 interface Props extends RouteComponentProps {
   activeNavItem?: ActiveNavbarItem;
@@ -35,7 +24,7 @@ const Navbar: React.FunctionComponent<Props> = ({
     setState(prevState => Object.assign({}, prevState, {searchText: text}));
 
   if (state.searchText) {
-    return <Redirect to={Hrefs.search(state.searchText)} />;
+    return <Redirect to={Hrefs.search({text: state.searchText})} />;
   }
 
   return (
