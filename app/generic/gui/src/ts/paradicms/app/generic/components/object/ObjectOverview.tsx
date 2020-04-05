@@ -11,7 +11,7 @@ import { Card, CardBody, CardHeader, CardTitle, Container, ListGroup, ListGroupI
 import { ObjectImagesCarousel } from "paradicms/app/generic/components/object/ObjectImagesCarousel";
 import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
-import { ApolloException } from "paradicms-base";
+import { ApolloException } from "@paradicms/base";
 import * as ReactLoader from "react-loader";
 
 // type Object = ObjectCardObject;

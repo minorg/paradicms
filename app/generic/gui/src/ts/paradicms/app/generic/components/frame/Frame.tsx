@@ -12,7 +12,7 @@ import * as FrameQueryDocument from "paradicms/app/generic/api/queries/FrameQuer
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import * as ReactLoader from "react-loader";
 import { useQuery } from "@apollo/react-hooks";
-import { ApolloException } from "paradicms-base";
+import { ApolloException } from "@paradicms/base";
 
 export const Frame: React.FunctionComponent<{
   activeNavItem?: ActiveNavbarItem;

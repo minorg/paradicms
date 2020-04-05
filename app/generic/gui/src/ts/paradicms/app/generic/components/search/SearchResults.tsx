@@ -18,7 +18,7 @@ import { BreadcrumbItem, Col, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
-import { ApolloException } from "paradicms-base";
+import { ApolloException } from "@paradicms/base";
 import { ObjectsQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import * as queryString from "query-string";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
