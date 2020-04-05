@@ -6,7 +6,7 @@ import { GenericErrorHandler } from "paradicms/app/generic/components/error/Gene
 import * as ReactLoader from "react-loader";
 import { HomeQuery } from "paradicms/app/generic/api/queries/types/HomeQuery";
 import { useQuery } from "@apollo/react-hooks";
-import { ApolloException } from "paradicms-base";
+import { ApolloException } from "@paradicms/base";
 import * as HomeQueryDocument from "paradicms/app/generic/api/queries/HomeQuery.graphql";
 
 export const Home: React.FunctionComponent = () => {

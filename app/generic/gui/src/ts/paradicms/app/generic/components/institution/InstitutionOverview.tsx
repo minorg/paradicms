@@ -10,7 +10,7 @@ import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/compo
 import { useQuery } from "@apollo/react-hooks";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import * as ReactLoader from "react-loader";
-import { ApolloException } from "paradicms-base";
+import { ApolloException } from "@paradicms/base";
 
 export const InstitutionOverview: React.FunctionComponent<RouteComponentProps<{
   institutionUri: string;
