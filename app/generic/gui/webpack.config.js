@@ -28,7 +28,7 @@ module.exports = function (env, argv) {
       new CopyWebpackPlugin([{
         from: 'img',
         to: path.join(distPath, 'img/')
-      }, 'graphiql.html', 'robots.txt']),
+      }, 'robots.txt']),
       new MiniCssExtractPlugin({
         disable: argv.mode !== "production",
         filename: 'css/[name].css'
