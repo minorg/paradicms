@@ -1,15 +1,21 @@
 import * as React from "react";
 import { Container, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Row } from "reactstrap";
-import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import { ObjectFilters, ObjectQuery, StringFacetFilter } from "paradicms/app/generic/api/graphqlGlobalTypes";
 
-const StringObjectFacet: React.FunctionComponent<{
+const StringFacetFilterListGroup: React.FunctionComponent<{
   allValues: string[];
-  excludeValues: string[];
-  onChange: (kwds: {excludeValues: string[], includeValues: string[]}) => void;
-  includeValues: string[];
+  currentState?: StringFacetFilter;
+  onChange: (newState?: StringFacetFilter) => void;
   title: string;
-}> = ({allValues, excludeValues, includeValues, onChange, title}) => (
-  allValues.length > 0 ?
+}> = ({allValues, currentState, onChange, title}) => {
+  if (allValues.length === 0) {
+    return null;
+  }
+
+  const excludeValues = (currentState && currentState.exclude) ? currentState!.exclude : [];
+  const includeValues = (currentState && currentState.include) ? currentState!.include : [];
+
+  return (
     <React.Fragment>
       <Row>
         <h4 className="text-center w-100">{title}</h4>
@@ -53,7 +59,15 @@ const StringObjectFacet: React.FunctionComponent<{
               console.debug("new exclude values: " + newExcludeValues.join(" | "));
               console.debug("old include values: " + includeValues.join(" | "));
               console.debug("new include values: " + newIncludeValues.join(" | "));
-              onChange({excludeValues: newExcludeValues, includeValues: newIncludeValues});
+
+              if (newExcludeValues.length === 0 && newIncludeValues.length === 0) {
+                onChange(undefined);
+              } else {
+                onChange({
+                  exclude: newExcludeValues.length > 0 ? newExcludeValues : undefined,
+                  include: newIncludeValues.length > 0 ? newIncludeValues : undefined
+                });
+              }
             };
 
             return (
@@ -70,8 +84,8 @@ const StringObjectFacet: React.FunctionComponent<{
         </ListGroup>
       </Row>
       <Row>&nbsp;</Row>
-    </React.Fragment>
-    : null);
+    </React.Fragment>);
+}
 
 export const ObjectFacets: React.FunctionComponent<{
   facets: {
@@ -80,17 +94,35 @@ export const ObjectFacets: React.FunctionComponent<{
   };
   onChange: (query: ObjectQuery) => void;
   query: ObjectQuery;
-}> = ({facets, query}) => {
-  const onChangeSubject = (kwds: {excludeValues: string[], includeValues: string[]}) => { return; }
-  const onChangeType = (kwds: {excludeValues: string[], includeValues: string[]}) => { return; }
+}> = ({facets, onChange, query}) => {
+  const isFiltersEmpty = (filters: ObjectFilters) => {
+    return filters.collectionUris || filters.institutionUris || filters.subjects || filters.types;
+  }
+
+  const onChangeStringFacetFilter = (attribute: keyof ObjectFilters, newState?: StringFacetFilter) => {
+    const newQuery = Object.assign({}, query);
+    newQuery.filters = Object.assign({}, newQuery.filters);
+    newQuery.filters[attribute] = newState;
+    if (isFiltersEmpty(newQuery.filters)) {
+      newQuery.filters = undefined;
+    }
+    onChange(newQuery);
+  }
+
+  const onChangeSubject = (newState?: StringFacetFilter) => onChangeStringFacetFilter("subjects", newState);
+  const onChangeType = (newState?: StringFacetFilter) => onChangeStringFacetFilter("types", newState);
 
   return (
     <Form>
       <Container className="py-4" fluid>
-        <StringObjectFacet allValues={facets.subjects} excludeValues={[]} includeValues={facets.subjects}
-                           onChange={onChangeSubject}
-                           title={"Subjects"}/>
-        <StringObjectFacet allValues={facets.types} excludeValues={[]} includeValues={[]} onChange={onChangeType} title={"Types"}/>
+        <StringFacetFilterListGroup allValues={facets.subjects}
+                     currentState={query.filters && query.filters.subjects ? query.filters.subjects : undefined}
+                     onChange={onChangeSubject}
+                     title={"Subjects"}/>
+        <StringFacetFilterListGroup allValues={facets.types}
+                     currentState={query.filters && query.filters.types ? query.filters.types : undefined}
+                     onChange={onChangeType}
+                     title={"Types"}/>
       </Container>
     </Form>
   );
