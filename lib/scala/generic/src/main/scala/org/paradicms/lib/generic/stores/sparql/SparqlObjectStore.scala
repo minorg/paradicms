@@ -11,24 +11,53 @@ import org.paradicms.lib.generic.stores._
 
 import scala.collection.JavaConverters._
 
-trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
-  private def collectionObjectsGraphPatterns(collectionUri: Uri, currentUserUri: Option[Uri], additionalGraphPatterns: List[String] = List()): String =
-    accessCheckGraphPatterns(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      s"<${collectionUri.toString}> rdf:type cms:Collection .",
-      "?institution cms:collection ?collection .",
-      "?institution rdf:type cms:Institution .",
-      "?collection cms:object ?object .",
-      "?object rdf:type cms:Object ."
-    ) ++ additionalGraphPatterns)
+trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns with SparqlPrefixes {
+  private object GraphPatterns extends SparqlAccessCheckGraphPatterns {
+//    def collectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], additionalGraphPatterns: List[String] = List()): String =
+//      accessCheck(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+//        s"<${collectionUri.toString}> rdf:type cms:Collection .",
+//        "?institution cms:collection ?collection .",
+//        "?institution rdf:type cms:Institution .",
+//        "?collection cms:object ?object .",
+//        "?object rdf:type cms:Object ."
+//      ) ++ additionalGraphPatterns)
 
-  override final def getObjectsCount(currentUserUri: Option[Uri], query: ObjectsQuery): Int = {
+    private def objectFilters(filters: ObjectFilters): List[String] =
+//      query.collectionUri.map(collectionUri => List(s"VALUES ?collection { <${collectionUri}> }")).getOrElse(List())
+      List()
+
+    def objectQuery(currentUserUri: Option[Uri], query: ObjectQuery, additionalGraphPatterns: List[String] = List()): String =
+      accessCheck(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+        "?institution rdf:type cms:Institution .",
+        "?institution cms:collection ?collection .",
+        "?collection rdf:type cms:Collection .",
+        "?collection cms:object ?object .",
+        "?object rdf:type cms:Object .",
+      ) ++ query.filters.map(filters => objectFilters(filters)).getOrElse(List())
+        ++ query.text.map(_ => List("?object text:query ?text .")).getOrElse(List())
+        ++ additionalGraphPatterns)
+
+    def objectsByUris(currentUserUri: Option[Uri], objectUris: List[Uri]): String =
+      accessCheck(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
+        "?institution rdf:type cms:Institution .",
+        "?institution cms:collection ?collection .",
+        "?collection rdf:type cms:Collection .",
+        "?collection cms:object ?object .",
+        s"VALUES ?object { ${objectUris.map(objectUri => "<" + objectUri.toString() + ">").mkString(" ")} }",
+        "?object rdf:type cms:Object .",
+        "?object ?objectP ?objectO .",
+        "OPTIONAL { ?object foaf:depiction ?originalImage . ?originalImage rdf:type cms:Image . ?originalImage ?originalImageP ?originalImageO . OPTIONAL { ?originalImage foaf:thumbnail ?thumbnailImage . ?thumbnailImage rdf:type cms:Image . ?thumbnailImage ?thumbnailImageP ?thumbnailImageO . } }"
+      ))
+  }
+
+  override final def getObjectsCount(currentUserUri: Option[Uri], query: ObjectQuery): Int = {
     val queryString = new ParameterizedSparqlString(
       s"""
          |${PREFIXES}
          |SELECT (COUNT(DISTINCT ?object) AS ?count) WHERE {
-         |${objectsQueryGraphPatterns(currentUserUri = currentUserUri, query = query)}
+         |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query)}
          |}""".stripMargin)
-    for ((key, value) <- objectsQueryParams(currentUserUri = currentUserUri, query = query)) {
+    for ((key, value) <- objectQueryParams(currentUserUri = currentUserUri, query = query)) {
       queryString.setParam(key, value)
     }
     withQueryExecution(queryString.asQuery()) { queryExecution =>
@@ -36,17 +65,17 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
-  override final def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectsQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map()): GetObjectsResult = {
+  override final def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map()): GetObjectsResult = {
     val queryString = new ParameterizedSparqlString(
       s"""
          |${PREFIXES}
          |SELECT ?collection ?institution ?object WHERE {
-         |${objectsQueryGraphPatterns(currentUserUri = currentUserUri, query = query)}
+         |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query)}
          |}
          |LIMIT ${limit}
          |OFFSET ${offset}
          |""".stripMargin)
-    for ((key, value) <- objectsQueryParams(currentUserUri = currentUserUri, query = query)) {
+    for ((key, value) <- objectQueryParams(currentUserUri = currentUserUri, query = query)) {
       queryString.setParam(key, value)
     }
     withQueryExecution(queryString.asQuery()) { queryExecution =>
@@ -79,7 +108,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
-  private def getObjectFacets(currentUserUri: Option[Uri], query: ObjectsQuery): ObjectFacets =
+  private def getObjectFacets(currentUserUri: Option[Uri], query: ObjectQuery): ObjectFacets =
     ObjectFacets(
       subjects = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query)
         .filter(node => node.isLiteral)
@@ -91,7 +120,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
         .toSet
     )
 
-  private def getObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectsQuery): List[RDFNode] = {
+  private def getObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): List[RDFNode] = {
     val propertyWherePattern =
     //      if (properties.size == 1)
       s"?object <${properties(0).getURI}> ?facet ."
@@ -102,9 +131,9 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
       s"""
          |${PREFIXES}
          |SELECT DISTINCT ?facet WHERE {
-         |${objectsQueryGraphPatterns(currentUserUri = currentUserUri, query = query, additionalGraphPatterns = List(propertyWherePattern))}
+         |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query, additionalGraphPatterns = List(propertyWherePattern))}
          |}""".stripMargin)
-    for ((key, value) <- objectsQueryParams(currentUserUri = currentUserUri, query = query)) {
+    for ((key, value) <- objectQueryParams(currentUserUri = currentUserUri, query = query)) {
       queryString.setParam(key, value)
     }
     withQueryExecution(queryString.asQuery()) { queryExecution =>
@@ -113,18 +142,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     }
   }
 
-  private def objectsQueryGraphPatterns(currentUserUri: Option[Uri], query: ObjectsQuery, additionalGraphPatterns: List[String] = List()): String =
-    accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      "?institution rdf:type cms:Institution .",
-      "?institution cms:collection ?collection .",
-      "?collection rdf:type cms:Collection .",
-      "?collection cms:object ?object .",
-      "?object rdf:type cms:Object .",
-    ) ++ query.collectionUri.map(collectionUri => List(s"VALUES ?collection { <${collectionUri}> }")).getOrElse(List())
-      ++ query.text.map(_ => List("?object text:query ?text .")).getOrElse(List())
-      ++ additionalGraphPatterns)
-
-  private def objectsQueryParams(currentUserUri: Option[Uri], query: ObjectsQuery): Map[String, RDFNode] =
+  private def objectQueryParams(currentUserUri: Option[Uri], query: ObjectQuery): Map[String, RDFNode] =
       query.text.flatMap(text => Some(("text", ResourceFactory.createStringLiteral(text)))).toMap
 
   override final def getObjectByUri(currentUserUri: Option[Uri], objectUri: Uri): models.domain.Object = {
@@ -135,18 +153,6 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
     if (objectUris.isEmpty) {
       return List()
     }
-    // Should be safe to inject objectUris since they've already been parsed as URIs
-    val queryWhere = accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-      "?institution rdf:type cms:Institution .",
-      "?institution cms:collection ?collection .",
-      "?collection rdf:type cms:Collection .",
-      "?collection cms:object ?object .",
-      s"VALUES ?object { ${objectUris.map(objectUri => "<" + objectUri.toString() + ">").mkString(" ")} }",
-      "?object rdf:type cms:Object .",
-      "?object ?objectP ?objectO .",
-      "OPTIONAL { ?object foaf:depiction ?originalImage . ?originalImage rdf:type cms:Image . ?originalImage ?originalImageP ?originalImageO . OPTIONAL { ?originalImage foaf:thumbnail ?thumbnailImage . ?thumbnailImage rdf:type cms:Image . ?thumbnailImage ?thumbnailImageP ?thumbnailImageO . } }"
-    ))
-
     val query = QueryFactory.create(
       s"""
          |${PREFIXES}
@@ -157,7 +163,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlAccessChecks {
          |  ?originalImage foaf:thumbnail ?thumbnailImage .
          |  ?thumbnailImage ?thumbnailImageP ?thumbnailImageO .
          |} WHERE {
-         |$queryWhere
+         |${GraphPatterns.objectsByUris(currentUserUri = currentUserUri, objectUris = objectUris)}
          |}
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>

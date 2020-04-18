@@ -1,0 +1,28 @@
+package org.paradicms.lib.generic.stores
+
+import io.lemonlabs.uri.Uri
+
+final case class ObjectQuery(
+                               filters: Option[ObjectFilters],
+                               text: Option[String]
+                             )
+
+object ObjectQuery {
+  // Use overloads instead of default parameters to get around Sangria limitations.
+  def collection(collectionUri: Uri) =
+    new ObjectQuery(
+      filters = Some(ObjectFilters(
+        collectionUris = Some(UriFacetFilter(exclude = None, include = Some(List(collectionUri)))),
+        institutionUris = None,
+        subjects = None,
+        types = None
+      )),
+      text = None
+    )
+
+  def text(text: String) =
+    new ObjectQuery(
+      filters = None,
+      text = Some(text)
+    )
+}

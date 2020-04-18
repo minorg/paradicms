@@ -9,12 +9,12 @@ import org.paradicms.lib.generic.stores.InstitutionStore
 
 import scala.collection.JavaConverters._
 
-trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessChecks {
+trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGraphPatterns with SparqlConnectionLoanPatterns with SparqlPrefixes {
   override final def getInstitutionByUri(currentUserUri: Option[Uri], institutionUri: Uri): Institution = {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
     val institutionVariable = "<" + institutionUri.toString() + ">"
     val queryWhere =
-      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = institutionVariable, objectVariable = None, queryPatterns = List(
+      accessCheck(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = institutionVariable, objectVariable = None, queryPatterns = List(
         s"$institutionVariable rdf:type cms:Institution .",
         s"$institutionVariable ?p ?o ."
       ))
@@ -37,7 +37,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessChecks {
 
   override final def getInstitutions(currentUserUri: Option[Uri]): List[Institution] = {
     val queryWhere =
-      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
+      accessCheck(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
         "?institution rdf:type cms:Institution .",
         "?institution ?p ?o ."
       ))
@@ -66,7 +66,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessChecks {
 
     // Should be safe to inject institutionUris since they've already been parsed as URIs
     val queryWhere =
-      accessCheckGraphPatterns(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
+      accessCheck(collectionVariable = None, currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
         s"VALUES ?institution { ${institutionUris.map(institutionUri => "<" + institutionUri.toString() + ">").mkString(" ")} }",
         "?institution rdf:type cms:Institution .",
         "?institution ?p ?o ."
