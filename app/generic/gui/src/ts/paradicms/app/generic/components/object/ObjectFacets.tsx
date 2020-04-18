@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { ObjectFilters, ObjectQuery, StringFacetFilter } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import * as invariant from "invariant";
 
 const StringFacetFilterListGroup: React.FunctionComponent<{
   allValues: string[];
@@ -12,8 +13,29 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
     return null;
   }
 
-  const excludeValues = (currentState && currentState.exclude) ? currentState!.exclude : [];
-  const includeValues = (currentState && currentState.include) ? currentState!.include : [];
+  // Build sets of the exclude and include values to avoid repeatedly iterating over the arrays.
+  const toSet = (values: string[] | null | undefined): {[index: string]: true} => {
+    const result: {[index: string]: true} = {};
+    for (const value of (values ? values : [])) {
+      result[value] = true;
+    }
+    return result;
+  }
+  toSet(allValues); // To check for duplicates
+  const excludeSet = toSet(currentState ? currentState.exclude : undefined);
+  const includeSet = toSet(currentState ? currentState.include : undefined);
+
+  // If a value is not in one of the sets it's implicitly included.
+  for (const value of allValues) {
+    if (value in excludeSet) {
+      invariant(!(value in includeSet), "value both included and excluded");
+    } else if (value in includeSet) {
+      continue;
+    } else {
+      includeSet[value] = true;
+    }
+  }
+  invariant(Object.keys(includeSet).length + Object.keys(excludeSet).length === allValues.length, "sets should account for all values");
 
   return (
     <React.Fragment>
@@ -23,50 +45,30 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
       <Row>
         <ListGroup className="w-100">
           {allValues.map(value => {
-            let checked: boolean;
-            let excluded: boolean = false;
-            let included: boolean = false;
-            if (includeValues.length === 0 && excludeValues.length === 0) {
-              checked = true;
-            } else if (includeValues.find(includeValue => includeValue === value)) {
-              included = true;
-              checked = true;
-            } else if (excludeValues.find(excludeValue => excludeValue === value)) {
-              excluded = true;
-              checked = false;
-            } else {
-              console.warn(title + " value " + value + " is neither included nor excluded");
-              return null;
-            }
-
             const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
               const newChecked = e.target.checked;
-              let newExcludeValues = excludeValues.concat();
-              let newIncludeValues = includeValues.concat();
-              if (excluded) {
-                newExcludeValues = newExcludeValues.filter(excludedValue => excludedValue !== value);
-                newIncludeValues.push(value);
-              } else if (included) {
-                newIncludeValues = newIncludeValues.filter(includedValue => includedValue !== value);
-                newExcludeValues.push(value);
-              } else if (newChecked) {
-                newIncludeValues.push(value);
+              if (newChecked) {
+                invariant(value in excludeSet, "value should have been in the exclude set if it wasn't checked before");
+                delete excludeSet[value];
+                includeSet[value] = true;
               } else {
-                newExcludeValues.push(value);
+                invariant(value in includeSet, "value should have been in the include set if it was checked before");
+                delete includeSet[value];
+                excludeSet[value] = true;
               }
-              console.debug(title + ": " + value + ": checked=" + checked);
-              console.debug("old exclude values: " + excludeValues.join(" | "));
-              console.debug("new exclude values: " + newExcludeValues.join(" | "));
-              console.debug("old include values: " + includeValues.join(" | "));
-              console.debug("new include values: " + newIncludeValues.join(" | "));
 
-              if (newExcludeValues.length === 0 && newIncludeValues.length === 0) {
-                onChange(undefined);
+              const exclude = Object.keys(excludeSet).sort();
+              const include = Object.keys(includeSet).sort();
+              invariant(include.length + exclude.length === allValues.length, "sets should account for all values");
+
+              if (include.length === allValues.length) {
+                onChange(undefined); // Implicitly include all values
+              } else if (include.length >= exclude.length) {
+                // exclude includes fewer values. Those outside it will be included.
+                onChange({exclude});
               } else {
-                onChange({
-                  exclude: newExcludeValues.length > 0 ? newExcludeValues : undefined,
-                  include: newIncludeValues.length > 0 ? newIncludeValues : undefined
-                });
+                // include includes fewer values. Those outside it will be excluded.
+                onChange({include});
               }
             };
 
@@ -74,7 +76,7 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
               <ListGroupItem className="w-100" key={value}>
                 <FormGroup check>
                   <Label check>
-                    <Input checked={checked} onChange={onChangeValue} type="checkbox"></Input>
+                    <Input checked={!!includeSet[value]} onChange={onChangeValue} type="checkbox"></Input>
                     {value}
                   </Label>
                 </FormGroup>
@@ -95,8 +97,8 @@ export const ObjectFacets: React.FunctionComponent<{
   onChange: (query: ObjectQuery) => void;
   query: ObjectQuery;
 }> = ({facets, onChange, query}) => {
-  const isFiltersEmpty = (filters: ObjectFilters) => {
-    return filters.collectionUris || filters.institutionUris || filters.subjects || filters.types;
+  const isFiltersEmpty = (filters: ObjectFilters): boolean => {
+    return !filters.collectionUris && !filters.institutionUris && !filters.subjects && !filters.types;
   }
 
   const onChangeStringFacetFilter = (attribute: keyof ObjectFilters, newState?: StringFacetFilter) => {

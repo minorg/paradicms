@@ -105,6 +105,16 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       : initialData.institutionByUri.rights
     : undefined;
 
+  const onChangeQuery = (newQuery: ObjectQuery) => {
+    console.info("original query: " + JSON.stringify(state.query));
+    console.info("new query: " + JSON.stringify(newQuery));
+    setState(prevState => {
+      const newState = Object.assign({}, prevState);
+      newState.query = newQuery;
+      return newState;
+    });
+  }
+
   return (
     <InstitutionCollectionObjectOverview
       collectionName={initialData!.collectionByUri.name}
@@ -133,7 +143,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
           <Col className="border-left border-top" xs={2}>
             <ObjectFacets
               facets={initialData!.collectionByUri.objects.facets}
-              onChange={(newQuery) => { return; }}
+              onChange={onChangeQuery}
               query={state.query}
             />
           </Col>
