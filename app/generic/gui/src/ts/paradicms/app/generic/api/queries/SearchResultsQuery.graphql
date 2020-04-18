@@ -1,7 +1,7 @@
 #import "./ObjectFacetsFragment.graphql"
 #import "./ObjectSummaryFragment.graphql"
 
-query SearchResultsQuery($limit: Int!, $offset: Int!, $query: ObjectsQuery! ) {
+query SearchResultsQuery($limit: Int!, $offset: Int!, $query: ObjectQuery! ) {
   objects(limit: $limit, offset: $offset, query: $query ) {
     collections {
       name

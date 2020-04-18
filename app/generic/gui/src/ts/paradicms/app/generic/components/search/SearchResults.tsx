@@ -19,13 +19,13 @@ import { Link } from "react-router-dom";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import { ApolloException } from "@paradicms/base";
-import { ObjectsQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import * as queryString from "query-string";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
 import { CollectionOverviewQuery_collectionByUri_objects_facets } from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
 
 export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({location}) => {
-  const query: ObjectsQuery = queryString.parse(location.search);
+  const query: ObjectQuery = queryString.parse(location.search);
 
   const [state, setState] = useState<{
     currentPage: number;
@@ -133,7 +133,11 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
             />
           </Col>
           <Col>
-            <ObjectFacets facets={state.objectFacets!} query={query}/>
+            <ObjectFacets
+              facets={state.objectFacets!}
+              onChange={(newQuery) => { return; }}
+              query={query}
+            />
           </Col>
         </Row>
       </Container>

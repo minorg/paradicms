@@ -21,6 +21,7 @@ import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/compo
 import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
 import { Col, Container, Row } from "reactstrap";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
+import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 
 export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   collectionUri: string;
@@ -32,9 +33,15 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   const [state, setState] = useState<{
     currentObjectsPage: number;
     objects: ObjectSummary[] | null;
+    query: ObjectQuery;
   }>({
     currentObjectsPage: 0,
     objects: null,
+    query: {
+      filters: {
+        collectionUris: { include: [collectionUri] }
+      }
+    }
   });
 
   const setObjects = (
@@ -126,7 +133,8 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
           <Col className="border-left border-top" xs={2}>
             <ObjectFacets
               facets={initialData!.collectionByUri.objects.facets}
-              query={{collectionUri}}
+              onChange={(newQuery) => { return; }}
+              query={state.query}
             />
           </Col>
         </Row>

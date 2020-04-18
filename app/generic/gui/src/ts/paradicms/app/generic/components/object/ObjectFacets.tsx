@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Container, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Row } from "reactstrap";
-import { ObjectsQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 
 const StringObjectFacet: React.FunctionComponent<{
   allValues: string[];
@@ -78,8 +78,8 @@ export const ObjectFacets: React.FunctionComponent<{
     subjects: string[];
     types: string[];
   };
-  onChange: (query: ObjectsQuery) => void;
-  query: ObjectsQuery;
+  onChange: (query: ObjectQuery) => void;
+  query: ObjectQuery;
 }> = ({facets, query}) => {
   const onChangeSubject = (kwds: {excludeValues: string[], includeValues: string[]}) => { return; }
   const onChangeType = (kwds: {excludeValues: string[], includeValues: string[]}) => { return; }

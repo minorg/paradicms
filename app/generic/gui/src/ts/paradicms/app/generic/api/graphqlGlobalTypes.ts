@@ -6,10 +6,26 @@
 // START Enums and Input Objects
 //==============================================================
 
-export interface ObjectsQuery {
-  collectionUri?: string | null;
-  institutionUri?: string | null;
+export interface ObjectFilters {
+  collectionUris?: UriFacetFilter | null;
+  institutionUris?: UriFacetFilter | null;
+  subjects?: StringFacetFilter | null;
+  types?: StringFacetFilter | null;
+}
+
+export interface ObjectQuery {
+  filters?: ObjectFilters | null;
   text?: string | null;
+}
+
+export interface StringFacetFilter {
+  exclude?: string[] | null;
+  include?: string[] | null;
+}
+
+export interface UriFacetFilter {
+  exclude?: string[] | null;
+  include?: string[] | null;
 }
 
 //==============================================================
