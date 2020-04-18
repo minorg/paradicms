@@ -1,6 +1,6 @@
 package org.paradicms.lib.generic.stores.sparql
 
-import org.paradicms.lib.generic.stores.ObjectQuery
+import org.paradicms.lib.generic.stores.{ObjectFilters, ObjectQuery, StringFacetFilter}
 import org.paradicms.lib.generic.{GenericTestData, UnitSpec}
 
 final class SparqlObjectStoreSpec extends UnitSpec {
@@ -35,6 +35,34 @@ final class SparqlObjectStoreSpec extends UnitSpec {
       actualSubjects should equal(expectedSubjects)
     }
 
+    "exclude the subject of an object" in {
+      val allSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
+      val objects = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery(
+        filters = Some(ObjectFilters(
+          collectionUris = None,
+          institutionUris = None,
+          subjects = Some(StringFacetFilter(include = None, exclude = Some(List(allSubjects(0))))),
+          types = None
+        )),
+        text = None
+      )).objectsWithContext
+      objects.size should equal(9)
+    }
+
+    "include the subject of an object" in {
+      val allSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
+      val objects = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery(
+        filters = Some(ObjectFilters(
+          collectionUris = None,
+          institutionUris = None,
+          subjects = Some(StringFacetFilter(exclude = None, include = Some(List(allSubjects(0))))),
+          types = None
+        )),
+        text = None
+      )).objectsWithContext
+      objects.size should equal(1)
+    }
+
     "count collection objects" in {
       val collectionObjectsCount = store.getObjectsCount(currentUserUri = currentUserUri, query = ObjectQuery.collection(testData.collection.uri))
       collectionObjectsCount should equal(testData.objects.size)
@@ -43,6 +71,14 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     "get an object by URI" in {
       val object_ = store.getObjectByUri(currentUserUri = currentUserUri, objectUri = testData.object_.uri)
       object_ should equal(testData.object_)
+    }
+
+    "list institution objects" in {
+      val objects =
+        store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery.institution(testData.institution.uri))
+          .objectsWithContext.map(objectWithContext => objectWithContext.object_)
+          .sortBy(object_ => object_.uri.toString())
+      objects should equal(testData.objects)
     }
 
     "list matching objects" in {

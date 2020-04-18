@@ -15,9 +15,9 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   private object GraphPatterns extends SparqlAccessCheckGraphPatterns {
     private def objectFilters(filters: ObjectFilters): List[String] =
       uriFacetFilter(filters.collectionUris, "?collection") ++
-      uriFacetFilter(filters.institutionUris, "?institutionUri") ++
+      uriFacetFilter(filters.institutionUris, "?institution") ++
       stringFacetFilter(filters.subjects, List(DCTerms.subject, DC_11.subject), "?subject") ++
-      stringFacetFilter(filters.types, List(DCTerms.`type`, DC_11.`type`), "?type") ++
+      stringFacetFilter(filters.types, List(DCTerms.`type`, DC_11.`type`), "?type")
 
     def objectQuery(currentUserUri: Option[Uri], query: ObjectQuery, additionalGraphPatterns: List[String] = List()): String =
       accessCheck(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
@@ -47,16 +47,16 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
       filter.map(
         filter =>
           List(s"?object ${properties.map(property => "<" + property.getURI + ">").mkString(" | ")} ${variable} .") ++
-          filter.include.map(includes => List(s"FILTER(${variable} IN ( ${includes.map(include => "\"" + include + "\"").mkString(", ")} )")).getOrElse(List()) ++
-          filter.exclude.map(excludes => List(s"FILTER(${variable} NOT IN ( ${excludes.map(exclude => "\"" + exclude + "\"").mkString(", ")} )")).getOrElse(List())
+          filter.include.map(includes => List(s"FILTER ( ${variable} IN ( ${includes.map(include => "\"" + include + "\"").mkString(", ")} ) )")).getOrElse(List()) ++
+          filter.exclude.map(excludes => List(s"FILTER ( ${variable} NOT IN ( ${excludes.map(exclude => "\"" + exclude + "\"").mkString(", ")} ) )")).getOrElse(List())
       ).getOrElse(List())
 
     private def uriFacetFilter(filter: Option[UriFacetFilter], variable: String): List[String] =
       // Assumes the variable has already been defined
       filter.map(
         filter =>
-          filter.include.map(includes => List(s"FILTER(${variable} IN ( ${includes.map(include => "\"" + include + "\"").mkString(", ")} )")).getOrElse(List()) ++
-          filter.exclude.map(excludes => List(s"FILTER(${variable} NOT IN ( ${excludes.map(exclude => "\"" + exclude + "\"").mkString(", ")} )")).getOrElse(List())
+          filter.include.map(includes => List(s"FILTER ( ${variable} IN ( ${includes.map(include => "<" + include + ">").mkString(", ")} ) )")).getOrElse(List()) ++
+          filter.exclude.map(excludes => List(s"FILTER ( ${variable} NOT IN ( ${excludes.map(exclude => "<" + exclude + ">").mkString(", ")} ) )")).getOrElse(List())
       ).getOrElse(List())
   }
 
