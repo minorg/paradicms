@@ -13,18 +13,11 @@ import scala.collection.JavaConverters._
 
 trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns with SparqlPrefixes {
   private object GraphPatterns extends SparqlAccessCheckGraphPatterns {
-//    def collectionObjects(collectionUri: Uri, currentUserUri: Option[Uri], additionalGraphPatterns: List[String] = List()): String =
-//      accessCheck(collectionVariable = Some("<" + collectionUri.toString() + ">"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
-//        s"<${collectionUri.toString}> rdf:type cms:Collection .",
-//        "?institution cms:collection ?collection .",
-//        "?institution rdf:type cms:Institution .",
-//        "?collection cms:object ?object .",
-//        "?object rdf:type cms:Object ."
-//      ) ++ additionalGraphPatterns)
-
     private def objectFilters(filters: ObjectFilters): List[String] =
-//      query.collectionUri.map(collectionUri => List(s"VALUES ?collection { <${collectionUri}> }")).getOrElse(List())
-      List()
+      uriFacetFilter(filters.collectionUris, "?collection") ++
+      uriFacetFilter(filters.institutionUris, "?institutionUri") ++
+      stringFacetFilter(filters.subjects, List(DCTerms.subject, DC_11.subject), "?subject") ++
+      stringFacetFilter(filters.types, List(DCTerms.`type`, DC_11.`type`), "?type") ++
 
     def objectQuery(currentUserUri: Option[Uri], query: ObjectQuery, additionalGraphPatterns: List[String] = List()): String =
       accessCheck(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
@@ -48,6 +41,23 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
         "?object ?objectP ?objectO .",
         "OPTIONAL { ?object foaf:depiction ?originalImage . ?originalImage rdf:type cms:Image . ?originalImage ?originalImageP ?originalImageO . OPTIONAL { ?originalImage foaf:thumbnail ?thumbnailImage . ?thumbnailImage rdf:type cms:Image . ?thumbnailImage ?thumbnailImageP ?thumbnailImageO . } }"
       ))
+
+    private def stringFacetFilter(filter: Option[StringFacetFilter], properties: List[Property], variable: String): List[String] =
+      // Declares a new variable
+      filter.map(
+        filter =>
+          List(s"?object ${properties.map(property => "<" + property.getURI + ">").mkString(" | ")} ${variable} .") ++
+          filter.include.map(includes => List(s"FILTER(${variable} IN ( ${includes.map(include => "\"" + include + "\"").mkString(", ")} )")).getOrElse(List()) ++
+          filter.exclude.map(excludes => List(s"FILTER(${variable} NOT IN ( ${excludes.map(exclude => "\"" + exclude + "\"").mkString(", ")} )")).getOrElse(List())
+      ).getOrElse(List())
+
+    private def uriFacetFilter(filter: Option[UriFacetFilter], variable: String): List[String] =
+      // Assumes the variable has already been defined
+      filter.map(
+        filter =>
+          filter.include.map(includes => List(s"FILTER(${variable} IN ( ${includes.map(include => "\"" + include + "\"").mkString(", ")} )")).getOrElse(List()) ++
+          filter.exclude.map(excludes => List(s"FILTER(${variable} NOT IN ( ${excludes.map(exclude => "\"" + exclude + "\"").mkString(", ")} )")).getOrElse(List())
+      ).getOrElse(List())
   }
 
   override final def getObjectsCount(currentUserUri: Option[Uri], query: ObjectQuery): Int = {
@@ -121,17 +131,11 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     )
 
   private def getObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): List[RDFNode] = {
-    val propertyWherePattern =
-    //      if (properties.size == 1)
-      s"?object <${properties(0).getURI}> ?facet ."
-    //      else
-    //        "{ " + properties.map(property => s"{ ?object <${property.getURI}> ?facet . }").mkString(" UNION ") + " }"
-
     val queryString = new ParameterizedSparqlString(
       s"""
          |${PREFIXES}
          |SELECT DISTINCT ?facet WHERE {
-         |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query, additionalGraphPatterns = List(propertyWherePattern))}
+         |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query, additionalGraphPatterns = List(s"?object ${properties.map(property => "<" + property.getURI + ">" ).mkString(" | ")} ?facet ."))}
          |}""".stripMargin)
     for ((key, value) <- objectQueryParams(currentUserUri = currentUserUri, query = query)) {
       queryString.setParam(key, value)
