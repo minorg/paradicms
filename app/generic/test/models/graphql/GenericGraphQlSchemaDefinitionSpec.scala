@@ -58,8 +58,11 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      val objects = executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("collectionByUri").result.get.as[JsObject].value.get("objects").get.as[JsObject].value.get("objects").get.as[JsArray].value
-      objects.size must equal(1)
+      val result = executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString()))
+      result must equal(Json.parse(
+        s"""
+           |{"data":{"collectionByUri":{"objects":[{"uri":"${testData.object_.uri.toString()}"}]}}}
+           |""".stripMargin))
     }
 
     "return collection object facets" in {
