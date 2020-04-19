@@ -1,5 +1,5 @@
 #import "./ObjectFacetsFragment.graphql"
-#import "./ObjectSummaryFragment.graphql"
+#import "./SearchResultsObjectsFragment.graphql"
 
 query SearchResultsInitialQuery($limit: Int!, $offset: Int!, $query: ObjectQuery!) {
   objectFacets(query: $query) {
@@ -8,30 +8,7 @@ query SearchResultsInitialQuery($limit: Int!, $offset: Int!, $query: ObjectQuery
     }
   }
   objects(limit: $limit, offset: $offset, query: $query ) {
-    collections {
-      name
-      rights {
-        text
-      }
-      uri
-    }
-    institutions {
-      name
-      rights {
-        text
-      }
-      uri
-    }
-    objectsWithContext {
-      collectionUri
-      institutionUri
-      object {
-        ...ObjectSummaryFragment
-        rights {
-          text
-        }
-      }
-    }
+    ...SearchResultsObjectsFragment
   }
   objectsCount(query: $query)
 }

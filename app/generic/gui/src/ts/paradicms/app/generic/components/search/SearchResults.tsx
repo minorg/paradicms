@@ -1,14 +1,8 @@
 import { RouteComponentProps } from "react-router";
 import * as React from "react";
 import { useState } from "react";
-import * as SearchResultsQueryDocument from "paradicms/app/generic/api/queries/SearchResultsQuery.graphql";
-import {
-  SearchResultsQuery,
-  SearchResultsQuery_objects,
-  SearchResultsQuery_objects_collections,
-  SearchResultsQuery_objects_institutions,
-  SearchResultsQueryVariables
-} from "paradicms/app/generic/api/queries/types/SearchResultsQuery";
+import * as SearchResultsInitialQueryDocument
+  from "paradicms/app/generic/api/queries/SearchResultsInitialQuery.graphql";
 import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
 import { Frame } from "paradicms/app/generic/components/frame/Frame";
 import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
@@ -22,31 +16,39 @@ import { ApolloException } from "@paradicms/base";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import * as queryString from "query-string";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
-import { CollectionOverviewQuery_collectionByUri_objects_facets } from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
+import {
+  SearchResultsInitialQuery,
+  SearchResultsInitialQuery_objects,
+  SearchResultsInitialQuery_objects_collections,
+  SearchResultsInitialQuery_objects_institutions,
+  SearchResultsInitialQueryVariables
+} from "paradicms/app/generic/api/queries/types/SearchResultsInitialQuery";
 
 export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({location}) => {
-  const query: ObjectQuery = queryString.parse(location.search);
+  const initialQuery: ObjectQuery = queryString.parse(location.search);
 
   const [state, setState] = useState<{
     currentPage: number;
-    objectFacets: CollectionOverviewQuery_collectionByUri_objects_facets | null;
     maxPage: number;
-    objects: ObjectSummary[] | null;
+    loadingQuery: ObjectQuery | null;
+    renderedObjects: ObjectSummary[] | null;
+    renderedQuery: ObjectQuery | null;
   }>({
     currentPage: 0,
     maxPage: 0,
-    objectFacets: null,
-    objects: null,
+    loadingQuery: initialQuery,
+    renderedObjects: null,
+    renderedQuery: null
   });
   console.info("State is ", JSON.stringify(state));
 
   const setObjects = (
-    objects: SearchResultsQuery_objects,
+    objects: SearchResultsInitialQuery_objects,
     objectsCount: number
   ) => {
-    const collectionsByUri: {[index: string]: SearchResultsQuery_objects_collections} = {};
+    const collectionsByUri: {[index: string]: SearchResultsInitialQuery_objects_collections} = {};
     objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
-    const institutionsByUri: {[index: string]: SearchResultsQuery_objects_institutions} = {};
+    const institutionsByUri: {[index: string]: SearchResultsInitialQuery_objects_institutions} = {};
     objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
     setState(prevState =>
       Object.assign({}, prevState, {
@@ -73,20 +75,20 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
       }));
   };
 
-  const {loading, data, error, refetch} = useQuery<
-    SearchResultsQuery,
-    SearchResultsQueryVariables
-  >(SearchResultsQueryDocument, {
+  const {initialLoading, initialData, initialError} = useQuery<
+    SearchResultsInitialQuery,
+    SearchResultsInitialQueryVariables
+  >(SearchResultsInitialQueryDocument, {
     variables: {
       limit: 10,
       offset: 0,
-      query
+      query: initialQuery
     },
   });
 
-  if (error) {
-    return <GenericErrorHandler exception={new ApolloException(error)}/>;
-  } else if (loading) {
+  if (initialError) {
+    return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
+  } else if (initialLoading) {
     return <ReactLoader loaded={false} />;
   }
 

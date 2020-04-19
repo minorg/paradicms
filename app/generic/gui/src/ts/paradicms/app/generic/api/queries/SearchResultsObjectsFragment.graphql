@@ -1,0 +1,28 @@
+#import "./ObjectSummaryFragment.graphql"
+
+fragment SearchResultsObjectsFragment on GetObjectsResult {
+    collections {
+      name
+      rights {
+        text
+      }
+      uri
+    }
+    institutions {
+      name
+      rights {
+        text
+      }
+      uri
+    }
+    objectsWithContext {
+      collectionUri
+      institutionUri
+      object {
+        ...ObjectSummaryFragment
+        rights {
+          text
+        }
+      }
+    }
+}
