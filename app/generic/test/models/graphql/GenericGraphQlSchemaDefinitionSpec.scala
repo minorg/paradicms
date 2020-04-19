@@ -52,16 +52,29 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
         graphql"""
          query ObjectsQuery($$collectionUri: String!) {
            collectionByUri(uri: $$collectionUri) {
-             objects(limit: 1, offset: 0) {
-               objects {
-                 uri
-               }
+             objects(limit: 1, offset: 0, query: {}) {
+               uri
              }
            }
          }
        """
       val objects = executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString())).as[JsObject].value("data").result.get.as[JsObject].value("collectionByUri").result.get.as[JsObject].value.get("objects").get.as[JsObject].value.get("objects").get.as[JsArray].value
       objects.size must equal(1)
+    }
+
+    "return collection object facets" in {
+      val query =
+        graphql"""
+         query ObjectsQuery($$collectionUri: String!) {
+           collectionByUri(uri: $$collectionUri) {
+             objectFacets {
+               subjects
+             }
+           }
+         }
+       """
+      val result = Json.stringify(executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString())))
+      result must include(testData.object_.subjects(0))
     }
 
     "return collection by URI" in {
@@ -109,7 +122,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            |""".stripMargin))
     }
 
-    "search objects" in {
+    "search objects with text alone" in {
       val query =
         graphql"""
          query SearchObjectsQuery($$text: String!) {
@@ -126,46 +139,24 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
       result must include(testData.object_.uri.toString())
     }
 
+    "search objects with text and filters" in {
+      val query =
+        graphql"""
+         query SearchObjectsQuery($$collectionUri: String!, $$text: String!) {
+           objects(limit: 10, offset: 0, query: { filters: { collectionUris: { include: [$$collectionUri] } }, text: $$text }) {
+               objectsWithContext {
+                 object {
+                     uri
+                 }
+               }
+           }
+         }
+       """
+      val result = Json.stringify(executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString, "text" -> testData.object_.title)))
+      result must include(testData.object_.uri.toString())
+    }
 
-    ////    "allow to fetch Han Solo using his ID provided through variables" in {
-    ////      val query =
-    ////        graphql"""
-    ////         query FetchSomeIDQuery($$humanId: String!) {
-    ////           human(id: $$humanId) {
-    ////             name
-    ////             friends {
-    ////               id
-    ////               name
-    ////             }
-    ////           }
-    ////         }
-    ////       """
-    ////
-    ////      executeQuery(query, vars = Json.obj("humanId" → JsString("1002"))) must be (Json.parse(
-    ////        """
-    ////         {
-    ////           "data": {
-    ////             "human": {
-    ////               "name": "Han Solo",
-    ////               "friends": [
-    ////                 {
-    ////                   "id": "1000",
-    ////                   "name": "Luke Skywalker"
-    ////                 },
-    ////                 {
-    ////                   "id": "1003",
-    ////                   "name": "Leia Organa"
-    ////                 },
-    ////                 {
-    ////                   "id": "2001",
-    ////                   "name": "R2-D2"
-    ////                 }
-    ////               ]
-    ////             }
-    ////           }
-    ////         }
-    ////        """))
-    //    }
+
   }
 
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {
