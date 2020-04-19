@@ -65,4 +65,5 @@ export interface CollectionOverviewInitialQuery {
 export interface CollectionOverviewInitialQueryVariables {
   collectionUri: string;
   institutionUri: string;
+  limit: number;
 }

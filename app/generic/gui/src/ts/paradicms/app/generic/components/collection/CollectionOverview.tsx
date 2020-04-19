@@ -1,19 +1,16 @@
 import { RouteComponentProps } from "react-router";
 import * as React from "react";
 import { useState } from "react";
-import * as CollectionOverviewQueryDocument from "paradicms/app/generic/api/queries/CollectionOverviewQuery.graphql";
+import * as CollectionOverviewInitialQueryDocument
+  from "paradicms/app/generic/api/queries/CollectionOverviewInitialQuery.graphql";
 import {
-  CollectionOverviewQuery,
-  CollectionOverviewQueryVariables
-} from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
+  CollectionOverviewInitialQuery,
+  CollectionOverviewInitialQuery_collectionByUri_objects,
+  CollectionOverviewInitialQueryVariables
+} from "paradicms/app/generic/api/queries/types/CollectionOverviewInitialQuery";
 import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
-import {
-  CollectionOverviewObjectsPaginationQuery,
-  CollectionOverviewObjectsPaginationQuery_collectionByUri_objects,
-  CollectionOverviewObjectsPaginationQueryVariables
-} from "paradicms/app/generic/api/queries/types/CollectionOverviewObjectsPaginationQuery";
-import * as CollectionOverviewObjectsPaginationQueryDocument
-  from "paradicms/app/generic/api/queries/CollectionOverviewObjectsPaginationQuery.graphql";
+import * as CollectionOverviewRefinementQueryDocument
+  from "paradicms/app/generic/api/queries/CollectionOverviewRefinementQuery.graphql";
 import { useLazyQuery, useQuery } from "@apollo/react-hooks";
 import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
 import * as ReactLoader from "react-loader";
@@ -22,6 +19,13 @@ import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable
 import { Col, Container, Row } from "reactstrap";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import {
+  CollectionOverviewRefinementQuery,
+  CollectionOverviewRefinementQueryVariables
+} from "paradicms/app/generic/api/queries/types/CollectionOverviewRefinementQuery";
+import * as invariant from "invariant";
+
+const OBJECTS_PER_PAGE = 20;
 
 export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   collectionUri: string;
@@ -30,73 +34,106 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   const collectionUri = decodeURIComponent(match.params.collectionUri);
   const institutionUri = decodeURIComponent(match.params.institutionUri);
 
-  const [state, setState] = useState<{
-    currentObjectsPage: number;
-    objects: ObjectSummary[] | null;
-    query: ObjectQuery;
-  }>({
-    currentObjectsPage: 0,
-    objects: null,
-    query: {
-      filters: {
-        collectionUris: { include: [collectionUri] }
-      }
+  const initialQuery: ObjectQuery = {
+    filters: {
+      collectionUris: { include: [collectionUri] }
     }
-  });
-
-  const setObjects = (
-    objects: CollectionOverviewObjectsPaginationQuery_collectionByUri_objects
-  ) => {
-    setState(prevState =>
-      Object.assign({}, prevState, {
-        objects: objects.objects.map(object_ => ({
-          collectionUri,
-          institutionUri,
-          ...object_,
-        })),
-      })
-    );
   };
 
-  const {loading: initialLoading, data: initialData} = useQuery<
-    CollectionOverviewQuery,
-    CollectionOverviewQueryVariables
-  >(CollectionOverviewQueryDocument, {
+  const [state, setState] = useState<{
+    currentObjectsPage: number;
+    loadingQuery: ObjectQuery | null;
+    renderedQuery: ObjectQuery | null;
+    renderedObjects: ObjectSummary[] | null;
+  }>({
+    currentObjectsPage: 0,
+    loadingQuery: initialQuery,
+    renderedObjects: null,
+    renderedQuery: null
+  });
+
+  const {data: initialData} = useQuery<
+    CollectionOverviewInitialQuery,
+    CollectionOverviewInitialQueryVariables
+  >(CollectionOverviewInitialQueryDocument, {
     variables: {
       collectionUri,
       institutionUri,
+      limit: OBJECTS_PER_PAGE
     },
   });
 
-  const [
-    getMoreObjects,
-    {loading: moreObjectsLoading, data: moreObjectsData},
-  ] = useLazyQuery<
-    CollectionOverviewObjectsPaginationQuery,
-    CollectionOverviewObjectsPaginationQueryVariables
-  >(CollectionOverviewObjectsPaginationQueryDocument);
+  if (!initialData) {
+    return <ReactLoader loaded={false} />;
+  } else if (!state.renderedObjects) {
+    invariant(!state.renderedQuery, "rendered objects and query must be in sync");
+    return <ReactLoader loaded={false} />;
+  }
 
-  if (initialLoading || moreObjectsLoading) {
-    return <ReactLoader loaded={false} />;
-  } else if (state.objects === null) {
-    if (moreObjectsData) {
-      console.info("setting objects from more objects data");
-      setObjects(moreObjectsData.collectionByUri.objects);
-    } else if (initialData) {
-      console.info("setting objects from initial data");
-      setObjects(initialData.collectionByUri.objects);
-    }
-    return <ReactLoader loaded={false} />;
+  if (!state.renderedObjects || !state.renderedQuery) {
+    throw new EvalError("rendered objects and query must be set here");
+  }
+
+  const [
+    refinementQuery,
+    {data: refinementData},
+  ] = useLazyQuery<
+    CollectionOverviewRefinementQuery,
+    CollectionOverviewRefinementQueryVariables
+  >(CollectionOverviewRefinementQueryDocument);
+
+  const onObjectsLoaded = (
+    objects: CollectionOverviewInitialQuery_collectionByUri_objects[]
+  ) => {
+    setState(prevState => {
+      const newState = Object.assign({}, prevState);
+      if (!prevState.loadingQuery) {
+        throw new EvalError();
+      }
+      newState.loadingQuery = null;
+      newState.renderedQuery = prevState.loadingQuery;
+      newState.renderedObjects = objects.map(object_ => ({
+        collectionUri,
+        institutionUri,
+        ...object_,
+      }));
+      return newState;
+    });
+  }
+
+  if (refinementData) {
+    console.info("setting objects from more objects data");
+    onObjectsLoaded(refinementData.collectionByUri.objects);
+  } else if (initialData) {
+    console.info("setting objects from initial data");
+    onObjectsLoaded(initialData.collectionByUri.objects);
   }
 
   const onObjectsPageRequest = (page: number) => {
     console.info("request page " + page);
+    const renderedQuery = state.renderedQuery!;
     setState(prevState =>
-      Object.assign({}, prevState, {currentObjectsPage: page, objects: null})
+      Object.assign({}, prevState, {currentObjectsPage: page, loadingQuery: renderedQuery})
     );
-    getMoreObjects({
-      variables: {collectionUri, limit: 20, offset: page * 20},
+    refinementQuery({
+      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: page * OBJECTS_PER_PAGE, query: renderedQuery},
     });
+  };
+
+  const onChangeQuery = (newQuery: ObjectQuery) => {
+    if (state.loadingQuery) {
+      console.warn("already loading a new query");
+      return;
+    }
+    console.info("rendered query: " + JSON.stringify(state.renderedQuery));
+    console.info("new query: " + JSON.stringify(newQuery));
+    setState(prevState =>
+      Object.assign({}, prevState, {loadingQuery: newQuery})
+    );
+    // Start over at the first page.
+    refinementQuery({
+      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
+    })
   };
 
   const rights = initialData
@@ -105,23 +142,13 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       : initialData.institutionByUri.rights
     : undefined;
 
-  const onChangeQuery = (newQuery: ObjectQuery) => {
-    console.info("original query: " + JSON.stringify(state.query));
-    console.info("new query: " + JSON.stringify(newQuery));
-    setState(prevState => {
-      const newState = Object.assign({}, prevState);
-      newState.query = newQuery;
-      return newState;
-    });
-  }
-
   return (
     <InstitutionCollectionObjectOverview
-      collectionName={initialData!.collectionByUri.name}
+      collectionName={initialData.collectionByUri.name}
       collectionUri={collectionUri}
-      institutionName={initialData!.institutionByUri.name}
+      institutionName={initialData.institutionByUri.name}
       institutionUri={institutionUri}
-      title={initialData!.collectionByUri.name}
+      title={initialData.collectionByUri.name}
     >
       <Container fluid>
         {rights ? (
@@ -135,16 +162,16 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
           <Col xs={10}>
             <ObjectsGallery
               currentPage={state.currentObjectsPage}
-              maxPage={Math.ceil(initialData!.collectionByUri.objectsCount / 20)}
-              objects={state.objects}
+              maxPage={Math.ceil(initialData.collectionByUri.objectsCount / OBJECTS_PER_PAGE)}
+              objects={state.renderedObjects}
               onPageRequest={onObjectsPageRequest}
             />
           </Col>
           <Col className="border-left border-top" xs={2}>
             <ObjectFacets
-              facets={initialData!.collectionByUri.objects.facets}
+              facets={initialData.collectionByUri.objectFacets}
               onChange={onChangeQuery}
-              query={state.query}
+              query={state.renderedQuery}
             />
           </Col>
         </Row>

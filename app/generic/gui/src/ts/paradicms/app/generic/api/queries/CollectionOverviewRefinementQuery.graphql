@@ -1,6 +1,6 @@
 #import "./ObjectSummaryFragment.graphql"
 
-query CollectionOverviewFollowUpQuery(
+query CollectionOverviewRefinementQuery(
   $collectionUri: String!
   $limit: Int!
   $offset: Int!
