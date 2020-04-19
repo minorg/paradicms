@@ -12,7 +12,6 @@ import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsG
 import * as CollectionOverviewRefinementQueryDocument
   from "paradicms/app/generic/api/queries/CollectionOverviewRefinementQuery.graphql";
 import { useLazyQuery, useQuery } from "@apollo/react-hooks";
-import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
 import * as ReactLoader from "react-loader";
 import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
 import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
@@ -23,9 +22,13 @@ import {
   CollectionOverviewRefinementQuery,
   CollectionOverviewRefinementQueryVariables
 } from "paradicms/app/generic/api/queries/types/CollectionOverviewRefinementQuery";
-import * as invariant from "invariant";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import { ApolloException } from "@paradicms/base";
+import {
+  initialSearchResultsState,
+  SearchResultsState
+} from "paradicms/app/generic/components/search/SearchResultsState";
+import * as _ from "lodash";
 
 const OBJECTS_PER_PAGE = 20;
 
@@ -36,23 +39,13 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   const collectionUri = decodeURIComponent(match.params.collectionUri);
   const institutionUri = decodeURIComponent(match.params.institutionUri);
 
-  const initialQuery: ObjectQuery = {
+  const initialObjectQuery: ObjectQuery = {
     filters: {
       collectionUris: { include: [collectionUri] }
     }
   };
 
-  const [state, setState] = useState<{
-    loadingQuery: ObjectQuery | null;
-    renderedPage: number;
-    renderedQuery: ObjectQuery | null;
-    renderedObjects: ObjectSummary[] | null;
-  }>({
-    loadingQuery: initialQuery,
-    renderedObjects: null,
-    renderedPage: 0,
-    renderedQuery: null
-  });
+  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(initialObjectQuery));
 
   const {data: initialData, error: initialError} = useQuery<
     CollectionOverviewInitialQuery,
@@ -65,76 +58,83 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
     },
   });
 
-  if (initialError) {
-    return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
-  } else if (!initialData) {
-    return <ReactLoader loaded={false} />;
-  } else if (!state.renderedObjects) {
-    // Have initial data and have setState with it, which hasn't gone through yet.
-    invariant(!state.renderedQuery, "rendered objects and query must be in sync");
-    return <ReactLoader loaded={false} />;
-  }
-
-  if (!state.renderedObjects || !state.renderedQuery) {
-    throw new EvalError("rendered objects and query must be set here");
-  }
-
+  // This isn't used until later, but all hooks must be rendered on every call to render().
   const [
     refinementQuery,
     {data: refinementData},
   ] = useLazyQuery<
     CollectionOverviewRefinementQuery,
     CollectionOverviewRefinementQueryVariables
-  >(CollectionOverviewRefinementQueryDocument);
+    >(CollectionOverviewRefinementQueryDocument);
+
+  if (initialError) {
+    return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
+  } else if (!initialData) {
+    return <ReactLoader loaded={false} />;
+  }
 
   const onObjectsLoaded = (
     objects: CollectionOverviewInitialQuery_collectionByUri_objects[]
   ) => {
     setState(prevState => {
-      const newState = Object.assign({}, prevState);
-      if (!prevState.loadingQuery) {
+      const newState = _.cloneDeep(prevState);
+      if (!prevState.loading) {
         throw new EvalError();
       }
-      newState.loadingQuery = null;
-      newState.renderedQuery = prevState.loadingQuery;
-      newState.renderedObjects = objects.map(object_ => ({
-        collectionUri,
-        institutionUri,
-        ...object_,
-      }));
+      newState.loading = null;
+      newState.rendered = {
+        objects: objects.map(object_ => ({
+          collectionUri,
+          institutionUri,
+          ...object_,
+        })),
+        objectQuery: prevState.loading.objectQuery,
+        objectsPage: prevState.loading.objectsPage
+      };
       return newState;
     });
   }
 
-  if (refinementData) {
-    onObjectsLoaded(refinementData.collectionByUri.objects);
-    return;
-  } else if (initialData) {
-    onObjectsLoaded(initialData.collectionByUri.objects);
-    return;
+  if (state.loading) {
+    if (refinementData) {
+      onObjectsLoaded(refinementData.collectionByUri.objects);
+      // Drop down to render what we already have.
+    } else if (!state.rendered) {
+      // Have initial data, put it into the state.
+      onObjectsLoaded(initialData.collectionByUri.objects);
+      return <ReactLoader loaded={false}/>;
+    }
+  }
+
+  if (!state.rendered) {
+    throw new EvalError();
   }
 
   const onObjectsPageRequest = (page: number) => {
     console.info("request page " + page);
-    const renderedQuery = state.renderedQuery!;
-    setState(prevState =>
-      Object.assign({}, prevState, {renderedPage: page, loadingQuery: renderedQuery})
-    );
+    if (state.loading) {
+      return;
+    }
+    setState(prevState => {
+      const newState = _.cloneDeep(prevState);
+      state.loading = {objectsPage: page, objectQuery: state.rendered!.objectQuery};
+      return newState;
+    });
     refinementQuery({
-      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: page * OBJECTS_PER_PAGE, query: renderedQuery},
+      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: page * OBJECTS_PER_PAGE, query: state.rendered!.objectQuery},
     });
   };
 
-  const onChangeQuery = (newQuery: ObjectQuery) => {
-    if (state.loadingQuery) {
-      console.warn("already loading a new query");
+  const onChangeObjectQuery = (newQuery: ObjectQuery) => {
+    console.info("change query " + JSON.stringify(newQuery));
+    if (state.loading) {
       return;
     }
-    console.info("rendered query: " + JSON.stringify(state.renderedQuery));
-    console.info("new query: " + JSON.stringify(newQuery));
-    setState(prevState =>
-      Object.assign({}, prevState, {loadingQuery: newQuery})
-    );
+    setState(prevState => {
+      const newState = _.cloneDeep(prevState);
+      state.loading = {objectsPage: prevState.rendered!.objectsPage, objectQuery: newQuery};
+      return newState;
+    });
     // Start over at the first page.
     refinementQuery({
       variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
@@ -166,17 +166,17 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
         <Row>
           <Col xs={10}>
             <ObjectsGallery
-              currentPage={state.renderedPage}
+              currentPage={state.rendered.objectsPage}
               maxPage={Math.ceil(initialData.collectionByUri.objectsCount / OBJECTS_PER_PAGE)}
-              objects={state.renderedObjects}
+              objects={state.rendered.objects}
               onPageRequest={onObjectsPageRequest}
             />
           </Col>
           <Col className="border-left border-top" xs={2}>
             <ObjectFacets
               facets={initialData.collectionByUri.objectFacets}
-              onChange={onChangeQuery}
-              query={state.renderedQuery}
+              onChange={onChangeObjectQuery}
+              query={state.rendered.objectQuery}
             />
           </Col>
         </Row>
