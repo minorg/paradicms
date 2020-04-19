@@ -29,7 +29,7 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     }
 
     "get collection object facets" in {
-      val facets = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery.collection(testData.collection.uri)).facets
+      val facets = store.getObjectFacets(currentUserUri = currentUserUri, query = ObjectQuery.collection(testData.collection.uri)).facets
       val actualSubjects = facets.subjects.toList.sortBy(subject => subject)
       val expectedSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
       actualSubjects should equal(expectedSubjects)

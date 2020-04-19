@@ -87,7 +87,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     }
   }
 
-  override final def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map()): GetObjectsResult = {
+  override final def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map(), cachedInstitutionsByUri: Map[Uri, Institution]= Map()): GetObjectsResult = {
     val queryString = new ParameterizedSparqlString(
       s"""
          |${PREFIXES}
@@ -119,7 +119,6 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
 
       GetObjectsResult(
         collections = collections,
-        facets = getObjectFacets(currentUserUri = currentUserUri, query = query),
         institutions = institutions,
         objectsWithContext = querySolutions.map(querySolution => ObjectWithContext(
           collectionUri = querySolution._1,
@@ -130,17 +129,25 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     }
   }
 
-  private def getObjectFacets(currentUserUri: Option[Uri], query: ObjectQuery): ObjectFacets =
-    ObjectFacets(
-      subjects = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query)
-        .filter(node => node.isLiteral)
-        .map(node => node.asLiteral().getString)
-        .toSet,
-      types = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.`type`, DC_11.`type`), query = query)
-        .filter(node => node.isLiteral)
-        .map(node => node.asLiteral().getString)
-        .toSet
+  def getObjectFacets(currentUserUri: Option[Uri], query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map(), cachedInstitutionsByUri: Map[Uri, Institution] = Map()): GetObjectFacetsResult = {
+    val facets =
+      ObjectFacets(
+        subjects = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query)
+          .filter(node => node.isLiteral)
+          .map(node => node.asLiteral().getString)
+          .toSet,
+        types = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.`type`, DC_11.`type`), query = query)
+          .filter(node => node.isLiteral)
+          .map(node => node.asLiteral().getString)
+          .toSet
+      )
+    // TODO: collection and institution will eventually be facets
+    GetObjectFacetsResult(
+      collections = List(),
+      facets = facets,
+      institutions = List()
     )
+  }
 
   private def getObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): List[RDFNode] = {
     val queryString = new ParameterizedSparqlString(
