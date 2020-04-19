@@ -24,6 +24,8 @@ import {
   CollectionOverviewRefinementQueryVariables
 } from "paradicms/app/generic/api/queries/types/CollectionOverviewRefinementQuery";
 import * as invariant from "invariant";
+import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
+import { ApolloException } from "@paradicms/base";
 
 const OBJECTS_PER_PAGE = 20;
 
@@ -41,18 +43,18 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   };
 
   const [state, setState] = useState<{
-    currentObjectsPage: number;
     loadingQuery: ObjectQuery | null;
+    renderedPage: number;
     renderedQuery: ObjectQuery | null;
     renderedObjects: ObjectSummary[] | null;
   }>({
-    currentObjectsPage: 0,
     loadingQuery: initialQuery,
     renderedObjects: null,
+    renderedPage: 0,
     renderedQuery: null
   });
 
-  const {data: initialData} = useQuery<
+  const {data: initialData, error: initialError} = useQuery<
     CollectionOverviewInitialQuery,
     CollectionOverviewInitialQueryVariables
   >(CollectionOverviewInitialQueryDocument, {
@@ -63,9 +65,12 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
     },
   });
 
-  if (!initialData) {
+  if (initialError) {
+    return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
+  } else if (!initialData) {
     return <ReactLoader loaded={false} />;
   } else if (!state.renderedObjects) {
+    // Have initial data and have setState with it, which hasn't gone through yet.
     invariant(!state.renderedQuery, "rendered objects and query must be in sync");
     return <ReactLoader loaded={false} />;
   }
@@ -102,18 +107,18 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   }
 
   if (refinementData) {
-    console.info("setting objects from more objects data");
     onObjectsLoaded(refinementData.collectionByUri.objects);
+    return;
   } else if (initialData) {
-    console.info("setting objects from initial data");
     onObjectsLoaded(initialData.collectionByUri.objects);
+    return;
   }
 
   const onObjectsPageRequest = (page: number) => {
     console.info("request page " + page);
     const renderedQuery = state.renderedQuery!;
     setState(prevState =>
-      Object.assign({}, prevState, {currentObjectsPage: page, loadingQuery: renderedQuery})
+      Object.assign({}, prevState, {renderedPage: page, loadingQuery: renderedQuery})
     );
     refinementQuery({
       variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: page * OBJECTS_PER_PAGE, query: renderedQuery},
@@ -161,7 +166,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
         <Row>
           <Col xs={10}>
             <ObjectsGallery
-              currentPage={state.currentObjectsPage}
+              currentPage={state.renderedPage}
               maxPage={Math.ceil(initialData.collectionByUri.objectsCount / OBJECTS_PER_PAGE)}
               objects={state.renderedObjects}
               onPageRequest={onObjectsPageRequest}

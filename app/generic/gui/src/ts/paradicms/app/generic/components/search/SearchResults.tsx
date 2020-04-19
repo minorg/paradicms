@@ -18,33 +18,68 @@ import * as queryString from "query-string";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
 import {
   SearchResultsInitialQuery,
-  SearchResultsInitialQuery_objects,
   SearchResultsInitialQuery_objects_collections,
   SearchResultsInitialQuery_objects_institutions,
   SearchResultsInitialQueryVariables
 } from "paradicms/app/generic/api/queries/types/SearchResultsInitialQuery";
+import * as invariant from "invariant";
+import { SearchResultsObjectsFragment } from "paradicms/app/generic/api/queries/types/SearchResultsObjectsFragment";
+
+const OBJECTS_PER_PAGE = 10;
 
 export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({location}) => {
   const initialQuery: ObjectQuery = queryString.parse(location.search);
 
   const [state, setState] = useState<{
-    currentPage: number;
-    maxPage: number;
+    loadingPage: number | null;
     loadingQuery: ObjectQuery | null;
     renderedObjects: ObjectSummary[] | null;
+    renderedPage: number | null;
     renderedQuery: ObjectQuery | null;
   }>({
-    currentPage: 0,
-    maxPage: 0,
+    loadingPage: null,
     loadingQuery: initialQuery,
     renderedObjects: null,
+    renderedPage: null,
     renderedQuery: null
   });
   console.info("State is ", JSON.stringify(state));
 
-  const setObjects = (
-    objects: SearchResultsInitialQuery_objects,
-    objectsCount: number
+  const {data: initialData, error: initialError} = useQuery<
+    SearchResultsInitialQuery,
+    SearchResultsInitialQueryVariables
+    >(SearchResultsInitialQueryDocument, {
+    variables: {
+      limit: OBJECTS_PER_PAGE,
+      offset: 0,
+      query: initialQuery
+    },
+  });
+
+  if (initialError) {
+    return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
+  } else if (!initialData) {
+    return <ReactLoader loaded={false} />;
+  } else if (!state.renderedObjects) {
+    // Have initial data and have setState with it, which hasn't gone through yet.
+    invariant(!state.renderedQuery, "rendered objects and query must be in sync");
+    return <ReactLoader loaded={false} />;
+  }
+
+  if (!state.renderedObjects || !state.renderedQuery || state.renderedPage === null) {
+    throw new EvalError("rendered objects and query must be set here");
+  }
+
+  // const [
+  //   refinementQuery,
+  //   {data: refinementData},
+  // ] = useLazyQuery<
+  //   CollectionOverviewRefinementQuery,
+  //   CollectionOverviewRefinementQueryVariables
+  //   >(CollectionOverviewRefinementQueryDocument);
+  
+  const onObjectsLoaded = (
+    objects: SearchResultsObjectsFragment
   ) => {
     const collectionsByUri: {[index: string]: SearchResultsInitialQuery_objects_collections} = {};
     objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
@@ -52,8 +87,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
     objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
     setState(prevState =>
       Object.assign({}, prevState, {
-        maxPage: Math.ceil(objectsCount / 10),
-        objectFacets: objects.facets,
+        // maxPage: Math.ceil(objectsCount / 10),
         objects: objects.objectsWithContext.map(objectWithContext => {
           const collection = collectionsByUri[objectWithContext.collectionUri]!;
           const institution = institutionsByUri[objectWithContext.institutionUri]!;
@@ -75,33 +109,20 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
       }));
   };
 
-  const {initialLoading, initialData, initialError} = useQuery<
-    SearchResultsInitialQuery,
-    SearchResultsInitialQueryVariables
-  >(SearchResultsInitialQueryDocument, {
-    variables: {
-      limit: 10,
-      offset: 0,
-      query: initialQuery
-    },
-  });
-
-  if (initialError) {
-    return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
-  } else if (initialLoading) {
-    return <ReactLoader loaded={false} />;
+  // if (refinementData) {
+  //   onObjectsLoaded(refinementData.collectionByUri.objects);
+  if (initialData) {
+    onObjectsLoaded(initialData.objects);
   }
-
-  if (state.objects == null) {
-    setObjects(data!.objects, data!.objectsCount);
-  }
-
-  const onPageRequest = (page: number) => {
-    setState(prevState => ({...prevState, currentPage: page, objects: null}));
-    refetch({limit: 10, offset: page * 10, query});
+  
+  const onObjectsPageRequest = (page: number) => {
+    const renderedQuery = state.renderedQuery!;
+    setState(prevState => ({ ...prevState, renderedPage: page, loadingQuery: renderedQuery }));
+    //   refetch({limit: 10, offset: page * 10, query});
+    // };
   };
 
-  const searchText = query.text;
+  const searchText = state.renderedQuery.text;
 
   return (
     <Frame
@@ -111,7 +132,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
             <Link to={Hrefs.home}>Home</Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
-            <Link to={Hrefs.search(query)}>
+            <Link to={Hrefs.search(state.renderedQuery)}>
               Search: <i>{searchText}</i>
             </Link>
           </BreadcrumbItem>
@@ -128,17 +149,17 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
         <Row>
           <Col xs="10">
             <ObjectsGallery
-              objects={state.objects!}
-              currentPage={state.currentPage}
-              maxPage={state.maxPage}
-              onPageRequest={onPageRequest}
+              objects={state.renderedObjects}
+              currentPage={state.renderedPage}
+              maxPage={Math.ceil(initialData.objectsCount / OBJECTS_PER_PAGE)}
+              onPageRequest={onObjectsPageRequest}
             />
           </Col>
           <Col>
             <ObjectFacets
-              facets={state.objectFacets!}
+              facets={initialData.objectFacets.facets}
               onChange={(newQuery) => { return; }}
-              query={query}
+              query={state.renderedQuery}
             />
           </Col>
         </Row>
