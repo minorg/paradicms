@@ -2,20 +2,18 @@
 #import "./ObjectSummaryFragment.graphql"
 #import "./RightsFragment.graphql"
 
-query CollectionOverviewQuery(
+query CollectionOverviewInitialQuery(
   $collectionUri: String!
   $institutionUri: String!
 ) {
   collectionByUri(uri: $collectionUri) {
     description
     name
-    objects(limit: 20, offset: 0) {
-      facets {
+    objectFacets {
         ...ObjectFacetsFragment
-      }
-      objects {
+    }
+    objects(limit: 20, offset: 0, query: {}) {
         ...ObjectSummaryFragment
-      }
     }
     objectsCount
     rights {

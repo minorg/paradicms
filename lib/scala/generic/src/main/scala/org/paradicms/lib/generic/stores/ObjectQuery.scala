@@ -9,24 +9,14 @@ final case class ObjectQuery(
 
 object ObjectQuery {
   def collection(collectionUri: Uri) =
-    new ObjectQuery(
-      filters = Some(ObjectFilters(
-        collectionUris = Some(UriFacetFilter(exclude = None, include = Some(List(collectionUri)))),
-        institutionUris = None,
-        subjects = None,
-        types = None
-      )),
+    ObjectQuery(
+      filters = Some(ObjectFilters.collection(collectionUri)),
       text = None
     )
 
   def institution(institutionUri: Uri) =
-    new ObjectQuery(
-      filters = Some(ObjectFilters(
-        collectionUris = None,
-        institutionUris = Some(UriFacetFilter(exclude = None, include = Some(List(institutionUri)))),
-        subjects = None,
-        types = None
-      )),
+    ObjectQuery(
+      filters = Some(ObjectFilters.institution(institutionUri)),
       text = None
     )
 

@@ -1,15 +1,14 @@
 #import "./ObjectSummaryFragment.graphql"
 
-query CollectionOverviewObjectsPaginationQuery(
+query CollectionOverviewFollowUpQuery(
   $collectionUri: String!
   $limit: Int!
   $offset: Int!
+  $query: ObjectQuery!
 ) {
   collectionByUri(uri: $collectionUri) {
-    objects(limit: $limit, offset: $offset) {
-      objects {
+    objects(limit: $limit, offset: $offset, query: $query) {
         ...ObjectSummaryFragment
-      }
     }
   }
 }

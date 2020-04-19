@@ -2,6 +2,8 @@ import * as React from "react";
 import { Container, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { ObjectFilters, ObjectQuery, StringFacetFilter } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import * as invariant from "invariant";
+import * as _ from "lodash";
+import { ObjectFacetsFragment } from "paradicms/app/generic/api/queries/types/ObjectFacetsFragment";
 
 const StringFacetFilterListGroup: React.FunctionComponent<{
   allValues: string[];
@@ -90,10 +92,7 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
 }
 
 export const ObjectFacets: React.FunctionComponent<{
-  facets: {
-    subjects: string[];
-    types: string[];
-  };
+  facets: ObjectFacetsFragment;
   onChange: (query: ObjectQuery) => void;
   query: ObjectQuery;
 }> = ({facets, onChange, query}) => {
@@ -102,8 +101,10 @@ export const ObjectFacets: React.FunctionComponent<{
   }
 
   const onChangeStringFacetFilter = (attribute: keyof ObjectFilters, newState?: StringFacetFilter) => {
-    const newQuery = Object.assign({}, query);
-    newQuery.filters = Object.assign({}, newQuery.filters);
+    const newQuery: ObjectQuery = _.cloneDeep(query);
+    if (!newQuery.filters) {
+      newQuery.filters = {};
+    }
     newQuery.filters[attribute] = newState;
     if (isFiltersEmpty(newQuery.filters)) {
       newQuery.filters = undefined;
