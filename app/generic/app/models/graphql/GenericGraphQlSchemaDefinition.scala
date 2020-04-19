@@ -1,5 +1,6 @@
 package models.graphql
 
+import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
 import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
 import org.paradicms.lib.generic.stores._
@@ -11,9 +12,42 @@ final case class CollectionObjects(facets: ObjectFacets, objects: List[Object])
 
 object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Input types
+  implicit val stringFacetFilterFromInput = new FromInput[StringFacetFilter] {
+    val marshaller = CoercedScalaResultMarshaller.default
+    def fromResult(node: marshaller.Node) = {
+      val ad = node.asInstanceOf[Map[String, Any]]
+      StringFacetFilter(
+        exclude = ad.get("exclude").flatMap(_.asInstanceOf[Option[Vector[String]]]).map(_.toList),
+        include = ad.get("include").flatMap(_.asInstanceOf[Option[Vector[String]]]).map(_.toList)
+      )
+    }
+  }
   implicit val stringFacetFilterType = deriveInputObjectType[StringFacetFilter]()
+
+  implicit val uriFacetFilterFromInput = new FromInput[UriFacetFilter] {
+    val marshaller = CoercedScalaResultMarshaller.default
+    def fromResult(node: marshaller.Node) = {
+      val ad = node.asInstanceOf[Map[String, Any]]
+      UriFacetFilter(
+        exclude = ad.get("exclude").flatMap(_.asInstanceOf[Option[Vector[Uri]]]).map(_.toList),
+        include = ad.get("include").flatMap(_.asInstanceOf[Option[Vector[Uri]]]).map(_.toList)
+      )
+    }
+  }
   implicit val uriFacetFilterType = deriveInputObjectType[UriFacetFilter]()
 
+  implicit val objectFiltersFromInput = new FromInput[ObjectFilters] {
+    val marshaller = CoercedScalaResultMarshaller.default
+    def fromResult(node: marshaller.Node) = {
+      val ad = node.asInstanceOf[Map[String, Any]]
+      ObjectFilters(
+        collectionUris = ad.get("collectionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
+        institutionUris = ad.get("institutionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
+        subjects = ad.get("subjects").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
+        types = ad.get("types").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
+      )
+    }
+  }
   implicit val ObjectFiltersType = deriveInputObjectType[ObjectFilters]()
 
   implicit val objectQueryFromInput = new FromInput[ObjectQuery] {
@@ -21,7 +55,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     def fromResult(node: marshaller.Node) = {
       val ad = node.asInstanceOf[Map[String, Any]]
       ObjectQuery(
-        filters = ad.get("filters").flatMap(_.asInstanceOf[Option[ObjectFilters]]),
+        filters = ad.get("filters").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => objectFiltersFromInput.fromResult(node)),
         text = ad.get("text").flatMap(_.asInstanceOf[Option[String]])
       )
     }

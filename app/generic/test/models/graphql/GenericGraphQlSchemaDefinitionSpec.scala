@@ -139,7 +139,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
       result must include(testData.object_.uri.toString())
     }
 
-    "search objects with text and filters" in {
+    "search objects with text and collection filter" in {
       val query =
         graphql"""
          query SearchObjectsQuery($$collectionUri: String!, $$text: String!) {
@@ -155,6 +155,24 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
       val result = Json.stringify(executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString, "text" -> testData.object_.title)))
       result must include(testData.object_.uri.toString())
     }
+
+    "search objects with text and subject filter" in {
+      val query =
+        graphql"""
+         query SearchObjectsQuery($$subject: String!, $$text: String!) {
+           objects(limit: 10, offset: 0, query: { filters: { subjects: { include: [$$subject] } }, text: $$text }) {
+               objectsWithContext {
+                 object {
+                     uri
+                 }
+               }
+           }
+         }
+       """
+      val result = Json.stringify(executeQuery(query, vars = Json.obj("subject" -> testData.object_.subjects(0), "text" -> testData.object_.title)))
+      result must include(testData.object_.uri.toString())
+    }
+
 
 
   }
