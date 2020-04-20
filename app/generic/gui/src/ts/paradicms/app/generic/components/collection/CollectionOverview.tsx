@@ -66,7 +66,9 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   ] = useLazyQuery<
     CollectionOverviewRefinementQuery,
     CollectionOverviewRefinementQueryVariables
-    >(CollectionOverviewRefinementQueryDocument);
+    >(CollectionOverviewRefinementQueryDocument, {
+      fetchPolicy: "network-only"
+    });
 
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
