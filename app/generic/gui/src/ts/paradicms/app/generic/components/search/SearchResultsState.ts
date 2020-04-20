@@ -8,6 +8,7 @@ interface SearchResultsLoadingState {
 
 interface SearchResultsRenderedState {
   objects: ObjectSummary[];
+  objectsCount: number;
   objectsPage: number;
   objectQuery: ObjectQuery;
 }

@@ -24,6 +24,7 @@ export interface CollectionOverviewRefinementQuery_collectionByUri_objects {
 export interface CollectionOverviewRefinementQuery_collectionByUri {
   __typename: "Collection";
   objects: CollectionOverviewRefinementQuery_collectionByUri_objects[];
+  objectsCount: number;
 }
 
 export interface CollectionOverviewRefinementQuery {

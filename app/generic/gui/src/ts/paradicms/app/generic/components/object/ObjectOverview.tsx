@@ -41,7 +41,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
 
   const nameValueTableRows = (name: string, values: string[]) =>
     values.map(value => (
-      <tr>
+      <tr key={value}>
         <td className="px-2">
           <strong>{name}</strong>
         </td>

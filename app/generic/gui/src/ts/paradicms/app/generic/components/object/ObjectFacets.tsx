@@ -65,11 +65,15 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
 
               if (include.length === allValues.length) {
                 onChange(undefined); // Implicitly include all values
+              } else if (exclude.length === allValues.length) {
+                onChange({exclude}); // Explicitly exclude all values
               } else if (include.length >= exclude.length) {
+                invariant(exclude.length > 0, "must explicitly exclude");
                 // exclude includes fewer values. Those outside it will be included.
                 onChange({exclude});
               } else {
                 // include includes fewer values. Those outside it will be excluded.
+                invariant(include.length > 0, "must explicitly include");
                 onChange({include});
               }
             };

@@ -10,5 +10,6 @@ query CollectionOverviewRefinementQuery(
     objects(limit: $limit, offset: $offset, query: $query) {
         ...ObjectSummaryFragment
     }
+    objectsCount(query: $query)
   }
 }

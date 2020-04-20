@@ -13,7 +13,7 @@ query CollectionOverviewInitialQuery(
     objectFacets {
         ...ObjectFacetsFragment
     }
-    objects(limit: $limit, offset: 0, query: {}) {
+    objects(limit: $limit, offset: 0) {
         ...ObjectSummaryFragment
     }
     objectsCount

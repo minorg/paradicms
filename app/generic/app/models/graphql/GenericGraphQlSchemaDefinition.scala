@@ -6,7 +6,7 @@ import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
 import org.paradicms.lib.generic.stores._
 import sangria.macros.derive._
 import sangria.marshalling.{CoercedScalaResultMarshaller, FromInput}
-import sangria.schema.{Argument, Field, IntType, ListType, OptionType, Schema, StringType, fields}
+import sangria.schema.{Argument, Field, IntType, ListType, OptionInputType, OptionType, Schema, StringType, fields}
 
 final case class CollectionObjects(facets: ObjectFacets, objects: List[Object])
 
@@ -64,6 +64,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
 
   // Argument types
   val ObjectQueryArgument = Argument("query", ObjectQueryType)
+  val OptionalObjectQueryArgument = Argument("query", OptionInputType(ObjectQueryType))
 
   // Object types, in dependence order
   implicit val ObjectType = deriveObjectType[GenericGraphQlSchemaContext, Object](
@@ -76,6 +77,25 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     ReplaceField("subjects", Field("subjects", ListType(StringType), resolve = _.value.subjects.toList)),
     ReplaceField("types", Field("types", ListType(StringType), resolve = _.value.types.toList))
   )
+
+  private def validateCollectionObjectsQuery(collectionUri: Uri, query: Option[ObjectQuery]): ObjectQuery =
+    if (query.isDefined)
+      validateCollectionObjectsQuery(collectionUri, query.get)
+    else
+      ObjectQuery.collection(collectionUri)
+
+  private def validateCollectionObjectsQuery(collectionUri: Uri, query: ObjectQuery): ObjectQuery =
+    if (!query.filters.isDefined) {
+      query.copy(filters = Some(ObjectFilters.collection(collectionUri)))
+    } else if (!query.filters.get.collectionUris.isDefined) {
+      throw new IllegalStateException("query has filters but none on collection")
+    } else if (!query.filters.get.collectionUris.get.include.isDefined) {
+      throw new IllegalStateException("query has filters but none including collection")
+    } else if (!query.filters.get.collectionUris.get.include.get.contains(collectionUri)) {
+      throw new IllegalStateException("query has filters but collection include does not have current collection URI");
+    } else {
+      query
+    }
 
   // https://github.com/sangria-graphql/sangria/issues/54
   implicit val CollectionType = deriveObjectType[GenericGraphQlSchemaContext, Collection](
@@ -94,31 +114,25 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
       Field(
         "objects",
         ListType(ObjectType),
-        arguments = LimitArgument :: OffsetArgument :: ObjectQueryArgument :: Nil,
-        resolve = ctx => {
-          var query: ObjectQuery = ctx.args.arg("query")
-          if (!query.filters.isDefined) {
-            query = query.copy(filters = Some(ObjectFilters.collection(ctx.value.uri)))
-          } else if (!query.filters.get.collectionUris.isDefined) {
-            throw new IllegalStateException("query has filters but none on collection")
-          } else if (!query.filters.get.collectionUris.get.include.isDefined) {
-            throw new IllegalStateException("query has filters but none including collection")
-          } else if (!query.filters.get.collectionUris.get.include.get.contains(ctx.value.uri)) {
-            throw new IllegalStateException("query has filters but collection include does not have current collection URI");
-          }
+        arguments = LimitArgument :: OffsetArgument :: OptionalObjectQueryArgument :: Nil,
+        resolve = ctx =>
           ctx.ctx.store.getObjects(
             cachedCollectionsByUri = Map(ctx.value.uri -> ctx.value),
             currentUserUri = ctx.ctx.currentUserUri,
             limit = ctx.args.arg("limit").asInstanceOf[Integer],
             offset = ctx.args.arg("offset").asInstanceOf[Integer],
-            query = ObjectQuery.collection(ctx.value.uri)
+            query = validateCollectionObjectsQuery(ctx.value.uri, ctx.args.argOpt("query"))
           ).objectsWithContext.map(objectWithContext => objectWithContext.object_)
-        }
       ),
       Field(
         "objectsCount",
         IntType,
-        resolve = ctx => ctx.ctx.store.getObjectsCount(currentUserUri = ctx.ctx.currentUserUri, query = ObjectQuery.collection(ctx.value.uri))
+        arguments = OptionalObjectQueryArgument :: Nil,
+        resolve = ctx =>
+          ctx.ctx.store.getObjectsCount(
+            currentUserUri = ctx.ctx.currentUserUri,
+            query = validateCollectionObjectsQuery(ctx.value.uri, ctx.args.argOpt("query"))
+        )
       )
     )
   )
