@@ -172,14 +172,14 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
           </BreadcrumbItem>
           <BreadcrumbItem>
             <Link to={Hrefs.search(state.rendered.objectQuery)}>
-              Search: <i>{searchText}</i>
+              Search: <i>{searchText}</i>&nbsp;
             </Link>
           </BreadcrumbItem>
         </React.Fragment>
       }
       cardTitle={
         <React.Fragment>
-          Search: <i>{searchText}</i>
+          Search: <i>{searchText}</i>&nbsp;({state.rendered.objectsCount} results)
         </React.Fragment>
       }
       documentTitle={"Search results: " + searchText}
