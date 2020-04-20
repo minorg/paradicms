@@ -93,6 +93,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
             objects: newData!.objects.map(object_ => ({
               collectionUri,
               institutionUri,
+              rights: null,
               ...object_,
             })),
             objectsCount: newData!.objectsCount,
