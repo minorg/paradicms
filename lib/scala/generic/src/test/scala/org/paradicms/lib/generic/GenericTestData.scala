@@ -3,9 +3,12 @@ package org.paradicms.lib.generic
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
 import org.paradicms.lib.generic.stores.ObjectQuery
 import org.paradicms.lib.generic.stores.sparql._
+import org.slf4j.LoggerFactory
 
 object GenericTestData {
-  private final class GenericTestSparqlStore extends TestSparqlStore with SparqlCollectionStore with SparqlInstitutionStore with SparqlObjectStore with SparqlUserStore
+  private final class GenericTestSparqlStore extends TestSparqlStore with SparqlCollectionStore with SparqlInstitutionStore with SparqlObjectStore with SparqlUserStore {
+    val logger = LoggerFactory.getLogger(classOf[GenericTestSparqlStore])
+  }
   private val store = new GenericTestSparqlStore
   private val currentUserUri = store.currentUserUri
 

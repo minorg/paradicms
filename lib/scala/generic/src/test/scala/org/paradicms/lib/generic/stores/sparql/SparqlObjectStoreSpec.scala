@@ -2,10 +2,13 @@ package org.paradicms.lib.generic.stores.sparql
 
 import org.paradicms.lib.generic.stores.{ObjectFilters, ObjectQuery, StringFacetFilter}
 import org.paradicms.lib.generic.{GenericTestData, UnitSpec}
+import org.slf4j.LoggerFactory
 
 final class SparqlObjectStoreSpec extends UnitSpec {
 
-  private final class TestSparqlObjectStore extends TestSparqlStore with SparqlCollectionStore with SparqlInstitutionStore with SparqlObjectStore
+  private final class TestSparqlObjectStore extends TestSparqlStore with SparqlCollectionStore with SparqlInstitutionStore with SparqlObjectStore {
+    val logger = LoggerFactory.getLogger(classOf[TestSparqlObjectStore])
+  }
 
   "SPARQL store" should {
     val store = new TestSparqlObjectStore
