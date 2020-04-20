@@ -1,105 +1,167 @@
 import { RouteComponentProps } from "react-router";
 import * as React from "react";
 import { useState } from "react";
-import * as SearchResultsQueryDocument from "paradicms/app/generic/api/queries/SearchResultsQuery.graphql";
-import {
-  SearchResultsQuery,
-  SearchResultsQuery_objects,
-  SearchResultsQuery_objects_collections,
-  SearchResultsQuery_objects_institutions,
-  SearchResultsQueryVariables
-} from "paradicms/app/generic/api/queries/types/SearchResultsQuery";
-import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
-import { Frame } from "paradicms/app/generic/components/frame/Frame";
-import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
-import { useQuery } from "@apollo/react-hooks";
-import * as ReactLoader from "react-loader";
-import { BreadcrumbItem, Col, Container, Row } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Hrefs } from "paradicms/app/generic/Hrefs";
+import * as SearchResultsInitialQueryDocument
+  from "paradicms/app/generic/api/queries/SearchResultsInitialQuery.graphql";
+import * as SearchResultsRefinementQueryDocument
+  from "paradicms/app/generic/api/queries/SearchResultsRefinementQuery.graphql";
+import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import * as ReactLoader from "react-loader";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import { ApolloException } from "@paradicms/base";
-import { ObjectsQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import * as queryString from "query-string";
+import {
+  SearchResultsInitialQuery,
+  SearchResultsInitialQuery_objects_collections,
+  SearchResultsInitialQuery_objects_institutions,
+  SearchResultsInitialQueryVariables
+} from "paradicms/app/generic/api/queries/types/SearchResultsInitialQuery";
+import {
+  initialSearchResultsState,
+  SearchResultsState
+} from "paradicms/app/generic/components/search/SearchResultsState";
+import {
+  SearchResultsRefinementQuery,
+  SearchResultsRefinementQueryVariables
+} from "paradicms/app/generic/api/queries/types/SearchResultsRefinementQuery";
+import { BreadcrumbItem, Col, Container, Row } from "reactstrap";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
+import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
-import { CollectionOverviewQuery_collectionByUri_objects_facets } from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
+import { Frame } from "paradicms/app/generic/components/frame/Frame";
+import * as invariant from "invariant";
+
+const OBJECTS_PER_PAGE = 10;
 
 export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({location}) => {
-  const query: ObjectsQuery = queryString.parse(location.search);
+  const initialObjectQuery: ObjectQuery = queryString.parse(location.search);
 
-  const [state, setState] = useState<{
-    currentPage: number;
-    objectFacets: CollectionOverviewQuery_collectionByUri_objects_facets | null;
-    maxPage: number;
-    objects: ObjectSummary[] | null;
-  }>({
-    currentPage: 0,
-    maxPage: 0,
-    objectFacets: null,
-    objects: null,
-  });
-  console.info("State is ", JSON.stringify(state));
+  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(initialObjectQuery));
 
-  const setObjects = (
-    objects: SearchResultsQuery_objects,
-    objectsCount: number
-  ) => {
-    const collectionsByUri: {[index: string]: SearchResultsQuery_objects_collections} = {};
-    objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
-    const institutionsByUri: {[index: string]: SearchResultsQuery_objects_institutions} = {};
-    objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
-    setState(prevState =>
-      Object.assign({}, prevState, {
-        maxPage: Math.ceil(objectsCount / 10),
-        objectFacets: objects.facets,
-        objects: objects.objectsWithContext.map(objectWithContext => {
-          const collection = collectionsByUri[objectWithContext.collectionUri]!;
-          const institution = institutionsByUri[objectWithContext.institutionUri]!;
-          const {rights: objectRights, ...otherObjectProps} = objectWithContext.object;
-          const rights = objectRights
-            ? objectRights
-            : collection.rights
-            ? collection.rights
-            : institution.rights;
-          return {
-            collectionName: collection.name,
-            collectionUri: collection.uri,
-            institutionName: institution.name,
-            institutionUri: institution.uri,
-            rights: rights ? rights.text : undefined,
-            ...otherObjectProps,
-          };
-        }),
-      }));
-  };
-
-  const {loading, data, error, refetch} = useQuery<
-    SearchResultsQuery,
-    SearchResultsQueryVariables
-  >(SearchResultsQueryDocument, {
+  const {data: initialData, error: initialError} = useQuery<
+    SearchResultsInitialQuery,
+    SearchResultsInitialQueryVariables
+    >(SearchResultsInitialQueryDocument, {
     variables: {
-      limit: 10,
+      limit: OBJECTS_PER_PAGE,
       offset: 0,
-      query
+      query: initialObjectQuery
     },
   });
 
-  if (error) {
-    return <GenericErrorHandler exception={new ApolloException(error)}/>;
-  } else if (loading) {
+  // This isn't used until later, but all hooks must be rendered on every call to render().
+  const [
+    refinementQuery,
+    {data: refinementData},
+  ] = useLazyQuery<
+    SearchResultsRefinementQuery,
+    SearchResultsRefinementQueryVariables
+    >(SearchResultsRefinementQueryDocument);
+
+  if (initialError) {
+    return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
+  } else if (!initialData) {
     return <ReactLoader loaded={false} />;
   }
 
-  if (state.objects == null) {
-    setObjects(data!.objects, data!.objectsCount);
+  if (state.loading) {
+    let newData: SearchResultsRefinementQuery | undefined;
+    if (refinementData) {
+      newData = refinementData;
+    } else if (!state.rendered) {
+      newData = initialData;
+    }
+
+    if (newData) {
+      const collectionsByUri: {[index: string]: SearchResultsInitialQuery_objects_collections} = {};
+      newData.objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
+      const institutionsByUri: {[index: string]: SearchResultsInitialQuery_objects_institutions} = {};
+      newData.objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
+
+      // Having this as a separate function creates a stale closure of an old setState.
+      setState(prevState => {
+        if (!prevState.loading) {
+          throw new EvalError();
+        }
+        if (!newData) {
+          throw new EvalError();
+        }
+        return {
+          loading: null,
+          rendered: {
+            objects: newData.objects.objectsWithContext.map(objectWithContext => {
+              const collection = collectionsByUri[objectWithContext.collectionUri]!;
+              const institution = institutionsByUri[objectWithContext.institutionUri]!;
+              const { rights: objectRights, ...otherObjectProps } = objectWithContext.object;
+              const rights = objectRights
+                ? objectRights
+                : collection.rights
+                  ? collection.rights
+                  : institution.rights;
+              return {
+                collectionName: collection.name,
+                collectionUri: collection.uri,
+                institutionName: institution.name,
+                institutionUri: institution.uri,
+                rights: rights ? rights.text : undefined,
+                ...otherObjectProps,
+              };
+            }),
+            objectQuery: prevState.loading?.objectQuery,
+            objectsCount: newData.objectsCount,
+            objectsPage: prevState.loading.objectsPage
+          }
+        }
+      });
+    }
   }
 
-  const onPageRequest = (page: number) => {
-    setState(prevState => ({...prevState, currentPage: page, objects: null}));
-    refetch({limit: 10, offset: page * 10, query});
+  if (!state.rendered) {
+    return <ReactLoader loaded={false}/>;
+  }
+
+  const searchText = state.rendered.objectQuery.text!;
+
+  const onObjectsPageRequest = (page: number) => {
+    console.info("request page " + page);
+    if (state.loading) {
+      console.warn("already loading, ignoring page change request");
+      return;
+    }
+    setState(prevState => {
+      invariant(!prevState.loading, "cannot already be loading");
+      invariant(prevState.rendered, "must have already rendered in order to change object pages");
+      return {
+        loading: {objectsPage: page, objectQuery: prevState.rendered!.objectQuery},
+        rendered: prevState.rendered
+      };
+    });
+    refinementQuery({
+      variables: {limit: OBJECTS_PER_PAGE, offset: page * OBJECTS_PER_PAGE, query: state.rendered!.objectQuery},
+    });
   };
 
-  const searchText = query.text;
+  const onChangeObjectQuery = (newQuery: ObjectQuery) => {
+    console.info("change query from " + JSON.stringify(state.rendered?.objectQuery) + " to " + JSON.stringify(newQuery));
+    if (state.loading) {
+      console.warn("already loading, ignoring query change request");
+      return;
+    }
+    // Start over at the first page.
+    setState(prevState => {
+      invariant(!prevState.loading, "cannot already be loading");
+      invariant(prevState.rendered, "must have already rendered in order to change object pages");
+      return {
+        loading: {objectsPage: 0, objectQuery: newQuery},
+        rendered: prevState.rendered
+      };
+    });
+    refinementQuery({
+      variables: {limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
+    })
+  };
 
   return (
     <Frame
@@ -109,15 +171,15 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
             <Link to={Hrefs.home}>Home</Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
-            <Link to={Hrefs.search(query)}>
-              Search: <i>{searchText}</i>
+            <Link to={Hrefs.search(state.rendered.objectQuery)}>
+              Search: <i>{searchText}</i>&nbsp;
             </Link>
           </BreadcrumbItem>
         </React.Fragment>
       }
       cardTitle={
         <React.Fragment>
-          Search: <i>{searchText}</i>
+          Search: <i>{searchText}</i>&nbsp;({state.rendered.objectsCount} results)
         </React.Fragment>
       }
       documentTitle={"Search results: " + searchText}
@@ -126,14 +188,18 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
         <Row>
           <Col xs="10">
             <ObjectsGallery
-              objects={state.objects!}
-              currentPage={state.currentPage}
-              maxPage={state.maxPage}
-              onPageRequest={onPageRequest}
+              objects={state.rendered.objects}
+              currentPage={state.rendered.objectsPage}
+              maxPage={Math.ceil(state.rendered.objectsCount / OBJECTS_PER_PAGE)}
+              onPageRequest={onObjectsPageRequest}
             />
           </Col>
           <Col>
-            <ObjectFacets facets={state.objectFacets!} query={query}/>
+            <ObjectFacets
+              facets={initialData.objectFacets.facets}
+              onChange={onChangeObjectQuery}
+              query={state.rendered.objectQuery}
+            />
           </Col>
         </Row>
       </Container>

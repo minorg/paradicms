@@ -1,6 +1,6 @@
 package org.paradicms.lib.generic.stores.sparql
 
-import org.paradicms.lib.generic.stores.ObjectsQuery
+import org.paradicms.lib.generic.stores.{ObjectFilters, ObjectQuery, StringFacetFilter}
 import org.paradicms.lib.generic.{GenericTestData, UnitSpec}
 
 final class SparqlObjectStoreSpec extends UnitSpec {
@@ -14,7 +14,7 @@ final class SparqlObjectStoreSpec extends UnitSpec {
 
     "list collection objects" in {
       val objects =
-        store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectsQuery.collection(testData.collection.uri))
+        store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery.collection(testData.collection.uri))
           .objectsWithContext.map(objectWithContext => objectWithContext.object_)
           .sortBy(object_ => object_.uri.toString())
       objects should equal(testData.objects)
@@ -29,14 +29,42 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     }
 
     "get collection object facets" in {
-      val facets = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectsQuery.collection(testData.collection.uri)).facets
+      val facets = store.getObjectFacets(currentUserUri = currentUserUri, query = ObjectQuery.collection(testData.collection.uri)).facets
       val actualSubjects = facets.subjects.toList.sortBy(subject => subject)
       val expectedSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
       actualSubjects should equal(expectedSubjects)
     }
 
+    "exclude the subject of an object" in {
+      val allSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
+      val objects = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery(
+        filters = Some(ObjectFilters(
+          collectionUris = None,
+          institutionUris = None,
+          subjects = Some(StringFacetFilter(include = None, exclude = Some(List(allSubjects(0))))),
+          types = None
+        )),
+        text = None
+      )).objectsWithContext
+      objects.size should equal(9)
+    }
+
+    "include the subject of an object" in {
+      val allSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
+      val objects = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery(
+        filters = Some(ObjectFilters(
+          collectionUris = None,
+          institutionUris = None,
+          subjects = Some(StringFacetFilter(exclude = None, include = Some(List(allSubjects(0))))),
+          types = None
+        )),
+        text = None
+      )).objectsWithContext
+      objects.size should equal(1)
+    }
+
     "count collection objects" in {
-      val collectionObjectsCount = store.getObjectsCount(currentUserUri = currentUserUri, query = ObjectsQuery.collection(testData.collection.uri))
+      val collectionObjectsCount = store.getObjectsCount(currentUserUri = currentUserUri, query = ObjectQuery.collection(testData.collection.uri))
       collectionObjectsCount should equal(testData.objects.size)
     }
 
@@ -45,8 +73,16 @@ final class SparqlObjectStoreSpec extends UnitSpec {
       object_ should equal(testData.object_)
     }
 
+    "list institution objects" in {
+      val objects =
+        store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery.institution(testData.institution.uri))
+          .objectsWithContext.map(objectWithContext => objectWithContext.object_)
+          .sortBy(object_ => object_.uri.toString())
+      objects should equal(testData.objects)
+    }
+
     "list matching objects" in {
-      val objects = store.getObjects(limit = 10, offset = 0, query = ObjectsQuery.text(testData.object_.title), currentUserUri = currentUserUri)
+      val objects = store.getObjects(limit = 10, offset = 0, query = ObjectQuery.text(testData.object_.title), currentUserUri = currentUserUri)
         .objectsWithContext.map(objectWithContext => objectWithContext.object_)
       // Will return all objects, but the exact match should be first
 //      objects(0) should equal(testData.object_)
@@ -54,7 +90,7 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     }
 
     "get matching objects count" in {
-      val count = store.getObjectsCount(query = ObjectsQuery.text(testData.object_.title), currentUserUri = currentUserUri)
+      val count = store.getObjectsCount(query = ObjectQuery.text(testData.object_.title), currentUserUri = currentUserUri)
       // Will return all objects
       count should equal(10)
     }

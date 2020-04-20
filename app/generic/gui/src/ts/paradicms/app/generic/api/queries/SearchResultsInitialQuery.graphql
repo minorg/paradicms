@@ -1,0 +1,14 @@
+#import "./ObjectFacetsFragment.graphql"
+#import "./SearchResultsObjectsFragment.graphql"
+
+query SearchResultsInitialQuery($limit: Int!, $offset: Int!, $query: ObjectQuery!) {
+  objectFacets(query: $query) {
+    facets {
+      ...ObjectFacetsFragment
+    }
+  }
+  objects(limit: $limit, offset: $offset, query: $query ) {
+    ...SearchResultsObjectsFragment
+  }
+  objectsCount(query: $query)
+}

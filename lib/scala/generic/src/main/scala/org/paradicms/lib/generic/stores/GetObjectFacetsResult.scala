@@ -2,8 +2,8 @@ package org.paradicms.lib.generic.stores
 
 import org.paradicms.lib.generic.models.domain.{Collection, Institution}
 
-final case class GetObjectsResult(
+final case class GetObjectFacetsResult(
                                   collections: List[Collection],
-                                  institutions: List[Institution],
-                                  objectsWithContext: List[ObjectWithContext]
+                                  facets: ObjectFacets,
+                                  institutions: List[Institution]
                                 )

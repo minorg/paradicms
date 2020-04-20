@@ -9,7 +9,8 @@ import org.paradicms.lib.generic.stores.CollectionStore
 
 import scala.collection.JavaConverters._
 
-trait SparqlCollectionStore extends CollectionStore with SparqlAccessChecks {
+
+trait SparqlCollectionStore extends CollectionStore with SparqlAccessCheckGraphPatterns with SparqlConnectionLoanPatterns with SparqlPrefixes {
   override final def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
     getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
   }
@@ -21,7 +22,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessChecks {
 
     // Should be safe to inject collectionUris since they've already been parsed as URIs
     val queryWhere =
-      accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
+      accessCheck(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = None, queryPatterns = List(
         s"VALUES ?collection { ${
           collectionUris.map(collectionUri => "<" + collectionUri.toString() + ">").mkString(" ")
         } }",
@@ -51,7 +52,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessChecks {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
     val institutionVariable = "<" + institutionUri.toString() + ">"
     val queryWhere =
-      accessCheckGraphPatterns(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = institutionVariable, objectVariable = None, queryPatterns = List(
+      accessCheck(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = institutionVariable, objectVariable = None, queryPatterns = List(
         s"$institutionVariable rdf:type cms:Institution .",
         s"$institutionVariable cms:collection ?collection .",
         "?collection rdf:type cms:Collection .",

@@ -4,7 +4,7 @@ export interface ObjectSummary {
   description: string | null | undefined;
   institutionName?: string;
   institutionUri: string;
-  rights?: string;
+  rights: string | null | undefined;
   thumbnail:
     | {
         url: string;

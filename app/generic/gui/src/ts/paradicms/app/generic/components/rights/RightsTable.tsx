@@ -1,8 +1,8 @@
-import { CollectionOverviewQuery_collectionByUri_rights } from "paradicms/app/generic/api/queries/types/CollectionOverviewQuery";
+import { CollectionOverviewInitialQuery_collectionByUri_rights } from "paradicms/app/generic/api/queries/types/CollectionOverviewInitialQuery";
 import * as React from "react";
 import { Uris } from "@paradicms/base";
 
-type Rights = CollectionOverviewQuery_collectionByUri_rights;
+type Rights = CollectionOverviewInitialQuery_collectionByUri_rights;
 
 export const RightsTable: React.FunctionComponent<{className?: string; rights: Rights}> = ({
   className,

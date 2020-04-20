@@ -1,5 +1,5 @@
 import * as queryString from "query-string";
-import { ObjectsQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 
 export class Hrefs {
   static collection(kwds: {collectionUri: string; institutionUri: string}) {
@@ -66,7 +66,7 @@ export class Hrefs {
     return "/privacy";
   }
 
-  static search(query: ObjectsQuery) {
+  static search(query: ObjectQuery) {
     return "/search?" + queryString.stringify(query);
   }
 }
