@@ -91,7 +91,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     val queryString = new ParameterizedSparqlString(
       s"""
          |${PREFIXES}
-         |SELECT ?collection ?institution ?object WHERE {
+         |SELECT DISTINCT ?collection ?institution ?object WHERE {
          |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query)}
          |}
          |LIMIT ${limit}

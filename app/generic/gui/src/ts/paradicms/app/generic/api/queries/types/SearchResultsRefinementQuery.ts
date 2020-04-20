@@ -67,6 +67,7 @@ export interface SearchResultsRefinementQuery_objects {
 
 export interface SearchResultsRefinementQuery {
   objects: SearchResultsRefinementQuery_objects;
+  objectsCount: number;
 }
 
 export interface SearchResultsRefinementQueryVariables {

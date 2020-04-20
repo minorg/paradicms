@@ -46,7 +46,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   };
 
   const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(initialObjectQuery));
-  // console.debug("State: " + JSON.stringify(state));
+  console.debug("State: " + JSON.stringify(state));
 
   const {data: initialData, error: initialError} = useQuery<
     CollectionOverviewInitialQuery,
@@ -83,7 +83,6 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
     }
 
     if (newData) {
-      // Having this as a separate function creates a stale closure of an old setState.
       setState(prevState => {
         if (!prevState.loading) {
           throw new EvalError();

@@ -4,4 +4,5 @@ query SearchResultsRefinementQuery($limit: Int!, $offset: Int!, $query: ObjectQu
   objects(limit: $limit, offset: $offset, query: $query ) {
     ...SearchResultsObjectsFragment
   }
+  objectsCount(query: $query)
 }
