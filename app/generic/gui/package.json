@@ -15,6 +15,7 @@
     "build": "../../../node_modules/.bin/webpack --mode production -p",
     "build-development": "..\\..\\..\\node_modules\\.bin\\webpack --mode development",
     "generate": "..\\..\\..\\node_modules\\.bin\\graphql-codegen --config graphql-codegen-config.yml && ..\\..\\..\\node_modules\\.bin\\apollo codegen:generate --endpoint http://localhost:9000/api/graphql --target=typescript --includes=src/ts/**/*.graphql,src/ts/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/ts/paradicms/app/generic/api/graphqlGlobalTypes.ts types",
-    "start": "..\\..\\..\\node_modules\\.bin\\webpack-dev-server --mode development --hot --info-verbosity verbose --inline"
+    "start": "..\\..\\..\\node_modules\\.bin\\webpack-dev-server --mode development --hot --info-verbosity verbose --inline",
+    "start-production": "..\\..\\..\\node_modules\\.bin\\webpack-dev-server --mode production --hot --info-verbosity verbose --inline"
   }
 }

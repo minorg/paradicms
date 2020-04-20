@@ -17,7 +17,8 @@ COPY /app/generic/gui ./app/generic/gui
 RUN npm install
 RUN npm run lerna:bootstrap
 RUN cd lib/ts/base && npm run build
-RUN cd app/generic/gui && npm run build
+# RUN cd app/generic/gui && npm run build
+RUN cd app/generic/gui && npm run build-development
 
 # Deployment
 FROM ubuntu:18.04
