@@ -8,7 +8,6 @@ lazy val root = (project in file ("."))
 lazy val baseLib =
   (project in file("lib/scala/base")).settings(
     libraryDependencies ++= Seq(
-      "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
       "io.lemonlabs" %% "scala-uri" % "1.5.1",
       "org.apache.jena" % "jena-arq" % jenaVersion,
       "org.apache.jena" % "jena-core" % jenaVersion,
