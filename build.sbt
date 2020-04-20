@@ -97,6 +97,7 @@ developers in ThisBuild := List(
 )
 homepage in ThisBuild := Some(url("https://github.com/minorg/paradicms"))
 licenses in ThisBuild += ("GPL-3.0", url("https://opensource.org/licenses/GPL-3.0"))
+maintainer in ThisBuild := "info@paradicms.org"
 publishMavenStyle in ThisBuild := true
 publishTo in ThisBuild := Some(
   if (isSnapshot.value)
