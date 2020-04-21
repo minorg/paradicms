@@ -49,13 +49,11 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
           {allValues.map(value => {
             const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
               const newChecked = e.target.checked;
+              delete excludeSet[value];
+              delete includeSet[value];
               if (newChecked) {
-                invariant(value in excludeSet, "value should have been in the exclude set if it wasn't checked before");
-                delete excludeSet[value];
                 includeSet[value] = true;
               } else {
-                invariant(value in includeSet, "value should have been in the include set if it was checked before");
-                delete includeSet[value];
                 excludeSet[value] = true;
               }
 

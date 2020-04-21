@@ -8,10 +8,13 @@ import org.paradicms.lib.generic.models
 import org.paradicms.lib.generic.models.domain.vocabulary.CMS
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
 import org.paradicms.lib.generic.stores._
+import org.slf4j.Logger
 
 import scala.collection.JavaConverters._
 
 trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns with SparqlPrefixes {
+  protected val logger: Logger
+
   private object GraphPatterns extends SparqlAccessCheckGraphPatterns {
     private def objectFilters(filters: ObjectFilters): List[String] =
       filters.collectionUris.map(filter => uriFacetFilter(filter, "?collection")).getOrElse(List()) ++
@@ -83,7 +86,9 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
       queryString.setParam(key, value)
     }
     withQueryExecution(queryString.asQuery()) { queryExecution =>
-      queryExecution.execSelect().next().get("count").asLiteral().getInt
+      val count = queryExecution.execSelect().next().get("count").asLiteral().getInt
+      logger.debug("getObjectsCount: {} -> {}", queryString, count)
+      count
     }
   }
 

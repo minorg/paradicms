@@ -9,9 +9,15 @@ services:
       context: .
       dockerfile: app/generic/Dockerfile
     container_name: generic-app
-    stdin_open: true
     volumes:
       - ./app/generic/conf/application.auth0.conf:/app/conf/application.auth0.conf:ro
+  generic-gui:
+    build:
+      context: .
+      dockerfile: app/generic/gui/Dockerfile
+    container_name: generic-gui
+    depends_on:
+      - generic-app
   fuseki:
     build:
       context: fuseki
