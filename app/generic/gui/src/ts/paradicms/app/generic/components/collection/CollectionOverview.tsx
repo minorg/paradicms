@@ -58,6 +58,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
     },
   });
 
+  // Don't need this until later, but every hook must be called on every render.
   const apolloClient = useApolloClient();
 
   if (initialError) {
