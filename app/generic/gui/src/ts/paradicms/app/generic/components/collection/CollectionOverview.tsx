@@ -3,14 +3,14 @@ import * as React from "react";
 import { useState } from "react";
 import * as CollectionOverviewInitialQueryDocument
   from "paradicms/app/generic/api/queries/CollectionOverviewInitialQuery.graphql";
+import * as CollectionOverviewRefinementQueryDocument
+  from "paradicms/app/generic/api/queries/CollectionOverviewRefinementQuery.graphql";
 import {
   CollectionOverviewInitialQuery,
   CollectionOverviewInitialQueryVariables
 } from "paradicms/app/generic/api/queries/types/CollectionOverviewInitialQuery";
 import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
-import * as CollectionOverviewRefinementQueryDocument
-  from "paradicms/app/generic/api/queries/CollectionOverviewRefinementQuery.graphql";
-import { useLazyQuery, useQuery } from "@apollo/react-hooks";
+import { useApolloClient, useQuery } from "@apollo/react-hooks";
 import * as ReactLoader from "react-loader";
 import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
 import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
@@ -28,8 +28,6 @@ import {
   initialSearchResultsState,
   SearchResultsState
 } from "paradicms/app/generic/components/search/SearchResultsState";
-import * as invariant from "invariant";
-import { NetworkStatus } from "apollo-client";
 
 const OBJECTS_PER_PAGE = 20;
 
@@ -60,17 +58,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
     },
   });
 
-  // This isn't used until later, but all hooks must be rendered on every call to render().
-  const [
-    refinementQuery,
-    {data: refinementData, loading: refinementLoading, networkStatus: refinementNetworkStatus},
-  ] = useLazyQuery<
-    CollectionOverviewRefinementQuery,
-    CollectionOverviewRefinementQueryVariables
-    >(CollectionOverviewRefinementQueryDocument, {
-    notifyOnNetworkStatusChange: true,
-    onCompleted: (data => { console.info("completed lazy query");})
-  });
+  const apolloClient = useApolloClient();
 
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
@@ -78,83 +66,47 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
     return <ReactLoader loaded={false} />;
   }
 
-  console.info("refinement loading: " + refinementLoading);
-  console.info("refinement data: " + refinementData);
-  console.info("refinement network status: " + refinementNetworkStatus);
+  const onLoadedData = (kwds: {data: CollectionOverviewRefinementQuery_collectionByUri, objectQuery: ObjectQuery, objectsPage: number}) => {
+    const {data, objectQuery, objectsPage} = kwds;
+    setState(prevState => {
+      return {
+        objects: data.objects.map(object_ => ({
+          collectionUri,
+          institutionUri,
+          rights: null,
+          ...object_,
+        })),
+        objectsCount: data.objectsCount,
+        objectQuery,
+        objectsPage
+      };
+    });
+  };
 
-  if (state.loading) {
-    let newData: CollectionOverviewRefinementQuery_collectionByUri | undefined;
-    if (refinementData) {
-      console.info("Setting refinement data");
-      newData = refinementData.collectionByUri;
-    } else if (!state.rendered) {
-      newData = initialData.collectionByUri;
-    }
-
-    if (newData) {
-      setState(prevState => {
-        if (!prevState.loading) {
-          throw new EvalError();
-        }
-        return {
-          loading: null,
-          rendered: {
-            objects: newData!.objects.map(object_ => ({
-              collectionUri,
-              institutionUri,
-              rights: null,
-              ...object_,
-            })),
-            objectsCount: newData!.objectsCount,
-            objectQuery: prevState.loading.objectQuery,
-            objectsPage: prevState.loading.objectsPage
-          }
-        };
-      });
-    }
-  }
-
-  if (!state.rendered) {
+  if (state.objectsCount === -1) {
+    // First time we've seen initialData
+    onLoadedData({data: initialData.collectionByUri, objectQuery: initialObjectQuery, objectsPage: 0});
     return <ReactLoader loaded={false}/>;
   }
 
   const onObjectsPageRequest = (page: number) => {
     console.info("request page " + page);
-    if (state.loading || refinementNetworkStatus !== NetworkStatus.ready) {
-      console.warn("already loading, ignoring page change request");
-      return;
-    }
-    setState(prevState => {
-      invariant(!prevState.loading, "cannot already be loading");
-      invariant(prevState.rendered, "must have already rendered in order to change object pages");
-      return {
-        loading: {objectsPage: page, objectQuery: prevState.rendered!.objectQuery},
-        rendered: prevState.rendered
-      };
-    });
-    refinementQuery({
-      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: page * OBJECTS_PER_PAGE, query: state.rendered!.objectQuery},
+    const query = state.objectQuery;
+    apolloClient.query<CollectionOverviewRefinementQuery, CollectionOverviewRefinementQueryVariables>({
+      query: CollectionOverviewRefinementQueryDocument,
+      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: page * OBJECTS_PER_PAGE, query}
+    }).then(({data}) => {
+      onLoadedData({data: data.collectionByUri, objectQuery: query, objectsPage: page});
     });
   };
 
   const onChangeObjectQuery = (newQuery: ObjectQuery) => {
-    console.info("change query from " + JSON.stringify(state.rendered?.objectQuery) + " to " + JSON.stringify(newQuery));
-    if (state.loading) {
-      console.warn("already loading, ignoring query change request");
-      return;
-    }
-    // Start over at the first page.
-    // Start the query first to avoid a race with the setState.
-    refinementQuery({
+    console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery));
+    apolloClient.query<CollectionOverviewRefinementQuery, CollectionOverviewRefinementQueryVariables>({
+      query: CollectionOverviewRefinementQueryDocument,
       variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
-    })
-    setState(prevState => {
-      invariant(!prevState.loading, "cannot already be loading");
-      invariant(prevState.rendered, "must have already rendered in order to change object pages");
-      return {
-        loading: {objectsPage: 0, objectQuery: newQuery},
-        rendered: prevState.rendered
-      };
+    }).then(({data}) => {
+      onLoadedData({data: data.collectionByUri, objectQuery: newQuery, objectsPage: 0});
     });
   };
 
@@ -183,9 +135,9 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
         <Row>
           <Col xs={10}>
             <ObjectsGallery
-              currentPage={state.rendered.objectsPage}
-              maxPage={Math.ceil(state.rendered.objectsCount / OBJECTS_PER_PAGE)}
-              objects={state.rendered.objects}
+              currentPage={state.objectsPage}
+              maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE)}
+              objects={state.objects}
               onPageRequest={onObjectsPageRequest}
             />
           </Col>
@@ -193,7 +145,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
             <ObjectFacets
               facets={initialData.collectionByUri.objectFacets}
               onChange={onChangeObjectQuery}
-              query={state.rendered.objectQuery}
+              query={state.objectQuery}
             />
           </Col>
         </Row>
