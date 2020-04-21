@@ -8,8 +8,8 @@ COPY /app/generic/gui ./app/generic/gui
 RUN npm install
 RUN npm run lerna:bootstrap
 RUN cd lib/ts/base && npm run build
-# RUN cd app/generic/gui && npm run build
-RUN cd app/generic/gui && npm run build-development-unix
+RUN cd app/generic/gui && npm run build
+# RUN cd app/generic/gui && npm run build-development-unix
 
 # Deployment
 FROM nginx:1.17.6
