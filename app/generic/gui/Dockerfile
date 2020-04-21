@@ -14,7 +14,7 @@ RUN cd app/generic/gui && npm run build-development-unix
 # Deployment
 FROM nginx:1.17.6
 
-COPY /app/generic/nginx.conf /etc/nginx/conf.d/default.conf
+COPY /app/generic/gui/nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /app/app/generic/gui/dist /usr/share/nginx/html
 
