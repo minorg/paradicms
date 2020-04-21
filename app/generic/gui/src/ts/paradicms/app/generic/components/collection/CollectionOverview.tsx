@@ -29,6 +29,7 @@ import {
   SearchResultsState
 } from "paradicms/app/generic/components/search/SearchResultsState";
 import * as invariant from "invariant";
+import { NetworkStatus } from "apollo-client";
 
 const OBJECTS_PER_PAGE = 20;
 
@@ -62,11 +63,14 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   // This isn't used until later, but all hooks must be rendered on every call to render().
   const [
     refinementQuery,
-    {data: refinementData},
+    {data: refinementData, loading: refinementLoading, networkStatus: refinementNetworkStatus},
   ] = useLazyQuery<
     CollectionOverviewRefinementQuery,
     CollectionOverviewRefinementQueryVariables
-    >(CollectionOverviewRefinementQueryDocument);
+    >(CollectionOverviewRefinementQueryDocument, {
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data => { console.info("completed lazy query");})
+  });
 
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
@@ -74,9 +78,14 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
     return <ReactLoader loaded={false} />;
   }
 
+  console.info("refinement loading: " + refinementLoading);
+  console.info("refinement data: " + refinementData);
+  console.info("refinement network status: " + refinementNetworkStatus);
+
   if (state.loading) {
     let newData: CollectionOverviewRefinementQuery_collectionByUri | undefined;
     if (refinementData) {
+      console.info("Setting refinement data");
       newData = refinementData.collectionByUri;
     } else if (!state.rendered) {
       newData = initialData.collectionByUri;
@@ -111,7 +120,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
 
   const onObjectsPageRequest = (page: number) => {
     console.info("request page " + page);
-    if (state.loading) {
+    if (state.loading || refinementNetworkStatus !== NetworkStatus.ready) {
       console.warn("already loading, ignoring page change request");
       return;
     }
@@ -135,6 +144,10 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       return;
     }
     // Start over at the first page.
+    // Start the query first to avoid a race with the setState.
+    refinementQuery({
+      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
+    })
     setState(prevState => {
       invariant(!prevState.loading, "cannot already be loading");
       invariant(prevState.rendered, "must have already rendered in order to change object pages");
@@ -143,9 +156,6 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
         rendered: prevState.rendered
       };
     });
-    refinementQuery({
-      variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
-    })
   };
 
   const rights = initialData
