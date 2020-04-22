@@ -8,8 +8,6 @@ import sangria.macros.derive._
 import sangria.marshalling.{CoercedScalaResultMarshaller, FromInput}
 import sangria.schema.{Argument, Field, IntType, ListType, OptionInputType, OptionType, Schema, StringType, fields}
 
-final case class CollectionObjects(facets: ObjectFacets, objects: List[Object])
-
 object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Input types
   implicit val stringFacetFilterFromInput = new FromInput[StringFacetFilter] {
