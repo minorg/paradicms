@@ -28,6 +28,7 @@ import {
   initialSearchResultsState,
   SearchResultsState
 } from "paradicms/app/generic/components/search/SearchResultsState";
+import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
 
 const OBJECTS_PER_PAGE = 20;
 
@@ -45,7 +46,6 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   };
 
   const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(initialObjectQuery));
-  console.debug("State: " + JSON.stringify(state));
 
   const {data: initialData, error: initialError} = useQuery<
     CollectionOverviewInitialQuery,
@@ -126,21 +126,34 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       title={initialData.collectionByUri.name}
     >
       <Container fluid>
-        {rights ? (
+        {rights && state.objects.length ? (
           <Row className="pb-4">
             <Col xs="10">
               <RightsTable rights={rights} />
             </Col>
           </Row>
         ) : null}
+        {state.objects.length ?
+          <React.Fragment>
+            <Row>
+              <Col>
+                <SearchResultsSummary objectsPerPage={OBJECTS_PER_PAGE} state={state}/>
+              </Col>
+            </Row>
+            <Row>
+            </Row>
+          </React.Fragment> : null}
         <Row>
           <Col xs={10}>
-            <ObjectsGallery
-              currentPage={state.objectsPage}
-              maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE)}
-              objects={state.objects}
-              onPageRequest={onObjectsPageRequest}
-            />
+            {state.objects.length ?
+              <ObjectsGallery
+                currentPage={state.objectsPage}
+                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE)}
+                objects={state.objects}
+                onPageRequest={onObjectsPageRequest}
+              /> :
+              <h4 className="text-center">No matching objects found.</h4>
+            }
           </Col>
           <Col className="border-left border-top" xs={2}>
             <ObjectFacets
