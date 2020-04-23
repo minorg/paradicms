@@ -162,7 +162,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
               <ObjectsGallery
                 objects={state.objects}
                 currentPage={state.objectsPage}
-                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE)}
+                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE) - 1}
                 onPageRequest={onObjectsPageRequest}
               /> :
               <h4 className="text-center">No matching objects found.</h4>

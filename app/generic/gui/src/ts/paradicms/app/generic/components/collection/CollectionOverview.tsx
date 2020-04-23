@@ -148,7 +148,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
             {state.objects.length ?
               <ObjectsGallery
                 currentPage={state.objectsPage}
-                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE)}
+                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE) - 1}
                 objects={state.objects}
                 onPageRequest={onObjectsPageRequest}
               /> :
