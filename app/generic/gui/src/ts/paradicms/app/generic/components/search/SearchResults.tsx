@@ -31,6 +31,7 @@ import {
   SearchResultsRefinementQuery,
   SearchResultsRefinementQueryVariables
 } from "paradicms/app/generic/api/queries/types/SearchResultsRefinementQuery";
+import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -139,20 +140,33 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
       }
       cardTitle={
         <React.Fragment>
-          Search: <i>{searchText}</i>&nbsp;({state.objectsCount} results)
+          Search: <i>{searchText}</i>
         </React.Fragment>
       }
       documentTitle={"Search results: " + searchText}
     >
       <Container fluid>
+        {state.objects.length ?
+          <React.Fragment>
+            <Row>
+              <Col>
+                <SearchResultsSummary objectsPerPage={OBJECTS_PER_PAGE} state={state}/>
+              </Col>
+            </Row>
+            <Row>
+            </Row>
+          </React.Fragment> : null}
         <Row>
           <Col xs="10">
-            <ObjectsGallery
-              objects={state.objects}
-              currentPage={state.objectsPage}
-              maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE)}
-              onPageRequest={onObjectsPageRequest}
-            />
+            {state.objects.length ?
+              <ObjectsGallery
+                objects={state.objects}
+                currentPage={state.objectsPage}
+                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE)}
+                onPageRequest={onObjectsPageRequest}
+              /> :
+              <h4 className="text-center">No matching objects found.</h4>
+            }
           </Col>
           <Col>
             <ObjectFacets
