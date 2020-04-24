@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import * as CollectionOverviewInitialQueryDocument

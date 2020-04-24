@@ -1,5 +1,6 @@
 import * as queryString from "query-string";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import * as invariant from "invariant";
 
 export class Hrefs {
   static collection(kwds: {collectionUri: string; institutionUri: string}) {
@@ -67,6 +68,7 @@ export class Hrefs {
   }
 
   static search(query: ObjectQuery) {
+    invariant(query.text, "text must always be set");
     return "/search?" + queryString.stringify(query);
   }
 }

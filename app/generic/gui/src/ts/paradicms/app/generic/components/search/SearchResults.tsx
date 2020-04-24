@@ -1,7 +1,6 @@
-import { RouteComponentProps } from "react-router";
+import { Link, RouteComponentProps } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import * as SearchResultsInitialQueryDocument
   from "paradicms/app/generic/api/queries/SearchResultsInitialQuery.graphql";
 import * as SearchResultsRefinementQueryDocument
@@ -32,13 +31,20 @@ import {
   SearchResultsRefinementQueryVariables
 } from "paradicms/app/generic/api/queries/types/SearchResultsRefinementQuery";
 import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
+import * as invariant from "invariant";
 
 const OBJECTS_PER_PAGE = 10;
 
-export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({location}) => {
-  const initialObjectQuery: ObjectQuery = queryString.parse(location.search);
 
-  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(initialObjectQuery));
+export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({history, location}) => {
+  console.info("Render " + location.search);
+
+  const locationObjectQuery: ObjectQuery = queryString.parse(location.search);
+  invariant(locationObjectQuery.text, "text must always be set");
+
+  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(locationObjectQuery));
+  invariant(state.objectQuery.text, "text must always be set");
+  console.debug("state: " + JSON.stringify(state));
 
   const {data: initialData, error: initialError} = useQuery<
     SearchResultsInitialQuery,
@@ -47,7 +53,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
     variables: {
       limit: OBJECTS_PER_PAGE,
       offset: 0,
-      query: initialObjectQuery
+      query: locationObjectQuery
     },
   });
 
@@ -57,19 +63,19 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
   } else if (!initialData) {
+    console.debug("do not have initial data");
     return <ReactLoader loaded={false} />;
   }
 
   const onLoadedData = (kwds: {data: SearchResultsRefinementQuery, objectQuery: ObjectQuery, objectsPage: number}) => {
     const {data, objectQuery, objectsPage} = kwds;
+    
     const collectionsByUri: {[index: string]: SearchResultsInitialQuery_objects_collections} = {};
     data.objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
     const institutionsByUri: {[index: string]: SearchResultsInitialQuery_objects_institutions} = {};
     data.objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
 
-    // Having this as a separate function creates a stale closure of an old setState.
-    setState(prevState => {
-      return {
+    setState(prevState => ({
         objects: data.objects.objectsWithContext.map(objectWithContext => {
           const collection = collectionsByUri[objectWithContext.collectionUri]!;
           const institution = institutionsByUri[objectWithContext.institutionUri]!;
@@ -91,16 +97,16 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
         objectQuery,
         objectsCount: data.objectsCount,
         objectsPage
-      }
-    });
+      }));
   };
 
   if (state.objectsCount === -1) {
     // First time we've seen initialData
-    onLoadedData({data: initialData, objectQuery: initialObjectQuery, objectsPage: 0});
+    console.debug("first check of initial data, loading");
+    onLoadedData({data: initialData, objectQuery: locationObjectQuery, objectsPage: 0});
     return <ReactLoader loaded={false}/>;
   }
-
+  
   const searchText = state.objectQuery.text!;
 
   const onObjectsPageRequest = (page: number) => {
@@ -115,7 +121,9 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
   };
 
   const onChangeObjectQuery = (newQuery: ObjectQuery) => {
-    console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery));
+    const newUrl = Hrefs.search(newQuery);
+    console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery) + "(" + newUrl + ")");
+    history.push({search: "?" + queryString.stringify(newQuery)});
     apolloClient.query<SearchResultsRefinementQuery, SearchResultsRefinementQueryVariables>({
       query: SearchResultsRefinementQueryDocument,
       variables: {limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
@@ -123,6 +131,9 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
       onLoadedData({data, objectQuery: newQuery, objectsPage: 0});
     });
   };
+
+  // New search in the navbar search form
+  const onNewSearch = (text: string) => onChangeObjectQuery({text});
 
   return (
     <Frame
@@ -144,6 +155,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
         </React.Fragment>
       }
       documentTitle={"Search results: " + searchText}
+      onSearch={onNewSearch}
     >
       <Container fluid>
         {state.objects.length ?
