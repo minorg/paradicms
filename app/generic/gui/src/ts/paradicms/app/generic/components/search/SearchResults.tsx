@@ -1,4 +1,4 @@
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import * as SearchResultsInitialQueryDocument
@@ -31,20 +31,19 @@ import {
   SearchResultsRefinementQueryVariables
 } from "paradicms/app/generic/api/queries/types/SearchResultsRefinementQuery";
 import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
-import * as invariant from "invariant";
+import * as _ from "lodash";
 
 const OBJECTS_PER_PAGE = 10;
 
 
-export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({history, location}) => {
-  console.info("Render " + location.search);
+export const SearchResults: React.FunctionComponent = () => {
+  const history = useHistory();
 
+  const location = useLocation();
   const locationObjectQuery: ObjectQuery = queryString.parse(location.search);
-  invariant(locationObjectQuery.text, "text must always be set");
 
   const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(locationObjectQuery));
-  invariant(state.objectQuery.text, "text must always be set");
-  console.debug("state: " + JSON.stringify(state));
+  // console.debug("state: " + JSON.stringify(state));
 
   const {data: initialData, error: initialError} = useQuery<
     SearchResultsInitialQuery,
@@ -121,9 +120,11 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({his
   };
 
   const onChangeObjectQuery = (newQuery: ObjectQuery) => {
-    const newUrl = Hrefs.search(newQuery);
-    console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery) + "(" + newUrl + ")");
-    history.push({search: "?" + queryString.stringify(newQuery)});
+    console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery));
+    if (!_.isEqual(locationObjectQuery, newQuery)) {
+      console.debug("pushing " + Hrefs.search(newQuery));
+      history.push(Hrefs.search(newQuery));
+    }
     apolloClient.query<SearchResultsRefinementQuery, SearchResultsRefinementQueryVariables>({
       query: SearchResultsRefinementQueryDocument,
       variables: {limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
@@ -131,6 +132,12 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({his
       onLoadedData({data, objectQuery: newQuery, objectsPage: 0});
     });
   };
+
+  if (!_.isEqual(locationObjectQuery, state.objectQuery)) {
+    console.debug("history has changed: location query=" + JSON.stringify(locationObjectQuery) + ", state query=" + JSON.stringify(state.objectQuery));
+    // History has changed, probably by hitting the back button.
+    onChangeObjectQuery(locationObjectQuery);
+  }
 
   // New search in the navbar search form
   const onNewSearch = (text: string) => onChangeObjectQuery({text});
