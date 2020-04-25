@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import * as CollectionOverviewInitialQueryDocument
@@ -32,12 +32,13 @@ import { SearchResultsSummary } from "paradicms/app/generic/components/search/Se
 
 const OBJECTS_PER_PAGE = 20;
 
-export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
-  collectionUri: string;
-  institutionUri: string;
-}>> = ({match}) => {
-  const collectionUri = decodeURIComponent(match.params.collectionUri);
-  const institutionUri = decodeURIComponent(match.params.institutionUri);
+export const CollectionOverview: React.FunctionComponent = () => {
+  let { collectionUri, institutionUri } = useParams<{
+    collectionUri: string;
+    institutionUri: string;
+  }>();
+  collectionUri = decodeURIComponent(collectionUri);
+  institutionUri = decodeURIComponent(institutionUri);
 
   const initialObjectQuery: ObjectQuery = {
     filters: {
