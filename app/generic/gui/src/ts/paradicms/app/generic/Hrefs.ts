@@ -1,13 +1,14 @@
 import * as qs from "qs";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
+import * as _ from "lodash";
 
 export class Hrefs {
-  static collection(kwds: {collectionUri: string; institutionUri: string}) {
-    return (
-      Hrefs.institution(kwds.institutionUri) +
-      "/collection/" +
-      encodeURIComponent(encodeURIComponent(kwds.collectionUri))
-    );
+  static collection(kwds: {collectionUri: string; institutionUri: string, query?: ObjectQuery}) {
+    let href = Hrefs.institution(kwds.institutionUri) + "/collection/" + encodeURIComponent(encodeURIComponent(kwds.collectionUri));
+    if (kwds.query && !_.isEmpty(kwds.query)) {
+      href += "?" + qs.stringify(kwds.query);
+    }
+    return href;
   }
 
   static get contact() {

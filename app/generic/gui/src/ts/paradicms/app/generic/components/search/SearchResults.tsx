@@ -126,7 +126,7 @@ export const SearchResults: React.FunctionComponent = () => {
   const onChangeObjectQuery = (newQuery: ObjectQuery) => {
     console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery));
     if (!_.isEqual(locationObjectQuery, newQuery)) {
-      console.debug("pushing " + Hrefs.search(newQuery));
+      // console.debug("pushing " + Hrefs.search(newQuery));
       history.push(Hrefs.search(newQuery));
     }
     apolloClient.query<SearchResultsRefinementQuery, SearchResultsRefinementQueryVariables>({
@@ -139,7 +139,6 @@ export const SearchResults: React.FunctionComponent = () => {
 
   if (!_.isEqual(locationObjectQuery, state.objectQuery)) {
     console.debug("history has changed: location query=" + JSON.stringify(locationObjectQuery) + ", state query=" + JSON.stringify(state.objectQuery));
-    // History has changed, probably by hitting the back button.
     onChangeObjectQuery(locationObjectQuery);
   }
 

@@ -6,6 +6,7 @@ query CollectionOverviewInitialQuery(
   $collectionUri: String!
   $institutionUri: String!
   $limit: Int!
+  $query: ObjectQuery
 ) {
   collectionByUri(uri: $collectionUri) {
     description
@@ -13,7 +14,7 @@ query CollectionOverviewInitialQuery(
     objectFacets {
         ...ObjectFacetsFragment
     }
-    objects(limit: $limit, offset: 0) {
+    objects(limit: $limit, offset: 0, query: $query) {
         ...ObjectSummaryFragment
     }
     objectsCount

@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { ObjectQuery } from "./../../graphqlGlobalTypes";
+
 // ====================================================
 // GraphQL query operation: CollectionOverviewInitialQuery
 // ====================================================
@@ -66,4 +68,5 @@ export interface CollectionOverviewInitialQueryVariables {
   collectionUri: string;
   institutionUri: string;
   limit: number;
+  query?: ObjectQuery | null;
 }
