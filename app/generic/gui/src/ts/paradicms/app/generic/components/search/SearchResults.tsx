@@ -10,7 +10,7 @@ import * as ReactLoader from "react-loader";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import { ApolloException } from "@paradicms/base";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
-import * as queryString from "query-string";
+import * as qs from "qs";
 import {
   SearchResultsInitialQuery,
   SearchResultsInitialQuery_objects_collections,
@@ -40,20 +40,24 @@ export const SearchResults: React.FunctionComponent = () => {
   const history = useHistory();
 
   const location = useLocation();
-  const locationObjectQuery: ObjectQuery = queryString.parse(location.search);
+  const locationObjectQuery: ObjectQuery = qs.parse(location.search.substring(1));
 
   const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(locationObjectQuery));
   // console.debug("state: " + JSON.stringify(state));
 
+  const initialVariables: SearchResultsInitialQueryVariables = {
+    limit: OBJECTS_PER_PAGE,
+    offset: 0,
+    queryWithFilters: locationObjectQuery,
+    queryWithoutFilters: {
+      text: locationObjectQuery.text
+    }
+  };
   const {data: initialData, error: initialError} = useQuery<
     SearchResultsInitialQuery,
     SearchResultsInitialQueryVariables
     >(SearchResultsInitialQueryDocument, {
-    variables: {
-      limit: OBJECTS_PER_PAGE,
-      offset: 0,
-      query: locationObjectQuery
-    },
+    variables: initialVariables,
   });
 
   // Don't need this until later, but every hook must be called on every render.
@@ -62,7 +66,7 @@ export const SearchResults: React.FunctionComponent = () => {
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
   } else if (!initialData) {
-    console.debug("do not have initial data");
+    console.debug("queried initial with " + JSON.stringify(initialVariables) + ", waiting on data");
     return <ReactLoader loaded={false} />;
   }
 

@@ -85,5 +85,6 @@ export interface SearchResultsInitialQuery {
 export interface SearchResultsInitialQueryVariables {
   limit: number;
   offset: number;
-  query: ObjectQuery;
+  queryWithFilters: ObjectQuery;
+  queryWithoutFilters: ObjectQuery;
 }

@@ -1,4 +1,4 @@
-import * as queryString from "query-string";
+import * as qs from "qs";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 
 export class Hrefs {
@@ -65,8 +65,7 @@ export class Hrefs {
   static get privacy() {
     return "/privacy";
   }
-
   static search(query: ObjectQuery) {
-    return "/search?" + queryString.stringify(query);
+    return "/search?" + qs.stringify(query);
   }
 }
