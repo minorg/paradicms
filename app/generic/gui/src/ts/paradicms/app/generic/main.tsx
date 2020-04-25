@@ -1,7 +1,6 @@
 import "paradicms/app/generic/custom_bootstrap.scss";
 
 import { apolloClient } from "paradicms/app/generic/api/apolloClient";
-import { createBrowserHistory } from "history";
 import { NoRoute } from "paradicms/app/generic/components/error/NoRoute";
 import { Home } from "paradicms/app/generic/components/home/Home";
 import { Privacy } from "paradicms/app/generic/components/static/Privacy";
@@ -10,7 +9,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { ApolloProvider } from "react-apollo";
 import { ApolloProvider as ApolloHooksProvider } from "@apollo/react-hooks";
-import { Route, Router, Switch } from "react-router";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ConsoleLogger, LoggerContext } from "@paradicms/base";
 import { CollectionOverview } from "paradicms/app/generic/components/collection/CollectionOverview";
 import { InstitutionOverview } from "paradicms/app/generic/components/institution/InstitutionOverview";
@@ -20,14 +19,11 @@ import { SearchResults } from "paradicms/app/generic/components/search/SearchRes
 // Logger
 const logger = new ConsoleLogger();
 
-// Stores
-const browserHistory = createBrowserHistory();
-
 ReactDOM.render(
   <ApolloProvider client={apolloClient}>
     <ApolloHooksProvider client={apolloClient}>
       <LoggerContext.Provider value={logger}>
-        <Router history={browserHistory}>
+        <BrowserRouter>
           <Switch>
             <Route exact path={Hrefs.home} component={Home} />
             <Route
@@ -43,10 +39,10 @@ ReactDOM.render(
               component={InstitutionOverview}
             />
             <Route exact path={Hrefs.privacy} component={Privacy} />
-            <Route path="/search" component={SearchResults} />
+            <Route exact path="/search" component={SearchResults} />
             <Route component={NoRoute} />
           </Switch>
-        </Router>
+        </BrowserRouter>
       </LoggerContext.Provider>
     </ApolloHooksProvider>
   </ApolloProvider>,

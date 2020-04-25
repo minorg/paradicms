@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import * as CollectionOverviewInitialQueryDocument
@@ -29,33 +29,44 @@ import {
   SearchResultsState
 } from "paradicms/app/generic/components/search/SearchResultsState";
 import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
+import * as qs from "qs";
+import * as _ from "lodash";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
 
 const OBJECTS_PER_PAGE = 20;
 
-export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
-  collectionUri: string;
-  institutionUri: string;
-}>> = ({match}) => {
-  const collectionUri = decodeURIComponent(match.params.collectionUri);
-  const institutionUri = decodeURIComponent(match.params.institutionUri);
+export const CollectionOverview: React.FunctionComponent = () => {
+  const history = useHistory();
 
-  const initialObjectQuery: ObjectQuery = {
-    filters: {
-      collectionUris: { include: [collectionUri] }
-    }
-  };
+  let { collectionUri, institutionUri } = useParams<{
+    collectionUri: string;
+    institutionUri: string;
+  }>();
+  collectionUri = decodeURIComponent(collectionUri);
+  institutionUri = decodeURIComponent(institutionUri);
 
-  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(initialObjectQuery));
+  const location = useLocation();
+  const locationObjectQuery = qs.parse(location.search.substring(1));
+  if (!locationObjectQuery.filters) {
+    locationObjectQuery.filters = {};
+  }
+  // console.debug("resetting collection and institution filters");
+  locationObjectQuery.filters.collectionUris = { include: [collectionUri] };
+  locationObjectQuery.filters.institutionUris = undefined;
 
+  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(locationObjectQuery));
+
+  const initialVariables: CollectionOverviewInitialQueryVariables = {
+    collectionUri,
+    institutionUri,
+    limit: OBJECTS_PER_PAGE,
+    query: locationObjectQuery
+  }
   const {data: initialData, error: initialError} = useQuery<
     CollectionOverviewInitialQuery,
     CollectionOverviewInitialQueryVariables
   >(CollectionOverviewInitialQueryDocument, {
-    variables: {
-      collectionUri,
-      institutionUri,
-      limit: OBJECTS_PER_PAGE
-    },
+    variables: initialVariables
   });
 
   // Don't need this until later, but every hook must be called on every render.
@@ -64,6 +75,7 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
   } else if (!initialData) {
+    console.debug("queried initial with " + JSON.stringify(initialVariables) + ", waiting on data");
     return <ReactLoader loaded={false} />;
   }
 
@@ -85,8 +97,8 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
   };
 
   if (state.objectsCount === -1) {
-    // First time we've seen initialData
-    onLoadedData({data: initialData.collectionByUri, objectQuery: initialObjectQuery, objectsPage: 0});
+    console.debug("first check of initial data, loading");
+    onLoadedData({data: initialData.collectionByUri, objectQuery: locationObjectQuery, objectsPage: 0});
     return <ReactLoader loaded={false}/>;
   }
 
@@ -103,6 +115,16 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
 
   const onChangeObjectQuery = (newQuery: ObjectQuery) => {
     console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery));
+    if (!_.isEqual(locationObjectQuery, newQuery)) {
+      const newLocationQuery = _.cloneDeep(newQuery);
+      if (newLocationQuery.filters) {
+        newLocationQuery.filters.collectionUris = undefined;
+        newLocationQuery.filters.institutionUris = undefined;
+      }
+      const newLocation = Hrefs.collection({collectionUri, institutionUri, query: newLocationQuery});
+      console.debug("pushing " + newLocation);
+      history.push(newLocation);
+    }
     apolloClient.query<CollectionOverviewRefinementQuery, CollectionOverviewRefinementQueryVariables>({
       query: CollectionOverviewRefinementQueryDocument,
       variables: {collectionUri, limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
@@ -110,6 +132,11 @@ export const CollectionOverview: React.FunctionComponent<RouteComponentProps<{
       onLoadedData({data: data.collectionByUri, objectQuery: newQuery, objectsPage: 0});
     });
   };
+
+  if (!_.isEqual(locationObjectQuery, state.objectQuery)) {
+    console.debug("history has changed: location query=" + JSON.stringify(locationObjectQuery) + ", state query=" + JSON.stringify(state.objectQuery));
+    onChangeObjectQuery(locationObjectQuery);
+  }
 
   const rights = initialData
     ? initialData.collectionByUri.rights

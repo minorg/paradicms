@@ -1,6 +1,6 @@
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import * as React from "react";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 
 import { Exception, FatalErrorModal } from "@paradicms/base";
 

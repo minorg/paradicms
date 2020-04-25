@@ -11,20 +11,28 @@ import { CurrentUser } from "paradicms/app/generic/components/navbar/CurrentUser
 interface Props extends RouteComponentProps {
   activeNavItem?: ActiveNavbarItem;
   currentUser?: CurrentUser;
+  onSearch?: (text: string) => void;
 }
 
 const Navbar: React.FunctionComponent<Props> = ({
   activeNavItem,
   currentUser,
+  onSearch: onSearchUserDefined
 }) => {
-  const [state, setState] = useState<{searchText: string | null}>({
-    searchText: null,
+  const [state, setState] = useState<{redirectToSearchText: string | null}>({
+    redirectToSearchText: null,
   });
-  const onSearch = (text: string) =>
-    setState(prevState => Object.assign({}, prevState, {searchText: text}));
 
-  if (state.searchText) {
-    return <Redirect to={Hrefs.search({text: state.searchText})} />;
+  let onSearch: (text: string) => void;
+  if (onSearchUserDefined) {
+    onSearch = onSearchUserDefined;
+  } else {
+    onSearch = (text: string) =>
+      setState(prevState => Object.assign({}, prevState, {redirectToSearchText: text}));
+
+    if (state.redirectToSearchText) {
+      return <Redirect to={Hrefs.search({text: state.redirectToSearchText})} />;
+    }
   }
 
   return (

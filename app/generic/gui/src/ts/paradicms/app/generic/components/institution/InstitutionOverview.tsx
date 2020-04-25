@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps } from "react-router-dom";
 import * as React from "react";
 import { CollectionsList } from "paradicms/app/generic/components/collection/CollectionsList";
 import * as InstitutionOverviewQueryDocument from "paradicms/app/generic/api/queries/InstitutionOverviewQuery.graphql";

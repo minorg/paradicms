@@ -1,7 +1,6 @@
-import { RouteComponentProps } from "react-router";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import * as SearchResultsInitialQueryDocument
   from "paradicms/app/generic/api/queries/SearchResultsInitialQuery.graphql";
 import * as SearchResultsRefinementQueryDocument
@@ -11,7 +10,7 @@ import * as ReactLoader from "react-loader";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import { ApolloException } from "@paradicms/base";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
-import * as queryString from "query-string";
+import * as qs from "qs";
 import {
   SearchResultsInitialQuery,
   SearchResultsInitialQuery_objects_collections,
@@ -32,23 +31,33 @@ import {
   SearchResultsRefinementQueryVariables
 } from "paradicms/app/generic/api/queries/types/SearchResultsRefinementQuery";
 import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
+import * as _ from "lodash";
 
 const OBJECTS_PER_PAGE = 10;
 
-export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({location}) => {
-  const initialObjectQuery: ObjectQuery = queryString.parse(location.search);
 
-  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(initialObjectQuery));
+export const SearchResults: React.FunctionComponent = () => {
+  const history = useHistory();
 
+  const location = useLocation();
+  const locationObjectQuery: ObjectQuery = qs.parse(location.search.substring(1));
+
+  const [state, setState] = useState<SearchResultsState>(initialSearchResultsState(locationObjectQuery));
+  // console.debug("state: " + JSON.stringify(state));
+
+  const initialVariables: SearchResultsInitialQueryVariables = {
+    limit: OBJECTS_PER_PAGE,
+    offset: 0,
+    queryWithFilters: locationObjectQuery,
+    queryWithoutFilters: {
+      text: locationObjectQuery.text
+    }
+  };
   const {data: initialData, error: initialError} = useQuery<
     SearchResultsInitialQuery,
     SearchResultsInitialQueryVariables
     >(SearchResultsInitialQueryDocument, {
-    variables: {
-      limit: OBJECTS_PER_PAGE,
-      offset: 0,
-      query: initialObjectQuery
-    },
+    variables: initialVariables,
   });
 
   // Don't need this until later, but every hook must be called on every render.
@@ -57,19 +66,19 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
   } else if (!initialData) {
+    console.debug("queried initial with " + JSON.stringify(initialVariables) + ", waiting on data");
     return <ReactLoader loaded={false} />;
   }
 
   const onLoadedData = (kwds: {data: SearchResultsRefinementQuery, objectQuery: ObjectQuery, objectsPage: number}) => {
     const {data, objectQuery, objectsPage} = kwds;
+    
     const collectionsByUri: {[index: string]: SearchResultsInitialQuery_objects_collections} = {};
     data.objects.collections.forEach(objectCollection => collectionsByUri[objectCollection.uri] = objectCollection);
     const institutionsByUri: {[index: string]: SearchResultsInitialQuery_objects_institutions} = {};
     data.objects.institutions.forEach(objectInstitution => institutionsByUri[objectInstitution.uri] = objectInstitution);
 
-    // Having this as a separate function creates a stale closure of an old setState.
-    setState(prevState => {
-      return {
+    setState(prevState => ({
         objects: data.objects.objectsWithContext.map(objectWithContext => {
           const collection = collectionsByUri[objectWithContext.collectionUri]!;
           const institution = institutionsByUri[objectWithContext.institutionUri]!;
@@ -91,16 +100,16 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
         objectQuery,
         objectsCount: data.objectsCount,
         objectsPage
-      }
-    });
+      }));
   };
 
   if (state.objectsCount === -1) {
     // First time we've seen initialData
-    onLoadedData({data: initialData, objectQuery: initialObjectQuery, objectsPage: 0});
+    console.debug("first check of initial data, loading");
+    onLoadedData({data: initialData, objectQuery: locationObjectQuery, objectsPage: 0});
     return <ReactLoader loaded={false}/>;
   }
-
+  
   const searchText = state.objectQuery.text!;
 
   const onObjectsPageRequest = (page: number) => {
@@ -116,6 +125,10 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
 
   const onChangeObjectQuery = (newQuery: ObjectQuery) => {
     console.info("change query from " + JSON.stringify(state.objectQuery) + " to " + JSON.stringify(newQuery));
+    if (!_.isEqual(locationObjectQuery, newQuery)) {
+      // console.debug("pushing " + Hrefs.search(newQuery));
+      history.push(Hrefs.search(newQuery));
+    }
     apolloClient.query<SearchResultsRefinementQuery, SearchResultsRefinementQueryVariables>({
       query: SearchResultsRefinementQueryDocument,
       variables: {limit: OBJECTS_PER_PAGE, offset: 0, query: newQuery}
@@ -123,6 +136,14 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
       onLoadedData({data, objectQuery: newQuery, objectsPage: 0});
     });
   };
+
+  if (!_.isEqual(locationObjectQuery, state.objectQuery)) {
+    console.debug("history has changed: location query=" + JSON.stringify(locationObjectQuery) + ", state query=" + JSON.stringify(state.objectQuery));
+    onChangeObjectQuery(locationObjectQuery);
+  }
+
+  // New search in the navbar search form
+  const onNewSearch = (text: string) => onChangeObjectQuery({text});
 
   return (
     <Frame
@@ -144,6 +165,7 @@ export const SearchResults: React.FunctionComponent<RouteComponentProps> = ({loc
         </React.Fragment>
       }
       documentTitle={"Search results: " + searchText}
+      onSearch={onNewSearch}
     >
       <Container fluid>
         {state.objects.length ?

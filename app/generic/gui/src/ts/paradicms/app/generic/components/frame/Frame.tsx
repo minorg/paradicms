@@ -21,6 +21,7 @@ export const Frame: React.FunctionComponent<{
   children: React.ReactNode;
   className?: string;
   documentTitle: string;
+  onSearch?: (text: string) => void;
 }> = ({
   activeNavItem,
   breadcrumbItems,
@@ -28,6 +29,7 @@ export const Frame: React.FunctionComponent<{
   className,
   children,
   documentTitle,
+  onSearch
 }) => {
   useEffect(() => {
     document.title = "Paradicms - " + documentTitle;
@@ -48,6 +50,7 @@ export const Frame: React.FunctionComponent<{
       <Navbar
         activeNavItem={activeNavItem}
         currentUser={data.currentUser ? data.currentUser : undefined}
+        onSearch={onSearch}
       />
       <div className="mb-2 mt-2">
         <Container fluid>
