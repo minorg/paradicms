@@ -46,7 +46,9 @@ query ObjectOverviewQuery(
     sources
     spatialCoverages
     subjects
+    temporals
     title
     titles
+    types
   }
 }
