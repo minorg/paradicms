@@ -114,8 +114,11 @@ export const ObjectFacets: React.FunctionComponent<{
     onChange(newQuery);
   }
 
+  const onChangeCulturalContext = (newState?: StringFacetFilter) => onChangeStringFacetFilter("culturalContexts", newState);
+  const onChangeMaterial = (newState?: StringFacetFilter) => onChangeStringFacetFilter("materials", newState);
   const onChangeSpatial = (newState?: StringFacetFilter) => onChangeStringFacetFilter("spatials", newState);
   const onChangeSubject = (newState?: StringFacetFilter) => onChangeStringFacetFilter("subjects", newState);
+  const onChangeTechnique = (newState?: StringFacetFilter) => onChangeStringFacetFilter("techniques", newState);
   const onChangeTemporal = (newState?: StringFacetFilter) => onChangeStringFacetFilter("temporals", newState);
   const onChangeType = (newState?: StringFacetFilter) => onChangeStringFacetFilter("types", newState);
 
@@ -130,10 +133,22 @@ export const ObjectFacets: React.FunctionComponent<{
                      currentState={query.filters && query.filters.types ? query.filters.types : undefined}
                      onChange={onChangeType}
                      title={"Types"}/>
+        <StringFacetFilterListGroup allValues={facets.culturalContexts}
+                                    currentState={query.filters && query.filters.culturalContexts ? query.filters.culturalContexts : undefined}
+                                    onChange={onChangeCulturalContext}
+                                    title={"Cultural context"}/>
+        <StringFacetFilterListGroup allValues={facets.materials}
+                                    currentState={query.filters && query.filters.materials ? query.filters.materials : undefined}
+                                    onChange={onChangeMaterial}
+                                    title={"Material"}/>
         <StringFacetFilterListGroup allValues={facets.spatials}
                                     currentState={query.filters && query.filters.spatials ? query.filters.spatials : undefined}
                                     onChange={onChangeSpatial}
                                     title={"Spatial coverage"}/>
+        <StringFacetFilterListGroup allValues={facets.techniques}
+                                    currentState={query.filters && query.filters.techniques ? query.filters.techniques : undefined}
+                                    onChange={onChangeTechnique}
+                                    title={"Technique"}/>
         <StringFacetFilterListGroup allValues={facets.temporals}
                                     currentState={query.filters && query.filters.temporals ? query.filters.temporals : undefined}
                                     onChange={onChangeTemporal}
