@@ -1,7 +1,7 @@
 package org.paradicms.lib.generic.models.domain
 
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.FoafResourceProperties
+import org.paradicms.lib.base.rdf.properties.FoafResourceProperties
 
 final case class DerivedImageSet(original: Image, thumbnail: Option[Image])
 

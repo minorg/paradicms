@@ -1,4 +1,4 @@
-package org.paradicms.lib.generic.models.domain.vocabulary
+package org.paradicms.lib.generic.rdf.vocabularies
 
 import org.apache.jena.rdf.model.ResourceFactory
 

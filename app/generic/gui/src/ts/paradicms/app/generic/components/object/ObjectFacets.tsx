@@ -1,11 +1,46 @@
 import * as React from "react";
-import { Container, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { useState } from "react";
+import { Col, Collapse, Container, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { ObjectFilters, ObjectQuery, StringFacetFilter } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import * as invariant from "invariant";
 import * as _ from "lodash";
 import { ObjectFacetsFragment } from "paradicms/app/generic/api/queries/types/ObjectFacetsFragment";
+import * as classnames from "classnames";
 
-const StringFacetFilterListGroup: React.FunctionComponent<{
+const FacetDisclosurePanel: React.FunctionComponent<{children: React.ReactNode; title: string}> = ({children, title}) => {
+  const [state, setState] = useState<{open: boolean}>({open: false});
+  const {open} = state;
+  const onToggle = () => setState(prevState => ({open: !prevState.open}));
+
+  return (
+    <React.Fragment>
+    <Row>
+      <Col xs={12}>
+        <a onClick={onToggle} style={{cursor: "pointer", fontSize: "larger"}}>{title}</a>
+        <div className="float-right">
+          <a onClick={onToggle} style={{cursor: "pointer"}}>
+            <i
+              className={classnames({
+                fas: true,
+                "fa-chevron-down": open,
+                "fa-chevron-right": !open,
+              })}
+            ></i>
+          </a>
+        </div>
+        <Collapse isOpen={open}>
+          <div className="mt-2">
+            {children}
+          </div>
+        </Collapse>
+      </Col>
+    </Row>
+    <Row>&nbsp;</Row>
+  </React.Fragment>
+  );
+}
+
+const StringFacet: React.FunctionComponent<{
   allValues: string[];
   currentState?: StringFacetFilter;
   onChange: (newState?: StringFacetFilter) => void;
@@ -40,11 +75,7 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
   invariant(Object.keys(includeSet).length + Object.keys(excludeSet).length === allValues.length, "sets should account for all values");
 
   return (
-    <React.Fragment>
-      <Row>
-        <h4 className="text-center w-100">{title}</h4>
-      </Row>
-      <Row>
+    <FacetDisclosurePanel title={title}>
         <ListGroup className="w-100">
           {allValues.sort().map(value => {
             const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -88,9 +119,7 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
             );
           })}
         </ListGroup>
-      </Row>
-      <Row>&nbsp;</Row>
-    </React.Fragment>);
+  </FacetDisclosurePanel>);
 }
 
 export const ObjectFacets: React.FunctionComponent<{
@@ -114,27 +143,42 @@ export const ObjectFacets: React.FunctionComponent<{
     onChange(newQuery);
   }
 
+  const onChangeCulturalContext = (newState?: StringFacetFilter) => onChangeStringFacetFilter("culturalContexts", newState);
+  const onChangeMaterial = (newState?: StringFacetFilter) => onChangeStringFacetFilter("materials", newState);
   const onChangeSpatial = (newState?: StringFacetFilter) => onChangeStringFacetFilter("spatials", newState);
   const onChangeSubject = (newState?: StringFacetFilter) => onChangeStringFacetFilter("subjects", newState);
+  const onChangeTechnique = (newState?: StringFacetFilter) => onChangeStringFacetFilter("techniques", newState);
   const onChangeTemporal = (newState?: StringFacetFilter) => onChangeStringFacetFilter("temporals", newState);
   const onChangeType = (newState?: StringFacetFilter) => onChangeStringFacetFilter("types", newState);
 
   return (
     <Form>
       <Container className="py-4" fluid>
-        <StringFacetFilterListGroup allValues={facets.subjects}
+        <StringFacet allValues={facets.subjects}
                      currentState={query.filters && query.filters.subjects ? query.filters.subjects : undefined}
                      onChange={onChangeSubject}
                      title={"Subjects"}/>
-        <StringFacetFilterListGroup allValues={facets.types}
+        <StringFacet allValues={facets.types}
                      currentState={query.filters && query.filters.types ? query.filters.types : undefined}
                      onChange={onChangeType}
                      title={"Types"}/>
-        <StringFacetFilterListGroup allValues={facets.spatials}
+        <StringFacet allValues={facets.culturalContexts}
+                                    currentState={query.filters && query.filters.culturalContexts ? query.filters.culturalContexts : undefined}
+                                    onChange={onChangeCulturalContext}
+                                    title={"Cultural context"}/>
+        <StringFacet allValues={facets.materials}
+                                    currentState={query.filters && query.filters.materials ? query.filters.materials : undefined}
+                                    onChange={onChangeMaterial}
+                                    title={"Material"}/>
+        <StringFacet allValues={facets.spatials}
                                     currentState={query.filters && query.filters.spatials ? query.filters.spatials : undefined}
                                     onChange={onChangeSpatial}
                                     title={"Spatial coverage"}/>
-        <StringFacetFilterListGroup allValues={facets.temporals}
+        <StringFacet allValues={facets.techniques}
+                                    currentState={query.filters && query.filters.techniques ? query.filters.techniques : undefined}
+                                    onChange={onChangeTechnique}
+                                    title={"Technique"}/>
+        <StringFacet allValues={facets.temporals}
                                     currentState={query.filters && query.filters.temporals ? query.filters.temporals : undefined}
                                     onChange={onChangeTemporal}
                                     title={"Temporal coverage"}/>

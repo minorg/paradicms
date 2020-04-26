@@ -5,8 +5,8 @@ import org.apache.jena.query.{ParameterizedSparqlString, QueryFactory}
 import org.apache.jena.rdf.model.{Property, RDFNode, ResourceFactory}
 import org.apache.jena.vocabulary.{DCTerms, DC_11, RDF}
 import org.paradicms.lib.generic.models
-import org.paradicms.lib.generic.models.domain.vocabulary.CMS
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
+import org.paradicms.lib.generic.rdf.vocabularies.{CMS, VRA}
 import org.paradicms.lib.generic.stores._
 import org.slf4j.Logger
 
@@ -17,18 +17,24 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
 
   private object GraphPatterns extends SparqlAccessCheckGraphPatterns {
     private def objectFilters(filters: ObjectFilters): List[String] =
-      filters.collectionUris.map(filter => uriFacetFilter(filter, "?collection")).getOrElse(List()) ++
-      filters.institutionUris.map(filter => uriFacetFilter(filter, "?institution")).getOrElse(List()) ++
-      filters.spatials.map(filter => stringFacetFilter(filter, List(DCTerms.spatial), "?spatial")).getOrElse(List()) ++
-      filters.subjects.map(filter => stringFacetFilter(filter, List(DCTerms.subject, DC_11.subject), "?subject")).getOrElse(List()) ++
-      filters.temporals.map(filter => stringFacetFilter(filter, List(DCTerms.temporal), "?temporal")).getOrElse(List()) ++
-      filters.types.map(filter => stringFacetFilter(filter, List(DCTerms.`type`, DC_11.`type`), "?type")).getOrElse(List())
+      uriFacetFilter(filters.collectionUris, "?collection") ++
+      stringFacetFilter(filters.culturalContexts, List(VRA.culturalContext), "?culturalContext") ++
+      uriFacetFilter(filters.institutionUris, "?institution") ++
+      stringFacetFilter(filters.materials, List(VRA.material), "?material") ++
+      stringFacetFilter(filters.spatials, List(DCTerms.spatial), "?spatial") ++
+      stringFacetFilter(filters.subjects, List(DCTerms.subject, DC_11.subject), "?subject") ++
+      stringFacetFilter(filters.techniques, List(VRA.hasTechnique), "?technique") ++
+      stringFacetFilter(filters.temporals, List(DCTerms.temporal), "?temporal") ++
+      stringFacetFilter(filters.types, List(DCTerms.`type`, DC_11.`type`), "?type")
 
     private def objectFiltersParams(filters: ObjectFilters): Map[String, RDFNode] =
-      filters.spatials.map(filter => stringFacetFilterParams(filter, "?spatial")).getOrElse(Map()) ++
-      filters.subjects.map(filter => stringFacetFilterParams(filter, "?subject")).getOrElse(Map()) ++
-      filters.temporals.map(filter => stringFacetFilterParams(filter, "?temporal")).getOrElse(Map()) ++
-      filters.types.map(filter => stringFacetFilterParams(filter, "?type")).getOrElse(Map())
+      stringFacetFilterParams(filters.culturalContexts, "?culturalContext") ++
+      stringFacetFilterParams(filters.materials, "?material") ++
+      stringFacetFilterParams(filters.spatials, "?spatial") ++
+      stringFacetFilterParams(filters.subjects, "?subject") ++
+      stringFacetFilterParams(filters.techniques, "?technique") ++
+      stringFacetFilterParams(filters.temporals, "?temporal") ++
+      stringFacetFilterParams(filters.types, "?type")
 
     def objectQuery(currentUserUri: Option[Uri], query: ObjectQuery, additionalGraphPatterns: List[String] = List()): String =
       accessCheck(collectionVariable = Some("?collection"), currentUserUri = currentUserUri, institutionVariable = "?institution", objectVariable = Some("?object"), queryPatterns = List(
@@ -63,6 +69,9 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
       filter.include.map(includes => List(s"FILTER ( ${variable} IN ( ${includes.indices.map(includeIndex => variable + "_include_" + includeIndex).mkString(", ")} ) )")).getOrElse(List()) ++
       filter.exclude.map(excludes => List(s"FILTER ( ${variable} NOT IN ( ${excludes.indices.map(excludeIndex => variable + "_exclude_" + excludeIndex).mkString(", ")} ) )")).getOrElse(List())
 
+    private def stringFacetFilter(filter: Option[StringFacetFilter], properties: List[Property], variable: String): List[String] =
+      filter.map(filter => stringFacetFilter(filter, properties, variable)).getOrElse(List())
+
     private def stringFacetFilterParams(filter: StringFacetFilter, variable: String): Map[String, RDFNode] =
       filter.include.map(includes =>
         includes.zipWithIndex.map(
@@ -73,10 +82,16 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
             excludeWithIndex => ((variable + "_exclude_" + excludeWithIndex._2), ResourceFactory.createStringLiteral(excludeWithIndex._1))
           ).toMap).getOrElse(Map())
 
+    private def stringFacetFilterParams(filter: Option[StringFacetFilter], variable: String): Map[String, RDFNode] =
+      filter.map(filter => stringFacetFilterParams(filter, variable)).getOrElse(Map())
+
     private def uriFacetFilter(filter: UriFacetFilter, variable: String): List[String] =
       // Assumes the variable has already been defined
         filter.include.map(includes => List(s"FILTER ( ${variable} IN ( ${includes.map(include => "<" + include + ">").mkString(", ")} ) )")).getOrElse(List()) ++
         filter.exclude.map(excludes => List(s"FILTER ( ${variable} NOT IN ( ${excludes.map(exclude => "<" + exclude + ">").mkString(", ")} ) )")).getOrElse(List())
+
+    private def uriFacetFilter(filter: Option[UriFacetFilter], variable: String): List[String] =
+      filter.map(filter => uriFacetFilter(filter, variable)).getOrElse(List())
   }
 
   override final def getObjectsCount(currentUserUri: Option[Uri], query: ObjectQuery): Int = {
@@ -141,8 +156,11 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   def getObjectFacets(currentUserUri: Option[Uri], query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map(), cachedInstitutionsByUri: Map[Uri, Institution] = Map()): GetObjectFacetsResult = {
     val facets =
       ObjectFacets(
+        culturalContexts = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(VRA.culturalContext), query = query),
+        materials = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(VRA.material), query = query),
         spatials = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.spatial), query = query),
         subjects = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query),
+        techniques = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(VRA.hasTechnique), query = query),
         temporals = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.temporal), query = query),
         types = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.`type`, DC_11.`type`), query = query)
       )
@@ -202,9 +220,10 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
 
   def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution]
 
-  private def getStringObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): Set[String] =
+  private def getStringObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): List[String] =
     getObjectFacet(currentUserUri = currentUserUri, properties = properties, query = query)
       .filter(node => node.isLiteral)
       .map(node => node.asLiteral().getString)
       .toSet
+      .toList
 }

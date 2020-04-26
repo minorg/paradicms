@@ -2,8 +2,8 @@ package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Url
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.ResourceProperties
-import org.paradicms.lib.generic.models.domain.vocabulary.EXIF
+import org.paradicms.lib.base.rdf.properties.ResourceProperties
+import org.paradicms.lib.generic.rdf.vocabularies.EXIF
 
 final case class Image(
                         height: Option[Int] = None,

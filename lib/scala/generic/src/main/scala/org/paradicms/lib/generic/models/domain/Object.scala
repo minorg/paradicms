@@ -3,13 +3,15 @@ package org.paradicms.lib.generic.models.domain
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.sparql.vocabulary.FOAF
-import org.paradicms.lib.base.models.domain.DublinCoreResourceProperties
+import org.paradicms.lib.base.rdf.properties.DcResourceProperties
+import org.paradicms.lib.generic.rdf.properties.VraResourceProperties
 
 import scala.collection.JavaConverters._
 
 final case class Object(
                          alternativeTitles: List[String] = List(),
                          creators: List[String] = List(),
+                         culturalContexts: List[String] = List(),
                          dates: List[String] = List(),
                          description: Option[String] = None,
                          descriptions: List[String] = List(),
@@ -17,6 +19,7 @@ final case class Object(
                          identifiers: List[String] = List(),
                          images: List[DerivedImageSet] = List(),
                          languages: List[String] = List(),
+                         materials: List[String] = List(),
                          media: List[String] = List(),
                          provenances: List[String] = List(),
                          publishers: List[String] = List(),
@@ -24,6 +27,7 @@ final case class Object(
                          sources: List[String] = List(),
                          spatials: List[String] = List(),
                          subjects: List[String] = List(),
+                         techniques: List[String] = List(),
                          temporals: List[String] = List(),
                          title: String,
                          titles: List[String],
@@ -32,29 +36,32 @@ final case class Object(
                        )
 
 object Object {
-  implicit class ObjectResource(val resource: Resource) extends DublinCoreResourceProperties
+  implicit class ObjectResource(val resource: Resource) extends DcResourceProperties with VraResourceProperties
 
   def apply(resource: ObjectResource): Object = {
-    val descriptions = resource.descriptions()
+    val descriptions = resource.descriptions
     Object(
       alternativeTitles = resource.alternatives,
       creators = resource.creators,
+      culturalContexts = resource.culturalContexts,
       dates = resource.dates,
       description = if (!descriptions.isEmpty) Some(descriptions(0)) else None,
       descriptions = descriptions,
       extents = resource.extents,
-      identifiers = resource.identifiers(),
+      identifiers = resource.identifiers,
       images = resource.resource.listProperties(FOAF.depiction).asScala.toList.map(statement => DerivedImageSet(statement.getObject.asResource())),
       languages = resource.languages,
+      materials = resource.materials,
       media = resource.media,
       provenances = resource.provenances,
       publishers = resource.publishers,
       rights = Rights(resource.resource),
-      sources = resource.sources(),
+      sources = resource.sources,
       spatials = resource.spatials,
-      subjects = resource.subjects(),
-      temporals = resource.temporals(),
-      title = (resource.titles() ::: resource.alternatives()) (0),
+      subjects = resource.subjects,
+      techniques = resource.hasTechniques,
+      temporals = resource.temporals,
+      title = (resource.titles ::: resource.alternatives)(0),
       titles = resource.titles,
       types = resource.types.filter(`type` => `type`.isLiteral).map(typeLiteral => typeLiteral.asLiteral().getString),
       uri = resource.uri

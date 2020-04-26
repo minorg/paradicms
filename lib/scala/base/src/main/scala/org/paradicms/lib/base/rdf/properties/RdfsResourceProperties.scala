@@ -1,4 +1,4 @@
-package org.paradicms.lib.base.models.domain
+package org.paradicms.lib.base.rdf.properties
 
 import org.apache.jena.vocabulary.RDFS
 

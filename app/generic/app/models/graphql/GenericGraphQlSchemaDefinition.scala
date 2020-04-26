@@ -6,7 +6,7 @@ import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
 import org.paradicms.lib.generic.stores._
 import sangria.macros.derive._
 import sangria.marshalling.{CoercedScalaResultMarshaller, FromInput}
-import sangria.schema.{Argument, Field, IntType, ListType, OptionInputType, OptionType, Schema, StringType, fields}
+import sangria.schema.{Argument, Field, IntType, ListType, OptionInputType, OptionType, Schema, fields}
 
 object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Input types
@@ -38,13 +38,20 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     val marshaller = CoercedScalaResultMarshaller.default
     def fromResult(node: marshaller.Node) = {
       val ad = node.asInstanceOf[Map[String, Any]]
+      def stringFacetFilterFromValue(key: String) =
+        ad.get(key).flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node))
+      def uriFacetFilterFromValue(key: String) =
+        ad.get(key).flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node))
       ObjectFilters(
-        collectionUris = ad.get("collectionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
-        institutionUris = ad.get("institutionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
-        spatials = ad.get("spatials").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
-        subjects = ad.get("subjects").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
-        temporals = ad.get("temporals").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
-        types = ad.get("types").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
+        collectionUris = uriFacetFilterFromValue("collectionUris"),
+        culturalContexts = stringFacetFilterFromValue("culturalContexts"),
+        institutionUris = uriFacetFilterFromValue("institutionUris"),
+        materials = stringFacetFilterFromValue("materials"),
+        spatials = stringFacetFilterFromValue("spatials"),
+        subjects = stringFacetFilterFromValue("subjects"),
+        techniques = stringFacetFilterFromValue("techniques"),
+        temporals = stringFacetFilterFromValue("temporals"),
+        types = stringFacetFilterFromValue("types")
       )
     }
   }
@@ -73,12 +80,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   implicit val ObjectWithContextType = deriveObjectType[GenericGraphQlSchemaContext, ObjectWithContext](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
-  implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets](
-    ReplaceField("spatials", Field("spatials", ListType(StringType), resolve = _.value.spatials.toList)),
-    ReplaceField("subjects", Field("subjects", ListType(StringType), resolve = _.value.subjects.toList)),
-    ReplaceField("temporals", Field("temporals", ListType(StringType), resolve = _.value.temporals.toList)),
-    ReplaceField("types", Field("types", ListType(StringType), resolve = _.value.types.toList))
-  )
+  implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets]()
 
   private def validateCollectionObjectsQuery(collectionUri: Uri, query: Option[ObjectQuery]): ObjectQuery =
     if (query.isDefined)

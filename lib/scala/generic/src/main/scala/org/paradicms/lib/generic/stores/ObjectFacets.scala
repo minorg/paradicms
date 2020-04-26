@@ -1,8 +1,11 @@
 package org.paradicms.lib.generic.stores
 
 final case class ObjectFacets(
-                               spatials: Set[String],
-                               subjects: Set[String],
-                               temporals: Set[String],
-                               types: Set[String]
+                               culturalContexts: List[String],
+                               materials: List[String],
+                               spatials: List[String],
+                               subjects: List[String],
+                               techniques: List[String],
+                               temporals: List[String],
+                               types: List[String]
                              )

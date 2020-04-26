@@ -2,8 +2,8 @@ package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.FoafResourceProperties
-import org.paradicms.lib.generic.models.domain.vocabulary.CONTACT
+import org.paradicms.lib.base.rdf.properties.FoafResourceProperties
+import org.paradicms.lib.generic.rdf.vocabularies.CONTACT
 
 final case class Person(
                          familyName: Option[String],
