@@ -11,6 +11,7 @@ import scala.collection.JavaConverters._
 final case class Object(
                          alternativeTitles: List[String] = List(),
                          creators: List[String] = List(),
+                         culturalContexts: List[String] = List(),
                          dates: List[String] = List(),
                          description: Option[String] = None,
                          descriptions: List[String] = List(),
@@ -18,6 +19,7 @@ final case class Object(
                          identifiers: List[String] = List(),
                          images: List[DerivedImageSet] = List(),
                          languages: List[String] = List(),
+                         materials: List[String] = List(),
                          media: List[String] = List(),
                          provenances: List[String] = List(),
                          publishers: List[String] = List(),
@@ -41,6 +43,7 @@ object Object {
     Object(
       alternativeTitles = resource.alternatives,
       creators = resource.creators,
+      culturalContexts = resource.culturalContexts,
       dates = resource.dates,
       description = if (!descriptions.isEmpty) Some(descriptions(0)) else None,
       descriptions = descriptions,
@@ -48,6 +51,7 @@ object Object {
       identifiers = resource.identifiers,
       images = resource.resource.listProperties(FOAF.depiction).asScala.toList.map(statement => DerivedImageSet(statement.getObject.asResource())),
       languages = resource.languages,
+      materials = resource.materials,
       media = resource.media,
       provenances = resource.provenances,
       publishers = resource.publishers,

@@ -29,14 +29,14 @@ object Book {
   def apply(resource: BookResource): Book =
     Book(
       creators=resource.creatorResources.map(resource => Person(resource)),
-      description=resource.descriptions().headOption,
-      format=resource.formats().headOption,
-      isbn=resource.identifiers().headOption,
+      description=resource.descriptions.headOption,
+      format=resource.formats.headOption,
+      isbn=resource.identifiers.headOption,
       pageCount=resource.pageCount,
-      publicationDate=resource.dates().headOption,
-      publisher=resource.publishers().headOption,
-      subjects=resource.subjects(),
-      title=resource.titles().head,
+      publicationDate=resource.dates.headOption,
+      publisher=resource.publishers.headOption,
+      subjects=resource.subjects,
+      title=resource.titles.head,
       uri=resource.uri
     )
 }
