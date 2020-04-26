@@ -16,9 +16,9 @@ const FacetDisclosurePanel: React.FunctionComponent<{children: React.ReactNode; 
     <React.Fragment>
     <Row>
       <Col xs={12}>
-        <a onClick={onToggle} style={{fontSize: "larger"}}>{title}</a>
+        <a onClick={onToggle} style={{cursor: "pointer", fontSize: "larger"}}>{title}</a>
         <div className="float-right">
-          <a onClick={onToggle}>
+          <a onClick={onToggle} style={{cursor: "pointer"}}>
             <i
               className={classnames({
                 fas: true,
