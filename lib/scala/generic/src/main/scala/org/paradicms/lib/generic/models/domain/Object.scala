@@ -3,7 +3,7 @@ package org.paradicms.lib.generic.models.domain
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.sparql.vocabulary.FOAF
-import org.paradicms.lib.base.models.domain.DublinCoreResourceProperties
+import org.paradicms.lib.base.models.domain.DcResourceProperties
 
 import scala.collection.JavaConverters._
 
@@ -32,7 +32,7 @@ final case class Object(
                        )
 
 object Object {
-  implicit class ObjectResource(val resource: Resource) extends DublinCoreResourceProperties
+  implicit class ObjectResource(val resource: Resource) extends DcResourceProperties
 
   def apply(resource: ObjectResource): Object = {
     val descriptions = resource.descriptions()

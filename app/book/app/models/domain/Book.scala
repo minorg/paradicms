@@ -4,7 +4,7 @@ import io.lemonlabs.uri.Uri
 import models.domain.vocabulary.SCHEMA
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.vocabulary.DCTerms
-import org.paradicms.lib.base.models.domain.DublinCoreResourceProperties
+import org.paradicms.lib.base.models.domain.DcResourceProperties
 import org.paradicms.lib.generic.models.domain.Person
 
 final case class Book(
@@ -21,7 +21,7 @@ final case class Book(
                    )
 
 object Book {
-  implicit class BookResource(val resource: Resource) extends DublinCoreResourceProperties {
+  implicit class BookResource(val resource: Resource) extends DcResourceProperties {
     def creatorResources: List[Resource] = getPropertyObjects(DCTerms.creator).flatMap(object_ => if (object_.isURIResource) Some(object_.asResource()) else None)
     def pageCount: Option[Int] = getPropertyObjectInts(SCHEMA.pageCount).headOption
   }

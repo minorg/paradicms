@@ -4,7 +4,7 @@ import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.vocabulary.{DCTerms, DC_11}
 
-trait DublinCoreResourceProperties extends ResourceProperties {
+trait DcResourceProperties extends ResourceProperties {
   def alternatives(): List[String] = getPropertyObjectStrings(DCTerms.alternative)
 
   def creators(): List[String] = getPropertyObjectStrings(DCTerms.creator) ::: getPropertyObjectStrings(DC_11.creator)

@@ -2,7 +2,7 @@ package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.{DublinCoreResourceProperties, FoafResourceProperties}
+import org.paradicms.lib.base.models.domain.{DcResourceProperties, FoafResourceProperties}
 
 final case class Collection(
                              description: Option[String] = None,
@@ -13,7 +13,7 @@ final case class Collection(
 
 object Collection {
   implicit class CollectionResource(val resource: Resource)
-    extends DublinCoreResourceProperties
+    extends DcResourceProperties
   with FoafResourceProperties
 
   def apply(resource: CollectionResource): Collection =

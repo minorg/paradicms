@@ -2,7 +2,7 @@ package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.DublinCoreResourceProperties
+import org.paradicms.lib.base.models.domain.DcResourceProperties
 
 final case class Rights(
                          holder: Option[String] = None,
@@ -12,7 +12,7 @@ final case class Rights(
                        )
 
 object Rights {
-  implicit class RightsResource(val resource: Resource) extends DublinCoreResourceProperties
+  implicit class RightsResource(val resource: Resource) extends DcResourceProperties
 
   def apply(resource: RightsResource): Option[Rights] = {
     val rights = resource.rights()
