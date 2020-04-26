@@ -165,14 +165,17 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
               <CardBody>
                 <table className="table-bordered w-100">
                   <tbody>
+                  {nameValueTableRows("Cultural context", object_.culturalContexts)}
                   {nameValueTableRows("Date", object_.dates)}
                   {nameValueTableRows("Extent", object_.extents)}
                   {nameValueTableRows("Language", object_.languages)}
+                  {nameValueTableRows("Material", object_.materials)}
                   {nameValueTableRows("Medium", object_.media)}
                   {nameValueTableRows(
                     "Spatial coverage",
                     object_.spatials
                   )}
+                  {nameValueTableRows("Technique", object_.techniques)}
                   {nameValueTableRows(
                     "Temporal",
                     object_.temporals

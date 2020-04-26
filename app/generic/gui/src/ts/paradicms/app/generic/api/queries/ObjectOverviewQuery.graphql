@@ -20,6 +20,7 @@ query ObjectOverviewQuery(
   objectByUri(uri: $objectUri) {
     alternativeTitles
     creators
+    culturalContexts
     dates
     descriptions
     extents
@@ -37,6 +38,7 @@ query ObjectOverviewQuery(
       }
     }
     languages
+    materials
     media
     provenances
     publishers
@@ -46,6 +48,7 @@ query ObjectOverviewQuery(
     sources
     spatials
     subjects
+    techniques
     temporals
     title
     titles
