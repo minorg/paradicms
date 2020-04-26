@@ -173,6 +173,10 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
                     "Spatial coverage",
                     object_.spatialCoverages
                   )}
+                  {nameValueTableRows(
+                    "Temporal",
+                    object_.temporals
+                  )}
                   </tbody>
                 </table>
               </CardBody>

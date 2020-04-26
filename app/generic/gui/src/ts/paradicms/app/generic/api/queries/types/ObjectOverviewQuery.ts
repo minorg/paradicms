@@ -79,6 +79,7 @@ export interface ObjectOverviewQuery_objectByUri {
   sources: string[];
   spatialCoverages: string[];
   subjects: string[];
+  temporals: string[];
   title: string;
   titles: string[];
   types: string[];
