@@ -81,6 +81,7 @@ export interface ObjectOverviewQuery_objectByUri {
   subjects: string[];
   title: string;
   titles: string[];
+  types: string[];
 }
 
 export interface ObjectOverviewQuery {

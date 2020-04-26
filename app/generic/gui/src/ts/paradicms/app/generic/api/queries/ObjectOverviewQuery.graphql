@@ -48,5 +48,6 @@ query ObjectOverviewQuery(
     subjects
     title
     titles
+    types
   }
 }

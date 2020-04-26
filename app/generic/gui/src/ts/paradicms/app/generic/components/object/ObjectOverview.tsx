@@ -122,6 +122,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
         ) : null}
         {listGroupSection("Identifiers", object_.identifiers)}
         {listGroupSection("Subjects", object_.subjects)}
+        {listGroupSection("Types", object_.types)}
         {object_.creators.length > 0 ||
         object_.provenances.length > 0 ||
         object_.publishers.length > 0 ||
