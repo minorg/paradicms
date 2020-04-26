@@ -5,7 +5,7 @@ import org.apache.jena.rdf.model.RDFNode
 import org.apache.jena.vocabulary.{DCTerms, DC_11}
 
 trait DublinCoreResourceProperties extends ResourceProperties {
-  def alternativeTitles(): List[String] = getPropertyObjectStrings(DCTerms.alternative)
+  def alternatives(): List[String] = getPropertyObjectStrings(DCTerms.alternative)
 
   def creators(): List[String] = getPropertyObjectStrings(DCTerms.creator) ::: getPropertyObjectStrings(DC_11.creator)
 
@@ -36,7 +36,7 @@ trait DublinCoreResourceProperties extends ResourceProperties {
 
   def sources(): List[String] = getPropertyObjectStrings(DCTerms.source) ::: getPropertyObjectStrings(DC_11.source)
 
-  def spatialCoverages(): List[String] = getPropertyObjectStrings(DCTerms.spatial)
+  def spatials(): List[String] = getPropertyObjectStrings(DCTerms.spatial)
 
   def subjects(): List[String] = getPropertyObjectStrings(DCTerms.subject)
 

@@ -10,7 +10,9 @@ import { ObjectQuery } from "./../../graphqlGlobalTypes";
 
 export interface CollectionOverviewInitialQuery_collectionByUri_objectFacets {
   __typename: "ObjectFacets";
+  spatials: string[];
   subjects: string[];
+  temporals: string[];
   types: string[];
 }
 

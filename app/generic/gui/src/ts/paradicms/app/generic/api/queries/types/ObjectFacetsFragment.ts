@@ -8,6 +8,8 @@
 
 export interface ObjectFacetsFragment {
   __typename: "ObjectFacets";
+  spatials: string[];
   subjects: string[];
+  temporals: string[];
   types: string[];
 }

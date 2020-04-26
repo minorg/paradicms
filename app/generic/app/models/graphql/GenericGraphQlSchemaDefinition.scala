@@ -41,7 +41,9 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
       ObjectFilters(
         collectionUris = ad.get("collectionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
         institutionUris = ad.get("institutionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
+        spatials = ad.get("spatials").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
         subjects = ad.get("subjects").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
+        temporals = ad.get("temporals").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
         types = ad.get("types").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
       )
     }
@@ -72,7 +74,9 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
   implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets](
+    ReplaceField("spatials", Field("spatials", ListType(StringType), resolve = _.value.spatials.toList)),
     ReplaceField("subjects", Field("subjects", ListType(StringType), resolve = _.value.subjects.toList)),
+    ReplaceField("temporals", Field("temporals", ListType(StringType), resolve = _.value.temporals.toList)),
     ReplaceField("types", Field("types", ListType(StringType), resolve = _.value.types.toList))
   )
 

@@ -1,4 +1,6 @@
 fragment ObjectFacetsFragment on ObjectFacets {
+  spatials
   subjects
+  temporals
   types
 }

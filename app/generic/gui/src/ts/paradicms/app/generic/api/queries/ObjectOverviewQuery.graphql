@@ -44,7 +44,7 @@ query ObjectOverviewQuery(
       ...RightsFragment
     }
     sources
-    spatialCoverages
+    spatials
     subjects
     temporals
     title

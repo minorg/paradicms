@@ -154,7 +154,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
         object_.extents.length > 0 ||
         object_.languages.length > 0 ||
         object_.media.length > 0 ||
-        object_.spatialCoverages.length > 0 ? (
+        object_.spatials.length > 0 ? (
           <Row className="pb-4">
             <Card className="w-100">
               <CardHeader>
@@ -171,7 +171,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
                   {nameValueTableRows("Medium", object_.media)}
                   {nameValueTableRows(
                     "Spatial coverage",
-                    object_.spatialCoverages
+                    object_.spatials
                   )}
                   {nameValueTableRows(
                     "Temporal",

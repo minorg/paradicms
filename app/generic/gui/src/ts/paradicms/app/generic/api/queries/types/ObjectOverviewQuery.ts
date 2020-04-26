@@ -77,7 +77,7 @@ export interface ObjectOverviewQuery_objectByUri {
   publishers: string[];
   rights: ObjectOverviewQuery_objectByUri_rights | null;
   sources: string[];
-  spatialCoverages: string[];
+  spatials: string[];
   subjects: string[];
   temporals: string[];
   title: string;

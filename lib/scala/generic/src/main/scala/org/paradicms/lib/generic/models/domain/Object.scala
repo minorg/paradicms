@@ -22,7 +22,7 @@ final case class Object(
                          publishers: List[String] = List(),
                          rights: Option[Rights] = None,
                          sources: List[String] = List(),
-                         spatialCoverages: List[String] = List(),
+                         spatials: List[String] = List(),
                          subjects: List[String] = List(),
                          temporals: List[String] = List(),
                          title: String,
@@ -37,7 +37,7 @@ object Object {
   def apply(resource: ObjectResource): Object = {
     val descriptions = resource.descriptions()
     Object(
-      alternativeTitles = resource.alternativeTitles,
+      alternativeTitles = resource.alternatives,
       creators = resource.creators,
       dates = resource.dates,
       description = if (!descriptions.isEmpty) Some(descriptions(0)) else None,
@@ -51,10 +51,10 @@ object Object {
       publishers = resource.publishers,
       rights = Rights(resource.resource),
       sources = resource.sources(),
-      spatialCoverages = resource.spatialCoverages,
+      spatials = resource.spatials,
       subjects = resource.subjects(),
       temporals = resource.temporals(),
-      title = (resource.titles() ::: resource.alternativeTitles()) (0),
+      title = (resource.titles() ::: resource.alternatives()) (0),
       titles = resource.titles,
       types = resource.types.filter(`type` => `type`.isLiteral).map(typeLiteral => typeLiteral.asLiteral().getString),
       uri = resource.uri

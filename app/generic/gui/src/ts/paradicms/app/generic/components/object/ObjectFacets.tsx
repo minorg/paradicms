@@ -46,7 +46,7 @@ const StringFacetFilterListGroup: React.FunctionComponent<{
       </Row>
       <Row>
         <ListGroup className="w-100">
-          {allValues.map(value => {
+          {allValues.sort().map(value => {
             const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
               const newChecked = e.target.checked;
               delete excludeSet[value];
@@ -114,7 +114,9 @@ export const ObjectFacets: React.FunctionComponent<{
     onChange(newQuery);
   }
 
+  const onChangeSpatial = (newState?: StringFacetFilter) => onChangeStringFacetFilter("spatials", newState);
   const onChangeSubject = (newState?: StringFacetFilter) => onChangeStringFacetFilter("subjects", newState);
+  const onChangeTemporal = (newState?: StringFacetFilter) => onChangeStringFacetFilter("temporals", newState);
   const onChangeType = (newState?: StringFacetFilter) => onChangeStringFacetFilter("types", newState);
 
   return (
@@ -128,6 +130,14 @@ export const ObjectFacets: React.FunctionComponent<{
                      currentState={query.filters && query.filters.types ? query.filters.types : undefined}
                      onChange={onChangeType}
                      title={"Types"}/>
+        <StringFacetFilterListGroup allValues={facets.spatials}
+                                    currentState={query.filters && query.filters.spatials ? query.filters.spatials : undefined}
+                                    onChange={onChangeSpatial}
+                                    title={"Spatial coverage"}/>
+        <StringFacetFilterListGroup allValues={facets.temporals}
+                                    currentState={query.filters && query.filters.temporals ? query.filters.temporals : undefined}
+                                    onChange={onChangeTemporal}
+                                    title={"Temporal coverage"}/>
       </Container>
     </Form>
   );

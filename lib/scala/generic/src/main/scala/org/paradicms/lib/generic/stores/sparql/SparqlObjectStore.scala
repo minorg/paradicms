@@ -19,11 +19,15 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     private def objectFilters(filters: ObjectFilters): List[String] =
       filters.collectionUris.map(filter => uriFacetFilter(filter, "?collection")).getOrElse(List()) ++
       filters.institutionUris.map(filter => uriFacetFilter(filter, "?institution")).getOrElse(List()) ++
+      filters.spatials.map(filter => stringFacetFilter(filter, List(DCTerms.spatial), "?spatial")).getOrElse(List()) ++
       filters.subjects.map(filter => stringFacetFilter(filter, List(DCTerms.subject, DC_11.subject), "?subject")).getOrElse(List()) ++
+      filters.temporals.map(filter => stringFacetFilter(filter, List(DCTerms.temporal), "?temporal")).getOrElse(List()) ++
       filters.types.map(filter => stringFacetFilter(filter, List(DCTerms.`type`, DC_11.`type`), "?type")).getOrElse(List())
 
     private def objectFiltersParams(filters: ObjectFilters): Map[String, RDFNode] =
+      filters.spatials.map(filter => stringFacetFilterParams(filter, "?spatial")).getOrElse(Map()) ++
       filters.subjects.map(filter => stringFacetFilterParams(filter, "?subject")).getOrElse(Map()) ++
+      filters.temporals.map(filter => stringFacetFilterParams(filter, "?temporal")).getOrElse(Map()) ++
       filters.types.map(filter => stringFacetFilterParams(filter, "?type")).getOrElse(Map())
 
     def objectQuery(currentUserUri: Option[Uri], query: ObjectQuery, additionalGraphPatterns: List[String] = List()): String =
@@ -137,14 +141,10 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   def getObjectFacets(currentUserUri: Option[Uri], query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map(), cachedInstitutionsByUri: Map[Uri, Institution] = Map()): GetObjectFacetsResult = {
     val facets =
       ObjectFacets(
-        subjects = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query)
-          .filter(node => node.isLiteral)
-          .map(node => node.asLiteral().getString)
-          .toSet,
-        types = getObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.`type`, DC_11.`type`), query = query)
-          .filter(node => node.isLiteral)
-          .map(node => node.asLiteral().getString)
-          .toSet
+        spatials = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.spatial), query = query),
+        subjects = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query),
+        temporals = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.temporal), query = query),
+        types = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.`type`, DC_11.`type`), query = query)
       )
     // TODO: collection and institution will eventually be facets
     GetObjectFacetsResult(
@@ -201,4 +201,10 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   def getCollectionsByUris(collectionUris: List[Uri], currentUserUri: Option[Uri]): List[Collection]
 
   def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution]
+
+  private def getStringObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): Set[String] =
+    getObjectFacet(currentUserUri = currentUserUri, properties = properties, query = query)
+      .filter(node => node.isLiteral)
+      .map(node => node.asLiteral().getString)
+      .toSet
 }

@@ -41,11 +41,8 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     "exclude the subject of an object" in {
       val allSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
       val objects = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery(
-        filters = Some(ObjectFilters(
-          collectionUris = None,
-          institutionUris = None,
-          subjects = Some(StringFacetFilter(include = None, exclude = Some(List(allSubjects(0))))),
-          types = None
+        filters = Some(ObjectFilters.create(
+          subjects = Some(StringFacetFilter(include = None, exclude = Some(List(allSubjects(0)))))
         )),
         text = None
       )).objectsWithContext
@@ -55,11 +52,8 @@ final class SparqlObjectStoreSpec extends UnitSpec {
     "include the subject of an object" in {
       val allSubjects = testData.objects.flatMap(object_ => object_.subjects).toSet.toList.sorted
       val objects = store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery(
-        filters = Some(ObjectFilters(
-          collectionUris = None,
-          institutionUris = None,
-          subjects = Some(StringFacetFilter(exclude = None, include = Some(List(allSubjects(0))))),
-          types = None
+        filters = Some(ObjectFilters.create(
+          subjects = Some(StringFacetFilter(exclude = None, include = Some(List(allSubjects(0)))))
         )),
         text = None
       )).objectsWithContext

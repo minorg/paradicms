@@ -9,7 +9,9 @@
 export interface ObjectFilters {
   collectionUris?: UriFacetFilter | null;
   institutionUris?: UriFacetFilter | null;
+  spatials?: StringFacetFilter | null;
   subjects?: StringFacetFilter | null;
+  temporals?: StringFacetFilter | null;
   types?: StringFacetFilter | null;
 }
 

@@ -10,7 +10,9 @@ import { ObjectQuery } from "./../../graphqlGlobalTypes";
 
 export interface SearchResultsInitialQuery_objectFacets_facets {
   __typename: "ObjectFacets";
+  spatials: string[];
   subjects: string[];
+  temporals: string[];
   types: string[];
 }
 
