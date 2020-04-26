@@ -6,7 +6,7 @@ import org.apache.jena.rdf.model.{Property, RDFNode, ResourceFactory}
 import org.apache.jena.vocabulary.{DCTerms, DC_11, RDF}
 import org.paradicms.lib.generic.models
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
-import org.paradicms.lib.generic.rdf.vocabularies.CMS
+import org.paradicms.lib.generic.rdf.vocabularies.{CMS, VRA}
 import org.paradicms.lib.generic.stores._
 import org.slf4j.Logger
 
@@ -141,8 +141,11 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   def getObjectFacets(currentUserUri: Option[Uri], query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map(), cachedInstitutionsByUri: Map[Uri, Institution] = Map()): GetObjectFacetsResult = {
     val facets =
       ObjectFacets(
+        culturalContexts = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(VRA.culturalContext), query = query),
+        materials = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(VRA.material), query = query),
         spatials = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.spatial), query = query),
         subjects = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.subject, DC_11.subject), query = query),
+        techniques = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(VRA.hasTechnique), query = query),
         temporals = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.temporal), query = query),
         types = getStringObjectFacet(currentUserUri = currentUserUri, properties = List(DCTerms.`type`, DC_11.`type`), query = query)
       )
@@ -202,9 +205,10 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
 
   def getInstitutionsByUris(currentUserUri: Option[Uri], institutionUris: List[Uri]): List[Institution]
 
-  private def getStringObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): Set[String] =
+  private def getStringObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): List[String] =
     getObjectFacet(currentUserUri = currentUserUri, properties = properties, query = query)
       .filter(node => node.isLiteral)
       .map(node => node.asLiteral().getString)
       .toSet
+      .toList
 }

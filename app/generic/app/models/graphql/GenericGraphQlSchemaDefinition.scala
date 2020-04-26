@@ -6,7 +6,7 @@ import org.paradicms.lib.generic.models.graphql.AbstractGraphQlSchemaDefinition
 import org.paradicms.lib.generic.stores._
 import sangria.macros.derive._
 import sangria.marshalling.{CoercedScalaResultMarshaller, FromInput}
-import sangria.schema.{Argument, Field, IntType, ListType, OptionInputType, OptionType, Schema, StringType, fields}
+import sangria.schema.{Argument, Field, IntType, ListType, OptionInputType, OptionType, Schema, fields}
 
 object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Input types
@@ -73,12 +73,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   implicit val ObjectWithContextType = deriveObjectType[GenericGraphQlSchemaContext, ObjectWithContext](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
   )
-  implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets](
-    ReplaceField("spatials", Field("spatials", ListType(StringType), resolve = _.value.spatials.toList)),
-    ReplaceField("subjects", Field("subjects", ListType(StringType), resolve = _.value.subjects.toList)),
-    ReplaceField("temporals", Field("temporals", ListType(StringType), resolve = _.value.temporals.toList)),
-    ReplaceField("types", Field("types", ListType(StringType), resolve = _.value.types.toList))
-  )
+  implicit val ObjectFacetsType = deriveObjectType[GenericGraphQlSchemaContext, ObjectFacets]()
 
   private def validateCollectionObjectsQuery(collectionUri: Uri, query: Option[ObjectQuery]): ObjectQuery =
     if (query.isDefined)
