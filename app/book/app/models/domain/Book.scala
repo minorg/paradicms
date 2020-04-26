@@ -4,7 +4,7 @@ import io.lemonlabs.uri.Uri
 import models.domain.vocabulary.SCHEMA
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.vocabulary.DCTerms
-import org.paradicms.lib.base.models.domain.DcResourceProperties
+import org.paradicms.lib.base.rdf.properties.DcResourceProperties
 import org.paradicms.lib.generic.models.domain.Person
 
 final case class Book(

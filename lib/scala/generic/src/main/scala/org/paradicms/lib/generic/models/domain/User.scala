@@ -2,7 +2,7 @@ package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.FoafResourceProperties
+import org.paradicms.lib.base.rdf.properties.FoafResourceProperties
 
 final case class User(email: Option[String], name: String, uri: Uri)
 

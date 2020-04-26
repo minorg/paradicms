@@ -2,7 +2,7 @@ package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.DcResourceProperties
+import org.paradicms.lib.base.rdf.properties.DcResourceProperties
 
 final case class Rights(
                          holder: Option[String] = None,

@@ -2,7 +2,7 @@ package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
-import org.paradicms.lib.base.models.domain.{DcResourceProperties, FoafResourceProperties}
+import org.paradicms.lib.base.rdf.properties.{DcResourceProperties, FoafResourceProperties}
 
 final case class Collection(
                              description: Option[String] = None,

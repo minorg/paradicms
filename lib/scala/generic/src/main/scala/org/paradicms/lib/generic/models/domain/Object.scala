@@ -3,7 +3,7 @@ package org.paradicms.lib.generic.models.domain
 import io.lemonlabs.uri.Uri
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.sparql.vocabulary.FOAF
-import org.paradicms.lib.base.models.domain.DcResourceProperties
+import org.paradicms.lib.base.rdf.properties.DcResourceProperties
 
 import scala.collection.JavaConverters._
 

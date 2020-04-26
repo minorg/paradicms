@@ -4,7 +4,7 @@ import io.lemonlabs.uri.Uri
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.vocabulary.RDF
 import org.paradicms.lib.generic.models.domain.Institution
-import org.paradicms.lib.generic.models.domain.vocabulary.CMS
+import org.paradicms.lib.generic.rdf.vocabularies.CMS
 import org.paradicms.lib.generic.stores.InstitutionStore
 
 import scala.collection.JavaConverters._

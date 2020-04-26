@@ -5,8 +5,8 @@ import org.apache.jena.query.{ParameterizedSparqlString, QueryFactory}
 import org.apache.jena.rdf.model.{Property, RDFNode, ResourceFactory}
 import org.apache.jena.vocabulary.{DCTerms, DC_11, RDF}
 import org.paradicms.lib.generic.models
-import org.paradicms.lib.generic.models.domain.vocabulary.CMS
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
+import org.paradicms.lib.generic.rdf.vocabularies.CMS
 import org.paradicms.lib.generic.stores._
 import org.slf4j.Logger
 
