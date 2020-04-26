@@ -38,13 +38,20 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
     val marshaller = CoercedScalaResultMarshaller.default
     def fromResult(node: marshaller.Node) = {
       val ad = node.asInstanceOf[Map[String, Any]]
+      def stringFacetFilterFromValue(key: String) =
+        ad.get(key).flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node))
+      def uriFacetFilterFromValue(key: String) =
+        ad.get(key).flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node))
       ObjectFilters(
-        collectionUris = ad.get("collectionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
-        institutionUris = ad.get("institutionUris").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => uriFacetFilterFromInput.fromResult(node)),
-        spatials = ad.get("spatials").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
-        subjects = ad.get("subjects").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
-        temporals = ad.get("temporals").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
-        types = ad.get("types").flatMap(_.asInstanceOf[Option[Map[String, Any]]]).map(node => stringFacetFilterFromInput.fromResult(node)),
+        collectionUris = uriFacetFilterFromValue("collectionUris"),
+        culturalContexts = stringFacetFilterFromValue("culturalContexts"),
+        institutionUris = uriFacetFilterFromValue("institutionUris"),
+        materials = stringFacetFilterFromValue("materials"),
+        spatials = stringFacetFilterFromValue("spatials"),
+        subjects = stringFacetFilterFromValue("subjects"),
+        techniques = stringFacetFilterFromValue("techniques"),
+        temporals = stringFacetFilterFromValue("temporals"),
+        types = stringFacetFilterFromValue("types")
       )
     }
   }
