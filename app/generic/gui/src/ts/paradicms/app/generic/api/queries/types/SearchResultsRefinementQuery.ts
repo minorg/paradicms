@@ -34,7 +34,9 @@ export interface SearchResultsRefinementQuery_objects_institutions {
 
 export interface SearchResultsRefinementQuery_objects_objectsWithContext_object_thumbnail {
   __typename: "Image";
+  height: number | null;
   url: string;
+  width: number | null;
 }
 
 export interface SearchResultsRefinementQuery_objects_objectsWithContext_object_rights {

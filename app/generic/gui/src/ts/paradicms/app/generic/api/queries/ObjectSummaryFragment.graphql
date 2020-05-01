@@ -2,7 +2,9 @@ fragment ObjectSummaryFragment on Object {
   description
   title
   thumbnail {
+    height
     url
+    width
   }
   uri
 }

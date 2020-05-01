@@ -21,7 +21,9 @@ export interface CollectionOverviewInitialQuery_collectionByUri_objectFacets {
 
 export interface CollectionOverviewInitialQuery_collectionByUri_objects_thumbnail {
   __typename: "Image";
+  height: number | null;
   url: string;
+  width: number | null;
 }
 
 export interface CollectionOverviewInitialQuery_collectionByUri_objects {

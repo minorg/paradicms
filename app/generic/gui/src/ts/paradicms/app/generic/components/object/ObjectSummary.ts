@@ -7,7 +7,9 @@ export interface ObjectSummary {
   rights: string | null | undefined;
   thumbnail:
     | {
+        height: number | null | undefined;
         url: string;
+        width: number | null | undefined;
       }
     | null
     | undefined;
