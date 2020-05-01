@@ -75,7 +75,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
 
   // Object types, in dependence order
   implicit val ObjectType = deriveObjectType[GenericGraphQlSchemaContext, Object](
-    AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
+    AddFields(Field("thumbnails", OptionType(ListType(ImageType)), resolve = _.value.images.find(image => !image.thumbnails.isEmpty)))
   )
   implicit val ObjectWithContextType = deriveObjectType[GenericGraphQlSchemaContext, ObjectWithContext](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
