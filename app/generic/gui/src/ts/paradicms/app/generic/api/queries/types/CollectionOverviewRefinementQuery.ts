@@ -10,7 +10,9 @@ import { ObjectQuery } from "./../../graphqlGlobalTypes";
 
 export interface CollectionOverviewRefinementQuery_collectionByUri_objects_thumbnail {
   __typename: "Image";
+  height: number | null;
   url: string;
+  width: number | null;
 }
 
 export interface CollectionOverviewRefinementQuery_collectionByUri_objects {

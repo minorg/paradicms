@@ -32,7 +32,7 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
                   <img
                     className="figure-img rounded"
                     src={object.thumbnail!.url}
-                    style={{height: "200px", width: "200px"}}
+                    style={{height: (object.thumbnail.height ? object.thumbnail.height : 200) + "px", width: (object.thumbnail.width ? object.thumbnail.width : 200) + "px"}}
                   />
                 </Link>
               </figure>
