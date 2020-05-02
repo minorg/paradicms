@@ -27,15 +27,16 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
         <Container fluid>
           <Row>
             {object.thumbnail ? (
-              <figure className="figure text-center w-100">
-                <Link to={objectHref}>
-                  <img
-                    className="figure-img rounded"
-                    src={object.thumbnail.url}
-                    style={{height: 200, width: 200}}
-                  />
-                </Link>
-              </figure>
+              <div style={{height: 200, width: 200}}>
+                <figure className="figure text-center w-100">
+                  <Link to={objectHref}>
+                    <img
+                      className="figure-img rounded"
+                      src={object.thumbnail.url}
+                    />
+                  </Link>
+                </figure>
+              </div>
             ) : null}
           </Row>
         </Container>
