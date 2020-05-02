@@ -66,22 +66,9 @@ abstract class AbstractGraphQlSchemaDefinition {
       }
 
     // First select an image with a defined height and width under the target
-    {
-      val bestImage = maxByOption[Image, ImageDimensions](derivedImageSet.derived.filter(image => image.exactDimensions.isDefined && maxDimensions.contains(image.exactDimensions.get)), image => image.exactDimensions.get)
-      if (bestImage.isDefined) {
-        return bestImage
-      }
-    }
-
-    // Else select an image with a max height and width under the target
-    {
-      val bestImage = maxByOption[Image, ImageDimensions](derivedImageSet.derived.filter(image => image.maxDimensions.isDefined && maxDimensions.contains(image.maxDimensions.get)), image => image.maxDimensions.get)
-      if (bestImage.isDefined) {
-        return bestImage
-      }
-    }
-
-    None
+    maxByOption[Image, ImageDimensions](derivedImageSet.derived.filter(image => image.exactDimensions.isDefined && maxDimensions.contains(image.exactDimensions.get)), image => image.exactDimensions.get)
+      // Else select an image with a max height and width under the target
+        .orElse(maxByOption[Image, ImageDimensions](derivedImageSet.derived.filter(image => image.maxDimensions.isDefined && maxDimensions.contains(image.maxDimensions.get)), image => image.maxDimensions.get))
   }
 
   implicit val DerivedImageSetType = deriveObjectType[Unit, DerivedImageSet](

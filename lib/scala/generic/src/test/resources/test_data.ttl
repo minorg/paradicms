@@ -39,50 +39,500 @@
 <http://example.com/object0> a paradicms:Object ;
     dcterms:subject "Test subject 0" ;
     dcterms:title "Test object 0" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object0/image0>,
+        <http://example.com/object0/image1>,
+        <http://example.com/object0/image2> .
+
+<http://example.com/object0/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object0/image0/square_thumbnail>,
+        <http://example.com/object0/image0/thumbnail> .
+
+<http://example.com/object0/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object0/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object0/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object0/image1/square_thumbnail>,
+        <http://example.com/object0/image1/thumbnail> .
+
+<http://example.com/object0/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object0/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object0/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object0/image2/square_thumbnail>,
+        <http://example.com/object0/image2/thumbnail> .
+
+<http://example.com/object0/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object0/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object1> a paradicms:Object ;
     dcterms:subject "Test subject 1" ;
     dcterms:title "Test object 1" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object1/image0>,
+        <http://example.com/object1/image1>,
+        <http://example.com/object1/image2> .
+
+<http://example.com/object1/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object1/image0/square_thumbnail>,
+        <http://example.com/object1/image0/thumbnail> .
+
+<http://example.com/object1/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object1/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object1/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object1/image1/square_thumbnail>,
+        <http://example.com/object1/image1/thumbnail> .
+
+<http://example.com/object1/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object1/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object1/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object1/image2/square_thumbnail>,
+        <http://example.com/object1/image2/thumbnail> .
+
+<http://example.com/object1/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object1/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object2> a paradicms:Object ;
     dcterms:subject "Test subject 2" ;
     dcterms:title "Test object 2" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object2/image0>,
+        <http://example.com/object2/image1>,
+        <http://example.com/object2/image2> .
+
+<http://example.com/object2/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object2/image0/square_thumbnail>,
+        <http://example.com/object2/image0/thumbnail> .
+
+<http://example.com/object2/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object2/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object2/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object2/image1/square_thumbnail>,
+        <http://example.com/object2/image1/thumbnail> .
+
+<http://example.com/object2/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object2/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object2/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object2/image2/square_thumbnail>,
+        <http://example.com/object2/image2/thumbnail> .
+
+<http://example.com/object2/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object2/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object3> a paradicms:Object ;
     dcterms:subject "Test subject 3" ;
     dcterms:title "Test object 3" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object3/image0>,
+        <http://example.com/object3/image1>,
+        <http://example.com/object3/image2> .
+
+<http://example.com/object3/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object3/image0/square_thumbnail>,
+        <http://example.com/object3/image0/thumbnail> .
+
+<http://example.com/object3/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object3/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object3/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object3/image1/square_thumbnail>,
+        <http://example.com/object3/image1/thumbnail> .
+
+<http://example.com/object3/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object3/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object3/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object3/image2/square_thumbnail>,
+        <http://example.com/object3/image2/thumbnail> .
+
+<http://example.com/object3/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object3/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object4> a paradicms:Object ;
     dcterms:subject "Test subject 4" ;
     dcterms:title "Test object 4" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object4/image0>,
+        <http://example.com/object4/image1>,
+        <http://example.com/object4/image2> .
+
+<http://example.com/object4/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object4/image0/square_thumbnail>,
+        <http://example.com/object4/image0/thumbnail> .
+
+<http://example.com/object4/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object4/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object4/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object4/image1/square_thumbnail>,
+        <http://example.com/object4/image1/thumbnail> .
+
+<http://example.com/object4/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object4/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object4/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object4/image2/square_thumbnail>,
+        <http://example.com/object4/image2/thumbnail> .
+
+<http://example.com/object4/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object4/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object5> a paradicms:Object ;
     dcterms:subject "Test subject 5" ;
     dcterms:title "Test object 5" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object5/image0>,
+        <http://example.com/object5/image1>,
+        <http://example.com/object5/image2> .
+
+<http://example.com/object5/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object5/image0/square_thumbnail>,
+        <http://example.com/object5/image0/thumbnail> .
+
+<http://example.com/object5/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object5/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object5/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object5/image1/square_thumbnail>,
+        <http://example.com/object5/image1/thumbnail> .
+
+<http://example.com/object5/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object5/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object5/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object5/image2/square_thumbnail>,
+        <http://example.com/object5/image2/thumbnail> .
+
+<http://example.com/object5/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object5/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object6> a paradicms:Object ;
     dcterms:subject "Test subject 6" ;
     dcterms:title "Test object 6" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object6/image0>,
+        <http://example.com/object6/image1>,
+        <http://example.com/object6/image2> .
+
+<http://example.com/object6/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object6/image0/square_thumbnail>,
+        <http://example.com/object6/image0/thumbnail> .
+
+<http://example.com/object6/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object6/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object6/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object6/image1/square_thumbnail>,
+        <http://example.com/object6/image1/thumbnail> .
+
+<http://example.com/object6/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object6/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object6/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object6/image2/square_thumbnail>,
+        <http://example.com/object6/image2/thumbnail> .
+
+<http://example.com/object6/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object6/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object7> a paradicms:Object ;
     dcterms:subject "Test subject 7" ;
     dcterms:title "Test object 7" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object7/image0>,
+        <http://example.com/object7/image1>,
+        <http://example.com/object7/image2> .
+
+<http://example.com/object7/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object7/image0/square_thumbnail>,
+        <http://example.com/object7/image0/thumbnail> .
+
+<http://example.com/object7/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object7/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object7/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object7/image1/square_thumbnail>,
+        <http://example.com/object7/image1/thumbnail> .
+
+<http://example.com/object7/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object7/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object7/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object7/image2/square_thumbnail>,
+        <http://example.com/object7/image2/thumbnail> .
+
+<http://example.com/object7/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object7/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object8> a paradicms:Object ;
     dcterms:subject "Test subject 8" ;
     dcterms:title "Test object 8" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object8/image0>,
+        <http://example.com/object8/image1>,
+        <http://example.com/object8/image2> .
+
+<http://example.com/object8/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object8/image0/square_thumbnail>,
+        <http://example.com/object8/image0/thumbnail> .
+
+<http://example.com/object8/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object8/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object8/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object8/image1/square_thumbnail>,
+        <http://example.com/object8/image1/thumbnail> .
+
+<http://example.com/object8/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object8/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object8/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object8/image2/square_thumbnail>,
+        <http://example.com/object8/image2/thumbnail> .
+
+<http://example.com/object8/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object8/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
 <http://example.com/object9> a paradicms:Object ;
     dcterms:subject "Test subject 9" ;
     dcterms:title "Test object 9" ;
-    paradicms:owner paradicms:inherit .
+    paradicms:owner paradicms:inherit ;
+    foaf:depiction <http://example.com/object9/image0>,
+        <http://example.com/object9/image1>,
+        <http://example.com/object9/image2> .
+
+<http://example.com/object9/image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object9/image0/square_thumbnail>,
+        <http://example.com/object9/image0/thumbnail> .
+
+<http://example.com/object9/image0/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object9/image0/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object9/image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object9/image1/square_thumbnail>,
+        <http://example.com/object9/image1/thumbnail> .
+
+<http://example.com/object9/image1/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object9/image1/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<http://example.com/object9/image2> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <http://example.com/object9/image2/square_thumbnail>,
+        <http://example.com/object9/image2/thumbnail> .
+
+<http://example.com/object9/image2/square_thumbnail> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/object9/image2/thumbnail> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
 
