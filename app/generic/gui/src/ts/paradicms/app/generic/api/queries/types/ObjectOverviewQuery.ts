@@ -34,18 +34,21 @@ export interface ObjectOverviewQuery_institutionByUri {
   rights: ObjectOverviewQuery_institutionByUri_rights | null;
 }
 
+export interface ObjectOverviewQuery_objectByUri_images_original_exactDimensions {
+  __typename: "ImageDimensions";
+  height: number;
+  width: number;
+}
+
 export interface ObjectOverviewQuery_objectByUri_images_original {
   __typename: "Image";
-  height: number | null;
+  exactDimensions: ObjectOverviewQuery_objectByUri_images_original_exactDimensions | null;
   url: string;
-  width: number | null;
 }
 
 export interface ObjectOverviewQuery_objectByUri_images_thumbnail {
   __typename: "Image";
-  height: number | null;
   url: string;
-  width: number | null;
 }
 
 export interface ObjectOverviewQuery_objectByUri_images {

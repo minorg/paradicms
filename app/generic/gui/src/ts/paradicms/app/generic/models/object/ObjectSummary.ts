@@ -1,18 +1,13 @@
 export interface ObjectSummary {
   collectionName?: string;
   collectionUri: string;
-  description: string | null | undefined;
+  description: string | null;
   institutionName?: string;
   institutionUri: string;
   rights: string | null | undefined;
-  thumbnail:
-    | {
-        height: number | null | undefined;
-        url: string;
-        width: number | null | undefined;
-      }
-    | null
-    | undefined;
+  thumbnail: {
+    url: string;
+  } | null;
   title: string;
   uri: string;
 }

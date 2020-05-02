@@ -50,9 +50,7 @@ export interface SearchResultsInitialQuery_objects_institutions {
 
 export interface SearchResultsInitialQuery_objects_objectsWithContext_object_thumbnail {
   __typename: "Image";
-  height: number | null;
   url: string;
-  width: number | null;
 }
 
 export interface SearchResultsInitialQuery_objects_objectsWithContext_object_rights {

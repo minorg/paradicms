@@ -8,7 +8,7 @@ import sangria.schema.{Field, OptionType, Schema, fields}
 object BookGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
   // Domain model types, in dependence order
   implicit val BookType = deriveObjectType[BookGraphQlSchemaContext, Object](
-    AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
+//    AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
   )
 
   implicit val CollectionType = deriveObjectType[BookGraphQlSchemaContext, Collection](

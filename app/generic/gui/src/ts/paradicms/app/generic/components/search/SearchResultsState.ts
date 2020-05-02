@@ -1,5 +1,5 @@
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
-import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
+import { ObjectSummary } from "paradicms/app/generic/models/object/ObjectSummary";
 
 export interface SearchResultsState {
   objects: ObjectSummary[];

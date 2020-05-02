@@ -2,7 +2,7 @@ import * as React from "react";
 import { Card, CardBody, CardHeader, CardTitle, Col, Container, Row } from "reactstrap";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import { Link } from "react-router-dom";
-import { ObjectSummary } from "paradicms/app/generic/components/object/ObjectSummary";
+import { ObjectSummary } from "paradicms/app/generic/models/object/ObjectSummary";
 import { TextDisclosurePanel } from "@paradicms/base";
 
 export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
@@ -31,8 +31,8 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
                 <Link to={objectHref}>
                   <img
                     className="figure-img rounded"
-                    src={object.thumbnail!.url}
-                    style={{height: (object.thumbnail.height ? object.thumbnail.height : 200) + "px", width: (object.thumbnail.width ? object.thumbnail.width : 200) + "px"}}
+                    src={object.thumbnail.url}
+                    style={{height: 200, width: 200}}
                   />
                 </Link>
               </figure>
