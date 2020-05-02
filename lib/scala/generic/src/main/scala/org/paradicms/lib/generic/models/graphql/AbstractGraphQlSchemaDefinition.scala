@@ -19,8 +19,8 @@ abstract class AbstractGraphQlSchemaDefinition {
     def fromResult(node: marshaller.Node) = {
       val ad = node.asInstanceOf[Map[String, Any]]
       ImageDimensions(
-        height = ad.get("height").asInstanceOf[Number].intValue(),
-        width = ad.get("width").asInstanceOf[Number].intValue()
+        height = ad("height").asInstanceOf[Number].intValue(),
+        width = ad("width").asInstanceOf[Number].intValue()
       )
     }
   }
