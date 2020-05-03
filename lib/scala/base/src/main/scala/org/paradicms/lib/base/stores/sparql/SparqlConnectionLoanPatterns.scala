@@ -1,4 +1,4 @@
-package org.paradicms.lib.generic.stores.sparql
+package org.paradicms.lib.base.stores.sparql
 
 import org.apache.jena.query.{Query, QueryExecution}
 import org.apache.jena.rdfconnection.RDFConnection

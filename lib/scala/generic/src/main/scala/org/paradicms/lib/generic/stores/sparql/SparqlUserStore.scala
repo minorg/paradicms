@@ -3,6 +3,7 @@ package org.paradicms.lib.generic.stores.sparql
 import io.lemonlabs.uri.Uri
 import org.apache.jena.query.{ParameterizedSparqlString, QueryFactory}
 import org.apache.jena.vocabulary.RDF
+import org.paradicms.lib.base.stores.sparql.SparqlConnectionLoanPatterns
 import org.paradicms.lib.generic.models.domain.User
 import org.paradicms.lib.generic.rdf.vocabularies.CMS
 import org.paradicms.lib.generic.stores.UserStore

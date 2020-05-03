@@ -2,6 +2,7 @@ package org.paradicms.lib.generic.stores.sparql
 
 import org.apache.jena.query.{Query, QueryExecution, QueryExecutionFactory}
 import org.apache.jena.rdfconnection.{RDFConnection, RDFConnectionFactory}
+import org.paradicms.lib.base.stores.sparql.SparqlConnectionLoanPatterns
 
 trait FusekiSparqlStore extends SparqlConnectionLoanPatterns {
   protected val configuration: FusekiSparqlStoreConfiguration

@@ -1,7 +1,7 @@
 package stores.sparql
 
 import javax.inject.{Inject, Singleton}
-import org.paradicms.lib.generic.stores.sparql._
+import org.paradicms.lib.generic.stores.sparql.{FusekiSparqlStoreConfiguration, _}
 import play.api.{Configuration, Logger}
 import stores.GenericStore
 
