@@ -48,6 +48,20 @@ abstract class AbstractGraphQlSchemaDefinition {
       return None
     }
 
+    val candidateImagesWithDimensions =
+      derivedImageSet.derived.flatMap(image =>
+        if (image.exactDimensions.isDefined) {
+          Some((image, image.exactDimensions.get))
+        } else if (image.maxDimensions.isDefined) {
+          Some((image, image.maxDimensions.get))
+        } else {
+          None
+        }).filter(imageWithDimensions => maxDimensions.contains(imageWithDimensions._2))
+
+    if (candidateImagesWithDimensions.isEmpty) {
+      return None
+    }
+
     implicit val imageDimensionsOrderingSmallestToLargest: Ordering[ImageDimensions] = (x, y) =>
         if (x.contains(y)) {
           1 // x > y
@@ -57,18 +71,7 @@ abstract class AbstractGraphQlSchemaDefinition {
           0 // equivalent for the purposes of ordering
         }
 
-    // maxByOption was added to the Scala standard library in 2.13, but we can't upgrade yet.
-    def maxByOption[A, B](list: List[A], f: (A) => B)(implicit cmp: math.Ordering[B]): Option[A] =
-      if (!list.isEmpty) {
-        Some(list.maxBy(f))
-      }else {
-        None
-      }
-
-    // First select an image with a defined height and width under the target
-    maxByOption[Image, ImageDimensions](derivedImageSet.derived.filter(image => image.exactDimensions.isDefined && maxDimensions.contains(image.exactDimensions.get)), image => image.exactDimensions.get)
-      // Else select an image with a max height and width under the target
-        .orElse(maxByOption[Image, ImageDimensions](derivedImageSet.derived.filter(image => image.maxDimensions.isDefined && maxDimensions.contains(image.maxDimensions.get)), image => image.maxDimensions.get))
+    Some(candidateImagesWithDimensions.maxBy(imageWithDimensions => imageWithDimensions._2)._1)
   }
 
   implicit val DerivedImageSetType = deriveObjectType[Unit, DerivedImageSet](

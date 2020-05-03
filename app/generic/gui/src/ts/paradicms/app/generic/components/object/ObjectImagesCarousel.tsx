@@ -49,10 +49,10 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                 className: "img",
                 src: image.thumbnail
                   ? image.thumbnail.url
-                  : "https://place-hold.it/200x200?text=Missing%20thumbnail",
+                  : "https://place-hold.it/600x600?text=Missing%20thumbnail",
                 style: {
-                  height: 200,
-                  width: 200,
+                  maxHeight: 600,
+                  maxWidth: 600,
                 }
               }}
               zoomImage={{
