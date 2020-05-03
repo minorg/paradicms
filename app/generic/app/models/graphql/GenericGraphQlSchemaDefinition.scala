@@ -9,7 +9,6 @@ import sangria.marshalling.{CoercedScalaResultMarshaller, FromInput}
 import sangria.schema.{Argument, Field, IntType, ListType, OptionInputType, OptionType, Schema, fields}
 
 object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
-  // Input types
   implicit val stringFacetFilterFromInput = new FromInput[StringFacetFilter] {
     val marshaller = CoercedScalaResultMarshaller.default
     def fromResult(node: marshaller.Node) = {
@@ -20,7 +19,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
       )
     }
   }
-  implicit val stringFacetFilterType = deriveInputObjectType[StringFacetFilter]()
+  implicit val stringFacetFilterInputType = deriveInputObjectType[StringFacetFilter]()
 
   implicit val uriFacetFilterFromInput = new FromInput[UriFacetFilter] {
     val marshaller = CoercedScalaResultMarshaller.default
@@ -32,7 +31,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
       )
     }
   }
-  implicit val uriFacetFilterType = deriveInputObjectType[UriFacetFilter]()
+  implicit val uriFacetFilterInputType = deriveInputObjectType[UriFacetFilter]()
 
   implicit val objectFiltersFromInput = new FromInput[ObjectFilters] {
     val marshaller = CoercedScalaResultMarshaller.default
@@ -55,7 +54,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
       )
     }
   }
-  implicit val ObjectFiltersType = deriveInputObjectType[ObjectFilters]()
+  implicit val ObjectFiltersInputType = deriveInputObjectType[ObjectFilters]()
 
   implicit val objectQueryFromInput = new FromInput[ObjectQuery] {
     val marshaller = CoercedScalaResultMarshaller.default
@@ -67,15 +66,15 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
       )
     }
   }
-  implicit val ObjectQueryType = deriveInputObjectType[ObjectQuery]()
+  implicit val ObjectQueryInputType = deriveInputObjectType[ObjectQuery]()
 
   // Argument types
-  val ObjectQueryArgument = Argument("query", ObjectQueryType)
-  val OptionalObjectQueryArgument = Argument("query", OptionInputType(ObjectQueryType))
+  val ObjectQueryArgument = Argument("query", ObjectQueryInputType)
+  val OptionalObjectQueryArgument = Argument("query", OptionInputType(ObjectQueryInputType))
 
   // Object types, in dependence order
   implicit val ObjectType = deriveObjectType[GenericGraphQlSchemaContext, Object](
-    AddFields(Field("thumbnail", OptionType(ImageType), resolve = _.value.images.find(image => image.thumbnail.isDefined).flatMap(image => image.thumbnail))),
+    AddFields(Field("thumbnail", OptionType(ImageType), arguments = MaxDimensionsArgument :: Nil, resolve = ctx => ctx.value.images.flatMap(derivedImageSet => selectThumbnail(derivedImageSet = derivedImageSet, maxDimensions = ctx.args.arg(MaxDimensionsArgument))).headOption))
   )
   implicit val ObjectWithContextType = deriveObjectType[GenericGraphQlSchemaContext, ObjectWithContext](
     ReplaceField("object_", Field("object", ObjectType, resolve = _.value.object_))
@@ -123,8 +122,8 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
           ctx.ctx.store.getObjects(
             cachedCollectionsByUri = Map(ctx.value.uri -> ctx.value),
             currentUserUri = ctx.ctx.currentUserUri,
-            limit = ctx.args.arg("limit").asInstanceOf[Integer],
-            offset = ctx.args.arg("offset").asInstanceOf[Integer],
+            limit = ctx.args.arg(LimitArgument).asInstanceOf[Integer],
+            offset = ctx.args.arg(OffsetArgument).asInstanceOf[Integer],
             query = validateCollectionObjectsQuery(ctx.value.uri, ctx.args.argOpt("query"))
           ).objectsWithContext.map(objectWithContext => objectWithContext.object_)
       ),
@@ -143,7 +142,7 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
 
   implicit val InstitutionType = deriveObjectType[GenericGraphQlSchemaContext, Institution](
     AddFields(
-      Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(currentUserUri = ctx.ctx.currentUserUri, collectionUri = ctx.args.arg("uri"))),
+      Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(currentUserUri = ctx.ctx.currentUserUri, collectionUri = ctx.args.arg(UriArgument))),
       Field("collections", ListType(CollectionType), resolve = ctx => ctx.ctx.store.getInstitutionCollections(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.value.uri))
     )
   )
@@ -153,14 +152,14 @@ object GenericGraphQlSchemaDefinition extends AbstractGraphQlSchemaDefinition {
 
   // Query types
   val RootQueryType = sangria.schema.ObjectType("RootQuery", fields[GenericGraphQlSchemaContext, Unit](
-    Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(collectionUri = ctx.args.arg("uri"), currentUserUri = ctx.ctx.currentUserUri)),
+    Field("collectionByUri", CollectionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getCollectionByUri(collectionUri = ctx.args.arg(UriArgument), currentUserUri = ctx.ctx.currentUserUri)),
     Field("currentUser", OptionType(CurrentUserType), resolve = _.ctx.currentUser),
-    Field("institutionByUri", InstitutionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getInstitutionByUri(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.args.arg("uri"))),
+    Field("institutionByUri", InstitutionType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getInstitutionByUri(currentUserUri = ctx.ctx.currentUserUri, institutionUri = ctx.args.arg(UriArgument))),
     Field("institutions", ListType(InstitutionType), resolve = ctx => ctx.ctx.store.getInstitutions(currentUserUri = ctx.ctx.currentUserUri)),
-    Field("objectFacets", GetObjectFacetsResultType, arguments = ObjectQueryArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getObjectFacets(currentUserUri = ctx.ctx.currentUserUri, query = ctx.args.arg("query"))),
-    Field("objects", GetObjectsResultType, arguments = LimitArgument :: OffsetArgument :: ObjectQueryArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getObjects(currentUserUri = ctx.ctx.currentUserUri, limit = ctx.args.arg("limit"), offset = ctx.args.arg("offset"), query = ctx.args.arg("query"))),
-    Field("objectsCount", IntType, arguments = ObjectQueryArgument :: Nil, resolve = ctx => ctx.ctx.store.getObjectsCount(currentUserUri = ctx.ctx.currentUserUri, query = ctx.args.arg("query"))),
-    Field("objectByUri", ObjectType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getObjectByUri(currentUserUri = ctx.ctx.currentUserUri, objectUri = ctx.args.arg("uri"))),
+    Field("objectFacets", GetObjectFacetsResultType, arguments = ObjectQueryArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getObjectFacets(currentUserUri = ctx.ctx.currentUserUri, query = ctx.args.arg(ObjectQueryArgument))),
+    Field("objects", GetObjectsResultType, arguments = LimitArgument :: OffsetArgument :: ObjectQueryArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getObjects(currentUserUri = ctx.ctx.currentUserUri, limit = ctx.args.arg(LimitArgument), offset = ctx.args.arg(OffsetArgument), query = ctx.args.arg(ObjectQueryArgument))),
+    Field("objectsCount", IntType, arguments = ObjectQueryArgument :: Nil, resolve = ctx => ctx.ctx.store.getObjectsCount(currentUserUri = ctx.ctx.currentUserUri, query = ctx.args.arg(ObjectQueryArgument))),
+    Field("objectByUri", ObjectType, arguments = UriArgument :: Nil, resolve = (ctx) => ctx.ctx.store.getObjectByUri(currentUserUri = ctx.ctx.currentUserUri, objectUri = ctx.args.arg(UriArgument))),
   ))
 
   // Schema

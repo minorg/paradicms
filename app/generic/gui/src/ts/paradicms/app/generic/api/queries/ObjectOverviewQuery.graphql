@@ -27,14 +27,14 @@ query ObjectOverviewQuery(
     identifiers
     images {
       original {
-        height
+        exactDimensions {
+          height
+          width
+        }
         url
-        width
       }
-      thumbnail {
-        height
+      thumbnail(maxDimensions: {height: 600, width: 600}) {
         url
-        width
       }
     }
     languages

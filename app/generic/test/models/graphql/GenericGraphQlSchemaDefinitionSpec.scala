@@ -125,6 +125,75 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            |""".stripMargin))
     }
 
+    "return object images" in {
+      val query =
+        graphql"""
+         query ObjectImagesQuery($$objectUri: String!) {
+           objectByUri(uri: $$objectUri) {
+             images {
+               original {
+                 url
+               }
+               derived {
+                 exactDimensions {
+                   height
+                   width
+                 }
+                 maxDimensions {
+                   height
+                   width
+                 }
+                 url
+               }
+             }
+           }
+         }
+       """
+      val results = Json.stringify(executeQuery(query, vars = Json.obj("objectUri" -> testData.object_.uri.toString())))
+      for (i <- 0 until 3) {
+        results must include(s"http://example.com/object0/image${i}")
+        results must include(s"http://example.com/object0/image${i}/square_thumbnail")
+        results must include(s"http://example.com/object0/image${i}/thumbnail")
+      }
+    }
+
+    "return object image thumbnails" in {
+      val query =
+        graphql"""
+         query ObjectImageThumbnails($$objectUri: String!) {
+           objectByUri(uri: $$objectUri) {
+             images {
+               thumbnail(maxDimensions: {height: 100, width: 100}) {
+                 url
+               }
+             }
+           }
+         }
+       """
+      val results = Json.stringify(executeQuery(query, vars = Json.obj("objectUri" -> testData.object_.uri.toString())))
+      for (i <- 0 until 3) {
+        results must include(s"http://example.com/object0/image${i}/square_thumbnail")
+        results must not include (s"http://example.com/object0/image${i}/thumbnail")
+      }
+    }
+
+    "return object thumbnail" in {
+      val query =
+        graphql"""
+         query ObjectImageThumbnails($$objectUri: String!) {
+           objectByUri(uri: $$objectUri) {
+             thumbnail(maxDimensions: {height: 100, width: 100}) {
+               url
+             }
+           }
+         }
+       """
+      executeQuery(query, vars = Json.obj("objectUri" -> testData.object_.uri.toString())) must be(Json.parse(
+        s"""
+           |{"data":{"objectByUri":{"thumbnail":{"url": "${testData.object_.uri + "/image0/square_thumbnail"}"}}}}
+           |""".stripMargin))
+    }
+
     "search objects with text alone" in {
       val query =
         graphql"""
@@ -175,9 +244,6 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
       val result = Json.stringify(executeQuery(query, vars = Json.obj("subject" -> testData.object_.subjects(0), "text" -> testData.object_.title)))
       result must include(testData.object_.uri.toString())
     }
-
-
-
   }
 
   def executeQuery(query: Document, vars: JsObject = Json.obj()) = {

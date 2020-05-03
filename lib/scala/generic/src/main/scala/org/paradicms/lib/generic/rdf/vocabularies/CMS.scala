@@ -6,6 +6,8 @@ object CMS {
   val URI = "http://www.paradicms.org/ns#"
 
   // Properties
+  val imageMaxHeight = ResourceFactory.createProperty(URI + "imageMaxHeight")
+  val imageMaxWidth = ResourceFactory.createProperty(URI + "imageMaxWidth")
   val owner = ResourceFactory.createProperty(URI + "owner")
 
   // Classes

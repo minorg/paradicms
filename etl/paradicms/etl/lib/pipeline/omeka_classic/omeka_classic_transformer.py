@@ -15,12 +15,23 @@ ElementTextTree = Dict[str, Dict[str, str]]
 
 
 class OmekaClassicTransformer(_Transformer):
-    def __init__(self, *, institution_kwds: Dict[str, str], square_thumbnail_height_px: int,
-                 square_thumbnail_width_px: int):
+    def __init__(self, *,
+                 fullsize_max_height_px: int,
+                 fullsize_max_width_px: int,
+                 institution_kwds: Dict[str, str],
+                 square_thumbnail_height_px: int,
+                 square_thumbnail_width_px: int,
+                 thumbnail_max_height_px: int,
+                 thumbnail_max_width_px: int):
         _Transformer.__init__(self)
+        # Single _ so we can use getattr
+        self._fullsize_max_height_px = fullsize_max_height_px
+        self._fullsize_max_width_px = fullsize_max_width_px
         self.__institution_kwds = institution_kwds
-        self.__square_thumbnail_height_px = square_thumbnail_height_px
-        self.__square_thumbnail_width_px = square_thumbnail_width_px
+        self._square_thumbnail_height_px = square_thumbnail_height_px
+        self._square_thumbnail_width_px = square_thumbnail_width_px
+        self._thumbnail_max_height_px = thumbnail_max_height_px
+        self._thumbnail_max_width_px = thumbnail_max_width_px
 
     def transform(self, collections, files, items):
         graph = self._new_graph
@@ -146,48 +157,54 @@ class OmekaClassicTransformer(_Transformer):
             self._logger.warn("unknown Dublin Core element names: %s", tuple(dc_element_text_tree.keys()))
 
     def _transform_file(self, *, file_, graph: Graph) -> Tuple[Image, ...]:
-        if not file_["mime_type"].startswith("image/"):
-            return None, None
+        """
+        Transform a file JSON object into a sequence of images.
 
-        original = thumbnail = None
+        If the sequence is not empty, the original image is guaranteed to be first.
+        """
+        if not file_["mime_type"].startswith("image/"):
+            return tuple()
+
+        images = []
+        original_image = None
         for key, url in file_["file_urls"].items():
             if url is None:
-                continue
-            if key not in ("original", "square_thumbnail"):
                 continue
             image = Image(graph=graph, uri=URIRef(url))
             if key == "original":
                 file_metadata = file_["metadata"]
-                if not isinstance(file_metadata, dict):
+                if isinstance(file_metadata, dict):
+                    # Some files have no metadata
+                    file_metadata_video = file_metadata["video"]
+                    if isinstance(file_metadata_video, dict):
+                        image.height = file_metadata_video["resolution_y"]
+                        assert isinstance(image.height, int)
+                        image.width = file_metadata_video["resolution_x"]
+                        assert isinstance(image.width, int)
+                    else:
+                        self._logger.debug("file %s has no resolution in its metadata", file_["id"])
+                else:
                     self._logger.debug("file %s has no metadata", file_["id"])
-                    continue
-                file_metadata_video = file_metadata["video"]
-                if not isinstance(file_metadata_video, dict):
-                    self._logger.debug("file %s has no resolution in its metadata", file_["id"])
-                    continue
-                image.height = file_metadata_video["resolution_y"]
-                assert isinstance(image.height, int)
-                image.width = file_metadata_video["resolution_x"]
-                assert isinstance(image.width, int)
-            elif key == "square_thumbnail":
-                image.height = self.__square_thumbnail_height_px
-                image.width = self.__square_thumbnail_width_px
+                original_image = image
+            else:
+                if key == "square_thumbnail":
+                    image.height = self._square_thumbnail_height_px
+                    image.width = self._square_thumbnail_width_px
+                else:
+                    image.max_height = getattr(self, "_" + key + "_max_height_px")
+                    image.max_width = getattr(self, "_" + key + "_max_width_px")
                 original_uri = URIRef(file_["file_urls"]["original"])
                 image.resource.add(PROV.wasDerivedFrom, original_uri)
                 graph.add((original_uri, FOAF.thumbnail, image.uri))
-            else:
-                raise NotImplementedError
             image.created = dateparser.parse(file_["added"], settings={"STRICT_PARSING": True})
             image.format = file_["mime_type"]
             image.modified = dateparser.parse(file_["modified"], settings={"STRICT_PARSING": True})
             if key == "original":
-                original = image
-            elif key == "square_thumbnail":
-                thumbnail = image
+                images.insert(0, image)
             else:
-                raise NotImplementedError
-
-        return original, thumbnail
+                images.append(image)
+        assert original_image
+        return tuple(images)
 
     def _transform_item(self, *, files_by_item_id, graph: Graph, item) -> Object:
         object_ = Object(
@@ -200,9 +217,10 @@ class OmekaClassicTransformer(_Transformer):
         self._transform_item_type_metadata(element_text_tree=item_element_text_tree, model=object_)
         self._log_unknown_element_texts(item_element_text_tree)
         for file_ in files_by_item_id.get(item["id"], []):
-            original_image, thumbnail_image = self._transform_file(file_=file_, graph=graph)
-            if not original_image:
+            images = self._transform_file(file_=file_, graph=graph)
+            if not images:
                 continue
+            original_image = images[0]
             original_image.resource.add(FOAF.depicts, object_.uri)
             object_.resource.add(FOAF.depiction, original_image.uri)
         return object_
