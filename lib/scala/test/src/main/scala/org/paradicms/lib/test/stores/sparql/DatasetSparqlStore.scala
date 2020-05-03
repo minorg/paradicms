@@ -1,4 +1,4 @@
-package org.paradicms.lib.generic.stores.sparql
+package org.paradicms.lib.test.stores.sparql
 
 import org.apache.jena.query.text.{EntityDefinition, TextDatasetFactory, TextIndexConfig}
 import org.apache.jena.query.{DatasetFactory, Query, QueryExecution, QueryExecutionFactory}
