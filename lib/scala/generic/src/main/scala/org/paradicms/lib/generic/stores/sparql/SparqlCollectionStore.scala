@@ -11,7 +11,7 @@ import org.paradicms.lib.generic.stores.CollectionStore
 import scala.collection.JavaConverters._
 
 
-trait SparqlCollectionStore extends CollectionStore with SparqlAccessCheckGraphPatterns with SparqlConnectionLoanPatterns with SparqlPrefixes {
+trait SparqlCollectionStore extends CollectionStore with SparqlAccessCheckGraphPatterns with SparqlConnectionLoanPatterns with GenericSparqlPrefixes {
   override final def getCollectionByUri(collectionUri: Uri, currentUserUri: Option[Uri]): Collection = {
     getCollectionsByUris(collectionUris = List(collectionUri), currentUserUri = currentUserUri).head
   }
@@ -35,7 +35,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessCheckGraphP
 
     val query = QueryFactory.create(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |CONSTRUCT {
          |  ?collection ?p ?o .
          |} WHERE {
@@ -62,7 +62,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessCheckGraphP
 
     val query = QueryFactory.create(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |CONSTRUCT {
          |  ?collection ?p ?o
          |} WHERE {

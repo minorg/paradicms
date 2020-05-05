@@ -13,7 +13,7 @@ import org.slf4j.Logger
 
 import scala.collection.JavaConverters._
 
-trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns with SparqlPrefixes {
+trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns with GenericSparqlPrefixes {
   protected val logger: Logger
 
   private object GraphPatterns extends SparqlAccessCheckGraphPatterns {
@@ -98,7 +98,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   override final def getObjectsCount(currentUserUri: Option[Uri], query: ObjectQuery): Int = {
     val queryString = new ParameterizedSparqlString(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |SELECT (COUNT(DISTINCT ?object) AS ?count) WHERE {
          |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query)}
          |}""".stripMargin)
@@ -115,7 +115,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   override final def getObjects(currentUserUri: Option[Uri], limit: Int, offset: Int, query: ObjectQuery, cachedCollectionsByUri: Map[Uri, Collection] = Map(), cachedInstitutionsByUri: Map[Uri, Institution]= Map()): GetObjectsResult = {
     val queryString = new ParameterizedSparqlString(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |SELECT DISTINCT ?collection ?institution ?object WHERE {
          |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query)}
          |}
@@ -176,7 +176,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
   private def getObjectFacet(currentUserUri: Option[Uri], properties: List[Property], query: ObjectQuery): List[RDFNode] = {
     val queryString = new ParameterizedSparqlString(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |SELECT DISTINCT ?facet WHERE {
          |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query, additionalGraphPatterns = List(s"?object ${properties.map(property => "<" + property.getURI + ">" ).mkString(" | ")} ?facet ."))}
          |}""".stripMargin)
@@ -199,7 +199,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     }
     val query = QueryFactory.create(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |CONSTRUCT {
          |  ?object ?objectP ?objectO .
          |  ?object foaf:depiction ?originalImage .

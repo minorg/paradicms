@@ -10,7 +10,7 @@ import org.paradicms.lib.generic.stores.InstitutionStore
 
 import scala.collection.JavaConverters._
 
-trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGraphPatterns with SparqlConnectionLoanPatterns with SparqlPrefixes {
+trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGraphPatterns with SparqlConnectionLoanPatterns with GenericSparqlPrefixes {
   override final def getInstitutionByUri(currentUserUri: Option[Uri], institutionUri: Uri): Institution = {
     // Should be safe to inject institutionUri since it's already been parsed as a URI
     val institutionVariable = "<" + institutionUri.toString() + ">"
@@ -22,7 +22,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGrap
 
     val query = QueryFactory.create(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |CONSTRUCT {
          |  $institutionVariable ?p ?o
          |} WHERE {
@@ -45,7 +45,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGrap
 
     val query = QueryFactory.create(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |CONSTRUCT {
          |  ?institution ?p ?o
          |} WHERE {
@@ -75,7 +75,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGrap
 
     val query = QueryFactory.create(
       s"""
-         |${PREFIXES}
+         |${GENERIC_SPARQL_PREFIXES}
          |CONSTRUCT {
          |  ?institution ?p ?o .
          |} WHERE {
