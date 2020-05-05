@@ -12,4 +12,10 @@ trait RdfsResourceProperties extends ResourceProperties {
     }
     commentStatements.map(statement => statement.getObject.asLiteral().getString)
   }
+
+//  final def comments = getPropertyObjectStrings(RDFS.comment) ++ getPropertyObjectStrings(RDFS.comment, "en")
+  final def comments_=(comments: List[String]) = setPropertyLiteral(RDFS.comment, comments)
+
+  final def labels = getPropertyObjectStrings(RDFS.label)
+  final def labels_=(labels: List[String]) = setPropertyLiteral(RDFS.label, labels)
 }

@@ -17,6 +17,9 @@ trait DcResourceProperties extends ResourceProperties {
 
   def identifiers: List[String] = getPropertyObjectStrings(DCTerms.identifier) ::: getPropertyObjectStrings(DC_11.identifier)
 
+  final def identifiers_=(values: List[String]): Unit =
+    setPropertyLiteral(DCTerms.identifier, values)
+
   def formats: List[String] = getPropertyObjectStrings(DCTerms.format) ::: getPropertyObjectStrings(DC_11.format)
 
   def languages: List[String] = getPropertyObjectStrings(DCTerms.language) ::: getPropertyObjectStrings(DC_11.language)
