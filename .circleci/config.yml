@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Build and test
           command: |
-            sbt clean update package test
+            sbt clean update package dist test
             cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
       #            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
       - store_test_results:
@@ -51,6 +51,10 @@ jobs:
             - "~/.ivy2/cache"
             - "~/.sbt"
             - "~/.m2"
+      - persist_to_workspace:
+          root: app/generic
+          paths:
+            - target
   ts:
     working_directory: ~/project
     docker:
@@ -75,6 +79,10 @@ jobs:
             npm run build
             cd ../../../app/generic/gui
             npm run build
+      - persist_to_workspace:
+          root: app/generic
+          paths:
+            - gui/dist
 orbs:
   cypress: cypress-io/cypress@1
 workflows:
@@ -85,6 +93,7 @@ workflows:
       - ts
       - cypress/install:
           build: |
+            find ~/
             npm install
             npm run lerna:bootstrap
             cd lib/ts/base
@@ -94,11 +103,12 @@ workflows:
           cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}'
           working_directory: app/generic/test/integration
       - cypress/run:
+          attach-workspace: true
           post-steps:
             - store_test_results:
                 path: cypress/results
           requires:
             - cypress/install
-          start: cd ../../../.. && sbt "project genericApp" run
+          start: find ~/ && cd ../../../.. && sbt "project genericApp" run
           wait-on: 'http-get://localhost:9000/index.html'
           working_directory: app/generic/test/integration
