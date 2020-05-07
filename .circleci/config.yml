@@ -104,7 +104,7 @@ workflows:
   build:
     jobs:
       - ts
-      - scala
+      - scala:
         requires:
           - ts
       - cypress/install:
