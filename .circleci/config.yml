@@ -5,6 +5,8 @@ jobs:
     docker:
       - image: circleci/openjdk:11
     steps:
+      - attach_to_workspace:
+          at: /tmp/workspace
       - checkout
       - restore_cache:
           key: sbt-cache-v1
@@ -29,11 +31,25 @@ jobs:
       - run:
           name: Build and test
           command: |
-            sbt clean update package dist test
+            sbt clean update package test
             cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
       #            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
       - store_test_results:
           path: test-results
+      - run:
+          name: Build a dist package with the GUI
+          command: |
+            cp -p -R /tmp/workspace/dist/gui app/generic/public
+            sbt "project genericApp" dist
+            cd app/generic/target/universal
+            unzip generic-app*.zip
+            rm generic-app*.zip
+            mkdir ~/dist
+            mv generic-app-*-SNAPSHOT ~/dist/generic-app
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - dist/generic-app
       - run:
           name: Publish (master branch only)
           command: |
@@ -51,10 +67,6 @@ jobs:
             - "~/.ivy2/cache"
             - "~/.sbt"
             - "~/.m2"
-      - persist_to_workspace:
-          root: app/generic
-          paths:
-            - target
   ts:
     working_directory: ~/project
     docker:
@@ -79,28 +91,23 @@ jobs:
             npm run build
             cd ../../../app/generic/gui
             npm run build
+            mkdir ~/dist
+            mv gui/dist ~/dist/generic-gui
       - persist_to_workspace:
-          root: app/generic
+          root: ~/
           paths:
-            - gui/dist
+            - dist/generic-gui
 orbs:
   cypress: cypress-io/cypress@1
 workflows:
   version: 2
   build:
     jobs:
-      - scala
       - ts
+      - scala
+        requires:
+          - ts
       - cypress/install:
-          build: |
-            find ~/
-            npm install
-            npm run lerna:bootstrap
-            cd lib/ts/base
-            npm run build
-            cd ../../../app/generic/gui
-            npm run build-public
-          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}'
           requires:
             - scala
             - ts
@@ -112,6 +119,9 @@ workflows:
                 path: cypress/results
           requires:
             - cypress/install
-          start: find ~/ && cd ../../../.. && sbt "project genericApp" run
+          start: |
+            find ~/dist/
+            cd ~/dist/generic-app
+            bin/generic-app
           wait-on: 'http-get://localhost:9000/index.html'
           working_directory: app/generic/test/integration
