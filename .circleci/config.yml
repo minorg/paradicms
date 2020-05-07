@@ -85,10 +85,13 @@ workflows:
       - ts
       - cypress/install:
           build: |
+            npm install
+            npm run lerna:bootstrap
             cd lib/ts/base
             npm run build
             cd ../../../app/generic/gui
             npm run build-public
+          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}'
           working_directory: app/generic/test/integration
       - cypress/run:
           post-steps:
