@@ -83,12 +83,12 @@ workflows:
     jobs:
       - scala
       - ts
-  integration-test:
-    jobs:
       - cypress/install:
           build: cd ../../gui && npm run build-development
       - cypress/run:
           post-steps:
             - store_test_results:
                 path: cypress/results
+          requires:
+            - cypress/install
           working_directory: app/generic/test/integration
