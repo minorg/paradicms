@@ -84,4 +84,7 @@ workflows:
       - scala
       - ts
       - cypress/run:
+          post-steps:
+            - store_test_results:
+                path: cypress/results
           working_directory: app/generic/test/integration
