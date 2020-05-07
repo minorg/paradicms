@@ -92,7 +92,7 @@ jobs:
             cd ../../../app/generic/gui
             npm run build
             mkdir ~/dist
-            mv gui/dist ~/dist/generic-gui
+            mv dist ~/dist/generic-gui
       - persist_to_workspace:
           root: ~/
           paths:
