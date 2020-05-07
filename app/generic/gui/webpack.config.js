@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = function (env, argv) {
-  const distPath = typeof(env.distPath) !== "undefined" ? path.join(__dirname, env.distPath) : path.join(__dirname, 'dist');
+  const distPath = env && env.distPath ? path.join(__dirname, env.distPath) : path.join(__dirname, 'dist');
   // console.info("Using distPath " + distPath);
 
   return merge(configBase(env, argv), configDevServer(distPath), {
