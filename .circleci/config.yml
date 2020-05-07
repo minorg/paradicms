@@ -84,7 +84,11 @@ workflows:
       - scala
       - ts
       - cypress/install:
-          build: cd ../../gui && npm run build-development
+          build: |
+            cd lib/ts/base
+            npm run build
+            cd ../../../app/generic/gui
+            npm run build-public
           working_directory: app/generic/test/integration
       - cypress/run:
           post-steps:
