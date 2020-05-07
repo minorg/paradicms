@@ -101,6 +101,9 @@ workflows:
             cd ../../../app/generic/gui
             npm run build-public
           cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}'
+          requires:
+            - scala
+            - ts
           working_directory: app/generic/test/integration
       - cypress/run:
           attach-workspace: true
