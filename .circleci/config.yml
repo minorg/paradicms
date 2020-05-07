@@ -99,4 +99,6 @@ workflows:
                 path: cypress/results
           requires:
             - cypress/install
+          start: cd ../../../.. && sbt "project genericApp" run
+          wait-on: 'http-get://localhost:9000/index.html'
           working_directory: app/generic/test/integration
