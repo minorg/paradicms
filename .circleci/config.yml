@@ -37,8 +37,9 @@ jobs:
       - store_test_results:
           path: test-results
       - run:
-          name: Build a dist package with the GUI
+          name: Build a dist package with the GUI for integration testing
           command: |
+            echo -e "auth0.clientSecret=$AUTH0_CLIENT_SECRET\nauth0.clientId=$AUTH0_CLIENT_ID\nauth0.domain=$AUTH0_DOMAIN\nauth0.callbackURL=\"http://localhost:9000/api/auth0/loginCallback\"\nauth0.audience=\"\"" >app/generic/conf/application.auth0.conf
             cp -p -R /tmp/workspace/dist/generic-gui app/generic/public
             sbt "project genericApp" playUpdateSecret dist
             cd app/generic/target/universal
