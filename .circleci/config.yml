@@ -85,6 +85,7 @@ workflows:
       - ts
       - cypress/install:
           build: cd ../../gui && npm run build-development
+          working_directory: app/generic/test/integration
       - cypress/run:
           post-steps:
             - store_test_results:
