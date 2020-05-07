@@ -40,7 +40,7 @@ jobs:
           name: Build a dist package with the GUI
           command: |
             cp -p -R /tmp/workspace/dist/generic-gui app/generic/public
-            sbt "project genericApp" dist
+            sbt "project genericApp" playUpdateSecret dist
             cd app/generic/target/universal
             unzip generic-app*.zip
             rm generic-app*.zip
