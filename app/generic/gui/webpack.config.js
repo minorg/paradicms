@@ -1,21 +1,17 @@
-var configBase = require("../../../lib/ts/base/webpack.config.base");
-var configDevServer = require("../../../lib/ts/base/webpack.config.devServer");
-var path = require('path');
-var merge = require("webpack-merge");
-var webpack = require('webpack');
-
-// variables
-var distPath = path.join(__dirname, 'dist');
-var srcPath = path.join(__dirname, 'src');
-
-// plugins
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const configBase = require("../../../lib/ts/base/webpack.config.base");
+const configDevServer = require("../../../lib/ts/base/webpack.config.devServer");
+const path = require('path');
+const merge = require("webpack-merge");
+const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = function (env, argv) {
+  const distPath = path.join(__dirname, 'dist');
+
   return merge(configBase(env, argv), configDevServer(distPath), {
-    context: srcPath,
+    context: path.join(__dirname, 'src'),
     entry: {
       "generic-gui": './ts/paradicms/app/generic/main.tsx'
     },

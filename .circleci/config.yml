@@ -1,10 +1,12 @@
-version: 2
+version: 2.1
 jobs:
   scala:
     working_directory: ~/project
     docker:
       - image: circleci/openjdk:11
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - checkout
       - restore_cache:
           key: sbt-cache-v1
@@ -34,6 +36,21 @@ jobs:
       #            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
       - store_test_results:
           path: test-results
+      - run:
+          name: Build a dist package with the GUI for integration testing
+          command: |
+            echo -e "auth0.clientSecret=$AUTH0_CLIENT_SECRET\nauth0.clientId=$AUTH0_CLIENT_ID\nauth0.domain=$AUTH0_DOMAIN\nauth0.callbackURL=\"http://localhost:9000/api/auth0/loginCallback\"\nauth0.audience=\"\"" >app/generic/conf/application.auth0.conf
+            cp -p -R /tmp/workspace/dist/generic-gui app/generic/public
+            sbt "project genericApp" playUpdateSecret dist
+            cd app/generic/target/universal
+            unzip generic-app*.zip
+            rm generic-app*.zip
+            mkdir ~/dist
+            mv generic-app-*-SNAPSHOT ~/dist/generic-app
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - dist/generic-app
       - run:
           name: Publish (master branch only)
           command: |
@@ -75,9 +92,37 @@ jobs:
             npm run build
             cd ../../../app/generic/gui
             npm run build
+            mkdir ~/dist
+            mv dist ~/dist/generic-gui
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - dist/generic-gui
+orbs:
+  cypress: cypress-io/cypress@1
 workflows:
   version: 2
   build:
     jobs:
-      - scala
       - ts
+      - scala:
+          requires:
+            - ts
+      - cypress/install:
+          requires:
+            - scala
+            - ts
+          working_directory: app/generic/test/integration
+      - cypress/run:
+          attach-workspace: true
+          post-steps:
+            - store_test_results:
+                path: cypress/results
+          requires:
+            - cypress/install
+          start: |
+            apt-get update && apt-get install -y default-jre
+            cd ~/dist/generic-app
+            bin/generic-app
+          wait-on: 'http-get://localhost:9000/index.html'
+          working_directory: app/generic/test/integration
