@@ -120,7 +120,8 @@ workflows:
           requires:
             - cypress/install
           start: |
-            find ~/dist/
+#            find ~/dist/
+            apt-get install -y default-jre
             cd ~/dist/generic-app
             bin/generic-app
           wait-on: 'http-get://localhost:9000/index.html'
