@@ -46,7 +46,7 @@ export const CollectionOverview: React.FunctionComponent = () => {
   institutionUri = decodeURIComponent(institutionUri);
 
   const location = useLocation();
-  const locationObjectQuery = qs.parse(location.search.substring(1));
+  const locationObjectQuery: ObjectQuery = qs.parse(location.search.substring(1));
   if (!locationObjectQuery.filters) {
     locationObjectQuery.filters = {};
   }
