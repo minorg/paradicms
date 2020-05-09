@@ -1,3 +1,22 @@
+class Footer {
+  get privacyLink() {
+    return cy.get(".frame footer a[href=\"/privacy\"]");
+  }
+}
+
+class Frame {
+  get cardTitle() {
+    return cy.get(".frame .card-title h2");
+  }
+
+  breadcrumbItem(n: number) {
+    return cy.get(".frame ol.breadcrumb li:nth-of-type(" + n + ")");
+  }
+
+  readonly footer = new Footer();
+  readonly navbar = new Navbar();
+}
+
 class Navbar {
   get homeLink() {
     return cy.get("nav a[href=\"/\"].nav-link");
@@ -19,18 +38,6 @@ class Navbar {
   get searchInput() {
     return cy.get("nav input[type=\"search\"");
   }
-}
-
-export class Frame {
-  get cardTitle() {
-    return cy.get(".frame .card-title h2");
-  }
-
-  breadcrumbItem(n: number) {
-    return cy.get(".frame ol.breadcrumb li:nth-of-type(" + n + ")");
-  }
-
-  readonly navbar = new Navbar();
 }
 
 export abstract class Page {
