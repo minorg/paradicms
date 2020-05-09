@@ -1,16 +1,13 @@
-import { reset } from "../support/reset";
 import { HomePage } from "../support/pages/HomePage";
 import { InstitutionOverviewPage } from "../support/pages/InstitutionOverviewPage";
 
 describe("Home", () => {
-  beforeEach(reset);
-
   const page = new HomePage();
 
   beforeEach(() => page.visit());
 
   it("should open the home page", () => {
-    page.frameCardTitle().should("have.text", "Institutions");
+    page.frameCardTitle.should("have.text", "Institutions");
   });
 
   it ("should show institutions", () => {
