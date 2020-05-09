@@ -11,7 +11,7 @@ import org.paradicms.lib.test.stores.sparql.DatasetSparqlStore
  * This is a class instead of an object so that it can be "reset" by creating a new instance.
  */
 abstract class TestSparqlStore extends DatasetSparqlStore with SparqlConnectionLoanPatterns {
-  RDFDataMgr.read(dataset, getClass.getResourceAsStream("/test_data.ttl"), Lang.TURTLE)
+  RDFDataMgr.read(dataset, getClass.getResourceAsStream("/generic_test_data.ttl"), Lang.TURTLE)
 
   val currentUserUri = Some(Uri.parse("http://example.com/user"))
 }
