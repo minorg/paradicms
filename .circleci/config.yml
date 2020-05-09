@@ -119,7 +119,7 @@ workflows:
             - store_test_results:
                 path: cypress/results
           pre-steps:
-            - run: 'cp ../../../../.circleci/cypress.json .'
+            - run: 'pwd && ls && cp ../../../../.circleci/cypress.json .'
           requires:
             - cypress/install
           start: |
