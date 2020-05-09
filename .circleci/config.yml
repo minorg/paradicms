@@ -118,11 +118,11 @@ workflows:
           post-steps:
             - store_test_results:
                 path: cypress/results
-          pre-steps:
-            - run: 'cp ~/project/.circleci/cypress.json ~/project/app/generic/test/integration'
           requires:
             - cypress/install
           start: |
+            pwd
+            cp ~/project/.circleci/cypress.json .
             apt-get update && apt-get install -y default-jre
             cd ~/dist/generic-app
             bin/generic-app
