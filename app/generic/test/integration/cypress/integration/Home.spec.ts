@@ -7,7 +7,7 @@ describe("Home", () => {
   beforeEach(() => page.visit());
 
   it("should open the home page", () => {
-    page.frameCardTitle.should("have.text", "Institutions");
+    page.frame.cardTitle.should("have.text", "Institutions");
   });
 
   it ("should show institutions", () => {
