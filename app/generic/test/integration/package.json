@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cypress:open": "cross-env EDITOR=\"\" cypress open",
+    "cypress:run": "cross-env EDITOR=\"\" cypress run"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "cypress": "^4.5.0",
     "cypress-intellij-reporter": "0.0.4",
     "typescript": "^3.8.3"
