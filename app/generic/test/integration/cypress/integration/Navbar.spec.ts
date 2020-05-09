@@ -8,29 +8,29 @@ describe("Navbar", () => {
 
   it("should search with typing and hitting enter", () => {
     const text = "test";
-    page.navbar.searchInput.type(text + "{enter}");
+    page.frame.navbar.searchInput.type(text + "{enter}");
     cy.url().should("eq", new SearchResultsPage(text).absoluteUrl);
   });
 
   it("should search with typing and clicking the search button", () => {
     const text = "test";
-    page.navbar.searchInput.type(text);
-    page.navbar.searchButton.click();
+    page.frame.navbar.searchInput.type(text);
+    page.frame.navbar.searchButton.click();
     cy.url().should("eq", new SearchResultsPage(text).absoluteUrl);
   });
 
   it("should have a login link", () => {
     // Cypress doesn't allow you to navigate to a URL outside of the origin within a test.
     // You have to go to the login directly.
-    page.navbar.loginLink;
+    page.frame.navbar.loginLink;
   });
 
   it("should go back home after going elsewhere", () => {
     const text = "test";
-    page.navbar.search(text);
+    page.frame.navbar.search(text);
     const newPage = new SearchResultsPage(text);
     cy.url().should("eq", newPage.absoluteUrl);
-    newPage.navbar.homeLink.click();
+    newPage.frame.navbar.homeLink.click();
     cy.url().should("eq", page.absoluteUrl);
   });
 });

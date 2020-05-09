@@ -21,18 +21,26 @@ class Navbar {
   }
 }
 
+export class Frame {
+  get cardTitle() {
+    return cy.get(".frame .card-title h2");
+  }
+
+  breadcrumbItem(n: number) {
+    return cy.get(".frame ol.breadcrumb li:nth-of-type(" + n + ")");
+  }
+
+  readonly navbar = new Navbar();
+}
+
 export abstract class Page {
   get absoluteUrl() {
     return Cypress.config().baseUrl + this.relativeUrl;
   }
 
-  readonly navbar = new Navbar();
+  readonly frame = new Frame();
 
   abstract readonly relativeUrl: string;
-
-  get frameCardTitle() {
-    return cy.get(".frame .card-title h2");
-  }
 
   visit(): void {
     cy.visit(this.relativeUrl);
