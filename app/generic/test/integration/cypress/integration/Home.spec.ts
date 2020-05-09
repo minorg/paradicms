@@ -11,8 +11,12 @@ describe("Home", () => {
   });
 
   it ("should show institutions", () => {
-    const institutionUri = "http://example.com/institution"
-    const institutionHref = new InstitutionOverviewPage(institutionUri).relativeUrl;
-    cy.get("a[href=\"" + institutionHref + "\"]").should("have.text", "Test institution");
+    page.institutionLink("http://example.com/institution").should("have.text", "Test institution");
+  });
+
+  it("should go to the institution page when clicking on an institution", () => {
+    const institutionUri = "http://example.com/institution";
+    page.institutionLink(institutionUri).click();
+    cy.url().should("eq", new InstitutionOverviewPage(institutionUri).absoluteUrl);
   });
 });
