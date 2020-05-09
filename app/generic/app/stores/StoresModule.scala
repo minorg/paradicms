@@ -6,7 +6,7 @@ import org.paradicms.lib.generic.stores.UserStore
 final class StoresModule extends AbstractModule {
   override def configure(): Unit = {
     val storeClass =
-      if (System.getProperty("test") != null)
+      if (System.getProperty("testIntegration") != null)
         classOf[TestGenericStore]
       else
         classOf[FusekiGenericStore]

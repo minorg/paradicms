@@ -15,6 +15,10 @@ POST        /api/graphql                    controllers.graphql.GenericGraphQlCo
 GET         /api/graphql-schema             controllers.graphql.GenericGraphQlController.renderSchema
 
 
+# Integration testing
+GET         /api/test/reset controllers.test.GenericTestController.reset
+
+
 # Assets
 GET         /             controllers.Assets.at(path="/public", file="index.html")
 GET         /*file        controllers.Assets.at(path="/public", file)
