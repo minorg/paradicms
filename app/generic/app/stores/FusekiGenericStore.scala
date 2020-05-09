@@ -1,9 +1,8 @@
-package stores.sparql
+package stores
 
 import javax.inject.{Inject, Singleton}
 import org.paradicms.lib.generic.stores.sparql.{FusekiSparqlStoreConfiguration, _}
 import play.api.{Configuration, Logger}
-import stores.GenericStore
 
 @Singleton
 class FusekiGenericStore(val configuration: FusekiSparqlStoreConfiguration) extends GenericStore with FusekiSparqlStore with SparqlCollectionStore with SparqlInstitutionStore with SparqlObjectStore with SparqlUserStore {

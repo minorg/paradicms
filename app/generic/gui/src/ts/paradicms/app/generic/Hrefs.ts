@@ -66,6 +66,7 @@ export class Hrefs {
   static get privacy() {
     return "/privacy";
   }
+
   static search(query: ObjectQuery) {
     return "/search?" + qs.stringify(query);
   }

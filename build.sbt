@@ -35,7 +35,9 @@ lazy val bookApp = (project in file("app/book"))
     skip in publish := true
   )
 lazy val genericApp = (project in file("app/generic"))
-  .dependsOn(genericLib % "compile->compile;test->test")
+  // The app depends on the testLib in order to get the Dataset-backed store implementation,
+  // which is needed for integration testing.
+  .dependsOn(genericLib % "compile->compile;test->test", testLib)
   .enablePlugins(PlayScala)
   .settings(
     //    libraryDependencies ++= Seq(

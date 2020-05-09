@@ -121,8 +121,10 @@ workflows:
           requires:
             - cypress/install
           start: |
+            pwd
+            cp ~/project/.circleci/cypress.json .
             apt-get update && apt-get install -y default-jre
             cd ~/dist/generic-app
-            bin/generic-app
+            bin/generic-app -DtestIntegration
           wait-on: 'http-get://localhost:9000/index.html'
           working_directory: app/generic/test/integration
