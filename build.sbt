@@ -1,6 +1,6 @@
 // Projects
 lazy val root = (project in file ("."))
-  .aggregate(bookApp, genericApp, genericLib)
+  .aggregate(baseLib, bookApp, genericApp, genericLib, testLib)
   .settings(
     name := "paradicms",
     skip in publish := true
@@ -15,7 +15,8 @@ lazy val baseLib =
       "org.scalatest" %% "scalatest" % "3.0.8" % Test,
       "org.slf4j" % "slf4j-simple" % slf4jVersion % Test
     ),
-    name := "paradicms-base"
+    name := "paradicms-base",
+    skip in publish := false
   )
 lazy val bookApp = (project in file("app/book"))
   .dependsOn(genericLib % "compile->compile;test->test")
@@ -67,7 +68,8 @@ lazy val genericLib =
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
       "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
     ),
-    name := "paradicms-generic"
+    name := "paradicms-generic",
+    skip in publish := false
   )
 // Separate test lib that can be published to OSSRH
 // We could just do test->test dependencies within this build.sbt, but this code should be usable outside of the paradicms build.
@@ -78,7 +80,8 @@ lazy val testLib =
       libraryDependencies ++= Seq(
         "org.apache.jena" % "jena-text" % jenaVersion,
       ),
-      name := "paradicms-test"
+      name := "paradicms-test",
+      skip in publish := false
     )
 
 // Constants
