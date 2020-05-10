@@ -1,32 +1,17 @@
 package controllers.test
 
-import java.io.File
-
 import controllers.{Assets, AssetsFinder}
 import javax.inject.{Inject, Singleton}
+import play.api.Environment
 import play.api.mvc.InjectedController
-import play.api.{Environment, Mode}
 import stores.{GenericStore, TestGenericStore}
 
 @Singleton
 class GenericTestController @Inject()(assets: Assets, assetsFinder: AssetsFinder, environment: Environment, store: GenericStore) extends InjectedController {
   def frontEndPath(path: String) = {
-    val pathExists =
-      if (environment.mode == Mode.Prod) {
-        val streamPath = "/public" + path
-        val stream = getClass.getClassLoader.getResourceAsStream(streamPath)
-        if (stream != null) {
-          stream.close()
-          true
-        } else {
-          false
-        }
-      } else {
-        val file = new File(s"${environment.rootPath}${assetsFinder.assetsBasePath}${File.separator}${path}").getAbsoluteFile
-        file.exists
-      }
-
-    if (pathExists) {
+    if (path.endsWith(".css") || path.endsWith(".html") || path.endsWith(".ico") || path.endsWith(".js")) {
+      // If the path has a file extension, assume it's a file and not a React URL
+      // This is simpler than more complicated code that tests if the file exists, which didn't work for both dev (public/ file system) and production (assets.jar) cases.
       assets.at("/public", path, aggressiveCaching = false)
     } else {
       assets.at("/public", "index.html", aggressiveCaching = false)
