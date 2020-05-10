@@ -126,5 +126,6 @@ workflows:
             apt-get update && apt-get install -y default-jre
             cd ~/dist/generic-app
             bin/generic-app -DtestIntegration
+          store_artifacts: true
           wait-on: 'http-get://localhost:9000/index.html'
           working_directory: app/generic/test/integration
