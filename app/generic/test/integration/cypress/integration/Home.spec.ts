@@ -1,5 +1,6 @@
 import { HomePage } from "../support/pages/HomePage";
 import { InstitutionOverviewPage } from "../support/pages/InstitutionOverviewPage";
+import { TestData } from "./TestData";
 
 describe("Home", () => {
   const page = new HomePage();
@@ -11,12 +12,11 @@ describe("Home", () => {
   });
 
   it ("should show institutions", () => {
-    page.institutionLink("http://example.com/institution").should("have.text", "Test institution");
+    page.institutionLink(TestData.institution.uri).should("have.text", TestData.institution.name);
   });
 
   it("should go to the institution page when clicking on an institution", () => {
-    const institutionUri = "http://example.com/institution";
-    page.institutionLink(institutionUri).click();
-    cy.url().should("eq", new InstitutionOverviewPage(institutionUri).absoluteUrl);
+    page.institutionLink(TestData.institution.uri).click();
+    cy.url().should("eq", new InstitutionOverviewPage(TestData.institution.uri).absoluteUrl);
   });
 });
