@@ -49,9 +49,9 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
       </tr>
     ));
 
-  const listGroupSection = (title: string, values: string[]) =>
+  const listGroupSection = (id: string, title: string, values: string[]) =>
     values.length > 0 ? (
-      <Row className="pb-4">
+      <Row className={id + "-section section pb-4"}>
         <Card className="w-100">
           <CardHeader>
             <CardTitle>
@@ -87,7 +87,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
     >
       <Container fluid>
         {object_.images.length > 0 ? (
-          <Row className="pb-4">
+          <Row className="pb-4 carousel-section section">
             <Card className="w-100">
               <CardBody>
                 <ObjectImagesCarousel images={object_.images}/>
@@ -95,11 +95,11 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
             </Card>
           </Row>
         ) : null}
-        {listGroupSection("Descriptions", object_.descriptions)}
+        {listGroupSection("descriptions","Descriptions", object_.descriptions)}
         {object_.titles.length > 1 ||
         object_.alternativeTitles.length > 0 ||
         object_.titles[0] !== object_.title ? (
-          <Row className="pb-4">
+          <Row className="pb-4 section titles-section">
             <Card className="w-100">
               <CardHeader>
                 <CardTitle>
@@ -120,14 +120,14 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
             </Card>
           </Row>
         ) : null}
-        {listGroupSection("Identifiers", object_.identifiers)}
-        {listGroupSection("Subjects", object_.subjects)}
-        {listGroupSection("Types", object_.types)}
+        {listGroupSection("identifiers", "Identifiers", object_.identifiers)}
+        {listGroupSection("subjects","Subjects", object_.subjects)}
+        {listGroupSection("types","Types", object_.types)}
         {object_.creators.length > 0 ||
         object_.provenances.length > 0 ||
         object_.publishers.length > 0 ||
         object_.sources.length > 0 ? (
-          <Row className="pb-4">
+          <Row className="pb-4 provenance-section section">
             <Card className="w-100">
               <CardHeader>
                 <CardTitle>
@@ -155,7 +155,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
         object_.languages.length > 0 ||
         object_.media.length > 0 ||
         object_.spatials.length > 0 ? (
-          <Row className="pb-4">
+          <Row className="pb-4 extent-section section">
             <Card className="w-100">
               <CardHeader>
                 <CardTitle>
@@ -187,7 +187,7 @@ export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
           </Row>
         ) : null}
         {rights ? (
-          <Row className="pb-4">
+          <Row className="pb-4 rights-section section">
             <Card className="w-100">
               <CardHeader>
                 <CardTitle>
