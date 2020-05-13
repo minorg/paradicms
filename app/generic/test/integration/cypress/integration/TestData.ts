@@ -1,3 +1,9 @@
+const objects = [...Array(10)].map((_, i) => ({
+  subject: "Test subject " + i,
+  title: "Test object " + i,
+  uri: "http://example.com/object" + i
+}));
+
 export const TestData = {
   collection: {
     name: "Test collection",
@@ -7,9 +13,6 @@ export const TestData = {
     name: "Test institution",
     uri: "http://example.com/institution"
   },
-  object: {
-    subject: "Test subject 0",
-    title: "Test object 0",
-    uri: "http://example.com/object0"
-  }
+  object: objects[0],
+  objects
 }
