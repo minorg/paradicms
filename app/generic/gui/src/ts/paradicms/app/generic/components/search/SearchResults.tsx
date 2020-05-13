@@ -154,7 +154,7 @@ export const SearchResults: React.FunctionComponent = () => {
           </BreadcrumbItem>
           <BreadcrumbItem>
             <Link to={Hrefs.search(state.objectQuery)}>
-              Search: <i>{searchText}</i>&nbsp;
+              Search: <i>{searchText}</i>
             </Link>
           </BreadcrumbItem>
         </React.Fragment>
