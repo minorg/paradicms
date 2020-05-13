@@ -35,7 +35,7 @@ jobs:
             cp -p -R /tmp/workspace/dist/generic-gui app/generic/public
             sbt test "project genericApp" playUpdateSecret dist
             cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
-            cd app/generic/target/universal && unzip generic-app*.zip && rm generic-app*.zip && mkdir ~/dist && mv generic-app-*-SNAPSHOT ~/dist/generic-app
+            cd app/generic/target/universal && unzip -qq generic-app*.zip && rm generic-app*.zip && mkdir ~/dist && mv generic-app-*-SNAPSHOT ~/dist/generic-app
       - store_test_results:
           path: test-results
       - persist_to_workspace:

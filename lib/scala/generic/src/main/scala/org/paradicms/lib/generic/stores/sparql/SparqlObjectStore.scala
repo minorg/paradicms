@@ -107,7 +107,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     }
     withQueryExecution(queryString.asQuery()) { queryExecution =>
       val count = queryExecution.execSelect().next().get("count").asLiteral().getInt
-      logger.debug("getObjectsCount: {} -> {}", queryString, count)
+//      logger.debug("getObjectsCount: {} -> {}", queryString, count)
       count
     }
   }
