@@ -31,22 +31,13 @@ jobs:
       - run:
           name: Build and test
           command: |
-            sbt clean update package test
-            cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
-      #            cp lib/scala/generic/target/test-reports/*.xml ~/project/test-results/scala
-      - store_test_results:
-          path: test-results
-      - run:
-          name: Build a dist package with the GUI for integration testing
-          command: |
             echo -e "auth0.clientSecret=$AUTH0_CLIENT_SECRET\nauth0.clientId=$AUTH0_CLIENT_ID\nauth0.domain=$AUTH0_DOMAIN\nauth0.callbackURL=\"http://localhost:9000/api/auth0/loginCallback\"\nauth0.audience=\"\"" >app/generic/conf/application.auth0.conf
             cp -p -R /tmp/workspace/dist/generic-gui app/generic/public
-            sbt "project genericApp" playUpdateSecret dist
-            cd app/generic/target/universal
-            unzip generic-app*.zip
-            rm generic-app*.zip
-            mkdir ~/dist
-            mv generic-app-*-SNAPSHOT ~/dist/generic-app
+            sbt test "project genericApp" playUpdateSecret dist
+            cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
+            cd app/generic/target/universal && unzip -qq generic-app*.zip && rm generic-app*.zip && mkdir ~/dist && mv generic-app-*-SNAPSHOT ~/dist/generic-app
+      - store_test_results:
+          path: test-results
       - persist_to_workspace:
           root: ~/
           paths:
@@ -78,7 +69,9 @@ jobs:
           key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
       - run:
           command: |
-            npm install
+            if [ ! -d ./node_modules ]; then
+              npm install
+            fi
             npm run lerna:bootstrap
       - save_cache:
           key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
