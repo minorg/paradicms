@@ -78,7 +78,9 @@ jobs:
           key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
       - run:
           command: |
-            npm install
+            if [ ! -d ./node_modules ]; then
+              npm install
+            fi
             npm run lerna:bootstrap
       - save_cache:
           key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
