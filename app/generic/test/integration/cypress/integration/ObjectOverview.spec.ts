@@ -17,14 +17,14 @@ describe("Object overview", () => {
     page.frame.breadcrumbItem(4).should("have.text", "Collections");
     page.frame.breadcrumbItem(5).should("have.text", TestData.collection.name);
     page.frame.breadcrumbItem(6).should("have.text", "Objects");
+    page.frame.breadcrumbItem(7).should("have.text", TestData.object.title);
   });
 
   it("should have the subject", () => {
-    cy.get(".subjects-section .card .card-title h5").should("have.text", "Subjects");
-    cy.get(".subjects-section .card-body ul.list-group li.list-group-item").should("have.text", TestData.object.subject);
+    page.subjects.should("have.text", TestData.object.subject);
   });
 
   it("should have an image in the thumbnail", () => {
-    cy.get("img[src=\"" + TestData.object.uri + "/image1/thumbnail\"]");
+    page.carouselThumbnail;
   });
 });
