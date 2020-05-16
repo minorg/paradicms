@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Modal, ModalBody, ModalHeader} from "reactstrap";
-import {Exception} from "../../Exception";
+import { Modal, ModalBody, ModalHeader } from "reactstrap";
+import { Exception } from "@paradicms/base";
 
 interface Props {
   error?: Error;

@@ -2,7 +2,8 @@ import { Hrefs } from "paradicms/app/generic/Hrefs";
 import * as React from "react";
 import { Redirect } from "react-router-dom";
 
-import { Exception, FatalErrorModal } from "@paradicms/base";
+import { Exception } from "@paradicms/base";
+import { FatalErrorModal } from "paradicms/app/generic/components/error/FatalErrorModal";
 
 export const GenericErrorHandler: React.FunctionComponent<{
   error?: any;
