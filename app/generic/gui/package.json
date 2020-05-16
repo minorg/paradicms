@@ -4,10 +4,22 @@
   "description": "Paradicms generic GUI",
   "dependencies": {
     "@paradicms/base": "^1.0.1",
-    "react-medium-image-zoom": "3.1.2"
+    "bootstrap": "^4.4.1",
+    "bootswatch": "^4.4.1",
+    "popper.js": "1.16.0",
+    "react-medium-image-zoom": "3.1.2",
+    "reactstrap": "^8.2.0"
   },
   "devDependencies": {
-    "@types/react-medium-image-zoom": "^3.0.0"
+    "@types/react-medium-image-zoom": "^3.0.0",
+    "autoprefixer": "^9.6.1",
+    "css-loader": "^0.28.11",
+    "mini-css-extract-plugin": "0.5.0",
+    "node-sass": "4.9.3",
+    "postcss-loader": "^2.1.5",
+    "precss": "3.1.2",
+    "sass-loader": "7.1.0",
+    "style-loader": "0.23.1"
   },
   "license": "GPLv3",
   "private": true,
