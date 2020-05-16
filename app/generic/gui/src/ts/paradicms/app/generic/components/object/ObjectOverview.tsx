@@ -1,4 +1,3 @@
-import { RouteComponentProps } from "react-router-dom";
 import * as React from "react";
 import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
 import { useQuery } from "@apollo/react-hooks";
@@ -13,17 +12,20 @@ import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import { ApolloException } from "@paradicms/base";
 import * as ReactLoader from "react-loader";
+import { useParams } from "react-router-dom";
 
 // type Object = ObjectCardObject;
 
-export const ObjectOverview: React.FunctionComponent<RouteComponentProps<{
-  collectionUri: string;
-  institutionUri: string;
-  objectUri: string;
-}>> = ({ match }) => {
-  const collectionUri = decodeURIComponent(match.params.collectionUri);
-  const institutionUri = decodeURIComponent(match.params.institutionUri);
-  const objectUri = decodeURIComponent(match.params.objectUri);
+export const ObjectOverview: React.FunctionComponent = () => {
+  const params = useParams<{
+    collectionUri: string;
+    institutionUri: string;
+    objectUri: string;
+  }>();
+
+  const collectionUri = decodeURIComponent(params.collectionUri);
+  const institutionUri = decodeURIComponent(params.institutionUri);
+  const objectUri = decodeURIComponent(params.objectUri);
 
   const { data, error, loading } = useQuery<ObjectOverviewQuery, ObjectOverviewQueryVariables>(ObjectOverviewQueryDocument, {
     variables: {

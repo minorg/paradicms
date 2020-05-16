@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as React from "react";
 import { CollectionsList } from "paradicms/app/generic/components/collection/CollectionsList";
 import * as InstitutionOverviewQueryDocument from "paradicms/app/generic/api/queries/InstitutionOverviewQuery.graphql";
@@ -12,10 +12,9 @@ import { GenericErrorHandler } from "paradicms/app/generic/components/error/Gene
 import * as ReactLoader from "react-loader";
 import { ApolloException } from "@paradicms/base";
 
-export const InstitutionOverview: React.FunctionComponent<RouteComponentProps<{
-  institutionUri: string;
-}>> = ({match}) => {
-  const institutionUri = decodeURIComponent(match.params.institutionUri);
+export const InstitutionOverview: React.FunctionComponent = () => {
+  const params = useParams<{institutionUri: string}>();
+  const institutionUri = decodeURIComponent(params.institutionUri);
 
   const { data, error, loading } = useQuery<InstitutionOverviewQuery, InstitutionOverviewQueryVariables>(InstitutionOverviewQueryDocument, {
     variables: {
