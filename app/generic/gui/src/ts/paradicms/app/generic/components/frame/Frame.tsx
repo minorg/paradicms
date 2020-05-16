@@ -3,7 +3,7 @@ import "./Frame.scss";
 import * as classnames from "classnames";
 import { Footer } from "paradicms/app/generic/components/footer/Footer";
 import { ActiveNavbarItem } from "paradicms/app/generic/components/navbar/ActiveNavbarItem";
-import Navbar from "paradicms/app/generic/components/navbar/Navbar";
+import { Navbar } from "paradicms/app/generic/components/navbar/Navbar";
 import * as React from "react";
 import { useEffect } from "react";
 import { Breadcrumb, Card, CardBody, CardHeader, CardTitle, Col, Container, Row } from "reactstrap";

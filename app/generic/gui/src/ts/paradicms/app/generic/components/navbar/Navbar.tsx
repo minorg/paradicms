@@ -2,19 +2,17 @@ import { ActiveNavbarItem } from "paradicms/app/generic/components/navbar/Active
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import * as React from "react";
 import { useState } from "react";
-import { Link, Redirect, RouteComponentProps, withRouter } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Nav, Navbar as BootstrapNavbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import { NavbarSearchForm } from "paradicms/app/generic/components/navbar/NavbarSearchForm";
 import { NavbarUserDropdown } from "paradicms/app/generic/components/navbar/NavbarUserDropdown";
 import { CurrentUser } from "paradicms/app/generic/components/navbar/CurrentUser";
 
-interface Props extends RouteComponentProps {
+export const Navbar: React.FunctionComponent< {
   activeNavItem?: ActiveNavbarItem;
   currentUser?: CurrentUser;
   onSearch?: (text: string) => void;
-}
-
-const Navbar: React.FunctionComponent<Props> = ({
+}> = ({
   activeNavItem,
   currentUser,
   onSearch: onSearchUserDefined
@@ -61,5 +59,3 @@ const Navbar: React.FunctionComponent<Props> = ({
     </div>
   );
 };
-
-export default withRouter(Navbar);
