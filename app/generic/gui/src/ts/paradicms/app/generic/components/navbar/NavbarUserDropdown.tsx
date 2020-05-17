@@ -1,8 +1,14 @@
 import * as React from "react";
 import { NavLink } from "reactstrap";
 import { CurrentUser } from "paradicms/app/generic/components/navbar/CurrentUser";
-import { Link, Menu, MenuItem, Typography } from "@material-ui/core";
+import { Link, makeStyles, Menu, MenuItem } from "@material-ui/core";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
+
+const useStyles = makeStyles((theme) => ({
+  navLink: {
+    fontSize: "larger"
+  }
+}));
 
 export const NavbarUserDropdown: React.FunctionComponent<{
   currentUser?: CurrentUser;
@@ -11,18 +17,19 @@ export const NavbarUserDropdown: React.FunctionComponent<{
 }> = ({currentUser, loginHref, logoutHref}) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLSpanElement | null>(null);
   const open = Boolean(anchorEl);
+  const classes = useStyles();
 
   if (!currentUser) {
     return (
-      <NavLink href={loginHref ? loginHref : Hrefs.login()}>Login</NavLink>
+      <NavLink className={classes.navLink} href={loginHref ? loginHref : Hrefs.login()}>Login</NavLink>
     );
   }
 
   return (
     <React.Fragment>
-      <Typography onClick={(event) => setAnchorEl(event.currentTarget)} variant="h6">
+      <div className={classes.navLink} onClick={(event) => setAnchorEl(event.currentTarget)}>
         {currentUser.name}
-      </Typography>
+      </div>
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{

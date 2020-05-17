@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(4),
   },
   navLink: {
-    marginRight: theme.spacing(2)
+    fontSize: "larger",
+    marginRight: theme.spacing(4)
   },
   root: {
     flexGrow: 1,
