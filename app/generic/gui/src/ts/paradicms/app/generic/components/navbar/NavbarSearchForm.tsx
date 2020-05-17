@@ -1,17 +1,46 @@
-import { Button, Form, Input } from "reactstrap";
 import * as React from "react";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { fade, IconButton, InputBase, makeStyles } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+
+const useStyles = makeStyles((theme) => ({
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: "1em",
+    transition: theme.transitions.create('width'),
+    width: '100%',
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    paddingLeft: theme.spacing(2)
+  }
+}));
+
 
 export const NavbarSearchForm: React.FunctionComponent<{
   className?: string;
   onSearch: (text: string) => void;
 }> = ({className, onSearch}) => {
   const [state, setState] = useState<{text: string}>({text: ""});
+  const classes = useStyles();
 
-  const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
-    ev.preventDefault(); // Prevent the form from being submitted normally, which messes everything up.
+  const onClickSearchButton = () => {
+    console.info("On click search button");
     setState(prevState => Object.assign({}, prevState, {text: ""}));
     onSearch(state.text);
+  };
+  const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
+    ev.preventDefault(); // Prevent the form from being submitted normally, which messes everything up.
+    onClickSearchButton();
   }
   const onTextChange = (ev: ChangeEvent<HTMLInputElement>) => {
     const text = ev.target.value;
@@ -19,18 +48,19 @@ export const NavbarSearchForm: React.FunctionComponent<{
   };
 
   return (
-    <Form className={className} inline onSubmit={onSubmit}>
-      <Input
-        className="form-control"
-        onChange={onTextChange}
+    <form className={classes.search} onSubmit={onSubmit} style={{ display: "inline-block" }}>
+      <InputBase
         placeholder="Search"
-        style={{width: "32em"}}
-        type="search"
-        value={state.text}
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput,
+        }}
+        onChange={onTextChange}
+        inputProps={{ 'aria-label': 'search' }}
       />
-      <Button className="ml-2 pt-2" size="sm" type="submit">
-        Search
-      </Button>
-    </Form>
+      <IconButton onClick={onClickSearchButton}>
+        <SearchIcon/>
+      </IconButton>
+    </form>
   );
 };
