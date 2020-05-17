@@ -1,40 +1,35 @@
 import * as React from "react";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import { Exception } from "@paradicms/base";
+import { Dialog, DialogTitle } from "@material-ui/core";
 
-interface Props {
+export const FatalErrorModal: React.FunctionComponent<{
   error?: Error;
   exception?: Exception;
   message?: string;
   onExit?: () => void;
-}
-
-export class FatalErrorModal extends React.Component<Props> {
-  render() {
-    let {message, onExit} = this.props;
-    if (!onExit) {
-      onExit = () => {
-        return;
-      };
-    }
-    const {error, exception} = this.props;
-    if (!message) {
-      if (error) {
-        message = error.toString();
-      } else if (exception) {
-        message = exception.message;
-      } else {
-        message = "";
-      }
-    }
-
-    return (
-      <div>
-        <Modal isOpen={true} onExit={onExit}>
-          <ModalHeader>Fatal error</ModalHeader>
-          <ModalBody>{message}</ModalBody>
-        </Modal>
-      </div>
-    );
+}> = ({error, exception, message, onExit}) => {
+  if (!onExit) {
+    onExit = () => {
+      return;
+    };
   }
+
+  if (!message) {
+    if (error) {
+      message = error.toString();
+    } else if (exception) {
+      message = exception.message;
+    } else {
+      message = "";
+    }
+  }
+
+  return (
+    <div>
+      <Dialog open={true} onClose={onExit}>
+        <DialogTitle>Fatal error</DialogTitle>
+        <p>{message}</p>
+      </Dialog>
+    </div>
+  );
 }
