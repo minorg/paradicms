@@ -43,6 +43,7 @@
     paradicms:owner paradicms:inherit .
 
 <http://example.com/object0> a paradicms:Object ;
+    dcterms:description "Test description 0" ;
     dcterms:subject "Test subject 0" ;
     dcterms:title "Test object 0" ;
     paradicms:owner paradicms:inherit ;
@@ -93,6 +94,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object1> a paradicms:Object ;
+    dcterms:description "Test description 1" ;
     dcterms:subject "Test subject 1" ;
     dcterms:title "Test object 1" ;
     paradicms:owner paradicms:inherit ;
@@ -143,6 +145,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object2> a paradicms:Object ;
+    dcterms:description "Test description 2" ;
     dcterms:subject "Test subject 2" ;
     dcterms:title "Test object 2" ;
     paradicms:owner paradicms:inherit ;
@@ -193,6 +196,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object3> a paradicms:Object ;
+    dcterms:description "Test description 3" ;
     dcterms:subject "Test subject 3" ;
     dcterms:title "Test object 3" ;
     paradicms:owner paradicms:inherit ;
@@ -243,6 +247,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object4> a paradicms:Object ;
+    dcterms:description "Test description 4" ;
     dcterms:subject "Test subject 4" ;
     dcterms:title "Test object 4" ;
     paradicms:owner paradicms:inherit ;
@@ -293,6 +298,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object5> a paradicms:Object ;
+    dcterms:description "Test description 5" ;
     dcterms:subject "Test subject 5" ;
     dcterms:title "Test object 5" ;
     paradicms:owner paradicms:inherit ;
@@ -343,6 +349,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object6> a paradicms:Object ;
+    dcterms:description "Test description 6" ;
     dcterms:subject "Test subject 6" ;
     dcterms:title "Test object 6" ;
     paradicms:owner paradicms:inherit ;
@@ -393,6 +400,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object7> a paradicms:Object ;
+    dcterms:description "Test description 7" ;
     dcterms:subject "Test subject 7" ;
     dcterms:title "Test object 7" ;
     paradicms:owner paradicms:inherit ;
@@ -443,6 +451,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object8> a paradicms:Object ;
+    dcterms:description "Test description 8" ;
     dcterms:subject "Test subject 8" ;
     dcterms:title "Test object 8" ;
     paradicms:owner paradicms:inherit ;
@@ -493,6 +502,7 @@
     paradicms:imageMaxWidth 600 .
 
 <http://example.com/object9> a paradicms:Object ;
+    dcterms:description "Test description 9" ;
     dcterms:subject "Test subject 9" ;
     dcterms:title "Test object 9" ;
     paradicms:owner paradicms:inherit ;
