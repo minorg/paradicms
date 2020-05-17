@@ -14,6 +14,9 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://example.com/institution> a paradicms:Institution ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution rights" ;
+    dcterms:rightsHolder "Institution rights holder" ;
     paradicms:collection <http://example.com/collection> ;
     paradicms:owner paradicms:public ;
     foaf:name "Test institution" .
@@ -23,6 +26,9 @@
     foaf:name "Test user" .
 
 <http://example.com/collection> a paradicms:Collection ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Collection rights" ;
+    dcterms:rightsHolder "Collection rights holder" ;
     dcterms:title "Test collection" ;
     paradicms:object <http://example.com/object0>,
         <http://example.com/object1>,
