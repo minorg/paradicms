@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
   navLink: {
     fontSize: "larger",
     marginRight: theme.spacing(4)
-  },
-  root: {
-    flexGrow: 1,
   }
 }));
 
@@ -47,25 +44,23 @@ export const Navbar: React.FunctionComponent< {
   }
 
   return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.brand}>
-            Paradicms
-          </Typography>
-          <NavLink to={Hrefs.home} className={classes.navLink}>
-            Home
-          </NavLink>
-          <NavbarSearchForm onSearch={onSearch} />
-          <Box ml="auto">
-            <NavbarUserDropdown
-              currentUser={currentUser}
-              loginHref={Hrefs.login()}
-              logoutHref={Hrefs.logout}
-            />
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" className={classes.brand}>
+          Paradicms
+        </Typography>
+        <NavLink to={Hrefs.home} className={classes.navLink}>
+          Home
+        </NavLink>
+        <NavbarSearchForm onSearch={onSearch} />
+        <Box ml="auto">
+          <NavbarUserDropdown
+            currentUser={currentUser}
+            loginHref={Hrefs.login()}
+            logoutHref={Hrefs.logout}
+          />
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };

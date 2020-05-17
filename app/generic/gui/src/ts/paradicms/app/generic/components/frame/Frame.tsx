@@ -1,20 +1,28 @@
 import "./Frame.scss";
-
-import * as classnames from "classnames";
 import { Footer } from "paradicms/app/generic/components/footer/Footer";
 import { Navbar } from "paradicms/app/generic/components/navbar/Navbar";
 import * as React from "react";
 import { useEffect } from "react";
-import { Breadcrumb, Card, CardBody, CardHeader, CardTitle, Col, Container, Row } from "reactstrap";
 import { FrameQuery } from "paradicms/app/generic/api/queries/types/FrameQuery";
 import * as FrameQueryDocument from "paradicms/app/generic/api/queries/FrameQuery.graphql";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import * as ReactLoader from "react-loader";
 import { useQuery } from "@apollo/react-hooks";
 import { ApolloException } from "@paradicms/base";
+import { Breadcrumbs, Card, CardContent, CardHeader, Grid, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  breadcrumbs: {
+    marginLeft: theme.spacing(4)
+  },
+  card: {
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+  }
+}));
 
 export const Frame: React.FunctionComponent<{
-  breadcrumbItems?: React.ReactNode;
+  breadcrumbItems?: React.ReactNode[];
   cardTitle?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
@@ -23,7 +31,6 @@ export const Frame: React.FunctionComponent<{
 }> = ({
   breadcrumbItems,
   cardTitle,
-  className,
   children,
   documentTitle,
   onSearch
@@ -34,6 +41,8 @@ export const Frame: React.FunctionComponent<{
 
   const { data, error, loading } = useQuery<FrameQuery>(FrameQueryDocument);
 
+  const classes = useStyles();
+
   if (error) {
     return <GenericErrorHandler exception={new ApolloException(error)}/>;
   } else if (loading) {
@@ -43,35 +52,30 @@ export const Frame: React.FunctionComponent<{
   }
 
   return (
-    <div className={classnames(["frame", className])}>
-      <Navbar
-        currentUser={data.currentUser ? data.currentUser : undefined}
-        onSearch={onSearch}
-      />
-      <div className="mb-2 mt-2">
-        <Container fluid>
-          {breadcrumbItems ? (
-            <Row>
-              <Col className="px-0" xs="12">
-                <Breadcrumb>{breadcrumbItems}</Breadcrumb>
-              </Col>
-            </Row>
-          ) : null}
-          <Row>
-            <Col className="px-0" xs="12">
-              <Card>
-                <CardHeader>
-                  <CardTitle>
-                    <h2>{cardTitle ? cardTitle : documentTitle}</h2>
-                  </CardTitle>
-                </CardHeader>
-                <CardBody>{children}</CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-      <Footer />
-      {/*{Environment.development ? <DevTools /> : null}*/}
-    </div>);
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Navbar
+          currentUser={data.currentUser ? data.currentUser : undefined}
+          onSearch={onSearch}
+        />
+      </Grid>
+      {breadcrumbItems ? (
+        <Grid item xs={12}>
+          <Breadcrumbs className={classes.breadcrumbs}>
+            {breadcrumbItems}
+          </Breadcrumbs>
+        </Grid>
+      ) : null}
+      <Grid item xs={12}>
+        <Card className={classes.card}>
+          <CardHeader title={cardTitle ? cardTitle : documentTitle}/>
+          <CardContent>
+            {children}
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Footer />
+      </Grid>
+    </Grid>);
 };

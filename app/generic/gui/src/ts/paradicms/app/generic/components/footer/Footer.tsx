@@ -15,7 +15,7 @@ export const Footer: React.FunctionComponent = () => {
       <Grid container>
         <Grid container>
           <Grid item xs={12}>
-            <p className="footerParagraph">
+            <p className={classes.footerParagraph}>
               This site is for educational purposes only.
             </p>
           </Grid>

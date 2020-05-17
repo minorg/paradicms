@@ -1,4 +1,4 @@
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import * as SearchResultsInitialQueryDocument
@@ -21,7 +21,7 @@ import {
   initialSearchResultsState,
   SearchResultsState
 } from "paradicms/app/generic/components/search/SearchResultsState";
-import { BreadcrumbItem, Col, Container, Row } from "reactstrap";
+import { Col, Container, Row } from "reactstrap";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
@@ -32,6 +32,7 @@ import {
 } from "paradicms/app/generic/api/queries/types/SearchResultsRefinementQuery";
 import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
 import * as _ from "lodash";
+import { Link } from "@material-ui/core";
 
 const OBJECTS_PER_PAGE = 10;
 
@@ -147,18 +148,12 @@ export const SearchResults: React.FunctionComponent = () => {
 
   return (
     <Frame
-      breadcrumbItems={
-        <React.Fragment>
-          <BreadcrumbItem>
-            <Link to={Hrefs.home}>Home</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <Link to={Hrefs.search(state.objectQuery)}>
-              Search: <i>{searchText}</i>
-            </Link>
-          </BreadcrumbItem>
-        </React.Fragment>
-      }
+      breadcrumbItems={[
+        <Link href={Hrefs.home}>Home</Link>,
+        <Link href={Hrefs.search(state.objectQuery)}>
+          Search: <i>{searchText}</i>
+        </Link>
+      ]}
       cardTitle={
         <React.Fragment>
           Search: <i>{searchText}</i>
