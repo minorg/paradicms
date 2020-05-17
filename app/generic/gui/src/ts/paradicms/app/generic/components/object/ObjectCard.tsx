@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Card, CardBody, CardHeader, CardTitle, Col, Container, Row } from "reactstrap";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import { Link } from "react-router-dom";
 import { ObjectSummary } from "paradicms/app/generic/models/object/ObjectSummary";
 import { TextDisclosurePanel } from "paradicms/app/generic/components/TextDisclosurePanel";
+import { Card, CardContent, CardHeader, Grid } from "@material-ui/core";
 
 export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
   object,
@@ -16,16 +16,10 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <strong>
-            <Link to={objectHref}>{object.title}</Link>
-          </strong>
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <Container fluid>
-          <Row>
+      <CardHeader component="a" href={objectHref} title={object.title}/>
+      <CardContent>
+        <Grid container>
+          <Grid item xs={12}>
             {object.thumbnail ? (
               <div style={{height: 200, width: 200}}>
                 <figure className="figure text-center w-100">
@@ -38,49 +32,41 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
                 </figure>
               </div>
             ) : null}
-          </Row>
-        </Container>
+          </Grid>
+        </Grid>
         {object.institutionName ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              Institution:{" "}
-              <Link to={Hrefs.institution(object.institutionUri)}>
-                {object.institutionName}
-              </Link>
-            </Col>
-          </Row>
+          <Grid item xs={12}>
+            Institution:{" "}
+            <Link to={Hrefs.institution(object.institutionUri)}>
+              {object.institutionName}
+            </Link>
+          </Grid>
         ) : null}
         {object.collectionName ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              Collection:{" "}
-              <Link to={Hrefs.collection(object)}>{object.collectionName}</Link>
-            </Col>
-          </Row>
+          <Grid item xs={12}>
+            Collection:{" "}
+            <Link to={Hrefs.collection(object)}>{object.collectionName}</Link>
+          </Grid>
         ) : null}
         {object.description ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              <TextDisclosurePanel
-                text={object.description}
-                textStyle={{fontSize: "x-small", maxWidth: "32em"}}
-                title="Description"
-              />
-            </Col>
-          </Row>
+          <Grid item xs={12}>
+            <TextDisclosurePanel
+              text={object.description}
+              textStyle={{fontSize: "x-small", maxWidth: "32em"}}
+              title="Description"
+            />
+          </Grid>
         ) : null}
         {object.rights ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              <TextDisclosurePanel
-                text={object.rights}
-                textStyle={{fontSize: "x-small", maxWidth: "32em"}}
-                title="Rights"
-              />
-            </Col>
-          </Row>
+          <Grid item xs={12}>
+            <TextDisclosurePanel
+              text={object.rights}
+              textStyle={{fontSize: "x-small", maxWidth: "32em"}}
+              title="Rights"
+            />
+          </Grid>
         ) : null}
-      </CardBody>
+      </CardContent>
     </Card>
   );
 };
