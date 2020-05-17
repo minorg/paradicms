@@ -1,21 +1,24 @@
 import * as React from "react";
-import {ListGroup, ListGroupItem} from "reactstrap";
-import {Hrefs} from "paradicms/app/generic/Hrefs";
-import {Link} from "react-router-dom";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 
 interface Institution {
   name: string;
   uri: string;
 }
 
+const ListItemLink = (props: any) => {
+  return <ListItem button component="a" {...props} />;
+}
+
 export const InstitutionsList: React.FunctionComponent<{
   institutions: Institution[];
 }> = ({institutions}) => (
-  <ListGroup>
+  <List>
     {institutions.map(institution => (
-      <ListGroupItem key={institution.uri}>
-        <Link to={Hrefs.institution(institution.uri)}>{institution.name}</Link>
-      </ListGroupItem>
+      <ListItemLink key={institution.uri} href={Hrefs.institution(institution.uri)}>
+        <ListItemText>{institution.name}</ListItemText>
+      </ListItemLink>
     ))}
-  </ListGroup>
+  </List>
 );
