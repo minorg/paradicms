@@ -1,12 +1,11 @@
-import {Frame} from "paradicms/app/generic/components/frame/Frame";
-import {ActiveNavbarItem} from "paradicms/app/generic/components/navbar/ActiveNavbarItem";
-import {Hrefs} from "paradicms/app/generic/Hrefs";
+import { Frame } from "paradicms/app/generic/components/frame/Frame";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
 import * as React from "react";
 
 export class Privacy extends React.Component {
   render() {
     return (
-      <Frame activeNavItem={ActiveNavbarItem.Home} documentTitle="Privacy">
+      <Frame documentTitle="Privacy">
         <p>
           This privacy notice discloses the privacy practices for the Paradicms
           web site (https://paradicms.org). This privacy notice applies solely

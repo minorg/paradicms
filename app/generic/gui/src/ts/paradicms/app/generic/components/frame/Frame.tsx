@@ -2,7 +2,6 @@ import "./Frame.scss";
 
 import * as classnames from "classnames";
 import { Footer } from "paradicms/app/generic/components/footer/Footer";
-import { ActiveNavbarItem } from "paradicms/app/generic/components/navbar/ActiveNavbarItem";
 import { Navbar } from "paradicms/app/generic/components/navbar/Navbar";
 import * as React from "react";
 import { useEffect } from "react";
@@ -15,7 +14,6 @@ import { useQuery } from "@apollo/react-hooks";
 import { ApolloException } from "@paradicms/base";
 
 export const Frame: React.FunctionComponent<{
-  activeNavItem?: ActiveNavbarItem;
   breadcrumbItems?: React.ReactNode;
   cardTitle?: React.ReactNode;
   children: React.ReactNode;
@@ -23,7 +21,6 @@ export const Frame: React.FunctionComponent<{
   documentTitle: string;
   onSearch?: (text: string) => void;
 }> = ({
-  activeNavItem,
   breadcrumbItems,
   cardTitle,
   className,
@@ -48,7 +45,6 @@ export const Frame: React.FunctionComponent<{
   return (
     <div className={classnames(["frame", className])}>
       <Navbar
-        activeNavItem={activeNavItem}
         currentUser={data.currentUser ? data.currentUser : undefined}
         onSearch={onSearch}
       />
