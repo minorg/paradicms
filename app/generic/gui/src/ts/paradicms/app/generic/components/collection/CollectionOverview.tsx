@@ -164,17 +164,17 @@ export const CollectionOverview: React.FunctionComponent = () => {
       institutionUri={institutionUri}
       title={initialData.collectionByUri.name}
     >
-      <Grid container spacing={2}>
+      <Grid container direction="column" spacing={2}>
         {rights && state.objects.length ? (
-          <Grid item xs={10}>
+          <Grid item>
             <RightsTable rights={rights} />
           </Grid>
         ) : null}
         {state.objects.length ?
-            <Grid item xs={12}>
+            <Grid item>
               <SearchResultsSummary objectsPerPage={OBJECTS_PER_PAGE} state={state}/>
             </Grid> : null}
-        <Grid item xs={12}>
+        <Grid item>
           <Grid container>
             <Grid item xs={10}>
               {state.objects.length ?

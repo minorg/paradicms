@@ -52,21 +52,21 @@ export const Frame: React.FunctionComponent<{
   }
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
+    <Grid container direction="column" spacing={2}>
+      <Grid item>
         <Navbar
           currentUser={data.currentUser ? data.currentUser : undefined}
           onSearch={onSearch}
         />
       </Grid>
       {breadcrumbItems ? (
-        <Grid item xs={12}>
+        <Grid item>
           <Breadcrumbs className={classes.breadcrumbs}>
             {breadcrumbItems}
           </Breadcrumbs>
         </Grid>
       ) : null}
-      <Grid item xs={12}>
+      <Grid item>
         <Card className={classes.card}>
           <CardHeader title={cardTitle ? cardTitle : documentTitle}/>
           <CardContent>
@@ -74,7 +74,7 @@ export const Frame: React.FunctionComponent<{
           </CardContent>
         </Card>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item>
         <Footer />
       </Grid>
     </Grid>);

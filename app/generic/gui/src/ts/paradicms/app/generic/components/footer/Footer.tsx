@@ -12,20 +12,16 @@ export const Footer: React.FunctionComponent = () => {
   const classes = useStyles();
   return (
     <footer>
-      <Grid container>
-        <Grid container>
-          <Grid item xs={12}>
-            <p className={classes.footerParagraph}>
-              This site is for educational purposes only.
-            </p>
-          </Grid>
+      <Grid container direction="column">
+        <Grid item>
+          <p className={classes.footerParagraph}>
+            This site is for educational purposes only.
+          </p>
         </Grid>
-        <Grid container>
-          <Grid item xs={12}>
-            <p className={classes.footerParagraph}>
-              <a href={Hrefs.contact}>Contact</a>&nbsp;|&nbsp;<a href={Hrefs.privacy}>Privacy</a>&nbsp;|&nbsp;<a href="https://github.com/minorg/paradicms">GitHub</a>
-            </p>
-          </Grid>
+        <Grid item>
+          <p className={classes.footerParagraph}>
+            <a href={Hrefs.contact}>Contact</a>&nbsp;|&nbsp;<a href={Hrefs.privacy}>Privacy</a>&nbsp;|&nbsp;<a href="https://github.com/minorg/paradicms">GitHub</a>
+          </p>
         </Grid>
       </Grid>
     </footer>
