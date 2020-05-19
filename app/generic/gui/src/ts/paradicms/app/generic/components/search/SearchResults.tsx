@@ -33,7 +33,7 @@ import { SearchResultsSummary } from "paradicms/app/generic/components/search/Se
 import * as _ from "lodash";
 import { Grid, Link, makeStyles } from "@material-ui/core";
 
-const OBJECTS_PER_PAGE = 10;
+const OBJECTS_PER_PAGE = 20;
 
 const useStyles = makeStyles((theme) => ({
   noObjects: {
