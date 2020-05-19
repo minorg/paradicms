@@ -28,9 +28,9 @@ describe("Collection overview", () => {
   it("should unselect one subject and see one fewer object", () => {
     page.objectFacets.subject.toggleOpen();
     page.objectFacets.subject.toggleValue(TestData.object.subject);
-    page.objectsGallery.getObjects(TestData.objects.slice(1));
+    page.objectsGallery.getObjects(TestData.objects.slice(1, 21));
     page.objectsGallery.startObjectIndex.should("have.text", "1");
-    page.objectsGallery.endObjectIndex.should("have.text", (TestData.objects.length - 1).toString());
-    page.objectsGallery.objectsCount.should("have.text", (TestData.objects.length - 1).toString());
+    page.objectsGallery.endObjectIndex.should("have.text", "20");
+    page.objectsGallery.objectsCount.should("have.text", "99");
   });
 });
