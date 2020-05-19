@@ -55,10 +55,11 @@ export const NavbarSearchForm: React.FunctionComponent<{
           root: classes.inputRoot,
           input: classes.inputInput,
         }}
+        id="search-input"
         onChange={onTextChange}
         inputProps={{ 'aria-label': 'search' }}
       />
-      <IconButton onClick={onClickSearchButton}>
+      <IconButton id="search-button" onClick={onClickSearchButton}>
         <SearchIcon/>
       </IconButton>
     </form>

@@ -53,7 +53,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
 
   const listGroupSection = (id: string, title: string, values: string[]) =>
     values.length > 0 ? (
-      <Grid item className={id + "-section section pb-4"}>
+      <Grid item className={"section pb-4"} id={id + "-section"}>
         <Card>
           <CardHeader title={title}/>
           <CardContent>
