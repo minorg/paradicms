@@ -119,7 +119,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
          |SELECT DISTINCT ?collection ?institution ?object WHERE {
          |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query)}
          |}
-         |ORDER BY ${if (query.text.isDefined) "DESC(?score)" else "?object"}
+         |ORDER BY ${if (query.text.isDefined) "DESC(?score) ?object" else "?object"}
          |LIMIT ${limit}
          |OFFSET ${offset}
          |""".stripMargin)
