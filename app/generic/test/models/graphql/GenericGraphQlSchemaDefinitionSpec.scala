@@ -16,6 +16,8 @@ import scala.concurrent.duration._
 
 class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
   val testData = GenericTestData
+  val objectUri = testData.object_.uri.toString()
+  val objectI = objectUri.charAt(objectUri.length - 1)
 
   "GraphQL schema" must {
     "return a list of institutions" in {
@@ -149,11 +151,11 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      val results = Json.stringify(executeQuery(query, vars = Json.obj("objectUri" -> testData.object_.uri.toString())))
+      val results = Json.stringify(executeQuery(query, vars = Json.obj("objectUri" -> objectUri)))
       for (i <- 0 until 3) {
-        results must include(s"http://example.com/object0/image${i}")
-        results must include(s"http://example.com/object0/image${i}/square_thumbnail")
-        results must include(s"http://example.com/object0/image${i}/thumbnail")
+        results must include(s"https://place-hold.it/1000x1000?text=Object${objectI}Image${i}")
+        results must include(s"https://place-hold.it/600x600?text=Object${objectI}Image${i}")
+        results must include(s"https://place-hold.it/75x75?text=Object${objectI}Image${i}")
       }
     }
 
@@ -170,10 +172,10 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      val results = Json.stringify(executeQuery(query, vars = Json.obj("objectUri" -> testData.object_.uri.toString())))
+      val results = Json.stringify(executeQuery(query, vars = Json.obj("objectUri" -> objectUri)))
       for (i <- 0 until 3) {
-        results must include(s"http://example.com/object0/image${i}/square_thumbnail")
-        results must not include (s"http://example.com/object0/image${i}/thumbnail")
+        results must include(s"https://place-hold.it/75x75?text=Object${objectI}Image${i}")
+        results must not include (s"https://place-hold.it/600x600?text=Object${objectI}Image${i}")
       }
     }
 
@@ -188,10 +190,8 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
            }
          }
        """
-      executeQuery(query, vars = Json.obj("objectUri" -> testData.object_.uri.toString())) must be(Json.parse(
-        s"""
-           |{"data":{"objectByUri":{"thumbnail":{"url": "${testData.object_.uri + "/image0/square_thumbnail"}"}}}}
-           |""".stripMargin))
+      val results = Json.stringify(executeQuery(query, vars = Json.obj("objectUri" -> objectUri)))
+      results must include(s"https://place-hold.it/75x75?text=Object${objectI}")
     }
 
     "search objects with text alone" in {
@@ -208,7 +208,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
          }
        """
       val result = Json.stringify(executeQuery(query, vars = Json.obj("text" -> testData.object_.title)))
-      result must include(testData.object_.uri.toString())
+      result must include(objectUri)
     }
 
     "search objects with text and collection filter" in {
@@ -225,7 +225,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
          }
        """
       val result = Json.stringify(executeQuery(query, vars = Json.obj("collectionUri" -> testData.collection.uri.toString, "text" -> testData.object_.title)))
-      result must include(testData.object_.uri.toString())
+      result must include(objectUri)
     }
 
     "search objects with text and subject filter" in {
@@ -242,7 +242,7 @@ class GenericGraphQlSchemaDefinitionSpec extends PlaySpec {
          }
        """
       val result = Json.stringify(executeQuery(query, vars = Json.obj("subject" -> testData.object_.subjects(0), "text" -> testData.object_.title)))
-      result must include(testData.object_.uri.toString())
+      result must include(objectUri)
     }
   }
 
