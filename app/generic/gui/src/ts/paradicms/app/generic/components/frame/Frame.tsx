@@ -1,4 +1,3 @@
-import "./Frame.scss";
 import { Footer } from "paradicms/app/generic/components/footer/Footer";
 import { Navbar } from "paradicms/app/generic/components/navbar/Navbar";
 import * as React from "react";

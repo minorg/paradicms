@@ -1,5 +1,3 @@
-import "paradicms/app/generic/custom_bootstrap.scss";
-
 import { apolloClient } from "paradicms/app/generic/api/apolloClient";
 import { NoRoute } from "paradicms/app/generic/components/error/NoRoute";
 import { Home } from "paradicms/app/generic/components/home/Home";
