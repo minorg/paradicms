@@ -13,36 +13,40 @@ import { CollectionOverview } from "paradicms/app/generic/components/collection/
 import { InstitutionOverview } from "paradicms/app/generic/components/institution/InstitutionOverview";
 import { ObjectOverview } from "paradicms/app/generic/components/object/ObjectOverview";
 import { SearchResults } from "paradicms/app/generic/components/search/SearchResults";
+import { CssBaseline } from "@material-ui/core";
 
 // Logger
 const logger = new ConsoleLogger();
 
 ReactDOM.render(
-  <ApolloProvider client={apolloClient}>
-    <ApolloHooksProvider client={apolloClient}>
-      <LoggerContext.Provider value={logger}>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path={Hrefs.home} component={Home} />
-            <Route
-              path="/institution/:institutionUri/collection/:collectionUri/object/:objectUri"
-              component={ObjectOverview}
-            />
-            <Route
-              path="/institution/:institutionUri/collection/:collectionUri"
-              component={CollectionOverview}
-            />
-            <Route
-              path="/institution/:institutionUri"
-              component={InstitutionOverview}
-            />
-            <Route exact path={Hrefs.privacy} component={Privacy} />
-            <Route exact path="/search" component={SearchResults} />
-            <Route component={NoRoute} />
-          </Switch>
-        </BrowserRouter>
-      </LoggerContext.Provider>
-    </ApolloHooksProvider>
-  </ApolloProvider>,
+  <React.Fragment>
+    <CssBaseline/>
+    <ApolloProvider client={apolloClient}>
+      <ApolloHooksProvider client={apolloClient}>
+        <LoggerContext.Provider value={logger}>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path={Hrefs.home} component={Home} />
+              <Route
+                path="/institution/:institutionUri/collection/:collectionUri/object/:objectUri"
+                component={ObjectOverview}
+              />
+              <Route
+                path="/institution/:institutionUri/collection/:collectionUri"
+                component={CollectionOverview}
+              />
+              <Route
+                path="/institution/:institutionUri"
+                component={InstitutionOverview}
+              />
+              <Route exact path={Hrefs.privacy} component={Privacy} />
+              <Route exact path="/search" component={SearchResults} />
+              <Route component={NoRoute} />
+            </Switch>
+          </BrowserRouter>
+        </LoggerContext.Provider>
+      </ApolloHooksProvider>
+    </ApolloProvider>
+  </React.Fragment>,
   document.getElementById("root")
 );
