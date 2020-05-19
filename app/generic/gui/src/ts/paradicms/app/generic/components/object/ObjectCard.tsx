@@ -86,35 +86,3 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
     </Card>
   );
 };
-
-// <figure className="figure">
-//     <a onClick={this.onToggleSelected}>
-//         <img
-//             className="figure-img rounded"
-//             src={thumbnailImgSrc}
-//             style={{ height: "200px", width: "200px" }}
-//         />
-//     </a>
-//     {definition.image ? (
-//         <figcaption className="figure-caption" style={{ fontSize: "xx-small" }}>
-//             Image&nbsp;&copy;
-//             <span>{definition.image.rights.author}</span>
-//             <br />License:&nbsp;
-//             <span ><WorksheetRightsLicenseComponent license={definition.image.rights.license}></WorksheetRightsLicenseComponent></span>
-//         </figcaption>
-//     ) : null}
-// </figure>
-// {definition.description ? (
-//     <div className="card-text">
-//         <a onClick={this.onToggleDescription} className="description-toggle">Description</a>
-//         <div className="float-right">
-//             <a onClick={this.onToggleDescription} className="description-toggle">
-//                 <i className={classnames({ fas: true, "fa-chevron-down": this.state.descriptionShown, "fa-chevron-right": !this.state.descriptionShown })}></i>
-//             </a>
-//         </div>
-//         <br />
-//         <Collapse isOpen={this.state.descriptionShown}>
-//             <WorksheetDescriptionComponent description={definition.description}></WorksheetDescriptionComponent>
-//         </Collapse>
-//     </div>
-// ) : null}

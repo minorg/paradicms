@@ -17,7 +17,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const FacetExpansionPanel: React.FunctionComponent<{children: React.ReactNode; id: string; title: string}> = ({children, id, title}) => {
   return (
-    <Grid item className={id + "-facet facet"}>
+    <Grid item className="facet" id={id + "-facet"}>
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>{title}</ExpansionPanelSummary>
         <ExpansionPanelDetails>{children}</ExpansionPanelDetails>

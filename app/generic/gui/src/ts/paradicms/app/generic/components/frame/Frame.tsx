@@ -51,7 +51,7 @@ export const Frame: React.FunctionComponent<{
   }
 
   return (
-    <Grid container direction="column" spacing={2}>
+    <Grid id="frame" container direction="column" spacing={2}>
       <Grid item>
         <Navbar
           currentUser={data.currentUser ? data.currentUser : undefined}
@@ -59,15 +59,15 @@ export const Frame: React.FunctionComponent<{
         />
       </Grid>
       {breadcrumbItems ? (
-        <Grid item>
-          <Breadcrumbs className={classes.breadcrumbs}>
+        <Grid item id="frame-breadcrumbs-row">
+          <Breadcrumbs className={classes.breadcrumbs} id="frame-breadcrumbs">
             {breadcrumbItems}
           </Breadcrumbs>
         </Grid>
       ) : null}
       <Grid item>
         <Card className={classes.card}>
-          <CardHeader title={cardTitle ? cardTitle : documentTitle}/>
+          <CardHeader id="frame-card-header" title={cardTitle ? cardTitle : documentTitle}/>
           <CardContent>
             {children}
           </CardContent>

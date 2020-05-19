@@ -45,7 +45,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
         "?collection cms:object ?object .",
         "?object rdf:type cms:Object .",
       ) ++ query.filters.map(filters => objectFilters(filters)).getOrElse(List())
-        ++ query.text.map(_ => List("?object text:query ?text .")).getOrElse(List())
+        ++ query.text.map(_ => List("(?object ?score) text:query ?text .")).getOrElse(List())
         ++ additionalGraphPatterns)
 
     def objectQueryParams(currentUserUri: Option[Uri], query: ObjectQuery): Map[String, RDFNode] =
@@ -119,6 +119,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
          |SELECT DISTINCT ?collection ?institution ?object WHERE {
          |${GraphPatterns.objectQuery(currentUserUri = currentUserUri, query = query)}
          |}
+         |ORDER BY ${if (query.text.isDefined) "DESC(?score)" else "?object"}
          |LIMIT ${limit}
          |OFFSET ${offset}
          |""".stripMargin)

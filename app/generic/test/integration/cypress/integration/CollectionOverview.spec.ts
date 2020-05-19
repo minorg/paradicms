@@ -19,9 +19,9 @@ describe("Collection overview", () => {
   });
 
   it("should have all objects", () => {
-    page.objectsGallery.getObjects(TestData.objects);
+    page.objectsGallery.getObjects(TestData.objects.slice(0, 20));
     page.objectsGallery.startObjectIndex.should("have.text", "1");
-    page.objectsGallery.endObjectIndex.should("have.text", TestData.objects.length.toString());
+    page.objectsGallery.endObjectIndex.should("have.text", "20");
     page.objectsGallery.objectsCount.should("have.text", TestData.objects.length.toString());
   });
 

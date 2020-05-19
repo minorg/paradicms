@@ -28,8 +28,8 @@ export class ObjectsGallery {
   getObjects(objects: (typeof TestData.object)[]): void {
     for (const object of objects) {
       const objectLink = new ObjectOverviewPage({collectionUri: TestData.collection.uri, institutionUri: TestData.institution.uri, objectUri: object.uri}).relativeUrl;
-      cy.get("a[href=\"" + objectLink + "\"]").should("have.text", object.title);
-      cy.get("img[src=\"" + object.uri + "/image0/square_thumbnail\"]");
+      cy.get("a[href=\"" + objectLink + "\"] .MuiCardHeader-title").should("have.text", object.title);
+      // cy.get("img[src=\"" + object.uri + "/image0/square_thumbnail\"]");
     }
   }
 

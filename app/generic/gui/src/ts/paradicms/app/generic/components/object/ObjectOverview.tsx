@@ -85,7 +85,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
     >
       <Grid container direction="column" spacing={2}>
         {object_.images.length > 0 ? (
-          <Grid item className="carousel-section section">
+          <Grid item className="section" id="carousel-section">
             <Card>
               <CardContent>
                 <ObjectImagesCarousel images={object_.images}/>
@@ -97,7 +97,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
         {object_.titles.length > 1 ||
         object_.alternativeTitles.length > 0 ||
         object_.titles[0] !== object_.title ? (
-          <Grid item className="section titles-section">
+          <Grid item className="section" id="titles-section">
             <Card>
               <CardHeader title="Titles"/>
               <CardContent>
@@ -121,7 +121,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
         object_.provenances.length > 0 ||
         object_.publishers.length > 0 ||
         object_.sources.length > 0 ? (
-          <Grid item className="provenance-section section">
+          <Grid item className="section" id="provenance-section">
             <Card className="w-100">
               <CardHeader title="Provenance"/>
               <CardContent>
@@ -145,7 +145,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
         object_.languages.length > 0 ||
         object_.media.length > 0 ||
         object_.spatials.length > 0 ? (
-          <Grid item className="extent-section section">
+          <Grid item className="section" id="extent-section">
             <Card>
               <CardHeader title="Extent"/>
               <CardContent>
@@ -173,7 +173,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
           </Grid>
         ) : null}
         {rights ? (
-          <Grid item className="rights-section section">
+          <Grid item className="section" id="rights-section">
             <Card>
               <CardHeader title="Rights"/>
               <CardContent>

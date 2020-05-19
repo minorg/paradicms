@@ -1,8 +1,8 @@
-const objects = [...Array(10)].map((_, i) => ({
+const objects = [...Array(100)].map((_, i) => ({
   subject: "Test subject " + i,
   title: "Test object " + i,
   uri: "http://example.com/object" + i
-}));
+})).sort((left, right) => left.uri.localeCompare(right.uri));
 
 export const TestData = {
   collection: {

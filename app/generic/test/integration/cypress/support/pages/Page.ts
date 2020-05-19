@@ -1,16 +1,16 @@
 class Footer {
   get privacyLink() {
-    return cy.get(".frame footer a[href=\"/privacy\"]");
+    return cy.get("#frame footer a[href=\"/privacy\"]");
   }
 }
 
 class Frame {
   get cardTitle() {
-    return cy.get(".frame .card-title h2");
+    return cy.get("#frame-card-header");
   }
 
   breadcrumbItem(n: number) {
-    return cy.get(".frame ol.breadcrumb li:nth-of-type(" + n + ")");
+    return cy.get("#frame-breadcrumbs li:nth-of-type(" + (n*2-1) + ")");
   }
 
   readonly footer = new Footer();
