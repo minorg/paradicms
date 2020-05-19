@@ -6,13 +6,13 @@ import {
   ObjectOverviewQueryVariables
 } from "paradicms/app/generic/api/queries/types/ObjectOverviewQuery";
 import * as ObjectOverviewQueryDocument from "paradicms/app/generic/api/queries/ObjectOverviewQuery.graphql";
-import { Card, CardBody, CardHeader, CardTitle, Container, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { ObjectImagesCarousel } from "paradicms/app/generic/components/object/ObjectImagesCarousel";
 import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import { ApolloException } from "@paradicms/base";
 import * as ReactLoader from "react-loader";
 import { useParams } from "react-router-dom";
+import { Card, CardContent, CardHeader, Grid, List, ListItemText } from "@material-ui/core";
 
 // type Object = ObjectCardObject;
 
@@ -53,22 +53,18 @@ export const ObjectOverview: React.FunctionComponent = () => {
 
   const listGroupSection = (id: string, title: string, values: string[]) =>
     values.length > 0 ? (
-      <Row className={id + "-section section pb-4"}>
-        <Card className="w-100">
-          <CardHeader>
-            <CardTitle>
-              <h5>{title}</h5>
-            </CardTitle>
-          </CardHeader>
-          <CardBody>
-            <ListGroup>
+      <Grid item className={id + "-section section pb-4"}>
+        <Card>
+          <CardHeader title={title}/>
+          <CardContent>
+            <List>
               {values.map(value => (
-                <ListGroupItem key={value}>{value}</ListGroupItem>
+                <ListItemText key={value}>{value}</ListItemText>
               ))}
-            </ListGroup>
-          </CardBody>
+            </List>
+          </CardContent>
         </Card>
-      </Row>
+      </Grid>
     ) : null;
 
   const object_ = data.objectByUri;
@@ -87,29 +83,25 @@ export const ObjectOverview: React.FunctionComponent = () => {
       objectUri={objectUri}
       title={data.objectByUri.title}
     >
-      <Container fluid>
+      <Grid container direction="column" spacing={2}>
         {object_.images.length > 0 ? (
-          <Row className="pb-4 carousel-section section">
-            <Card className="w-100">
-              <CardBody>
+          <Grid item className="carousel-section section">
+            <Card>
+              <CardContent>
                 <ObjectImagesCarousel images={object_.images}/>
-              </CardBody>
+              </CardContent>
             </Card>
-          </Row>
+          </Grid>
         ) : null}
         {listGroupSection("descriptions","Descriptions", object_.descriptions)}
         {object_.titles.length > 1 ||
         object_.alternativeTitles.length > 0 ||
         object_.titles[0] !== object_.title ? (
-          <Row className="pb-4 section titles-section">
-            <Card className="w-100">
-              <CardHeader>
-                <CardTitle>
-                  <h5>Titles</h5>
-                </CardTitle>
-              </CardHeader>
-              <CardBody>
-                <table className="table-bordered w-100">
+          <Grid item className="section titles-section">
+            <Card>
+              <CardHeader title="Titles"/>
+              <CardContent>
+                <table>
                   <tbody>
                   {nameValueTableRows("Title", object_.titles)}
                   {nameValueTableRows(
@@ -118,9 +110,9 @@ export const ObjectOverview: React.FunctionComponent = () => {
                   )}
                   </tbody>
                 </table>
-              </CardBody>
+              </CardContent>
             </Card>
-          </Row>
+          </Grid>
         ) : null}
         {listGroupSection("identifiers", "Identifiers", object_.identifiers)}
         {listGroupSection("subjects","Subjects", object_.subjects)}
@@ -129,14 +121,10 @@ export const ObjectOverview: React.FunctionComponent = () => {
         object_.provenances.length > 0 ||
         object_.publishers.length > 0 ||
         object_.sources.length > 0 ? (
-          <Row className="pb-4 provenance-section section">
+          <Grid item className="provenance-section section">
             <Card className="w-100">
-              <CardHeader>
-                <CardTitle>
-                  <h5>Provenance</h5>
-                </CardTitle>
-              </CardHeader>
-              <CardBody>
+              <CardHeader title="Provenance"/>
+              <CardContent>
                 <table className="table-bordered w-100">
                   <tbody>
                   {nameValueTableRows("Creator", object_.creators)}
@@ -148,24 +136,20 @@ export const ObjectOverview: React.FunctionComponent = () => {
                   {nameValueTableRows("Source", object_.sources)}
                   </tbody>
                 </table>
-              </CardBody>
+              </CardContent>
             </Card>
-          </Row>
+          </Grid>
         ) : null}
         {object_.dates.length > 0 ||
         object_.extents.length > 0 ||
         object_.languages.length > 0 ||
         object_.media.length > 0 ||
         object_.spatials.length > 0 ? (
-          <Row className="pb-4 extent-section section">
-            <Card className="w-100">
-              <CardHeader>
-                <CardTitle>
-                  <h5>Extent</h5>
-                </CardTitle>
-              </CardHeader>
-              <CardBody>
-                <table className="table-bordered w-100">
+          <Grid item className="extent-section section">
+            <Card>
+              <CardHeader title="Extent"/>
+              <CardContent>
+                <table>
                   <tbody>
                   {nameValueTableRows("Cultural context", object_.culturalContexts)}
                   {nameValueTableRows("Date", object_.dates)}
@@ -184,25 +168,21 @@ export const ObjectOverview: React.FunctionComponent = () => {
                   )}
                   </tbody>
                 </table>
-              </CardBody>
+              </CardContent>
             </Card>
-          </Row>
+          </Grid>
         ) : null}
         {rights ? (
-          <Row className="pb-4 rights-section section">
-            <Card className="w-100">
-              <CardHeader>
-                <CardTitle>
-                  <h5>Rights</h5>
-                </CardTitle>
-              </CardHeader>
-              <CardBody>
+          <Grid item className="rights-section section">
+            <Card>
+              <CardHeader title="Rights"/>
+              <CardContent>
                 <RightsTable className="table-bordered" rights={rights}/>
-              </CardBody>
+              </CardContent>
             </Card>
-          </Row>
+          </Grid>
         ) : null}
-      </Container>
+      </Grid>
     </InstitutionCollectionObjectOverview>
   );
 };

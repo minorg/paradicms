@@ -7,7 +7,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
   images: ObjectOverviewQuery_objectByUri_images[];
 }> = ({images}) => {
   return (
-    <Carousel>
+    <Carousel autoPlay={false}>
       {images.map(image =>
         <ImageZoom
           image={{
