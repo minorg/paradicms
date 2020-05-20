@@ -1,49 +1,51 @@
 import * as React from "react";
-import {
-  Collapse,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-} from "reactstrap";
-import {CurrentUser} from "paradicms/app/generic/components/navbar/CurrentUser";
+import { CurrentUser } from "paradicms/app/generic/components/navbar/CurrentUser";
+import { Link, makeStyles, Menu, MenuItem } from "@material-ui/core";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
+import { NavLink } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+  navLink: {
+    fontSize: "larger"
+  }
+}));
 
 export const NavbarUserDropdown: React.FunctionComponent<{
-  className?: string;
   currentUser?: CurrentUser;
-  loginHref: string;
-  logoutHref: string;
-}> = ({className, currentUser, loginHref, logoutHref}) => {
-  let currentUserJsx: React.ReactNode;
-  if (currentUser) {
-    currentUserJsx = (
-      <UncontrolledDropdown nav inNavbar>
-        <DropdownToggle nav caret>
-          {currentUser.name}
-        </DropdownToggle>
-        <DropdownMenu right>
-          {/* <DropdownItem><Link to={Hrefs.userSettings}>Settings</Link></DropdownItem> */}
-          <DropdownItem>
-            <a href={logoutHref}>Logout</a>
-          </DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-    );
-  } else {
-    currentUserJsx = (
-      <NavItem>
-        <NavLink href={loginHref}>Login</NavLink>
-      </NavItem>
+  loginHref?: string;
+  logoutHref?: string;
+}> = ({currentUser, loginHref, logoutHref}) => {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLSpanElement | null>(null);
+  const open = Boolean(anchorEl);
+  const classes = useStyles();
+
+  if (!currentUser) {
+    return (
+      <NavLink className={classes.navLink} to={loginHref ? loginHref : Hrefs.login()}>Login</NavLink>
     );
   }
+
   return (
-    <Collapse navbar>
-      <Nav className={className} navbar>
-        {currentUserJsx}
-      </Nav>
-    </Collapse>
+    <React.Fragment>
+      <div className={classes.navLink} onClick={(event) => setAnchorEl(event.currentTarget)}>
+        {currentUser.name}
+      </div>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        open={open}
+        onClose={() => setAnchorEl(null)}
+      >
+        <MenuItem><Link href={logoutHref ? logoutHref : Hrefs.logout}>Logout</Link></MenuItem>
+      </Menu>
+    </React.Fragment>
   );
 };

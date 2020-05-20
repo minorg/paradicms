@@ -20,7 +20,7 @@ final class SparqlObjectStoreSpec extends UnitSpec {
         store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery.collection(testData.collection.uri))
           .objectsWithContext.map(objectWithContext => objectWithContext.object_)
           .sortBy(object_ => object_.uri.toString())
-      objects should equal(testData.objects)
+      objects should equal(testData.objects.take(10))
 //      val objectWithImages = objects.find(object_ => !object_.images.isEmpty)
 //      objectWithImages should not be (null)
 //      val objectWithThumbnail = objects.find(object_ => object_.images.exists(image => image.thumbnail.isDefined))
@@ -46,7 +46,8 @@ final class SparqlObjectStoreSpec extends UnitSpec {
         )),
         text = None
       )).objectsWithContext
-      objects.size should equal(9)
+      val objectSubjects = objects.flatMap(object_ => object_.object_.subjects)
+      objectSubjects should not contain(allSubjects(0))
     }
 
     "include the subject of an object" in {
@@ -75,7 +76,7 @@ final class SparqlObjectStoreSpec extends UnitSpec {
         store.getObjects(currentUserUri = currentUserUri, limit = 10, offset = 0, query = ObjectQuery.institution(testData.institution.uri))
           .objectsWithContext.map(objectWithContext => objectWithContext.object_)
           .sortBy(object_ => object_.uri.toString())
-      objects should equal(testData.objects)
+      objects should equal(testData.objects.take(10))
     }
 
     "list matching objects" in {
@@ -83,13 +84,13 @@ final class SparqlObjectStoreSpec extends UnitSpec {
         .objectsWithContext.map(objectWithContext => objectWithContext.object_)
       // Will return all objects, but the exact match should be first
 //      objects(0) should equal(testData.object_)
-      objects.sortBy(object_ => object_.uri.toString) should equal(testData.objects)
+      objects.sortBy(object_ => object_.uri.toString) should equal(testData.objects.take(10))
     }
 
     "get matching objects count" in {
       val count = store.getObjectsCount(query = ObjectQuery.text(testData.object_.title), currentUserUri = currentUserUri)
       // Will return all objects
-      count should equal(10)
+      count should equal(testData.objects.length)
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import * as React from "react";
 import { useState } from "react";
 import * as SearchResultsInitialQueryDocument
@@ -21,7 +21,6 @@ import {
   initialSearchResultsState,
   SearchResultsState
 } from "paradicms/app/generic/components/search/SearchResultsState";
-import { BreadcrumbItem, Col, Container, Row } from "reactstrap";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import { ObjectsGallery } from "paradicms/app/generic/components/object/ObjectsGallery";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
@@ -32,9 +31,19 @@ import {
 } from "paradicms/app/generic/api/queries/types/SearchResultsRefinementQuery";
 import { SearchResultsSummary } from "paradicms/app/generic/components/search/SearchResultsSummary";
 import * as _ from "lodash";
+import { Grid, Link, makeStyles } from "@material-ui/core";
 
-const OBJECTS_PER_PAGE = 10;
+const OBJECTS_PER_PAGE = 20;
 
+const useStyles = makeStyles((theme) => ({
+  noObjects: {
+    textAlign: "center"
+  },
+  objectFacets: {
+    borderLeft: "solid 1px",
+    borderTop: "solid 1px"
+  }
+}));
 
 export const SearchResults: React.FunctionComponent = () => {
   const history = useHistory();
@@ -62,6 +71,8 @@ export const SearchResults: React.FunctionComponent = () => {
 
   // Don't need this until later, but every hook must be called on every render.
   const apolloClient = useApolloClient();
+
+  const classes = useStyles();
 
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
@@ -147,18 +158,12 @@ export const SearchResults: React.FunctionComponent = () => {
 
   return (
     <Frame
-      breadcrumbItems={
-        <React.Fragment>
-          <BreadcrumbItem>
-            <Link to={Hrefs.home}>Home</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem>
-            <Link to={Hrefs.search(state.objectQuery)}>
-              Search: <i>{searchText}</i>
-            </Link>
-          </BreadcrumbItem>
-        </React.Fragment>
-      }
+      breadcrumbItems={[
+        <Link href={Hrefs.home}>Home</Link>,
+        <Link href={Hrefs.search(state.objectQuery)}>
+          Search: <i>{searchText}</i>
+        </Link>
+      ]}
       cardTitle={
         <React.Fragment>
           Search: <i>{searchText}</i>
@@ -167,38 +172,35 @@ export const SearchResults: React.FunctionComponent = () => {
       documentTitle={"Search results: " + searchText}
       onSearch={onNewSearch}
     >
-      <Container fluid>
+      <Grid direction="column">
         {state.objects.length ?
-          <React.Fragment>
-            <Row>
-              <Col>
-                <SearchResultsSummary objectsPerPage={OBJECTS_PER_PAGE} state={state}/>
-              </Col>
-            </Row>
-            <Row>
-            </Row>
-          </React.Fragment> : null}
-        <Row>
-          <Col xs="10">
-            {state.objects.length ?
-              <ObjectsGallery
-                objects={state.objects}
-                currentPage={state.objectsPage}
-                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE) - 1}
-                onPageRequest={onObjectsPageRequest}
-              /> :
-              <h4 className="text-center">No matching objects found.</h4>
-            }
-          </Col>
-          <Col>
-            <ObjectFacets
-              facets={initialData.objectFacets.facets}
-              onChange={onChangeObjectQuery}
-              query={state.objectQuery}
-            />
-          </Col>
-        </Row>
-      </Container>
+          <Grid item>
+            <SearchResultsSummary objectsPerPage={OBJECTS_PER_PAGE} state={state}/>
+          </Grid>
+          : null}
+        <Grid item>
+          <Grid container>
+            <Grid item xs={10}>
+              {state.objects.length ?
+                <ObjectsGallery
+                  objects={state.objects}
+                  currentPage={state.objectsPage}
+                  maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE) - 1}
+                  onPageRequest={onObjectsPageRequest}
+                /> :
+                <h4 className={classes.noObjects}>No matching objects found.</h4>
+              }
+            </Grid>
+            <Grid item className={classes.objectFacets} xs={2}>
+              <ObjectFacets
+                facets={initialData.objectFacets.facets}
+                onChange={onChangeObjectQuery}
+                query={state.objectQuery}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </Frame>
   );
 };

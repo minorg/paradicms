@@ -4,7 +4,7 @@ import * as _ from "lodash";
 
 export class Hrefs {
   static collection(kwds: {collectionUri: string; institutionUri: string, query?: ObjectQuery}) {
-    let href = Hrefs.institution(kwds.institutionUri) + "/collection/" + encodeURIComponent(encodeURIComponent(kwds.collectionUri));
+    let href = Hrefs.institution(kwds.institutionUri) + "/collection/" + encodeURIComponent(kwds.collectionUri);
     if (kwds.query && !_.isEmpty(kwds.query)) {
       href += "?" + qs.stringify(kwds.query);
     }
@@ -20,7 +20,7 @@ export class Hrefs {
   }
 
   static institution(uri: string) {
-    return "/institution/" + encodeURIComponent(encodeURIComponent(uri));
+    return "/institution/" + encodeURIComponent(uri);
   }
 
   static login(returnTo?: string) {
@@ -32,7 +32,7 @@ export class Hrefs {
     }
     return (
       "/api/auth0/login?returnTo=" +
-      encodeURIComponent(encodeURIComponent(returnTo))
+      encodeURIComponent(returnTo)
     );
   }
 
@@ -43,11 +43,9 @@ export class Hrefs {
   static get logout() {
     return (
       "/api/auth0/logout?returnTo=" +
-      encodeURIComponent(
         encodeURIComponent(
           window.location.protocol + "//" + window.location.host + "/"
         )
-      )
     );
   }
 
@@ -59,7 +57,7 @@ export class Hrefs {
     return (
       Hrefs.collection(kwds) +
       "/object/" +
-      encodeURIComponent(encodeURIComponent(kwds.objectUri))
+      encodeURIComponent(kwds.objectUri)
     );
   }
 

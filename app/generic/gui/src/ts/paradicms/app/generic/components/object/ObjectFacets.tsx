@@ -1,42 +1,28 @@
 import * as React from "react";
-import { useState } from "react";
-import { Col, Collapse, Container, Form, FormGroup, Input, Label, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { ObjectFilters, ObjectQuery, StringFacetFilter } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import * as invariant from "invariant";
 import * as _ from "lodash";
 import { ObjectFacetsFragment } from "paradicms/app/generic/api/queries/types/ObjectFacetsFragment";
-import * as classnames from "classnames";
+import {
+  Checkbox,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  FormControlLabel,
+  Grid,
+  List,
+  ListItem
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-const FacetDisclosurePanel: React.FunctionComponent<{children: React.ReactNode; id: string; title: string}> = ({children, id, title}) => {
-  const [state, setState] = useState<{open: boolean}>({open: false});
-  const {open} = state;
-  const onToggle = () => setState(prevState => ({open: !prevState.open}));
-
+const FacetExpansionPanel: React.FunctionComponent<{children: React.ReactNode; id: string; title: string}> = ({children, id, title}) => {
   return (
-    <React.Fragment>
-    <Row className={id + "-facet facet"}>
-      <Col xs={12}>
-        <a className="facet-header-text" onClick={onToggle} style={{cursor: "pointer", fontSize: "larger"}}>{title}</a>
-        <div className="float-right">
-          <a className="facet-header-chevron" onClick={onToggle} style={{cursor: "pointer"}}>
-            <i
-              className={classnames({
-                fas: true,
-                "fa-chevron-down": open,
-                "fa-chevron-right": !open,
-              })}
-            ></i>
-          </a>
-        </div>
-        <Collapse isOpen={open}>
-          <div className="mt-2">
-            {children}
-          </div>
-        </Collapse>
-      </Col>
-    </Row>
-    <Row>&nbsp;</Row>
-  </React.Fragment>
+    <Grid item className="facet" id={id + "-facet"}>
+      <ExpansionPanel>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>{title}</ExpansionPanelSummary>
+        <ExpansionPanelDetails>{children}</ExpansionPanelDetails>
+      </ExpansionPanel>
+    </Grid>
   );
 }
 
@@ -76,8 +62,8 @@ const StringFacet: React.FunctionComponent<{
   invariant(Object.keys(includeSet).length + Object.keys(excludeSet).length === allValues.length, "sets should account for all values");
 
   return (
-    <FacetDisclosurePanel id={id} title={title}>
-        <ListGroup className="w-100">
+    <FacetExpansionPanel id={id} title={title}>
+        <List>
           {allValues.sort().map(value => {
             const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
               const newChecked = e.target.checked;
@@ -109,18 +95,16 @@ const StringFacet: React.FunctionComponent<{
             };
 
             return (
-              <ListGroupItem className="w-100" key={value}>
-                <FormGroup check>
-                  <Label check>
-                    <Input checked={!!includeSet[value]} onChange={onChangeValue} type="checkbox"></Input>
-                    {value}
-                  </Label>
-                </FormGroup>
-              </ListGroupItem>
+              <ListItem className="w-100" key={value}>
+                <FormControlLabel
+                  control={<Checkbox checked={!!includeSet[value]} onChange={onChangeValue}/>}
+                  label={value}
+                />
+              </ListItem>
             );
           })}
-        </ListGroup>
-  </FacetDisclosurePanel>);
+        </List>
+  </FacetExpansionPanel>);
 }
 
 export const ObjectFacets: React.FunctionComponent<{
@@ -153,45 +137,43 @@ export const ObjectFacets: React.FunctionComponent<{
   const onChangeType = (newState?: StringFacetFilter) => onChangeStringFacetFilter("types", newState);
 
   return (
-    <Form>
-      <Container className="py-4" fluid>
-        <StringFacet allValues={facets.subjects}
-                     currentState={query.filters && query.filters.subjects ? query.filters.subjects : undefined}
-                     id="subject"
-                     onChange={onChangeSubject}
-                     title={"Subjects"}/>
-        <StringFacet allValues={facets.types}
-                     currentState={query.filters && query.filters.types ? query.filters.types : undefined}
-                     id="type"
-                     onChange={onChangeType}
-                     title={"Types"}/>
-        <StringFacet allValues={facets.culturalContexts}
-                     currentState={query.filters && query.filters.culturalContexts ? query.filters.culturalContexts : undefined}
-                     id="cultural-context"
-                     onChange={onChangeCulturalContext}
-                     title={"Cultural context"}/>
-        <StringFacet allValues={facets.materials}
-                    currentState={query.filters && query.filters.materials ? query.filters.materials : undefined}
-                    id="material"
-                    onChange={onChangeMaterial}
-                    title={"Material"}/>
-        <StringFacet allValues={facets.spatials}
-                                    currentState={query.filters && query.filters.spatials ? query.filters.spatials : undefined}
-                                    id="spatial-coverage"
-                                    onChange={onChangeSpatial}
-                                    title={"Spatial coverage"}/>
-        <StringFacet allValues={facets.techniques}
-                                    currentState={query.filters && query.filters.techniques ? query.filters.techniques : undefined}
-                                    id="technique"
-                                    onChange={onChangeTechnique}
-                                    title={"Technique"}/>
-        <StringFacet allValues={facets.temporals}
-                                    currentState={query.filters && query.filters.temporals ? query.filters.temporals : undefined}
-                                    id="temporal-coverage"
-                                    onChange={onChangeTemporal}
-                                    title={"Temporal coverage"}/>
-      </Container>
-    </Form>
+    <Grid container direction="column">
+      <StringFacet allValues={facets.subjects}
+                   currentState={query.filters && query.filters.subjects ? query.filters.subjects : undefined}
+                   id="subject"
+                   onChange={onChangeSubject}
+                   title={"Subjects"}/>
+      <StringFacet allValues={facets.types}
+                   currentState={query.filters && query.filters.types ? query.filters.types : undefined}
+                   id="type"
+                   onChange={onChangeType}
+                   title={"Types"}/>
+      <StringFacet allValues={facets.culturalContexts}
+                   currentState={query.filters && query.filters.culturalContexts ? query.filters.culturalContexts : undefined}
+                   id="cultural-context"
+                   onChange={onChangeCulturalContext}
+                   title={"Cultural context"}/>
+      <StringFacet allValues={facets.materials}
+                  currentState={query.filters && query.filters.materials ? query.filters.materials : undefined}
+                  id="material"
+                  onChange={onChangeMaterial}
+                  title={"Material"}/>
+      <StringFacet allValues={facets.spatials}
+                                  currentState={query.filters && query.filters.spatials ? query.filters.spatials : undefined}
+                                  id="spatial-coverage"
+                                  onChange={onChangeSpatial}
+                                  title={"Spatial coverage"}/>
+      <StringFacet allValues={facets.techniques}
+                                  currentState={query.filters && query.filters.techniques ? query.filters.techniques : undefined}
+                                  id="technique"
+                                  onChange={onChangeTechnique}
+                                  title={"Technique"}/>
+      <StringFacet allValues={facets.temporals}
+                                  currentState={query.filters && query.filters.temporals ? query.filters.temporals : undefined}
+                                  id="temporal-coverage"
+                                  onChange={onChangeTemporal}
+                                  title={"Temporal coverage"}/>
+    </Grid>
   );
 };
 

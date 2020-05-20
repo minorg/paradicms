@@ -3,7 +3,11 @@
   "version": "1.0.1",
   "description": "Paradicms generic GUI",
   "dependencies": {
+    "@material-ui/core": "4.9.14",
+    "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.53",
     "@paradicms/base": "^1.0.1",
+    "react-material-ui-carousel": "1.4.5",
     "react-medium-image-zoom": "3.1.2"
   },
   "devDependencies": {

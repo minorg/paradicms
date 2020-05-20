@@ -8,11 +8,11 @@ class StringFacet {
   }
 
   toggleOpen() {
-    return cy.get("." + this.id + "-facet a.facet-header-text").click();
+    return cy.get("#" + this.id + "-facet .MuiButtonBase-root.MuiExpansionPanelSummary-root").click();
   }
 
   toggleValue(value: string) {
-    return cy.get("." + this.id + "-facet").contains(value).click();
+    return cy.get("#" + this.id + "-facet").contains(value).click();
   }
 }
 
@@ -22,23 +22,23 @@ export class ObjectFacets {
 
 export class ObjectsGallery {
   get endObjectIndex() {
-    return cy.get(".end-object-index");
+    return cy.get("#end-object-index");
   }
 
   getObjects(objects: (typeof TestData.object)[]): void {
     for (const object of objects) {
       const objectLink = new ObjectOverviewPage({collectionUri: TestData.collection.uri, institutionUri: TestData.institution.uri, objectUri: object.uri}).relativeUrl;
-      cy.get("a[href=\"" + objectLink + "\"]").should("have.text", object.title);
-      cy.get("img[src=\"" + object.uri + "/image0/square_thumbnail\"]");
+      cy.get("a[href=\"" + objectLink + "\"] .MuiCardHeader-title").should("have.text", object.title);
+      // cy.get("img[src=\"" + object.uri + "/image0/square_thumbnail\"]");
     }
   }
 
   get objectsCount() {
-    return cy.get(".objects-count");
+    return cy.get("#objects-count");
   }
 
   get startObjectIndex() {
-    return cy.get(".start-object-index");
+    return cy.get("#start-object-index");
   }
 
 }

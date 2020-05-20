@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Frame } from "paradicms/app/generic/components/frame/Frame";
-import { ActiveNavbarItem } from "paradicms/app/generic/components/navbar/ActiveNavbarItem";
 import { InstitutionsList } from "paradicms/app/generic/components/institution/InstitutionsList";
 import { GenericErrorHandler } from "paradicms/app/generic/components/error/GenericErrorHandler";
 import * as ReactLoader from "react-loader";
@@ -22,7 +21,6 @@ export const Home: React.FunctionComponent = () => {
 
   return (
     <Frame
-      activeNavItem={ActiveNavbarItem.Home}
       documentTitle="Home"
       cardTitle="Institutions"
     >

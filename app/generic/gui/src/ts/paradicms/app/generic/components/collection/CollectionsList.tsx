@@ -1,7 +1,6 @@
 import * as React from "react";
-import {ListGroup, ListGroupItem} from "reactstrap";
-import {Hrefs} from "paradicms/app/generic/Hrefs";
-import {Link} from "react-router-dom";
+import { Hrefs } from "paradicms/app/generic/Hrefs";
+import { List, ListItem, ListItemText } from "@material-ui/core";
 
 interface Collection {
   institutionUri: string;
@@ -9,21 +8,22 @@ interface Collection {
   uri: string;
 }
 
+const ListItemLink = (props: any) => {
+  return <ListItem button component="a" {...props} />;
+}
+
 export const CollectionsList: React.FunctionComponent<{
   collections: Collection[];
 }> = ({collections}) => (
-  <ListGroup>
+  <List>
     {collections.map(collection => (
-      <ListGroupItem key={collection.uri}>
-        <Link
-          to={Hrefs.collection({
+      <ListItemLink key={collection.uri} href={Hrefs.collection({
             collectionUri: collection.uri,
             institutionUri: collection.institutionUri,
           })}
         >
-          {collection.name}
-        </Link>
-      </ListGroupItem>
+          <ListItemText>{collection.name}</ListItemText>
+      </ListItemLink>
     ))}
-  </ListGroup>
+  </List>
 );

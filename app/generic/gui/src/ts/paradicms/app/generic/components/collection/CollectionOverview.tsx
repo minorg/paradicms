@@ -14,7 +14,6 @@ import { useApolloClient, useQuery } from "@apollo/react-hooks";
 import * as ReactLoader from "react-loader";
 import { InstitutionCollectionObjectOverview } from "paradicms/app/generic/components/frame/InstitutionCollectionObjectOverview";
 import { RightsTable } from "paradicms/app/generic/components/rights/RightsTable";
-import { Col, Container, Row } from "reactstrap";
 import { ObjectFacets } from "paradicms/app/generic/components/object/ObjectFacets";
 import { ObjectQuery } from "paradicms/app/generic/api/graphqlGlobalTypes";
 import {
@@ -32,8 +31,19 @@ import { SearchResultsSummary } from "paradicms/app/generic/components/search/Se
 import * as qs from "qs";
 import * as _ from "lodash";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
+import { Grid, makeStyles } from "@material-ui/core";
 
 const OBJECTS_PER_PAGE = 20;
+
+const useStyles = makeStyles((theme) => ({
+  noObjects: {
+    textAlign: "center"
+  },
+  objectFacets: {
+    borderLeft: "solid 1px",
+    borderTop: "solid 1px"
+  }
+}));
 
 export const CollectionOverview: React.FunctionComponent = () => {
   const history = useHistory();
@@ -71,6 +81,8 @@ export const CollectionOverview: React.FunctionComponent = () => {
 
   // Don't need this until later, but every hook must be called on every render.
   const apolloClient = useApolloClient();
+
+  const classes = useStyles();
 
   if (initialError) {
     return <GenericErrorHandler exception={new ApolloException(initialError)}/>;
@@ -152,45 +164,39 @@ export const CollectionOverview: React.FunctionComponent = () => {
       institutionUri={institutionUri}
       title={initialData.collectionByUri.name}
     >
-      <Container fluid>
+      <Grid container direction="column" spacing={2}>
         {rights && state.objects.length ? (
-          <Row className="pb-4">
-            <Col xs="10">
-              <RightsTable rights={rights} />
-            </Col>
-          </Row>
+          <Grid item>
+            <RightsTable rights={rights} />
+          </Grid>
         ) : null}
         {state.objects.length ?
-          <React.Fragment>
-            <Row>
-              <Col>
-                <SearchResultsSummary objectsPerPage={OBJECTS_PER_PAGE} state={state}/>
-              </Col>
-            </Row>
-            <Row>
-            </Row>
-          </React.Fragment> : null}
-        <Row>
-          <Col xs={10}>
-            {state.objects.length ?
-              <ObjectsGallery
-                currentPage={state.objectsPage}
-                maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE) - 1}
-                objects={state.objects}
-                onPageRequest={onObjectsPageRequest}
-              /> :
-              <h4 className="text-center">No matching objects found.</h4>
-            }
-          </Col>
-          <Col className="border-left border-top" xs={2}>
-            <ObjectFacets
-              facets={initialData.collectionByUri.objectFacets}
-              onChange={onChangeObjectQuery}
-              query={state.objectQuery}
-            />
-          </Col>
-        </Row>
-      </Container>
+            <Grid item>
+              <SearchResultsSummary objectsPerPage={OBJECTS_PER_PAGE} state={state}/>
+            </Grid> : null}
+        <Grid item>
+          <Grid container>
+            <Grid item xs={10}>
+              {state.objects.length ?
+                <ObjectsGallery
+                  currentPage={state.objectsPage}
+                  maxPage={Math.ceil(state.objectsCount / OBJECTS_PER_PAGE) - 1}
+                  objects={state.objects}
+                  onPageRequest={onObjectsPageRequest}
+                /> :
+                <h4 className={classes.noObjects}>No matching objects found.</h4>
+              }
+            </Grid>
+            <Grid item className={classes.objectFacets} xs={2}>
+              <ObjectFacets
+                facets={initialData.collectionByUri.objectFacets}
+                onChange={onChangeObjectQuery}
+                query={state.objectQuery}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </InstitutionCollectionObjectOverview>
   );
 };

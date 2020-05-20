@@ -1,9 +1,25 @@
 import * as React from "react";
-import { Card, CardBody, CardHeader, CardTitle, Col, Container, Row } from "reactstrap";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
 import { Link } from "react-router-dom";
 import { ObjectSummary } from "paradicms/app/generic/models/object/ObjectSummary";
-import { TextDisclosurePanel } from "@paradicms/base";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Grid,
+  makeStyles
+} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+const useStyles = makeStyles((theme) => ({
+  expansionPanelText: {
+    fontSize: "x-small",
+    maxWidth: "32em"
+  }
+}));
 
 export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
   object,
@@ -14,18 +30,14 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
     objectUri: object.uri,
   });
 
+  const classes = useStyles();
+
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <strong>
-            <Link to={objectHref}>{object.title}</Link>
-          </strong>
-        </CardTitle>
-      </CardHeader>
-      <CardBody>
-        <Container fluid>
-          <Row>
+      <CardHeader component="a" href={objectHref} title={object.title}/>
+      <CardContent>
+        <Grid container direction="column" spacing={1}>
+          <Grid item>
             {object.thumbnail ? (
               <div style={{height: 200, width: 200}}>
                 <figure className="figure text-center w-100">
@@ -38,81 +50,39 @@ export const ObjectCard: React.FunctionComponent<{object: ObjectSummary}> = ({
                 </figure>
               </div>
             ) : null}
-          </Row>
-        </Container>
+          </Grid>
         {object.institutionName ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              Institution:{" "}
-              <Link to={Hrefs.institution(object.institutionUri)}>
-                {object.institutionName}
-              </Link>
-            </Col>
-          </Row>
+          <Grid item>
+            Institution:{" "}
+            <Link to={Hrefs.institution(object.institutionUri)}>
+              {object.institutionName}
+            </Link>
+          </Grid>
         ) : null}
         {object.collectionName ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              Collection:{" "}
-              <Link to={Hrefs.collection(object)}>{object.collectionName}</Link>
-            </Col>
-          </Row>
+          <Grid item>
+            Collection:{" "}
+            <Link to={Hrefs.collection(object)}>{object.collectionName}</Link>
+          </Grid>
         ) : null}
         {object.description ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              <TextDisclosurePanel
-                text={object.description}
-                textStyle={{fontSize: "x-small", maxWidth: "32em"}}
-                title="Description"
-              />
-            </Col>
-          </Row>
+          <Grid item>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>Description</ExpansionPanelSummary>
+              <ExpansionPanelDetails className={classes.expansionPanelText}>{object.description}</ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
         ) : null}
         {object.rights ? (
-          <Row className="pt-1">
-            <Col xs="12">
-              <TextDisclosurePanel
-                text={object.rights}
-                textStyle={{fontSize: "x-small", maxWidth: "32em"}}
-                title="Rights"
-              />
-            </Col>
-          </Row>
+          <Grid item>
+            <ExpansionPanel>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>Rights</ExpansionPanelSummary>
+              <ExpansionPanelDetails className={classes.expansionPanelText}>{object.rights}</ExpansionPanelDetails>
+            </ExpansionPanel>
+          </Grid>
         ) : null}
-      </CardBody>
+        </Grid>
+      </CardContent>
     </Card>
   );
 };
-
-// <figure className="figure">
-//     <a onClick={this.onToggleSelected}>
-//         <img
-//             className="figure-img rounded"
-//             src={thumbnailImgSrc}
-//             style={{ height: "200px", width: "200px" }}
-//         />
-//     </a>
-//     {definition.image ? (
-//         <figcaption className="figure-caption" style={{ fontSize: "xx-small" }}>
-//             Image&nbsp;&copy;
-//             <span>{definition.image.rights.author}</span>
-//             <br />License:&nbsp;
-//             <span ><WorksheetRightsLicenseComponent license={definition.image.rights.license}></WorksheetRightsLicenseComponent></span>
-//         </figcaption>
-//     ) : null}
-// </figure>
-// {definition.description ? (
-//     <div className="card-text">
-//         <a onClick={this.onToggleDescription} className="description-toggle">Description</a>
-//         <div className="float-right">
-//             <a onClick={this.onToggleDescription} className="description-toggle">
-//                 <i className={classnames({ fas: true, "fa-chevron-down": this.state.descriptionShown, "fa-chevron-right": !this.state.descriptionShown })}></i>
-//             </a>
-//         </div>
-//         <br />
-//         <Collapse isOpen={this.state.descriptionShown}>
-//             <WorksheetDescriptionComponent description={definition.description}></WorksheetDescriptionComponent>
-//         </Collapse>
-//     </div>
-// ) : null}

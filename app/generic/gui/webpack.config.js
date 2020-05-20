@@ -2,10 +2,8 @@ const configBase = require("../../../lib/ts/base/webpack.config.base");
 const configDevServer = require("../../../lib/ts/base/webpack.config.devServer");
 const path = require('path');
 const merge = require("webpack-merge");
-const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = function (env, argv) {
   const distPath = path.join(__dirname, 'dist');
@@ -25,10 +23,6 @@ module.exports = function (env, argv) {
         from: 'img',
         to: path.join(distPath, 'img/')
       }, 'robots.txt']),
-      new MiniCssExtractPlugin({
-        disable: argv.mode !== "production",
-        filename: 'css/[name].css'
-      }),
       new HtmlWebpackPlugin({
         hash: true,
         template: 'index.html'

@@ -5,20 +5,22 @@ export class ObjectOverviewPage extends Page {
     super();
     this.collectionUri = kwds.collectionUri;
     this.institutionUri = kwds.institutionUri;
+    this.objectIndex = parseInt(kwds.objectUri.charAt(kwds.objectUri.length - 1));
     this.objectUri = kwds.objectUri;
   }
 
   readonly collectionUri: string;
   readonly institutionUri: string;
+  readonly objectIndex: number;
   readonly objectUri: string;
 
   get carouselThumbnail() {
-    return cy.get("img[src=\"" + this.objectUri + "/image1/thumbnail\"]");
+    return cy.get("img[src=\"https://place-hold.it/600x600?text=Object" + this.objectIndex + "Image0\"]");
   }
 
   get subjects() {
-    cy.get(".subjects-section .card .card-title h5").should("have.text", "Subjects");
-    return cy.get(".subjects-section .card-body ul.list-group li.list-group-item");
+    cy.get("#subjects-section .MuiCardHeader-title").should("have.text", "Subjects");
+    return cy.get("#subjects-section ul div");
   }
 
   get relativeUrl() {

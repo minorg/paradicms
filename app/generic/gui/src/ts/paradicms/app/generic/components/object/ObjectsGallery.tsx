@@ -1,29 +1,34 @@
 import * as React from "react";
 import { ObjectCard } from "paradicms/app/generic/components/object/ObjectCard";
-import { Col, Container, Row } from "reactstrap";
 import { ObjectSummary } from "paradicms/app/generic/models/object/ObjectSummary";
-import { DefaultPagination, DefaultPaginationProps } from "@paradicms/base";
+import { Grid } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
 
-interface Props extends DefaultPaginationProps {
+export const ObjectsGallery: React.FunctionComponent<{
+  currentPage: number;
+  maxPage: number;
   objects: ObjectSummary[];
-}
-
-export const ObjectsGallery: React.FunctionComponent<Props> = ({
+  onPageRequest: (page: number) => void;
+}> = ({
+  currentPage,
+  maxPage,
   objects,
-  ...paginationProps
+  onPageRequest
 }) => (
-  <Container fluid>
-    <Row>
-      {objects.map(object => (
-        <div className="mr-4 mb-4" key={object.uri}>
-          <ObjectCard object={object} />
-        </div>
-      ))}
-    </Row>
-    <Row>
-      <Col className="p-0" xs="12">
-        <DefaultPagination {...paginationProps} />
-      </Col>
-    </Row>
-  </Container>
+  <Grid container direction="column" spacing={4}>
+    <Grid item>
+      <Grid container>
+        {objects.map(object => (
+          <Grid item key={object.uri}>
+            <ObjectCard object={object} />
+          </Grid>
+        ))}
+      </Grid>
+    </Grid>
+    {maxPage > 1 ?
+      <Grid item style={{alignSelf: "center"}}>
+        <Pagination count={maxPage} page={currentPage} onChange={(event, value) => onPageRequest(value)}/>
+      </Grid>
+      : null}
+  </Grid>
 );

@@ -1,16 +1,16 @@
 class Footer {
   get privacyLink() {
-    return cy.get(".frame footer a[href=\"/privacy\"]");
+    return cy.get("#frame footer a[href=\"/privacy\"]");
   }
 }
 
 class Frame {
   get cardTitle() {
-    return cy.get(".frame .card-title h2");
+    return cy.get("#frame-card-header");
   }
 
   breadcrumbItem(n: number) {
-    return cy.get(".frame ol.breadcrumb li:nth-of-type(" + n + ")");
+    return cy.get("#frame-breadcrumbs li:nth-of-type(" + (n*2-1) + ")");
   }
 
   readonly footer = new Footer();
@@ -19,15 +19,15 @@ class Frame {
 
 class Navbar {
   get homeLink() {
-    return cy.get("nav a[href=\"/\"].nav-link");
+    return cy.get("#navbar a[href=\"/\"]");
   }
 
   get loginLink() {
-    return cy.get("nav .nav-item a[href^=\"/api/auth0/\"]");
+    return cy.get("#navbar a[href^=\"/api/auth0/\"]");
   }
 
   get searchButton() {
-    return cy.get("nav button[type=\"submit\"]");
+    return cy.get("#navbar #search-button");
   }
 
   search(text: string) {
@@ -36,7 +36,7 @@ class Navbar {
   }
 
   get searchInput() {
-    return cy.get("nav input[type=\"search\"");
+    return cy.get("#navbar #search-input");
   }
 }
 
