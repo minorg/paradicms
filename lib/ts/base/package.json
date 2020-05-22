@@ -1,6 +1,6 @@
 {
   "name": "@paradicms/base",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Paradicms base library",
   "devDependencies": {
     "@graphql-codegen/cli": "1.2.0",
@@ -65,7 +65,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "../../../node_modules/.bin/webpack --mode production -p",
-    "build-development": "..\\..\\..\\node_modules\\.bin\\webpack --mode development",
+    "build-win32": "..\\..\\..\\node_modules\\.bin\\webpack --mode production -p",
     "start": "..\\..\\..\\node_modules\\.bin\\webpack --mode development --info-verbosity verbose --watch"
   },
   "types": "dist/index.d.ts"

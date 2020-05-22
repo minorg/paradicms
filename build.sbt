@@ -97,7 +97,7 @@ parallelExecution in ThisBuild := false
 // Build settings
 organization in ThisBuild := "org.paradicms"
 scalaVersion in ThisBuild := "2.12.10"
-version in ThisBuild := "1.0.1-SNAPSHOT"
+version in ThisBuild := "1.0.2-SNAPSHOT"
 resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 
 // Publish settings
