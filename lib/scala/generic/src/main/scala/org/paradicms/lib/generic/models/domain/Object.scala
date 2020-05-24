@@ -1,12 +1,6 @@
 package org.paradicms.lib.generic.models.domain
 
 import io.lemonlabs.uri.Uri
-import org.apache.jena.rdf.model.Resource
-import org.apache.jena.sparql.vocabulary.FOAF
-import org.paradicms.lib.base.rdf.properties.DcResourceProperties
-import org.paradicms.lib.generic.rdf.properties.VraResourceProperties
-
-import scala.collection.JavaConverters._
 
 final case class Object(
                          alternativeTitles: List[String] = List(),
@@ -34,37 +28,3 @@ final case class Object(
                          types: List[String],
                          uri: Uri
                        )
-
-object Object {
-  implicit class ObjectResource(val resource: Resource) extends DcResourceProperties with VraResourceProperties
-
-  def apply(resource: ObjectResource): Object = {
-    val descriptions = resource.descriptions
-    Object(
-      alternativeTitles = resource.alternatives,
-      creators = resource.creators,
-      culturalContexts = resource.culturalContexts,
-      dates = resource.dates,
-      description = if (!descriptions.isEmpty) Some(descriptions(0)) else None,
-      descriptions = descriptions,
-      extents = resource.extents,
-      identifiers = resource.identifiers,
-      images = resource.resource.listProperties(FOAF.depiction).asScala.toList.map(statement => DerivedImageSet(statement.getObject.asResource())),
-      languages = resource.languages,
-      materials = resource.materials,
-      media = resource.media,
-      provenances = resource.provenances,
-      publishers = resource.publishers,
-      rights = Rights(resource.resource),
-      sources = resource.sources,
-      spatials = resource.spatials,
-      subjects = resource.subjects,
-      techniques = resource.hasTechniques,
-      temporals = resource.temporals,
-      title = (resource.titles ::: resource.alternatives)(0),
-      titles = resource.titles,
-      types = resource.types.filter(`type` => `type`.isLiteral).map(typeLiteral => typeLiteral.asLiteral().getString),
-      uri = resource.uri
-    )
-  }
-}

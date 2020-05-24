@@ -4,8 +4,10 @@ import io.lemonlabs.uri.Uri
 import org.apache.jena.query.{ParameterizedSparqlString, QueryFactory}
 import org.apache.jena.rdf.model.{Property, RDFNode, ResourceFactory}
 import org.apache.jena.vocabulary.{DCTerms, DC_11, RDF}
+import org.paradicms.lib.base.rdf.Rdf
 import org.paradicms.lib.base.stores.sparql.{SparqlAccessCheckGraphPatterns, SparqlConnectionLoanPatterns}
 import org.paradicms.lib.generic.models
+import org.paradicms.lib.generic.models.domain.rdf.reads._
 import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
 import org.paradicms.lib.generic.rdf.vocabularies.{CMS, VRA}
 import org.paradicms.lib.generic.stores._
@@ -214,7 +216,7 @@ trait SparqlObjectStore extends ObjectStore with SparqlConnectionLoanPatterns wi
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
       //      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.foreach(resource => model.listStatements(resource, null, null).asScala.foreach(System.out.println(_)))
-      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.map(resource => Object(resource))
+      model.listSubjectsWithProperty(RDF.`type`, CMS.Object).asScala.toList.map(resource => Rdf.read[Object](resource))
     }
   }
 

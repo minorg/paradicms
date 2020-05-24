@@ -3,8 +3,10 @@ package org.paradicms.lib.generic.stores.sparql
 import io.lemonlabs.uri.Uri
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.vocabulary.RDF
+import org.paradicms.lib.base.rdf.Rdf
 import org.paradicms.lib.base.stores.sparql.{SparqlAccessCheckGraphPatterns, SparqlConnectionLoanPatterns}
 import org.paradicms.lib.generic.models.domain.Collection
+import org.paradicms.lib.generic.models.domain.rdf.reads._
 import org.paradicms.lib.generic.rdf.vocabularies.CMS
 import org.paradicms.lib.generic.stores.CollectionStore
 
@@ -45,7 +47,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessCheckGraphP
     withQueryExecution(query) {
       queryExecution =>
         val model = queryExecution.execConstruct()
-        model.listSubjectsWithProperty(RDF.`type`, CMS.Collection).asScala.toList.map(resource => Collection(resource))
+        model.listSubjectsWithProperty(RDF.`type`, CMS.Collection).asScala.toList.map(resource => Rdf.read[Collection](resource))
     }
   }
 
@@ -71,7 +73,7 @@ trait SparqlCollectionStore extends CollectionStore with SparqlAccessCheckGraphP
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.Collection).asScala.toList.map(resource => Collection(resource))
+      model.listSubjectsWithProperty(RDF.`type`, CMS.Collection).asScala.toList.map(resource => Rdf.read[Collection](resource))
     }
   }
 }
