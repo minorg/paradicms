@@ -63,7 +63,9 @@ lazy val genericLib =
       guice,
       ws,
       "com.typesafe.play" %% "play" % playVersion,
+      "io.circe" %% "circe-generic" % "0.12.3",
       "org.sangria-graphql" %% "sangria" % "1.4.2",
+      "org.sangria-graphql" %% "sangria-circe" % "1.2.1",
       "org.sangria-graphql" %% "sangria-slowlog" % "0.1.8",
       "org.sangria-graphql" %% "sangria-play-json" % "1.0.4",
       "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
