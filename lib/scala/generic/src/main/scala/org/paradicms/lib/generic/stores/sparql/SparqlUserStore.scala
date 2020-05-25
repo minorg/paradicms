@@ -3,8 +3,10 @@ package org.paradicms.lib.generic.stores.sparql
 import io.lemonlabs.uri.Uri
 import org.apache.jena.query.{ParameterizedSparqlString, QueryFactory}
 import org.apache.jena.vocabulary.RDF
+import org.paradicms.lib.base.rdf.Rdf
 import org.paradicms.lib.base.stores.sparql.SparqlConnectionLoanPatterns
 import org.paradicms.lib.generic.models.domain.User
+import org.paradicms.lib.generic.models.domain.rdf.reads._
 import org.paradicms.lib.generic.rdf.vocabularies.CMS
 import org.paradicms.lib.generic.stores.UserStore
 
@@ -29,7 +31,7 @@ trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns with G
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => User(resource))
+      model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => Rdf.read[User](resource))
     }
   }
 
