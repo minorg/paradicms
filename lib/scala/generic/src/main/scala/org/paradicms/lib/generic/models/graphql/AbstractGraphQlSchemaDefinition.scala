@@ -58,6 +58,8 @@ abstract class AbstractGraphQlSchemaDefinition {
   val UriArgument = Argument("uri", UriType, description = "URI")
 
   // Complex decoders
+  implicit val derivedImageSetDecoder: Decoder[DerivedImageSet] = deriveDecoder
+  implicit val imageDecoder: Decoder[Image] = deriveDecoder
   implicit val imageDimensionsDecoder: Decoder[ImageDimensions] = deriveDecoder
 
   // Complex input types
