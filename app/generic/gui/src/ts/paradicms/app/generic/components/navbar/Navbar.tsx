@@ -12,8 +12,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(4),
   },
   navLink: {
+    color: "white",
     fontSize: "larger",
-    marginRight: theme.spacing(4)
+    marginRight: theme.spacing(4),
+    textDecoration: "none"
   }
 }));
 

@@ -2,11 +2,12 @@ import * as React from "react";
 import { CurrentUser } from "paradicms/app/generic/components/navbar/CurrentUser";
 import { Link, makeStyles, Menu, MenuItem } from "@material-ui/core";
 import { Hrefs } from "paradicms/app/generic/Hrefs";
-import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   navLink: {
-    fontSize: "larger"
+    color: "white",
+    fontSize: "larger",
+    textDecoration: "none"
   }
 }));
 
@@ -21,7 +22,7 @@ export const NavbarUserDropdown: React.FunctionComponent<{
 
   if (!currentUser) {
     return (
-      <NavLink className={classes.navLink} to={loginHref ? loginHref : Hrefs.login()}>Login</NavLink>
+      <Link className={classes.navLink} href={loginHref ? loginHref : Hrefs.login()}>Login</Link>
     );
   }
 
