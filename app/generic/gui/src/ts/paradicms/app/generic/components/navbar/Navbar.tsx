@@ -46,7 +46,7 @@ export const Navbar: React.FunctionComponent< {
   }
 
   return (
-    <AppBar id="navbar" position="static">
+    <AppBar data-cy="navbar" position="static">
       <Toolbar>
         <Typography variant="h6" className={classes.brand}>
           Paradicms
