@@ -1,6 +1,6 @@
 package org.paradicms.lib.generic
 
-import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object}
+import org.paradicms.lib.generic.models.domain.{Collection, Institution, Object, User}
 import org.paradicms.lib.generic.stores.ObjectQuery
 import org.paradicms.lib.generic.stores.sparql._
 import org.slf4j.LoggerFactory
@@ -24,5 +24,9 @@ object GenericTestData {
       .map(objectWithContext => objectWithContext.object_)
       .sortBy((object_ => object_.uri.toString()))
   val object_ = store.getObjects(currentUserUri = currentUserUri, limit = 1, offset = 0, query = ObjectQuery.collection(collection.uri)).objectsWithContext(0).object_
-  val user = store.getUserByUri(currentUserUri.get).get
+  val user = User(
+    email = Some("test@example.com"),
+    name = "Test user",
+    uri = currentUserUri.get
+  )
 }
