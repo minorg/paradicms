@@ -62,7 +62,7 @@ const StringFacet: React.FunctionComponent<{
   invariant(Object.keys(includeSet).length + Object.keys(excludeSet).length === allValues.length, "sets should account for all values");
 
   return (
-    <FacetExpansionPanel data-cy={id} title={title}>
+    <FacetExpansionPanel id={id} title={title}>
         <List>
           {allValues.sort().map(value => {
             const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -140,37 +140,37 @@ export const ObjectFacets: React.FunctionComponent<{
     <Grid container direction="column">
       <StringFacet allValues={facets.subjects}
                    currentState={query.filters && query.filters.subjects ? query.filters.subjects : undefined}
-                   data-cy="subject"
+                   id="subject"
                    onChange={onChangeSubject}
                    title={"Subjects"}/>
       <StringFacet allValues={facets.types}
                    currentState={query.filters && query.filters.types ? query.filters.types : undefined}
-                   data-cy="type"
+                   id="type"
                    onChange={onChangeType}
                    title={"Types"}/>
       <StringFacet allValues={facets.culturalContexts}
                    currentState={query.filters && query.filters.culturalContexts ? query.filters.culturalContexts : undefined}
-                   data-cy="cultural-context"
+                   id="cultural-context"
                    onChange={onChangeCulturalContext}
                    title={"Cultural context"}/>
       <StringFacet allValues={facets.materials}
                   currentState={query.filters && query.filters.materials ? query.filters.materials : undefined}
-                  data-cy="material"
+                  id="material"
                   onChange={onChangeMaterial}
                   title={"Material"}/>
       <StringFacet allValues={facets.spatials}
                                   currentState={query.filters && query.filters.spatials ? query.filters.spatials : undefined}
-                                  data-cy="spatial-coverage"
+                                  id="spatial-coverage"
                                   onChange={onChangeSpatial}
                                   title={"Spatial coverage"}/>
       <StringFacet allValues={facets.techniques}
                                   currentState={query.filters && query.filters.techniques ? query.filters.techniques : undefined}
-                                  data-cy="technique"
+                                  id="technique"
                                   onChange={onChangeTechnique}
                                   title={"Technique"}/>
       <StringFacet allValues={facets.temporals}
                                   currentState={query.filters && query.filters.temporals ? query.filters.temporals : undefined}
-                                  data-cy="temporal-coverage"
+                                  id="temporal-coverage"
                                   onChange={onChangeTemporal}
                                   title={"Temporal coverage"}/>
     </Grid>
