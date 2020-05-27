@@ -53,7 +53,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
 
   const listGroupSection = (id: string, title: string, values: string[]) =>
     values.length > 0 ? (
-      <Grid item className={"section pb-4"} id={id + "-section"}>
+      <Grid item className={"section pb-4"} data-cy={id + "-section"}>
         <Card>
           <CardHeader title={title}/>
           <CardContent>
@@ -85,7 +85,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
     >
       <Grid container direction="column" spacing={2}>
         {object_.images.length > 0 ? (
-          <Grid item className="section" id="carousel-section">
+          <Grid item className="section" data-cy="carousel-section">
             <Card>
               <CardContent>
                 <ObjectImagesCarousel images={object_.images}/>
@@ -97,7 +97,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
         {object_.titles.length > 1 ||
         object_.alternativeTitles.length > 0 ||
         object_.titles[0] !== object_.title ? (
-          <Grid item className="section" id="titles-section">
+          <Grid item className="section" data-cy="titles-section">
             <Card>
               <CardHeader title="Titles"/>
               <CardContent>
@@ -121,7 +121,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
         object_.provenances.length > 0 ||
         object_.publishers.length > 0 ||
         object_.sources.length > 0 ? (
-          <Grid item className="section" id="provenance-section">
+          <Grid item className="section" data-cy="provenance-section">
             <Card className="w-100">
               <CardHeader title="Provenance"/>
               <CardContent>
@@ -145,7 +145,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
         object_.languages.length > 0 ||
         object_.media.length > 0 ||
         object_.spatials.length > 0 ? (
-          <Grid item className="section" id="extent-section">
+          <Grid item className="section" data-cy="extent-section">
             <Card>
               <CardHeader title="Extent"/>
               <CardContent>
@@ -173,7 +173,7 @@ export const ObjectOverview: React.FunctionComponent = () => {
           </Grid>
         ) : null}
         {rights ? (
-          <Grid item className="section" id="rights-section">
+          <Grid item className="section" data-cy="rights-section">
             <Card>
               <CardHeader title="Rights"/>
               <CardContent>

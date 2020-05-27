@@ -19,8 +19,8 @@ export class ObjectOverviewPage extends Page {
   }
 
   get subjects() {
-    cy.get("#subjects-section .MuiCardHeader-title").should("have.text", "Subjects");
-    return cy.get("#subjects-section ul div");
+    cy.get("[data-cy=\"subjects-section\"] .MuiCardHeader-title").should("have.text", "Subjects");
+    return cy.get("[data-cy=\"subjects-section\"] ul div");
   }
 
   get relativeUrl() {
