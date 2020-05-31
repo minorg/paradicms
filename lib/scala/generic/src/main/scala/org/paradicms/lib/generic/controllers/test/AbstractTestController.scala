@@ -5,12 +5,12 @@ import io.lemonlabs.uri.Uri
 import org.paradicms.lib.generic.controllers.auth0.CurrentUser
 import org.paradicms.lib.generic.models.domain.User
 import org.paradicms.lib.generic.stores.UserStore
-import play.api.mvc.InjectedController
+import play.api.mvc.{Action, AnyContent, InjectedController}
 
 abstract class AbstractTestController (assets: Assets, userStore: UserStore) extends InjectedController {
   protected def checkTestEnvironment(): Boolean
 
-  final def frontEndPath(path: String) = {
+  final def frontEndPath(path: String): Action[AnyContent] = {
     if (checkTestEnvironment()) {
       if (path.endsWith(".css") || path.endsWith(".html") || path.endsWith(".ico") || path.endsWith(".js")) {
         // If the path has a file extension, assume it's a file and not a React URL
@@ -20,7 +20,9 @@ abstract class AbstractTestController (assets: Assets, userStore: UserStore) ext
         assets.at("/public", "index.html", aggressiveCaching = false)
       }
     } else {
-      InternalServerError("Not in testing environment")
+      Action {
+        InternalServerError("Not in testing environment")
+      }
     }
   }
 
