@@ -28,7 +28,6 @@ abstract class AbstractTestController (assets: Assets, userStore: UserStore) ext
 
   final def login(returnTo: String, userUri: Option[String]) = Action {
     if (checkTestEnvironment()) {
-
       val user = User(email = Some("test@example.com"), name = "Test user", uri = if (userUri.isDefined) Uri.parse(userUri.get) else Uri.parse("http://example.com/user"))
       if (!userStore.getUserByUri(user.uri).isDefined) {
         userStore.putUser(user)
@@ -38,6 +37,10 @@ abstract class AbstractTestController (assets: Assets, userStore: UserStore) ext
     } else {
       InternalServerError("Not in testing environment")
     }
+  }
+
+  final def logout(returnTo: String) = Action {
+    Redirect(returnTo).withNewSession
   }
 
   final def reset() = Action {
