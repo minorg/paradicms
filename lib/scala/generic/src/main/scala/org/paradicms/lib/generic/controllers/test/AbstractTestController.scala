@@ -46,7 +46,7 @@ abstract class AbstractTestController (assets: Assets, userStore: UserStore) ext
   final def reset() = Action {
     if (checkTestEnvironment()) {
       doReset()
-      Redirect("/").withNewSession
+      Ok.withNewSession
     } else {
       InternalServerError("Not in testing environment")
     }
