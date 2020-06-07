@@ -6,6 +6,7 @@ import io.lemonlabs.uri.Uri
 import javax.inject.Inject
 import org.paradicms.lib.generic.models.domain.User
 import org.paradicms.lib.generic.stores.UserStore
+import org.slf4j.LoggerFactory
 import play.api.Configuration
 import play.api.http.{HeaderNames, MimeTypes}
 import play.api.libs.json.Json.toJsFieldJsValueWrapper
@@ -18,9 +19,11 @@ import scala.concurrent.Future
 
 class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, userStore: UserStore) extends InjectedController {
   private val config = Auth0Configuration(configuration)
+  private val logger = LoggerFactory.getLogger(getClass)
 
   final def login(returnTo: String): Action[AnyContent] = Action {
     val state = returnTo // "unused"
+    logger.info("login state: {}", returnTo)
 
     var audience = config.audience
     if (config.audience == "") {
@@ -28,17 +31,21 @@ class Auth0Controller @Inject()(ws: WSClient, configuration: Configuration, user
     }
 
     val query = String.format(
-      "authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=openid profile&audience=%s&state=%s",
-      config.clientId,
-      config.callbackURL,
-      audience,
-      state
+      "authorize?client_id=%s&redirect_uri=%s&response_type=code&scope=%s&audience=%s&state=%s",
+      URLEncoder.encode(config.clientId, "UTF-8"),
+      URLEncoder.encode(config.callbackURL, "UTF-8"),
+      URLEncoder.encode("openid profile", "UTF-8"),
+      URLEncoder.encode(audience, "UTF-8"),
+      URLEncoder.encode(state, "UTF-8")
     )
-    Redirect(String.format("https://%s/%s", config.domain, query))
+    val redirectUrl = String.format("https://%s/%s", config.domain, query)
+    logger.info("login redirecting to {}", redirectUrl)
+    Redirect(redirectUrl)
   }
 
   final def loginCallback(codeOpt: Option[String] = None, stateOpt: Option[String]): Action[AnyContent] = Action.async { request =>
     val returnTo = stateOpt.get
+    logger.info("loginCallback state: {}", returnTo)
 
     (for {
       code <- codeOpt
