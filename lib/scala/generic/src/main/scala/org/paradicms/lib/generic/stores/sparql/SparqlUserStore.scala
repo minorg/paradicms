@@ -3,14 +3,18 @@ package org.paradicms.lib.generic.stores.sparql
 import io.lemonlabs.uri.Uri
 import org.apache.jena.query.{ParameterizedSparqlString, QueryFactory}
 import org.apache.jena.vocabulary.RDF
+import org.paradicms.lib.base.rdf.Rdf
 import org.paradicms.lib.base.stores.sparql.SparqlConnectionLoanPatterns
 import org.paradicms.lib.generic.models.domain.User
+import org.paradicms.lib.generic.models.domain.rdf.reads._
 import org.paradicms.lib.generic.rdf.vocabularies.CMS
 import org.paradicms.lib.generic.stores.UserStore
 
 import scala.collection.JavaConverters._
 
 trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns with GenericSparqlPrefixes {
+  private val GRAPH_URI = "urn:system:user"
+
   override final def getUserByUri(userUri: Uri): Option[User] =
     getUsersByUris(List(userUri)).headOption
 
@@ -22,14 +26,16 @@ trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns with G
          |CONSTRUCT {
          |  ?user ?p ?o .
          |} WHERE {
-         |  VALUES ?user { ${userUris.map(userUri => "<" + userUri.toString() + ">").mkString(" ")} }
-         |  ?user rdf:type cms:User .
-         |  ?user ?p ?o .
+         |  GRAPH <${GRAPH_URI}> {
+         |    VALUES ?user { ${userUris.map(userUri => "<" + userUri.toString() + ">").mkString(" ")} }
+         |    ?user rdf:type cms:User .
+         |    ?user ?p ?o .
+         |  }
          |}
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => User(resource))
+      model.listSubjectsWithProperty(RDF.`type`, CMS.User).asScala.toList.map(resource => Rdf.read[User](resource))
     }
   }
 
@@ -40,7 +46,7 @@ trait SparqlUserStore extends UserStore with SparqlConnectionLoanPatterns with G
         s"""
            |${GENERIC_SPARQL_PREFIXES}
            |INSERT DATA {
-           |  GRAPH <urn:system:user> {
+           |  GRAPH <${GRAPH_URI}> {
            |    <${user.uri.toString()}> rdf:type cms:User .
            |    ${emailStatement}
            |    <${user.uri.toString()}> foaf:name ?name .

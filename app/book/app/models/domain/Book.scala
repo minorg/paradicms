@@ -4,8 +4,10 @@ import io.lemonlabs.uri.Uri
 import models.domain.vocabulary.SCHEMA
 import org.apache.jena.rdf.model.Resource
 import org.apache.jena.vocabulary.DCTerms
+import org.paradicms.lib.base.rdf.Rdf
 import org.paradicms.lib.base.rdf.properties.DcResourceProperties
 import org.paradicms.lib.generic.models.domain.Person
+import org.paradicms.lib.generic.models.domain.rdf.reads._
 
 final case class Book(
                      creators: List[Person] = List(),
@@ -28,7 +30,7 @@ object Book {
 
   def apply(resource: BookResource): Book =
     Book(
-      creators=resource.creatorResources.map(resource => Person(resource)),
+      creators=resource.creatorResources.map(resource => Rdf.read[Person](resource)),
       description=resource.descriptions.headOption,
       format=resource.formats.headOption,
       isbn=resource.identifiers.headOption,

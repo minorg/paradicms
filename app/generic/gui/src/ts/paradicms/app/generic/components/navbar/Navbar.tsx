@@ -12,8 +12,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(4),
   },
   navLink: {
+    color: "white",
     fontSize: "larger",
-    marginRight: theme.spacing(4)
+    marginRight: theme.spacing(4),
+    textDecoration: "none"
   }
 }));
 
@@ -44,7 +46,7 @@ export const Navbar: React.FunctionComponent< {
   }
 
   return (
-    <AppBar id="navbar" position="static">
+    <AppBar data-cy="navbar" position="static">
       <Toolbar>
         <Typography variant="h6" className={classes.brand}>
           Paradicms

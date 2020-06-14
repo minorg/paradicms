@@ -16,6 +16,8 @@ GET         /api/graphql-schema             controllers.graphql.GenericGraphQlCo
 
 
 # Integration testing
+GET         /api/test/login controllers.test.GenericTestController.login(returnTo: String, userUri: Option[String])
+GET         /api/test/logout controllers.test.GenericTestController.logout(returnTo: String)
 GET         /api/test/reset controllers.test.GenericTestController.reset
 
 

@@ -1,29 +1,68 @@
 package org.paradicms.lib.generic.models.graphql
 
+import io.circe.generic.semiauto.deriveDecoder
+import io.circe.{Decoder, DecodingFailure, HCursor}
+import io.lemonlabs.uri.{Uri, Url}
 import org.paradicms.lib.generic.models.domain._
 import sangria.macros.derive._
-import sangria.marshalling.{CoercedScalaResultMarshaller, FromInput}
-import sangria.schema.{Argument, Field, IntType, OptionType, StringType, fields}
+import sangria.marshalling.circe._
+import sangria.schema.{Argument, Field, IntType, OptionType, ScalarAlias, StringType, fields}
+import sangria.validation.{BaseViolation, Violation}
 
 abstract class AbstractGraphQlSchemaDefinition {
-  implicit val uriType = UriType
+  // Scalar aliases
+  implicit object UriType extends ScalarAlias[Uri, String](
+    StringType, _.toString, uri => {
+      val result = Url.parseTry(uri)
+      if (result.isSuccess) {
+        Right(result.get)
+      } else {
+        Left(new BaseViolation(result.failed.get.getMessage) {}.asInstanceOf[Violation])
+      }
+    }
+  )
+
+  object UrlType extends ScalarAlias[Url, String](
+    StringType, _.toString, uri => {
+      val result = Url.parseTry(uri)
+      if (result.isSuccess) {
+        Right(result.get)
+      } else {
+        Left(new BaseViolation(result.failed.get.getMessage) {}.asInstanceOf[Violation])
+      }
+    }
+  )
+
+  // Scalar decoders
+  implicit val uriDecoder: Decoder[Uri] = (c: HCursor) => {
+    val result = Uri.parseTry(c.value.asString.get)
+    if (result.isSuccess) {
+      Right(result.get)
+    } else {
+      Left(DecodingFailure.fromThrowable(result.failed.get, c.history))
+    }
+  }
+
+  implicit val urlDecoder: Decoder[Url] = (c: HCursor) => {
+    val result = Url.parseTry(c.value.asString.get)
+    if (result.isSuccess) {
+      Right(result.get)
+    } else {
+      Left(DecodingFailure.fromThrowable(result.failed.get, c.history))
+    }
+  }
 
   // Scalar argument types
   val LimitArgument = Argument("limit", IntType, description = "Limit")
   val OffsetArgument = Argument("offset", IntType, description = "Offset")
   val UriArgument = Argument("uri", UriType, description = "URI")
 
+  // Complex decoders
+  implicit val derivedImageSetDecoder: Decoder[DerivedImageSet] = deriveDecoder
+  implicit val imageDecoder: Decoder[Image] = deriveDecoder
+  implicit val imageDimensionsDecoder: Decoder[ImageDimensions] = deriveDecoder
+
   // Complex input types
-  implicit val imageDimensionsFromInput = new FromInput[ImageDimensions] {
-    val marshaller = CoercedScalaResultMarshaller.default
-    def fromResult(node: marshaller.Node) = {
-      val ad = node.asInstanceOf[Map[String, Any]]
-      ImageDimensions(
-        height = ad("height").asInstanceOf[Number].intValue(),
-        width = ad("width").asInstanceOf[Number].intValue()
-      )
-    }
-  }
   implicit val ImageDimensionsInputType = deriveInputObjectType[ImageDimensions](
     InputObjectTypeName("ImageDimensionsInput")
   )
@@ -38,7 +77,6 @@ abstract class AbstractGraphQlSchemaDefinition {
   ))
 
   implicit val ImageDimensionsType = deriveObjectType[Unit, ImageDimensions]()
-
   implicit val ImageType = deriveObjectType[Unit, Image](
     ReplaceField("url", Field("url", UrlType, resolve = _.value.url))
   )
@@ -78,6 +116,5 @@ abstract class AbstractGraphQlSchemaDefinition {
     AddFields(Field("thumbnail", OptionType(ImageType), arguments = MaxDimensionsArgument :: Nil, resolve = ctx => selectThumbnail(derivedImageSet = ctx.value, maxDimensions = ctx.args.arg(MaxDimensionsArgument))))
   )
 
-  // Rights
   implicit val RightsType = deriveObjectType[Unit, Rights]()
 }

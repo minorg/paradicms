@@ -12,8 +12,8 @@ FROM ubuntu:18.04
 
 RUN apt-get update && apt-get install -y default-jre-headless unzip
 
-COPY --from=build /app/app/generic/target/universal/generic-app-1.0.1-SNAPSHOT.zip /
-RUN unzip -q generic-app-1.0.1-SNAPSHOT.zip && mv /generic-app-1.0.1-SNAPSHOT /app && chmod +x /app/bin/generic-app
+COPY --from=build /app/app/generic/target/universal/generic-app-1.0.2-SNAPSHOT.zip /
+RUN unzip -q generic-app-1.0.2-SNAPSHOT.zip && mv /generic-app-1.0.2-SNAPSHOT /app && chmod +x /app/bin/generic-app
 
 EXPOSE 9000
 

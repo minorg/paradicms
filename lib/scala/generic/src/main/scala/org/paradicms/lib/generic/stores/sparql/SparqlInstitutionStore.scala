@@ -3,8 +3,10 @@ package org.paradicms.lib.generic.stores.sparql
 import io.lemonlabs.uri.Uri
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.vocabulary.RDF
+import org.paradicms.lib.base.rdf.Rdf
 import org.paradicms.lib.base.stores.sparql.{SparqlAccessCheckGraphPatterns, SparqlConnectionLoanPatterns}
 import org.paradicms.lib.generic.models.domain.Institution
+import org.paradicms.lib.generic.models.domain.rdf.reads._
 import org.paradicms.lib.generic.rdf.vocabularies.CMS
 import org.paradicms.lib.generic.stores.InstitutionStore
 
@@ -31,7 +33,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGrap
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
-      val institutions = model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
+      val institutions = model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Rdf.read[Institution](resource))
       if (!institutions.isEmpty) institutions(0) else throw new NoSuchElementException
     }
   }
@@ -56,7 +58,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGrap
 
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
+      model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Rdf.read[Institution](resource))
     }
   }
 
@@ -84,7 +86,7 @@ trait SparqlInstitutionStore extends InstitutionStore with SparqlAccessCheckGrap
          |""".stripMargin)
     withQueryExecution(query) { queryExecution =>
       val model = queryExecution.execConstruct()
-      model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Institution(resource))
+      model.listSubjectsWithProperty(RDF.`type`, CMS.Institution).asScala.toList.map(resource => Rdf.read[Institution](resource))
     }
   }
 }
