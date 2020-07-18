@@ -24,7 +24,7 @@ jobs:
           command: |
             cd etl
             export PYTHONPATH=$PWD
-            python3 paradicms_etl/pipeline/generic_test_data/generic_test_data_pipeline.py
+            python3 paradicms_etl/pipelines/generic_test_data/generic_test_data_pipeline.py
   scala:
     docker:
       - image: circleci/openjdk:11
