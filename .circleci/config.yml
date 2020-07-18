@@ -1,7 +1,23 @@
 version: 2.1
 jobs:
+  py:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.8/site-packages
+      - restore_cache:
+          key: py-dependencies-{{ .Branch }}-{{ checksum "etl-requirements.txt" }}
+      - run: pip install -r etl/requirements.txt
+      - save_cache:
+          key: py-dependencies-{{ .Branch }}-{{ checksum "etl/requirements.txt" }}
+          paths:
+            - "~/.cache/pip"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.8/site-packages"
+      - run: python3 etl/paradicms_etl/pipeline/generic_test_data/generic_test_data_pipeline.py
   scala:
-    working_directory: ~/project
     docker:
       - image: circleci/openjdk:11
     steps:
@@ -60,7 +76,6 @@ jobs:
             - "~/.sbt"
             - "~/.m2"
   ts:
-    working_directory: ~/project
     docker:
       - image: circleci/node:10
     steps:
@@ -97,6 +112,7 @@ workflows:
   version: 2
   build:
     jobs:
+      - py
       - ts
       - scala:
           requires:
