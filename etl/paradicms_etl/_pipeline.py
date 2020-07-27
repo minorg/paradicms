@@ -1,7 +1,7 @@
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import Optional
+from typing import Dict, Optional
 
 from configargparse import ArgParser
 from rdflib import URIRef
@@ -45,8 +45,6 @@ class _Pipeline(ABC):
                                        help="force extract and transform, ignoring any cached data")
         arg_parser.add_argument("--force-extract", action="store_true",
                                        help="force extract, ignoring any cached data")
-        arg_parser.add_argument("--force-transform", action="store_true",
-                                       help="force transform, ignoring any cached data")
         arg_parser.add_argument("--fuseki-data-url", default="http://fuseki:3030/ds/data")
         arg_parser.add_argument(
             '--logging-level',
@@ -66,16 +64,17 @@ class _Pipeline(ABC):
         return self.__extractor
 
     @classmethod
-    def main(cls, args=None):
+    def main(cls, args: Optional[Dict[str, object]]=None):
         if args is None:
             arg_parser = ArgParser()
             cls.add_arguments(arg_parser)
             args = arg_parser.parse_args()
+            args = vars(args).copy()
 
-        if args.debug:
+        if args.get("debug", False):
             logging_level = logging.DEBUG
-        elif args.logging_level is not None:
-            logging_level = getattr(logging, args.logging_level.upper())
+        elif args.get("logging_level") is not None:
+            logging_level = getattr(logging, args["logging_level"].upper())
         else:
             logging_level = logging.INFO
         logging.basicConfig(
@@ -83,32 +82,27 @@ class _Pipeline(ABC):
             level=logging_level
         )
 
-        pipeline_kwds = vars(args).copy()
-        pipeline_kwds.pop("data_dir_path")
-        pipeline_kwds.pop("force")
-        pipeline_kwds.pop("force_extract")
-        pipeline_kwds.pop("force_transform")
-        pipeline_kwds.pop("logging_level")
-        try:
-            pipeline_kwds.pop("pipeline_module")
-        except KeyError:
-            pass
+        pipeline_kwds = args.copy()
+        for key in ("data_dir_path", "force", "force_extract", "logging_level", "pipeline_module"):
+            try:
+                pipeline_kwds.pop(key)
+            except KeyError:
+                pass
         pipeline = cls(**pipeline_kwds)
 
         from paradicms_etl.pipeline_wrapper import PipelineWrapper
-        pipeline_wrapper = PipelineWrapper(data_dir_path=Path(args.data_dir_path) if args.data_dir_path else None, pipeline=pipeline)
+        data_dir_path = args.get("data_dir_path")
+        if data_dir_path is not None:
+            data_dir_path = Path(data_dir_path)
+        pipeline_wrapper = PipelineWrapper(data_dir_path=data_dir_path, pipeline=pipeline)
 
-        force = bool(getattr(args, "force", False))
-        force_extract = force or bool(getattr(args, "force_extract", False))
-        force_load = force or bool(getattr(args, "force_load", False))
-        force_transform = force or bool(getattr(args, "force_transform", False))
+        force = bool(args.get("force", False))
+        force_extract = force or bool(args.get("force_extract", False))
+        force_load = force or bool(args.get("force_load", False))
 
         extract_kwds = pipeline_wrapper.extract(force=force_extract)
-        graph_or_kwds = pipeline_wrapper.transform(force=force_transform, **extract_kwds)
-        if isinstance(graph_or_kwds, dict):
-            pipeline_wrapper.load(force=force_load, **graph_or_kwds)
-        else:
-            pipeline_wrapper.load(force=force_load, graph=graph_or_kwds)
+        models = pipeline_wrapper.transform(**extract_kwds)
+        pipeline_wrapper.load(force=force_load, models=models)
 
     @property
     def id(self):
