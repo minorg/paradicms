@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "declaration": true,
+    "noEmit": false,
+    "outDir": "out"
+  },
+  "extends": "../gatsby-base/tsconfig.base.json"
+}
