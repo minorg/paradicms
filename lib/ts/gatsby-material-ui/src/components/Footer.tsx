@@ -2,7 +2,9 @@ import * as React from "react";
 import {Grid, makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
-  footerParagraph: {},
+  footerParagraph: {
+    "text-align": "center",
+  },
 }));
 
 export const Footer: React.FunctionComponent<{
