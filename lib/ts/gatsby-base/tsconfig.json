@@ -2,8 +2,14 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "declaration": true,
-    "noEmit": false,
-    "outDir": "out"
+    "declarationMap": true,
+    "outDir": "./dist"
   },
-  "extends": "./tsconfig.base.json"
+  "exclude": [
+    "./node_modules/*"
+  ],
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "./src/**/*"
+  ]
 }
