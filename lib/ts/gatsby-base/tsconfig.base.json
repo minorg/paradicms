@@ -1,28 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
     "lib": [
       "dom",
       "es6"
     ],
-    "sourceMap": true,
-    "jsx": "react",
-    "noUnusedLocals": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "types": [
-      "node"
-    ],
-    "esModuleInterop": true,
     "noEmit": false,
     "noEmitOnError": true,
-    "skipLibCheck": true
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es5",
+    "types": [
+      "node"
+    ]
   }
 }
