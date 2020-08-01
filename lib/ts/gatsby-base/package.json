@@ -14,8 +14,10 @@
     "gatsby-plugin-lunr": "^1.5.2",
     "gatsby-plugin-react-helmet": "^3.1.0",
     "gatsby-plugin-resolve-src": "^2.1.0",
+    "gatsby-plugin-ts": "^2.7.1",
+    "gatsby-plugin-ts-config": "^0.2.3",
+    "gatsby-plugin-tsconfig-paths": "^1.0.2",
     "gatsby-plugin-typegen": "^2.2.1",
-    "gatsby-plugin-typescript": "^2.1.0",
     "gatsby-plugin-use-query-params": "^1.0.1",
     "gatsby-source-filesystem": "^2.1.0",
     "gatsby-transformer-json": "^2.2.0",
@@ -32,6 +34,7 @@
     "webpack": "^4.44.1"
   },
   "devDependencies": {
+    "@zerollup/ts-transform-paths": "^1.7.18",
     "@typescript-eslint/eslint-plugin": "^2.17.0",
     "@typescript-eslint/parser": "^2.17.0",
     "eslint": "^6.8.0",
