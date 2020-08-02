@@ -1,7 +1,7 @@
 
 {
   "name": "Gatsby Schema",
-  "schemaPath": "schema.graphql",
+  "schemaPath": "./gatsby/graphql/schema.graphql",
   "extensions": {
     "endpoints": {
       "Gatsby GraphQL Endpoint": {
