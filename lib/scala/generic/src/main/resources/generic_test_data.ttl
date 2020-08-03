@@ -18,12 +18,7 @@
         "Institution rights" ;
     dcterms:rightsHolder "Institution rights holder" ;
     paradicms:collection <http://example.com/collection> ;
-    paradicms:owner paradicms:public ;
     foaf:name "Test institution" .
-
-<http://example.com/user> a paradicms:User ;
-    foaf:mbox "test@example.com" ;
-    foaf:name "Test user" .
 
 <http://example.com/collection> a paradicms:Collection ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
@@ -129,8 +124,7 @@
         <http://example.com/object96>,
         <http://example.com/object97>,
         <http://example.com/object98>,
-        <http://example.com/object99> ;
-    paradicms:owner paradicms:inherit .
+        <http://example.com/object99> .
 
 <http://example.com/object0> a paradicms:Object ;
     dcterms:description "Test description 0" ;
@@ -139,7 +133,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 0" ;
     dcterms:title "Test object 0" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object0Image0>,
         <https://place-hold.it/1000x1000?text=Object0Image1>,
         <https://place-hold.it/1000x1000?text=Object0Image2> .
@@ -151,7 +144,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 1" ;
     dcterms:title "Test object 1" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object1Image0>,
         <https://place-hold.it/1000x1000?text=Object1Image1>,
         <https://place-hold.it/1000x1000?text=Object1Image2> .
@@ -163,7 +155,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 10" ;
     dcterms:title "Test object 10" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object10Image0>,
         <https://place-hold.it/1000x1000?text=Object10Image1>,
         <https://place-hold.it/1000x1000?text=Object10Image2> .
@@ -175,7 +166,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 11" ;
     dcterms:title "Test object 11" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object11Image0>,
         <https://place-hold.it/1000x1000?text=Object11Image1>,
         <https://place-hold.it/1000x1000?text=Object11Image2> .
@@ -187,7 +177,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 12" ;
     dcterms:title "Test object 12" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object12Image0>,
         <https://place-hold.it/1000x1000?text=Object12Image1>,
         <https://place-hold.it/1000x1000?text=Object12Image2> .
@@ -199,7 +188,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 13" ;
     dcterms:title "Test object 13" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object13Image0>,
         <https://place-hold.it/1000x1000?text=Object13Image1>,
         <https://place-hold.it/1000x1000?text=Object13Image2> .
@@ -211,7 +199,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 14" ;
     dcterms:title "Test object 14" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object14Image0>,
         <https://place-hold.it/1000x1000?text=Object14Image1>,
         <https://place-hold.it/1000x1000?text=Object14Image2> .
@@ -223,7 +210,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 15" ;
     dcterms:title "Test object 15" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object15Image0>,
         <https://place-hold.it/1000x1000?text=Object15Image1>,
         <https://place-hold.it/1000x1000?text=Object15Image2> .
@@ -235,7 +221,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 16" ;
     dcterms:title "Test object 16" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object16Image0>,
         <https://place-hold.it/1000x1000?text=Object16Image1>,
         <https://place-hold.it/1000x1000?text=Object16Image2> .
@@ -247,7 +232,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 17" ;
     dcterms:title "Test object 17" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object17Image0>,
         <https://place-hold.it/1000x1000?text=Object17Image1>,
         <https://place-hold.it/1000x1000?text=Object17Image2> .
@@ -259,7 +243,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 18" ;
     dcterms:title "Test object 18" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object18Image0>,
         <https://place-hold.it/1000x1000?text=Object18Image1>,
         <https://place-hold.it/1000x1000?text=Object18Image2> .
@@ -271,7 +254,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 19" ;
     dcterms:title "Test object 19" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object19Image0>,
         <https://place-hold.it/1000x1000?text=Object19Image1>,
         <https://place-hold.it/1000x1000?text=Object19Image2> .
@@ -283,7 +265,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 2" ;
     dcterms:title "Test object 2" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object2Image0>,
         <https://place-hold.it/1000x1000?text=Object2Image1>,
         <https://place-hold.it/1000x1000?text=Object2Image2> .
@@ -295,7 +276,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 20" ;
     dcterms:title "Test object 20" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object20Image0>,
         <https://place-hold.it/1000x1000?text=Object20Image1>,
         <https://place-hold.it/1000x1000?text=Object20Image2> .
@@ -307,7 +287,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 21" ;
     dcterms:title "Test object 21" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object21Image0>,
         <https://place-hold.it/1000x1000?text=Object21Image1>,
         <https://place-hold.it/1000x1000?text=Object21Image2> .
@@ -319,7 +298,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 22" ;
     dcterms:title "Test object 22" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object22Image0>,
         <https://place-hold.it/1000x1000?text=Object22Image1>,
         <https://place-hold.it/1000x1000?text=Object22Image2> .
@@ -331,7 +309,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 23" ;
     dcterms:title "Test object 23" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object23Image0>,
         <https://place-hold.it/1000x1000?text=Object23Image1>,
         <https://place-hold.it/1000x1000?text=Object23Image2> .
@@ -343,7 +320,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 24" ;
     dcterms:title "Test object 24" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object24Image0>,
         <https://place-hold.it/1000x1000?text=Object24Image1>,
         <https://place-hold.it/1000x1000?text=Object24Image2> .
@@ -355,7 +331,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 25" ;
     dcterms:title "Test object 25" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object25Image0>,
         <https://place-hold.it/1000x1000?text=Object25Image1>,
         <https://place-hold.it/1000x1000?text=Object25Image2> .
@@ -367,7 +342,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 26" ;
     dcterms:title "Test object 26" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object26Image0>,
         <https://place-hold.it/1000x1000?text=Object26Image1>,
         <https://place-hold.it/1000x1000?text=Object26Image2> .
@@ -379,7 +353,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 27" ;
     dcterms:title "Test object 27" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object27Image0>,
         <https://place-hold.it/1000x1000?text=Object27Image1>,
         <https://place-hold.it/1000x1000?text=Object27Image2> .
@@ -391,7 +364,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 28" ;
     dcterms:title "Test object 28" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object28Image0>,
         <https://place-hold.it/1000x1000?text=Object28Image1>,
         <https://place-hold.it/1000x1000?text=Object28Image2> .
@@ -403,7 +375,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 29" ;
     dcterms:title "Test object 29" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object29Image0>,
         <https://place-hold.it/1000x1000?text=Object29Image1>,
         <https://place-hold.it/1000x1000?text=Object29Image2> .
@@ -415,7 +386,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 3" ;
     dcterms:title "Test object 3" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object3Image0>,
         <https://place-hold.it/1000x1000?text=Object3Image1>,
         <https://place-hold.it/1000x1000?text=Object3Image2> .
@@ -427,7 +397,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 30" ;
     dcterms:title "Test object 30" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object30Image0>,
         <https://place-hold.it/1000x1000?text=Object30Image1>,
         <https://place-hold.it/1000x1000?text=Object30Image2> .
@@ -439,7 +408,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 31" ;
     dcterms:title "Test object 31" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object31Image0>,
         <https://place-hold.it/1000x1000?text=Object31Image1>,
         <https://place-hold.it/1000x1000?text=Object31Image2> .
@@ -451,7 +419,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 32" ;
     dcterms:title "Test object 32" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object32Image0>,
         <https://place-hold.it/1000x1000?text=Object32Image1>,
         <https://place-hold.it/1000x1000?text=Object32Image2> .
@@ -463,7 +430,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 33" ;
     dcterms:title "Test object 33" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object33Image0>,
         <https://place-hold.it/1000x1000?text=Object33Image1>,
         <https://place-hold.it/1000x1000?text=Object33Image2> .
@@ -475,7 +441,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 34" ;
     dcterms:title "Test object 34" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object34Image0>,
         <https://place-hold.it/1000x1000?text=Object34Image1>,
         <https://place-hold.it/1000x1000?text=Object34Image2> .
@@ -487,7 +452,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 35" ;
     dcterms:title "Test object 35" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object35Image0>,
         <https://place-hold.it/1000x1000?text=Object35Image1>,
         <https://place-hold.it/1000x1000?text=Object35Image2> .
@@ -499,7 +463,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 36" ;
     dcterms:title "Test object 36" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object36Image0>,
         <https://place-hold.it/1000x1000?text=Object36Image1>,
         <https://place-hold.it/1000x1000?text=Object36Image2> .
@@ -511,7 +474,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 37" ;
     dcterms:title "Test object 37" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object37Image0>,
         <https://place-hold.it/1000x1000?text=Object37Image1>,
         <https://place-hold.it/1000x1000?text=Object37Image2> .
@@ -523,7 +485,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 38" ;
     dcterms:title "Test object 38" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object38Image0>,
         <https://place-hold.it/1000x1000?text=Object38Image1>,
         <https://place-hold.it/1000x1000?text=Object38Image2> .
@@ -535,7 +496,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 39" ;
     dcterms:title "Test object 39" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object39Image0>,
         <https://place-hold.it/1000x1000?text=Object39Image1>,
         <https://place-hold.it/1000x1000?text=Object39Image2> .
@@ -547,7 +507,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 4" ;
     dcterms:title "Test object 4" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object4Image0>,
         <https://place-hold.it/1000x1000?text=Object4Image1>,
         <https://place-hold.it/1000x1000?text=Object4Image2> .
@@ -559,7 +518,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 40" ;
     dcterms:title "Test object 40" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object40Image0>,
         <https://place-hold.it/1000x1000?text=Object40Image1>,
         <https://place-hold.it/1000x1000?text=Object40Image2> .
@@ -571,7 +529,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 41" ;
     dcterms:title "Test object 41" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object41Image0>,
         <https://place-hold.it/1000x1000?text=Object41Image1>,
         <https://place-hold.it/1000x1000?text=Object41Image2> .
@@ -583,7 +540,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 42" ;
     dcterms:title "Test object 42" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object42Image0>,
         <https://place-hold.it/1000x1000?text=Object42Image1>,
         <https://place-hold.it/1000x1000?text=Object42Image2> .
@@ -595,7 +551,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 43" ;
     dcterms:title "Test object 43" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object43Image0>,
         <https://place-hold.it/1000x1000?text=Object43Image1>,
         <https://place-hold.it/1000x1000?text=Object43Image2> .
@@ -607,7 +562,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 44" ;
     dcterms:title "Test object 44" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object44Image0>,
         <https://place-hold.it/1000x1000?text=Object44Image1>,
         <https://place-hold.it/1000x1000?text=Object44Image2> .
@@ -619,7 +573,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 45" ;
     dcterms:title "Test object 45" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object45Image0>,
         <https://place-hold.it/1000x1000?text=Object45Image1>,
         <https://place-hold.it/1000x1000?text=Object45Image2> .
@@ -631,7 +584,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 46" ;
     dcterms:title "Test object 46" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object46Image0>,
         <https://place-hold.it/1000x1000?text=Object46Image1>,
         <https://place-hold.it/1000x1000?text=Object46Image2> .
@@ -643,7 +595,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 47" ;
     dcterms:title "Test object 47" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object47Image0>,
         <https://place-hold.it/1000x1000?text=Object47Image1>,
         <https://place-hold.it/1000x1000?text=Object47Image2> .
@@ -655,7 +606,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 48" ;
     dcterms:title "Test object 48" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object48Image0>,
         <https://place-hold.it/1000x1000?text=Object48Image1>,
         <https://place-hold.it/1000x1000?text=Object48Image2> .
@@ -667,7 +617,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 49" ;
     dcterms:title "Test object 49" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object49Image0>,
         <https://place-hold.it/1000x1000?text=Object49Image1>,
         <https://place-hold.it/1000x1000?text=Object49Image2> .
@@ -679,7 +628,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 5" ;
     dcterms:title "Test object 5" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object5Image0>,
         <https://place-hold.it/1000x1000?text=Object5Image1>,
         <https://place-hold.it/1000x1000?text=Object5Image2> .
@@ -691,7 +639,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 50" ;
     dcterms:title "Test object 50" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object50Image0>,
         <https://place-hold.it/1000x1000?text=Object50Image1>,
         <https://place-hold.it/1000x1000?text=Object50Image2> .
@@ -703,7 +650,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 51" ;
     dcterms:title "Test object 51" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object51Image0>,
         <https://place-hold.it/1000x1000?text=Object51Image1>,
         <https://place-hold.it/1000x1000?text=Object51Image2> .
@@ -715,7 +661,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 52" ;
     dcterms:title "Test object 52" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object52Image0>,
         <https://place-hold.it/1000x1000?text=Object52Image1>,
         <https://place-hold.it/1000x1000?text=Object52Image2> .
@@ -727,7 +672,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 53" ;
     dcterms:title "Test object 53" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object53Image0>,
         <https://place-hold.it/1000x1000?text=Object53Image1>,
         <https://place-hold.it/1000x1000?text=Object53Image2> .
@@ -739,7 +683,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 54" ;
     dcterms:title "Test object 54" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object54Image0>,
         <https://place-hold.it/1000x1000?text=Object54Image1>,
         <https://place-hold.it/1000x1000?text=Object54Image2> .
@@ -751,7 +694,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 55" ;
     dcterms:title "Test object 55" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object55Image0>,
         <https://place-hold.it/1000x1000?text=Object55Image1>,
         <https://place-hold.it/1000x1000?text=Object55Image2> .
@@ -763,7 +705,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 56" ;
     dcterms:title "Test object 56" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object56Image0>,
         <https://place-hold.it/1000x1000?text=Object56Image1>,
         <https://place-hold.it/1000x1000?text=Object56Image2> .
@@ -775,7 +716,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 57" ;
     dcterms:title "Test object 57" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object57Image0>,
         <https://place-hold.it/1000x1000?text=Object57Image1>,
         <https://place-hold.it/1000x1000?text=Object57Image2> .
@@ -787,7 +727,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 58" ;
     dcterms:title "Test object 58" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object58Image0>,
         <https://place-hold.it/1000x1000?text=Object58Image1>,
         <https://place-hold.it/1000x1000?text=Object58Image2> .
@@ -799,7 +738,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 59" ;
     dcterms:title "Test object 59" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object59Image0>,
         <https://place-hold.it/1000x1000?text=Object59Image1>,
         <https://place-hold.it/1000x1000?text=Object59Image2> .
@@ -811,7 +749,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 6" ;
     dcterms:title "Test object 6" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object6Image0>,
         <https://place-hold.it/1000x1000?text=Object6Image1>,
         <https://place-hold.it/1000x1000?text=Object6Image2> .
@@ -823,7 +760,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 60" ;
     dcterms:title "Test object 60" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object60Image0>,
         <https://place-hold.it/1000x1000?text=Object60Image1>,
         <https://place-hold.it/1000x1000?text=Object60Image2> .
@@ -835,7 +771,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 61" ;
     dcterms:title "Test object 61" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object61Image0>,
         <https://place-hold.it/1000x1000?text=Object61Image1>,
         <https://place-hold.it/1000x1000?text=Object61Image2> .
@@ -847,7 +782,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 62" ;
     dcterms:title "Test object 62" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object62Image0>,
         <https://place-hold.it/1000x1000?text=Object62Image1>,
         <https://place-hold.it/1000x1000?text=Object62Image2> .
@@ -859,7 +793,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 63" ;
     dcterms:title "Test object 63" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object63Image0>,
         <https://place-hold.it/1000x1000?text=Object63Image1>,
         <https://place-hold.it/1000x1000?text=Object63Image2> .
@@ -871,7 +804,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 64" ;
     dcterms:title "Test object 64" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object64Image0>,
         <https://place-hold.it/1000x1000?text=Object64Image1>,
         <https://place-hold.it/1000x1000?text=Object64Image2> .
@@ -883,7 +815,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 65" ;
     dcterms:title "Test object 65" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object65Image0>,
         <https://place-hold.it/1000x1000?text=Object65Image1>,
         <https://place-hold.it/1000x1000?text=Object65Image2> .
@@ -895,7 +826,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 66" ;
     dcterms:title "Test object 66" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object66Image0>,
         <https://place-hold.it/1000x1000?text=Object66Image1>,
         <https://place-hold.it/1000x1000?text=Object66Image2> .
@@ -907,7 +837,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 67" ;
     dcterms:title "Test object 67" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object67Image0>,
         <https://place-hold.it/1000x1000?text=Object67Image1>,
         <https://place-hold.it/1000x1000?text=Object67Image2> .
@@ -919,7 +848,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 68" ;
     dcterms:title "Test object 68" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object68Image0>,
         <https://place-hold.it/1000x1000?text=Object68Image1>,
         <https://place-hold.it/1000x1000?text=Object68Image2> .
@@ -931,7 +859,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 69" ;
     dcterms:title "Test object 69" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object69Image0>,
         <https://place-hold.it/1000x1000?text=Object69Image1>,
         <https://place-hold.it/1000x1000?text=Object69Image2> .
@@ -943,7 +870,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 7" ;
     dcterms:title "Test object 7" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object7Image0>,
         <https://place-hold.it/1000x1000?text=Object7Image1>,
         <https://place-hold.it/1000x1000?text=Object7Image2> .
@@ -955,7 +881,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 70" ;
     dcterms:title "Test object 70" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object70Image0>,
         <https://place-hold.it/1000x1000?text=Object70Image1>,
         <https://place-hold.it/1000x1000?text=Object70Image2> .
@@ -967,7 +892,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 71" ;
     dcterms:title "Test object 71" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object71Image0>,
         <https://place-hold.it/1000x1000?text=Object71Image1>,
         <https://place-hold.it/1000x1000?text=Object71Image2> .
@@ -979,7 +903,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 72" ;
     dcterms:title "Test object 72" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object72Image0>,
         <https://place-hold.it/1000x1000?text=Object72Image1>,
         <https://place-hold.it/1000x1000?text=Object72Image2> .
@@ -991,7 +914,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 73" ;
     dcterms:title "Test object 73" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object73Image0>,
         <https://place-hold.it/1000x1000?text=Object73Image1>,
         <https://place-hold.it/1000x1000?text=Object73Image2> .
@@ -1003,7 +925,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 74" ;
     dcterms:title "Test object 74" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object74Image0>,
         <https://place-hold.it/1000x1000?text=Object74Image1>,
         <https://place-hold.it/1000x1000?text=Object74Image2> .
@@ -1015,7 +936,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 75" ;
     dcterms:title "Test object 75" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object75Image0>,
         <https://place-hold.it/1000x1000?text=Object75Image1>,
         <https://place-hold.it/1000x1000?text=Object75Image2> .
@@ -1027,7 +947,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 76" ;
     dcterms:title "Test object 76" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object76Image0>,
         <https://place-hold.it/1000x1000?text=Object76Image1>,
         <https://place-hold.it/1000x1000?text=Object76Image2> .
@@ -1039,7 +958,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 77" ;
     dcterms:title "Test object 77" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object77Image0>,
         <https://place-hold.it/1000x1000?text=Object77Image1>,
         <https://place-hold.it/1000x1000?text=Object77Image2> .
@@ -1051,7 +969,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 78" ;
     dcterms:title "Test object 78" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object78Image0>,
         <https://place-hold.it/1000x1000?text=Object78Image1>,
         <https://place-hold.it/1000x1000?text=Object78Image2> .
@@ -1063,7 +980,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 79" ;
     dcterms:title "Test object 79" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object79Image0>,
         <https://place-hold.it/1000x1000?text=Object79Image1>,
         <https://place-hold.it/1000x1000?text=Object79Image2> .
@@ -1075,7 +991,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 8" ;
     dcterms:title "Test object 8" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object8Image0>,
         <https://place-hold.it/1000x1000?text=Object8Image1>,
         <https://place-hold.it/1000x1000?text=Object8Image2> .
@@ -1087,7 +1002,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 80" ;
     dcterms:title "Test object 80" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object80Image0>,
         <https://place-hold.it/1000x1000?text=Object80Image1>,
         <https://place-hold.it/1000x1000?text=Object80Image2> .
@@ -1099,7 +1013,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 81" ;
     dcterms:title "Test object 81" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object81Image0>,
         <https://place-hold.it/1000x1000?text=Object81Image1>,
         <https://place-hold.it/1000x1000?text=Object81Image2> .
@@ -1111,7 +1024,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 82" ;
     dcterms:title "Test object 82" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object82Image0>,
         <https://place-hold.it/1000x1000?text=Object82Image1>,
         <https://place-hold.it/1000x1000?text=Object82Image2> .
@@ -1123,7 +1035,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 83" ;
     dcterms:title "Test object 83" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object83Image0>,
         <https://place-hold.it/1000x1000?text=Object83Image1>,
         <https://place-hold.it/1000x1000?text=Object83Image2> .
@@ -1135,7 +1046,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 84" ;
     dcterms:title "Test object 84" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object84Image0>,
         <https://place-hold.it/1000x1000?text=Object84Image1>,
         <https://place-hold.it/1000x1000?text=Object84Image2> .
@@ -1147,7 +1057,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 85" ;
     dcterms:title "Test object 85" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object85Image0>,
         <https://place-hold.it/1000x1000?text=Object85Image1>,
         <https://place-hold.it/1000x1000?text=Object85Image2> .
@@ -1159,7 +1068,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 86" ;
     dcterms:title "Test object 86" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object86Image0>,
         <https://place-hold.it/1000x1000?text=Object86Image1>,
         <https://place-hold.it/1000x1000?text=Object86Image2> .
@@ -1171,7 +1079,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 87" ;
     dcterms:title "Test object 87" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object87Image0>,
         <https://place-hold.it/1000x1000?text=Object87Image1>,
         <https://place-hold.it/1000x1000?text=Object87Image2> .
@@ -1183,7 +1090,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 88" ;
     dcterms:title "Test object 88" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object88Image0>,
         <https://place-hold.it/1000x1000?text=Object88Image1>,
         <https://place-hold.it/1000x1000?text=Object88Image2> .
@@ -1195,7 +1101,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 89" ;
     dcterms:title "Test object 89" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object89Image0>,
         <https://place-hold.it/1000x1000?text=Object89Image1>,
         <https://place-hold.it/1000x1000?text=Object89Image2> .
@@ -1207,7 +1112,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 9" ;
     dcterms:title "Test object 9" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object9Image0>,
         <https://place-hold.it/1000x1000?text=Object9Image1>,
         <https://place-hold.it/1000x1000?text=Object9Image2> .
@@ -1219,7 +1123,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 90" ;
     dcterms:title "Test object 90" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object90Image0>,
         <https://place-hold.it/1000x1000?text=Object90Image1>,
         <https://place-hold.it/1000x1000?text=Object90Image2> .
@@ -1231,7 +1134,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 91" ;
     dcterms:title "Test object 91" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object91Image0>,
         <https://place-hold.it/1000x1000?text=Object91Image1>,
         <https://place-hold.it/1000x1000?text=Object91Image2> .
@@ -1243,7 +1145,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 92" ;
     dcterms:title "Test object 92" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object92Image0>,
         <https://place-hold.it/1000x1000?text=Object92Image1>,
         <https://place-hold.it/1000x1000?text=Object92Image2> .
@@ -1255,7 +1156,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 93" ;
     dcterms:title "Test object 93" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object93Image0>,
         <https://place-hold.it/1000x1000?text=Object93Image1>,
         <https://place-hold.it/1000x1000?text=Object93Image2> .
@@ -1267,7 +1167,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 94" ;
     dcterms:title "Test object 94" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object94Image0>,
         <https://place-hold.it/1000x1000?text=Object94Image1>,
         <https://place-hold.it/1000x1000?text=Object94Image2> .
@@ -1279,7 +1178,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 95" ;
     dcterms:title "Test object 95" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object95Image0>,
         <https://place-hold.it/1000x1000?text=Object95Image1>,
         <https://place-hold.it/1000x1000?text=Object95Image2> .
@@ -1291,7 +1189,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 96" ;
     dcterms:title "Test object 96" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object96Image0>,
         <https://place-hold.it/1000x1000?text=Object96Image1>,
         <https://place-hold.it/1000x1000?text=Object96Image2> .
@@ -1303,7 +1200,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 97" ;
     dcterms:title "Test object 97" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object97Image0>,
         <https://place-hold.it/1000x1000?text=Object97Image1>,
         <https://place-hold.it/1000x1000?text=Object97Image2> .
@@ -1315,7 +1211,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 98" ;
     dcterms:title "Test object 98" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object98Image0>,
         <https://place-hold.it/1000x1000?text=Object98Image1>,
         <https://place-hold.it/1000x1000?text=Object98Image2> .
@@ -1327,7 +1222,6 @@
     dcterms:rightsHolder "Object rights holder" ;
     dcterms:subject "Test subject 99" ;
     dcterms:title "Test object 99" ;
-    paradicms:owner paradicms:inherit ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Object99Image0>,
         <https://place-hold.it/1000x1000?text=Object99Image1>,
         <https://place-hold.it/1000x1000?text=Object99Image2> .
