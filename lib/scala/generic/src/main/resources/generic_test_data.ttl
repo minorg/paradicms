@@ -47,11 +47,6 @@
         <http://example.com/institution0/collection0/object18>,
         <http://example.com/institution0/collection0/object19>,
         <http://example.com/institution0/collection0/object2>,
-        <http://example.com/institution0/collection0/object20>,
-        <http://example.com/institution0/collection0/object21>,
-        <http://example.com/institution0/collection0/object22>,
-        <http://example.com/institution0/collection0/object23>,
-        <http://example.com/institution0/collection0/object24>,
         <http://example.com/institution0/collection0/object3>,
         <http://example.com/institution0/collection0/object4>,
         <http://example.com/institution0/collection0/object5>,
@@ -195,56 +190,6 @@
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object2Image1> .
 
-<http://example.com/institution0/collection0/object20> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 20 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 20 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 20 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 20 subject" ;
-    dcterms:title "Institution 0 collection 0 object 20" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object20Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection0Object20Image1> .
-
-<http://example.com/institution0/collection0/object21> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 21 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 21 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 21 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 21 subject" ;
-    dcterms:title "Institution 0 collection 0 object 21" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object21Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection0Object21Image1> .
-
-<http://example.com/institution0/collection0/object22> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 22 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 22 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 22 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 22 subject" ;
-    dcterms:title "Institution 0 collection 0 object 22" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object22Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection0Object22Image1> .
-
-<http://example.com/institution0/collection0/object23> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 23 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 23 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 23 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 23 subject" ;
-    dcterms:title "Institution 0 collection 0 object 23" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object23Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection0Object23Image1> .
-
-<http://example.com/institution0/collection0/object24> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 24 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 24 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 24 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 24 subject" ;
-    dcterms:title "Institution 0 collection 0 object 24" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object24Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection0Object24Image1> .
-
 <http://example.com/institution0/collection0/object3> a paradicms:Object ;
     dcterms:description "Institution 0 collection 0 object 3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
@@ -333,11 +278,6 @@
         <http://example.com/institution0/collection1/object18>,
         <http://example.com/institution0/collection1/object19>,
         <http://example.com/institution0/collection1/object2>,
-        <http://example.com/institution0/collection1/object20>,
-        <http://example.com/institution0/collection1/object21>,
-        <http://example.com/institution0/collection1/object22>,
-        <http://example.com/institution0/collection1/object23>,
-        <http://example.com/institution0/collection1/object24>,
         <http://example.com/institution0/collection1/object3>,
         <http://example.com/institution0/collection1/object4>,
         <http://example.com/institution0/collection1/object5>,
@@ -481,56 +421,6 @@
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object2Image1> .
 
-<http://example.com/institution0/collection1/object20> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 20 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 20 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 20 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 20 subject" ;
-    dcterms:title "Institution 0 collection 1 object 20" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object20Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection1Object20Image1> .
-
-<http://example.com/institution0/collection1/object21> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 21 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 21 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 21 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 21 subject" ;
-    dcterms:title "Institution 0 collection 1 object 21" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object21Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection1Object21Image1> .
-
-<http://example.com/institution0/collection1/object22> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 22 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 22 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 22 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 22 subject" ;
-    dcterms:title "Institution 0 collection 1 object 22" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object22Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection1Object22Image1> .
-
-<http://example.com/institution0/collection1/object23> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 23 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 23 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 23 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 23 subject" ;
-    dcterms:title "Institution 0 collection 1 object 23" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object23Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection1Object23Image1> .
-
-<http://example.com/institution0/collection1/object24> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 24 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 24 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 24 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 24 subject" ;
-    dcterms:title "Institution 0 collection 1 object 24" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object24Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0Collection1Object24Image1> .
-
 <http://example.com/institution0/collection1/object3> a paradicms:Object ;
     dcterms:description "Institution 0 collection 1 object 3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
@@ -619,11 +509,6 @@
         <http://example.com/institution1/collection0/object18>,
         <http://example.com/institution1/collection0/object19>,
         <http://example.com/institution1/collection0/object2>,
-        <http://example.com/institution1/collection0/object20>,
-        <http://example.com/institution1/collection0/object21>,
-        <http://example.com/institution1/collection0/object22>,
-        <http://example.com/institution1/collection0/object23>,
-        <http://example.com/institution1/collection0/object24>,
         <http://example.com/institution1/collection0/object3>,
         <http://example.com/institution1/collection0/object4>,
         <http://example.com/institution1/collection0/object5>,
@@ -767,56 +652,6 @@
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object2Image1> .
 
-<http://example.com/institution1/collection0/object20> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 20 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 20 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 20 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 20 subject" ;
-    dcterms:title "Institution 1 collection 0 object 20" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object20Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection0Object20Image1> .
-
-<http://example.com/institution1/collection0/object21> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 21 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 21 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 21 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 21 subject" ;
-    dcterms:title "Institution 1 collection 0 object 21" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object21Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection0Object21Image1> .
-
-<http://example.com/institution1/collection0/object22> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 22 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 22 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 22 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 22 subject" ;
-    dcterms:title "Institution 1 collection 0 object 22" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object22Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection0Object22Image1> .
-
-<http://example.com/institution1/collection0/object23> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 23 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 23 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 23 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 23 subject" ;
-    dcterms:title "Institution 1 collection 0 object 23" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object23Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection0Object23Image1> .
-
-<http://example.com/institution1/collection0/object24> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 24 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 24 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 24 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 24 subject" ;
-    dcterms:title "Institution 1 collection 0 object 24" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object24Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection0Object24Image1> .
-
 <http://example.com/institution1/collection0/object3> a paradicms:Object ;
     dcterms:description "Institution 1 collection 0 object 3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
@@ -905,11 +740,6 @@
         <http://example.com/institution1/collection1/object18>,
         <http://example.com/institution1/collection1/object19>,
         <http://example.com/institution1/collection1/object2>,
-        <http://example.com/institution1/collection1/object20>,
-        <http://example.com/institution1/collection1/object21>,
-        <http://example.com/institution1/collection1/object22>,
-        <http://example.com/institution1/collection1/object23>,
-        <http://example.com/institution1/collection1/object24>,
         <http://example.com/institution1/collection1/object3>,
         <http://example.com/institution1/collection1/object4>,
         <http://example.com/institution1/collection1/object5>,
@@ -1052,56 +882,6 @@
     dcterms:title "Institution 1 collection 1 object 2" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object2Image1> .
-
-<http://example.com/institution1/collection1/object20> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 20 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 20 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 20 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 20 subject" ;
-    dcterms:title "Institution 1 collection 1 object 20" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object20Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection1Object20Image1> .
-
-<http://example.com/institution1/collection1/object21> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 21 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 21 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 21 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 21 subject" ;
-    dcterms:title "Institution 1 collection 1 object 21" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object21Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection1Object21Image1> .
-
-<http://example.com/institution1/collection1/object22> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 22 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 22 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 22 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 22 subject" ;
-    dcterms:title "Institution 1 collection 1 object 22" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object22Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection1Object22Image1> .
-
-<http://example.com/institution1/collection1/object23> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 23 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 23 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 23 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 23 subject" ;
-    dcterms:title "Institution 1 collection 1 object 23" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object23Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection1Object23Image1> .
-
-<http://example.com/institution1/collection1/object24> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 24 description" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 24 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 24 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 24 subject" ;
-    dcterms:title "Institution 1 collection 1 object 24" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object24Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1Collection1Object24Image1> .
 
 <http://example.com/institution1/collection1/object3> a paradicms:Object ;
     dcterms:description "Institution 1 collection 1 object 3 description" ;
@@ -1316,66 +1096,6 @@
     exif:width 1000 ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object1Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection0Object1Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object20Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object20Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object20Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object20Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object20Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object20Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object21Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object21Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object21Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object21Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object21Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object21Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object22Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object22Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object22Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object22Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object22Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object22Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object23Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object23Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object23Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object23Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object23Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object23Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object24Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object24Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object24Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection0Object24Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection0Object24Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection0Object24Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection0Object2Image0> a paradicms:Image ;
     exif:height 1000 ;
@@ -1616,66 +1336,6 @@
     exif:width 1000 ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object1Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection1Object1Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object20Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object20Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object20Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object20Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object20Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object20Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object21Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object21Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object21Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object21Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object21Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object21Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object22Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object22Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object22Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object22Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object22Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object22Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object23Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object23Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object23Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object23Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object23Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object23Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object24Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object24Image0>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object24Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution0Collection1Object24Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object24Image1>,
-        <https://place-hold.it/75x75?text=Institution0Collection1Object24Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution0Collection1Object2Image0> a paradicms:Image ;
     exif:height 1000 ;
@@ -1977,66 +1637,6 @@
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object1Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection0Object1Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object20Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object20Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object20Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object20Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object20Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object20Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object21Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object21Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object21Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object21Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object21Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object21Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object22Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object22Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object22Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object22Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object22Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object22Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object23Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object23Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object23Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object23Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object23Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object23Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object24Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object24Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object24Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection0Object24Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection0Object24Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection0Object24Image1> .
-
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object2Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -2276,66 +1876,6 @@
     exif:width 1000 ;
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object1Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection1Object1Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object20Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object20Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object20Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object20Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object20Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object20Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object21Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object21Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object21Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object21Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object21Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object21Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object22Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object22Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object22Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object22Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object22Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object22Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object23Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object23Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object23Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object23Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object23Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object23Image1> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object24Image0> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object24Image0>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object24Image0> .
-
-<https://place-hold.it/1000x1000?text=Institution1Collection1Object24Image1> a paradicms:Image ;
-    exif:height 1000 ;
-    exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object24Image1>,
-        <https://place-hold.it/75x75?text=Institution1Collection1Object24Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection1Object2Image0> a paradicms:Image ;
     exif:height 1000 ;
@@ -2589,46 +2129,6 @@
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0Collection0Object20Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object20Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object21Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object21Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object22Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object22Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object23Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object23Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object24Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection0Object24Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
 <https://place-hold.it/600x600?text=Institution0Collection0Object2Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
@@ -2786,46 +2286,6 @@
     paradicms:imageMaxWidth 600 .
 
 <https://place-hold.it/600x600?text=Institution0Collection1Object1Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object20Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object20Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object21Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object21Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object22Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object22Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object23Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object23Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object24Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution0Collection1Object24Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
@@ -3029,46 +2489,6 @@
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1Collection0Object20Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object20Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object21Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object21Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object22Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object22Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object23Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object23Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object24Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection0Object24Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
 <https://place-hold.it/600x600?text=Institution1Collection0Object2Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
@@ -3226,46 +2646,6 @@
     paradicms:imageMaxWidth 600 .
 
 <https://place-hold.it/600x600?text=Institution1Collection1Object1Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object20Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object20Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object21Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object21Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object22Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object22Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object23Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object23Image1> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object24Image0> a paradicms:Image ;
-    paradicms:imageMaxHeight 600 ;
-    paradicms:imageMaxWidth 600 .
-
-<https://place-hold.it/600x600?text=Institution1Collection1Object24Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
@@ -3469,46 +2849,6 @@
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0Collection0Object20Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object20Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object21Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object21Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object22Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object22Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object23Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object23Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object24Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection0Object24Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
 <https://place-hold.it/75x75?text=Institution0Collection0Object2Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
@@ -3666,46 +3006,6 @@
     exif:width 75 .
 
 <https://place-hold.it/75x75?text=Institution0Collection1Object1Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object20Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object20Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object21Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object21Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object22Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object22Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object23Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object23Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object24Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution0Collection1Object24Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
@@ -3909,46 +3209,6 @@
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1Collection0Object20Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object20Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object21Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object21Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object22Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object22Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object23Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object23Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object24Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection0Object24Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
 <https://place-hold.it/75x75?text=Institution1Collection0Object2Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
@@ -4106,46 +3366,6 @@
     exif:width 75 .
 
 <https://place-hold.it/75x75?text=Institution1Collection1Object1Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object20Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object20Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object21Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object21Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object22Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object22Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object23Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object23Image1> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object24Image0> a paradicms:Image ;
-    exif:height 75 ;
-    exif:width 75 .
-
-<https://place-hold.it/75x75?text=Institution1Collection1Object24Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
