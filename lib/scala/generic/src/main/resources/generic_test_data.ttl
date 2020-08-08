@@ -58,7 +58,12 @@
         <http://example.com/institution0/collection0/object6>,
         <http://example.com/institution0/collection0/object7>,
         <http://example.com/institution0/collection0/object8>,
-        <http://example.com/institution0/collection0/object9> .
+        <http://example.com/institution0/collection0/object9>,
+        <http://example.com/institution0/shared/object0>,
+        <http://example.com/institution0/shared/object1>,
+        <http://example.com/institution0/shared/object2>,
+        <http://example.com/institution0/shared/object3>,
+        <http://example.com/institution0/shared/object4> .
 
 <http://example.com/institution0/collection0/object0> a paradicms:Object ;
     dcterms:description "Institution 0 collection 0 object 0 description" ;
@@ -339,7 +344,12 @@
         <http://example.com/institution0/collection1/object6>,
         <http://example.com/institution0/collection1/object7>,
         <http://example.com/institution0/collection1/object8>,
-        <http://example.com/institution0/collection1/object9> .
+        <http://example.com/institution0/collection1/object9>,
+        <http://example.com/institution0/shared/object0>,
+        <http://example.com/institution0/shared/object1>,
+        <http://example.com/institution0/shared/object2>,
+        <http://example.com/institution0/shared/object3>,
+        <http://example.com/institution0/shared/object4> .
 
 <http://example.com/institution0/collection1/object0> a paradicms:Object ;
     dcterms:description "Institution 0 collection 1 object 0 description" ;
@@ -620,7 +630,12 @@
         <http://example.com/institution1/collection0/object6>,
         <http://example.com/institution1/collection0/object7>,
         <http://example.com/institution1/collection0/object8>,
-        <http://example.com/institution1/collection0/object9> .
+        <http://example.com/institution1/collection0/object9>,
+        <http://example.com/institution1/shared/object0>,
+        <http://example.com/institution1/shared/object1>,
+        <http://example.com/institution1/shared/object2>,
+        <http://example.com/institution1/shared/object3>,
+        <http://example.com/institution1/shared/object4> .
 
 <http://example.com/institution1/collection0/object0> a paradicms:Object ;
     dcterms:description "Institution 1 collection 0 object 0 description" ;
@@ -901,7 +916,12 @@
         <http://example.com/institution1/collection1/object6>,
         <http://example.com/institution1/collection1/object7>,
         <http://example.com/institution1/collection1/object8>,
-        <http://example.com/institution1/collection1/object9> .
+        <http://example.com/institution1/collection1/object9>,
+        <http://example.com/institution1/shared/object0>,
+        <http://example.com/institution1/shared/object1>,
+        <http://example.com/institution1/shared/object2>,
+        <http://example.com/institution1/shared/object3>,
+        <http://example.com/institution1/shared/object4> .
 
 <http://example.com/institution1/collection1/object0> a paradicms:Object ;
     dcterms:description "Institution 1 collection 1 object 0 description" ;
@@ -1753,6 +1773,66 @@
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object9Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection1Object9Image1> .
 
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image0>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image1>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image0>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image1>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image0>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image1>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image0>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image1>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image0>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image1>,
+        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image1> .
+
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object0Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
@@ -2353,6 +2433,66 @@
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object9Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection1Object9Image1> .
 
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image0>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image1>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image0>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image1>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image0>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image1>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image0>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image1>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image1> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image0> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image0>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image0> .
+
+<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image1> a paradicms:Image ;
+    exif:height 1000 ;
+    exif:width 1000 ;
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image1>,
+        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image1> .
+
 <https://place-hold.it/600x600?text=Institution0Collection0Object0Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
@@ -2750,6 +2890,46 @@
     paradicms:imageMaxWidth 600 .
 
 <https://place-hold.it/600x600?text=Institution0Collection1Object9Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
@@ -3153,6 +3333,46 @@
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image0> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
+<https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image1> a paradicms:Image ;
+    paradicms:imageMaxHeight 600 ;
+    paradicms:imageMaxWidth 600 .
+
 <https://place-hold.it/75x75?text=Institution0Collection0Object0Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
@@ -3550,6 +3770,46 @@
     exif:width 75 .
 
 <https://place-hold.it/75x75?text=Institution0Collection1Object9Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
@@ -3952,4 +4212,144 @@
 <https://place-hold.it/75x75?text=Institution1Collection1Object9Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image0> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image1> a paradicms:Image ;
+    exif:height 75 ;
+    exif:width 75 .
+
+<http://example.com/institution0/shared/object0> a paradicms:Object ;
+    dcterms:description "Institution 0 shared object 0 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 0 shared object 0 rights" ;
+    dcterms:rightsHolder "Institution 0 shared object 0 rights holder" ;
+    dcterms:subject "Institution 0 shared object 0 subject" ;
+    dcterms:title "Institution 0 shared object 0" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image1> .
+
+<http://example.com/institution0/shared/object1> a paradicms:Object ;
+    dcterms:description "Institution 0 shared object 1 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 0 shared object 1 rights" ;
+    dcterms:rightsHolder "Institution 0 shared object 1 rights holder" ;
+    dcterms:subject "Institution 0 shared object 1 subject" ;
+    dcterms:title "Institution 0 shared object 1" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image1> .
+
+<http://example.com/institution0/shared/object2> a paradicms:Object ;
+    dcterms:description "Institution 0 shared object 2 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 0 shared object 2 rights" ;
+    dcterms:rightsHolder "Institution 0 shared object 2 rights holder" ;
+    dcterms:subject "Institution 0 shared object 2 subject" ;
+    dcterms:title "Institution 0 shared object 2" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image1> .
+
+<http://example.com/institution0/shared/object3> a paradicms:Object ;
+    dcterms:description "Institution 0 shared object 3 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 0 shared object 3 rights" ;
+    dcterms:rightsHolder "Institution 0 shared object 3 rights holder" ;
+    dcterms:subject "Institution 0 shared object 3 subject" ;
+    dcterms:title "Institution 0 shared object 3" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image1> .
+
+<http://example.com/institution0/shared/object4> a paradicms:Object ;
+    dcterms:description "Institution 0 shared object 4 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 0 shared object 4 rights" ;
+    dcterms:rightsHolder "Institution 0 shared object 4 rights holder" ;
+    dcterms:subject "Institution 0 shared object 4 subject" ;
+    dcterms:title "Institution 0 shared object 4" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image1> .
+
+<http://example.com/institution1/shared/object0> a paradicms:Object ;
+    dcterms:description "Institution 1 shared object 0 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 1 shared object 0 rights" ;
+    dcterms:rightsHolder "Institution 1 shared object 0 rights holder" ;
+    dcterms:subject "Institution 1 shared object 0 subject" ;
+    dcterms:title "Institution 1 shared object 0" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image1> .
+
+<http://example.com/institution1/shared/object1> a paradicms:Object ;
+    dcterms:description "Institution 1 shared object 1 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 1 shared object 1 rights" ;
+    dcterms:rightsHolder "Institution 1 shared object 1 rights holder" ;
+    dcterms:subject "Institution 1 shared object 1 subject" ;
+    dcterms:title "Institution 1 shared object 1" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image1> .
+
+<http://example.com/institution1/shared/object2> a paradicms:Object ;
+    dcterms:description "Institution 1 shared object 2 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 1 shared object 2 rights" ;
+    dcterms:rightsHolder "Institution 1 shared object 2 rights holder" ;
+    dcterms:subject "Institution 1 shared object 2 subject" ;
+    dcterms:title "Institution 1 shared object 2" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image1> .
+
+<http://example.com/institution1/shared/object3> a paradicms:Object ;
+    dcterms:description "Institution 1 shared object 3 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 1 shared object 3 rights" ;
+    dcterms:rightsHolder "Institution 1 shared object 3 rights holder" ;
+    dcterms:subject "Institution 1 shared object 3 subject" ;
+    dcterms:title "Institution 1 shared object 3" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image1> .
+
+<http://example.com/institution1/shared/object4> a paradicms:Object ;
+    dcterms:description "Institution 1 shared object 4 description" ;
+    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
+        "Institution 1 shared object 4 rights" ;
+    dcterms:rightsHolder "Institution 1 shared object 4 rights holder" ;
+    dcterms:subject "Institution 1 shared object 4 subject" ;
+    dcterms:title "Institution 1 shared object 4" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image1> .
 
