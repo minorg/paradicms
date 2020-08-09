@@ -15,25 +15,25 @@
 
 <http://example.com/institution0> a paradicms:Institution ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 rights" ;
-    dcterms:rightsHolder "Institution 0 rights holder" ;
+        "Institution0 rights" ;
+    dcterms:rightsHolder "Institution0 rights holder" ;
     paradicms:collection <http://example.com/institution0/collection0>,
         <http://example.com/institution0/collection1> ;
-    foaf:name "Institution 0" .
+    foaf:name "Institution0" .
 
 <http://example.com/institution1> a paradicms:Institution ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 rights" ;
-    dcterms:rightsHolder "Institution 1 rights holder" ;
+        "Institution1 rights" ;
+    dcterms:rightsHolder "Institution1 rights holder" ;
     paradicms:collection <http://example.com/institution1/collection0>,
         <http://example.com/institution1/collection1> ;
-    foaf:name "Institution 1" .
+    foaf:name "Institution1" .
 
 <http://example.com/institution0/collection0> a paradicms:Collection ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 rights holder" ;
-    dcterms:title "Institution 0 collection 0" ;
+        "Institution0Collection0 rights" ;
+    dcterms:rightsHolder "Institution0Collection0 rights holder" ;
+    dcterms:title "Institution0Collection0" ;
     paradicms:object <http://example.com/institution0/collection0/object0>,
         <http://example.com/institution0/collection0/object1>,
         <http://example.com/institution0/collection0/object10>,
@@ -61,210 +61,210 @@
         <http://example.com/institution0/shared/object4> .
 
 <http://example.com/institution0/collection0/object0> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 0 description" ;
+    dcterms:description "Institution0Collection0Object0 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 0 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 0 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 0 subject" ;
-    dcterms:title "Institution 0 collection 0 object 0" ;
+        "Institution0Collection0Object0 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object0 rights holder" ;
+    dcterms:subject "Institution0Collection0Object0 subject" ;
+    dcterms:title "Institution0Collection0Object0" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object0Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object0Image1> .
 
 <http://example.com/institution0/collection0/object1> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 1 description" ;
+    dcterms:description "Institution0Collection0Object1 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 1 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 1 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 1 subject" ;
-    dcterms:title "Institution 0 collection 0 object 1" ;
+        "Institution0Collection0Object1 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object1 rights holder" ;
+    dcterms:subject "Institution0Collection0Object1 subject" ;
+    dcterms:title "Institution0Collection0Object1" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object1Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object1Image1> .
 
 <http://example.com/institution0/collection0/object10> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 10 description" ;
+    dcterms:description "Institution0Collection0Object10 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 10 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 10 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 10 subject" ;
-    dcterms:title "Institution 0 collection 0 object 10" ;
+        "Institution0Collection0Object10 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object10 rights holder" ;
+    dcterms:subject "Institution0Collection0Object10 subject" ;
+    dcterms:title "Institution0Collection0Object10" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object10Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object10Image1> .
 
 <http://example.com/institution0/collection0/object11> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 11 description" ;
+    dcterms:description "Institution0Collection0Object11 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 11 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 11 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 11 subject" ;
-    dcterms:title "Institution 0 collection 0 object 11" ;
+        "Institution0Collection0Object11 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object11 rights holder" ;
+    dcterms:subject "Institution0Collection0Object11 subject" ;
+    dcterms:title "Institution0Collection0Object11" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object11Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object11Image1> .
 
 <http://example.com/institution0/collection0/object12> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 12 description" ;
+    dcterms:description "Institution0Collection0Object12 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 12 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 12 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 12 subject" ;
-    dcterms:title "Institution 0 collection 0 object 12" ;
+        "Institution0Collection0Object12 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object12 rights holder" ;
+    dcterms:subject "Institution0Collection0Object12 subject" ;
+    dcterms:title "Institution0Collection0Object12" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object12Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object12Image1> .
 
 <http://example.com/institution0/collection0/object13> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 13 description" ;
+    dcterms:description "Institution0Collection0Object13 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 13 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 13 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 13 subject" ;
-    dcterms:title "Institution 0 collection 0 object 13" ;
+        "Institution0Collection0Object13 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object13 rights holder" ;
+    dcterms:subject "Institution0Collection0Object13 subject" ;
+    dcterms:title "Institution0Collection0Object13" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object13Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object13Image1> .
 
 <http://example.com/institution0/collection0/object14> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 14 description" ;
+    dcterms:description "Institution0Collection0Object14 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 14 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 14 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 14 subject" ;
-    dcterms:title "Institution 0 collection 0 object 14" ;
+        "Institution0Collection0Object14 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object14 rights holder" ;
+    dcterms:subject "Institution0Collection0Object14 subject" ;
+    dcterms:title "Institution0Collection0Object14" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object14Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object14Image1> .
 
 <http://example.com/institution0/collection0/object15> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 15 description" ;
+    dcterms:description "Institution0Collection0Object15 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 15 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 15 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 15 subject" ;
-    dcterms:title "Institution 0 collection 0 object 15" ;
+        "Institution0Collection0Object15 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object15 rights holder" ;
+    dcterms:subject "Institution0Collection0Object15 subject" ;
+    dcterms:title "Institution0Collection0Object15" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object15Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object15Image1> .
 
 <http://example.com/institution0/collection0/object16> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 16 description" ;
+    dcterms:description "Institution0Collection0Object16 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 16 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 16 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 16 subject" ;
-    dcterms:title "Institution 0 collection 0 object 16" ;
+        "Institution0Collection0Object16 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object16 rights holder" ;
+    dcterms:subject "Institution0Collection0Object16 subject" ;
+    dcterms:title "Institution0Collection0Object16" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object16Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object16Image1> .
 
 <http://example.com/institution0/collection0/object17> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 17 description" ;
+    dcterms:description "Institution0Collection0Object17 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 17 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 17 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 17 subject" ;
-    dcterms:title "Institution 0 collection 0 object 17" ;
+        "Institution0Collection0Object17 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object17 rights holder" ;
+    dcterms:subject "Institution0Collection0Object17 subject" ;
+    dcterms:title "Institution0Collection0Object17" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object17Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object17Image1> .
 
 <http://example.com/institution0/collection0/object18> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 18 description" ;
+    dcterms:description "Institution0Collection0Object18 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 18 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 18 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 18 subject" ;
-    dcterms:title "Institution 0 collection 0 object 18" ;
+        "Institution0Collection0Object18 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object18 rights holder" ;
+    dcterms:subject "Institution0Collection0Object18 subject" ;
+    dcterms:title "Institution0Collection0Object18" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object18Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object18Image1> .
 
 <http://example.com/institution0/collection0/object19> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 19 description" ;
+    dcterms:description "Institution0Collection0Object19 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 19 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 19 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 19 subject" ;
-    dcterms:title "Institution 0 collection 0 object 19" ;
+        "Institution0Collection0Object19 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object19 rights holder" ;
+    dcterms:subject "Institution0Collection0Object19 subject" ;
+    dcterms:title "Institution0Collection0Object19" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object19Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object19Image1> .
 
 <http://example.com/institution0/collection0/object2> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 2 description" ;
+    dcterms:description "Institution0Collection0Object2 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 2 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 2 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 2 subject" ;
-    dcterms:title "Institution 0 collection 0 object 2" ;
+        "Institution0Collection0Object2 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object2 rights holder" ;
+    dcterms:subject "Institution0Collection0Object2 subject" ;
+    dcterms:title "Institution0Collection0Object2" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object2Image1> .
 
 <http://example.com/institution0/collection0/object3> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 3 description" ;
+    dcterms:description "Institution0Collection0Object3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 3 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 3 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 3 subject" ;
-    dcterms:title "Institution 0 collection 0 object 3" ;
+        "Institution0Collection0Object3 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object3 rights holder" ;
+    dcterms:subject "Institution0Collection0Object3 subject" ;
+    dcterms:title "Institution0Collection0Object3" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object3Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object3Image1> .
 
 <http://example.com/institution0/collection0/object4> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 4 description" ;
+    dcterms:description "Institution0Collection0Object4 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 4 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 4 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 4 subject" ;
-    dcterms:title "Institution 0 collection 0 object 4" ;
+        "Institution0Collection0Object4 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object4 rights holder" ;
+    dcterms:subject "Institution0Collection0Object4 subject" ;
+    dcterms:title "Institution0Collection0Object4" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object4Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object4Image1> .
 
 <http://example.com/institution0/collection0/object5> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 5 description" ;
+    dcterms:description "Institution0Collection0Object5 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 5 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 5 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 5 subject" ;
-    dcterms:title "Institution 0 collection 0 object 5" ;
+        "Institution0Collection0Object5 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object5 rights holder" ;
+    dcterms:subject "Institution0Collection0Object5 subject" ;
+    dcterms:title "Institution0Collection0Object5" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object5Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object5Image1> .
 
 <http://example.com/institution0/collection0/object6> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 6 description" ;
+    dcterms:description "Institution0Collection0Object6 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 6 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 6 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 6 subject" ;
-    dcterms:title "Institution 0 collection 0 object 6" ;
+        "Institution0Collection0Object6 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object6 rights holder" ;
+    dcterms:subject "Institution0Collection0Object6 subject" ;
+    dcterms:title "Institution0Collection0Object6" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object6Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object6Image1> .
 
 <http://example.com/institution0/collection0/object7> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 7 description" ;
+    dcterms:description "Institution0Collection0Object7 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 7 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 7 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 7 subject" ;
-    dcterms:title "Institution 0 collection 0 object 7" ;
+        "Institution0Collection0Object7 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object7 rights holder" ;
+    dcterms:subject "Institution0Collection0Object7 subject" ;
+    dcterms:title "Institution0Collection0Object7" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object7Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object7Image1> .
 
 <http://example.com/institution0/collection0/object8> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 8 description" ;
+    dcterms:description "Institution0Collection0Object8 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 8 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 8 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 8 subject" ;
-    dcterms:title "Institution 0 collection 0 object 8" ;
+        "Institution0Collection0Object8 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object8 rights holder" ;
+    dcterms:subject "Institution0Collection0Object8 subject" ;
+    dcterms:title "Institution0Collection0Object8" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object8Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object8Image1> .
 
 <http://example.com/institution0/collection0/object9> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 0 object 9 description" ;
+    dcterms:description "Institution0Collection0Object9 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 0 object 9 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 0 object 9 rights holder" ;
-    dcterms:subject "Institution 0 collection 0 object 9 subject" ;
-    dcterms:title "Institution 0 collection 0 object 9" ;
+        "Institution0Collection0Object9 rights" ;
+    dcterms:rightsHolder "Institution0Collection0Object9 rights holder" ;
+    dcterms:subject "Institution0Collection0Object9 subject" ;
+    dcterms:title "Institution0Collection0Object9" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection0Object9Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection0Object9Image1> .
 
 <http://example.com/institution0/collection1> a paradicms:Collection ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 rights holder" ;
-    dcterms:title "Institution 0 collection 1" ;
+        "Institution0Collection1 rights" ;
+    dcterms:rightsHolder "Institution0Collection1 rights holder" ;
+    dcterms:title "Institution0Collection1" ;
     paradicms:object <http://example.com/institution0/collection1/object0>,
         <http://example.com/institution0/collection1/object1>,
         <http://example.com/institution0/collection1/object10>,
@@ -292,210 +292,210 @@
         <http://example.com/institution0/shared/object4> .
 
 <http://example.com/institution0/collection1/object0> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 0 description" ;
+    dcterms:description "Institution0Collection1Object0 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 0 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 0 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 0 subject" ;
-    dcterms:title "Institution 0 collection 1 object 0" ;
+        "Institution0Collection1Object0 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object0 rights holder" ;
+    dcterms:subject "Institution0Collection1Object0 subject" ;
+    dcterms:title "Institution0Collection1Object0" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object0Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object0Image1> .
 
 <http://example.com/institution0/collection1/object1> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 1 description" ;
+    dcterms:description "Institution0Collection1Object1 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 1 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 1 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 1 subject" ;
-    dcterms:title "Institution 0 collection 1 object 1" ;
+        "Institution0Collection1Object1 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object1 rights holder" ;
+    dcterms:subject "Institution0Collection1Object1 subject" ;
+    dcterms:title "Institution0Collection1Object1" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object1Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object1Image1> .
 
 <http://example.com/institution0/collection1/object10> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 10 description" ;
+    dcterms:description "Institution0Collection1Object10 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 10 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 10 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 10 subject" ;
-    dcterms:title "Institution 0 collection 1 object 10" ;
+        "Institution0Collection1Object10 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object10 rights holder" ;
+    dcterms:subject "Institution0Collection1Object10 subject" ;
+    dcterms:title "Institution0Collection1Object10" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object10Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object10Image1> .
 
 <http://example.com/institution0/collection1/object11> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 11 description" ;
+    dcterms:description "Institution0Collection1Object11 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 11 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 11 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 11 subject" ;
-    dcterms:title "Institution 0 collection 1 object 11" ;
+        "Institution0Collection1Object11 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object11 rights holder" ;
+    dcterms:subject "Institution0Collection1Object11 subject" ;
+    dcterms:title "Institution0Collection1Object11" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object11Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object11Image1> .
 
 <http://example.com/institution0/collection1/object12> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 12 description" ;
+    dcterms:description "Institution0Collection1Object12 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 12 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 12 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 12 subject" ;
-    dcterms:title "Institution 0 collection 1 object 12" ;
+        "Institution0Collection1Object12 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object12 rights holder" ;
+    dcterms:subject "Institution0Collection1Object12 subject" ;
+    dcterms:title "Institution0Collection1Object12" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object12Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object12Image1> .
 
 <http://example.com/institution0/collection1/object13> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 13 description" ;
+    dcterms:description "Institution0Collection1Object13 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 13 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 13 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 13 subject" ;
-    dcterms:title "Institution 0 collection 1 object 13" ;
+        "Institution0Collection1Object13 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object13 rights holder" ;
+    dcterms:subject "Institution0Collection1Object13 subject" ;
+    dcterms:title "Institution0Collection1Object13" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object13Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object13Image1> .
 
 <http://example.com/institution0/collection1/object14> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 14 description" ;
+    dcterms:description "Institution0Collection1Object14 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 14 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 14 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 14 subject" ;
-    dcterms:title "Institution 0 collection 1 object 14" ;
+        "Institution0Collection1Object14 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object14 rights holder" ;
+    dcterms:subject "Institution0Collection1Object14 subject" ;
+    dcterms:title "Institution0Collection1Object14" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object14Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object14Image1> .
 
 <http://example.com/institution0/collection1/object15> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 15 description" ;
+    dcterms:description "Institution0Collection1Object15 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 15 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 15 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 15 subject" ;
-    dcterms:title "Institution 0 collection 1 object 15" ;
+        "Institution0Collection1Object15 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object15 rights holder" ;
+    dcterms:subject "Institution0Collection1Object15 subject" ;
+    dcterms:title "Institution0Collection1Object15" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object15Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object15Image1> .
 
 <http://example.com/institution0/collection1/object16> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 16 description" ;
+    dcterms:description "Institution0Collection1Object16 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 16 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 16 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 16 subject" ;
-    dcterms:title "Institution 0 collection 1 object 16" ;
+        "Institution0Collection1Object16 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object16 rights holder" ;
+    dcterms:subject "Institution0Collection1Object16 subject" ;
+    dcterms:title "Institution0Collection1Object16" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object16Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object16Image1> .
 
 <http://example.com/institution0/collection1/object17> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 17 description" ;
+    dcterms:description "Institution0Collection1Object17 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 17 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 17 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 17 subject" ;
-    dcterms:title "Institution 0 collection 1 object 17" ;
+        "Institution0Collection1Object17 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object17 rights holder" ;
+    dcterms:subject "Institution0Collection1Object17 subject" ;
+    dcterms:title "Institution0Collection1Object17" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object17Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object17Image1> .
 
 <http://example.com/institution0/collection1/object18> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 18 description" ;
+    dcterms:description "Institution0Collection1Object18 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 18 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 18 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 18 subject" ;
-    dcterms:title "Institution 0 collection 1 object 18" ;
+        "Institution0Collection1Object18 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object18 rights holder" ;
+    dcterms:subject "Institution0Collection1Object18 subject" ;
+    dcterms:title "Institution0Collection1Object18" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object18Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object18Image1> .
 
 <http://example.com/institution0/collection1/object19> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 19 description" ;
+    dcterms:description "Institution0Collection1Object19 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 19 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 19 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 19 subject" ;
-    dcterms:title "Institution 0 collection 1 object 19" ;
+        "Institution0Collection1Object19 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object19 rights holder" ;
+    dcterms:subject "Institution0Collection1Object19 subject" ;
+    dcterms:title "Institution0Collection1Object19" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object19Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object19Image1> .
 
 <http://example.com/institution0/collection1/object2> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 2 description" ;
+    dcterms:description "Institution0Collection1Object2 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 2 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 2 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 2 subject" ;
-    dcterms:title "Institution 0 collection 1 object 2" ;
+        "Institution0Collection1Object2 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object2 rights holder" ;
+    dcterms:subject "Institution0Collection1Object2 subject" ;
+    dcterms:title "Institution0Collection1Object2" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object2Image1> .
 
 <http://example.com/institution0/collection1/object3> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 3 description" ;
+    dcterms:description "Institution0Collection1Object3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 3 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 3 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 3 subject" ;
-    dcterms:title "Institution 0 collection 1 object 3" ;
+        "Institution0Collection1Object3 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object3 rights holder" ;
+    dcterms:subject "Institution0Collection1Object3 subject" ;
+    dcterms:title "Institution0Collection1Object3" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object3Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object3Image1> .
 
 <http://example.com/institution0/collection1/object4> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 4 description" ;
+    dcterms:description "Institution0Collection1Object4 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 4 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 4 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 4 subject" ;
-    dcterms:title "Institution 0 collection 1 object 4" ;
+        "Institution0Collection1Object4 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object4 rights holder" ;
+    dcterms:subject "Institution0Collection1Object4 subject" ;
+    dcterms:title "Institution0Collection1Object4" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object4Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object4Image1> .
 
 <http://example.com/institution0/collection1/object5> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 5 description" ;
+    dcterms:description "Institution0Collection1Object5 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 5 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 5 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 5 subject" ;
-    dcterms:title "Institution 0 collection 1 object 5" ;
+        "Institution0Collection1Object5 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object5 rights holder" ;
+    dcterms:subject "Institution0Collection1Object5 subject" ;
+    dcterms:title "Institution0Collection1Object5" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object5Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object5Image1> .
 
 <http://example.com/institution0/collection1/object6> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 6 description" ;
+    dcterms:description "Institution0Collection1Object6 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 6 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 6 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 6 subject" ;
-    dcterms:title "Institution 0 collection 1 object 6" ;
+        "Institution0Collection1Object6 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object6 rights holder" ;
+    dcterms:subject "Institution0Collection1Object6 subject" ;
+    dcterms:title "Institution0Collection1Object6" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object6Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object6Image1> .
 
 <http://example.com/institution0/collection1/object7> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 7 description" ;
+    dcterms:description "Institution0Collection1Object7 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 7 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 7 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 7 subject" ;
-    dcterms:title "Institution 0 collection 1 object 7" ;
+        "Institution0Collection1Object7 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object7 rights holder" ;
+    dcterms:subject "Institution0Collection1Object7 subject" ;
+    dcterms:title "Institution0Collection1Object7" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object7Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object7Image1> .
 
 <http://example.com/institution0/collection1/object8> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 8 description" ;
+    dcterms:description "Institution0Collection1Object8 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 8 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 8 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 8 subject" ;
-    dcterms:title "Institution 0 collection 1 object 8" ;
+        "Institution0Collection1Object8 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object8 rights holder" ;
+    dcterms:subject "Institution0Collection1Object8 subject" ;
+    dcterms:title "Institution0Collection1Object8" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object8Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object8Image1> .
 
 <http://example.com/institution0/collection1/object9> a paradicms:Object ;
-    dcterms:description "Institution 0 collection 1 object 9 description" ;
+    dcterms:description "Institution0Collection1Object9 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 collection 1 object 9 rights" ;
-    dcterms:rightsHolder "Institution 0 collection 1 object 9 rights holder" ;
-    dcterms:subject "Institution 0 collection 1 object 9 subject" ;
-    dcterms:title "Institution 0 collection 1 object 9" ;
+        "Institution0Collection1Object9 rights" ;
+    dcterms:rightsHolder "Institution0Collection1Object9 rights holder" ;
+    dcterms:subject "Institution0Collection1Object9 subject" ;
+    dcterms:title "Institution0Collection1Object9" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution0Collection1Object9Image0>,
         <https://place-hold.it/1000x1000?text=Institution0Collection1Object9Image1> .
 
 <http://example.com/institution1/collection0> a paradicms:Collection ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 rights holder" ;
-    dcterms:title "Institution 1 collection 0" ;
+        "Institution1Collection0 rights" ;
+    dcterms:rightsHolder "Institution1Collection0 rights holder" ;
+    dcterms:title "Institution1Collection0" ;
     paradicms:object <http://example.com/institution1/collection0/object0>,
         <http://example.com/institution1/collection0/object1>,
         <http://example.com/institution1/collection0/object10>,
@@ -523,210 +523,210 @@
         <http://example.com/institution1/shared/object4> .
 
 <http://example.com/institution1/collection0/object0> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 0 description" ;
+    dcterms:description "Institution1Collection0Object0 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 0 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 0 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 0 subject" ;
-    dcterms:title "Institution 1 collection 0 object 0" ;
+        "Institution1Collection0Object0 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object0 rights holder" ;
+    dcterms:subject "Institution1Collection0Object0 subject" ;
+    dcterms:title "Institution1Collection0Object0" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object0Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object0Image1> .
 
 <http://example.com/institution1/collection0/object1> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 1 description" ;
+    dcterms:description "Institution1Collection0Object1 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 1 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 1 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 1 subject" ;
-    dcterms:title "Institution 1 collection 0 object 1" ;
+        "Institution1Collection0Object1 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object1 rights holder" ;
+    dcterms:subject "Institution1Collection0Object1 subject" ;
+    dcterms:title "Institution1Collection0Object1" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object1Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object1Image1> .
 
 <http://example.com/institution1/collection0/object10> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 10 description" ;
+    dcterms:description "Institution1Collection0Object10 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 10 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 10 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 10 subject" ;
-    dcterms:title "Institution 1 collection 0 object 10" ;
+        "Institution1Collection0Object10 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object10 rights holder" ;
+    dcterms:subject "Institution1Collection0Object10 subject" ;
+    dcterms:title "Institution1Collection0Object10" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object10Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object10Image1> .
 
 <http://example.com/institution1/collection0/object11> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 11 description" ;
+    dcterms:description "Institution1Collection0Object11 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 11 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 11 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 11 subject" ;
-    dcterms:title "Institution 1 collection 0 object 11" ;
+        "Institution1Collection0Object11 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object11 rights holder" ;
+    dcterms:subject "Institution1Collection0Object11 subject" ;
+    dcterms:title "Institution1Collection0Object11" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object11Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object11Image1> .
 
 <http://example.com/institution1/collection0/object12> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 12 description" ;
+    dcterms:description "Institution1Collection0Object12 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 12 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 12 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 12 subject" ;
-    dcterms:title "Institution 1 collection 0 object 12" ;
+        "Institution1Collection0Object12 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object12 rights holder" ;
+    dcterms:subject "Institution1Collection0Object12 subject" ;
+    dcterms:title "Institution1Collection0Object12" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object12Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object12Image1> .
 
 <http://example.com/institution1/collection0/object13> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 13 description" ;
+    dcterms:description "Institution1Collection0Object13 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 13 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 13 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 13 subject" ;
-    dcterms:title "Institution 1 collection 0 object 13" ;
+        "Institution1Collection0Object13 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object13 rights holder" ;
+    dcterms:subject "Institution1Collection0Object13 subject" ;
+    dcterms:title "Institution1Collection0Object13" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object13Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object13Image1> .
 
 <http://example.com/institution1/collection0/object14> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 14 description" ;
+    dcterms:description "Institution1Collection0Object14 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 14 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 14 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 14 subject" ;
-    dcterms:title "Institution 1 collection 0 object 14" ;
+        "Institution1Collection0Object14 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object14 rights holder" ;
+    dcterms:subject "Institution1Collection0Object14 subject" ;
+    dcterms:title "Institution1Collection0Object14" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object14Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object14Image1> .
 
 <http://example.com/institution1/collection0/object15> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 15 description" ;
+    dcterms:description "Institution1Collection0Object15 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 15 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 15 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 15 subject" ;
-    dcterms:title "Institution 1 collection 0 object 15" ;
+        "Institution1Collection0Object15 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object15 rights holder" ;
+    dcterms:subject "Institution1Collection0Object15 subject" ;
+    dcterms:title "Institution1Collection0Object15" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object15Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object15Image1> .
 
 <http://example.com/institution1/collection0/object16> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 16 description" ;
+    dcterms:description "Institution1Collection0Object16 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 16 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 16 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 16 subject" ;
-    dcterms:title "Institution 1 collection 0 object 16" ;
+        "Institution1Collection0Object16 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object16 rights holder" ;
+    dcterms:subject "Institution1Collection0Object16 subject" ;
+    dcterms:title "Institution1Collection0Object16" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object16Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object16Image1> .
 
 <http://example.com/institution1/collection0/object17> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 17 description" ;
+    dcterms:description "Institution1Collection0Object17 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 17 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 17 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 17 subject" ;
-    dcterms:title "Institution 1 collection 0 object 17" ;
+        "Institution1Collection0Object17 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object17 rights holder" ;
+    dcterms:subject "Institution1Collection0Object17 subject" ;
+    dcterms:title "Institution1Collection0Object17" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object17Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object17Image1> .
 
 <http://example.com/institution1/collection0/object18> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 18 description" ;
+    dcterms:description "Institution1Collection0Object18 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 18 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 18 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 18 subject" ;
-    dcterms:title "Institution 1 collection 0 object 18" ;
+        "Institution1Collection0Object18 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object18 rights holder" ;
+    dcterms:subject "Institution1Collection0Object18 subject" ;
+    dcterms:title "Institution1Collection0Object18" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object18Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object18Image1> .
 
 <http://example.com/institution1/collection0/object19> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 19 description" ;
+    dcterms:description "Institution1Collection0Object19 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 19 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 19 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 19 subject" ;
-    dcterms:title "Institution 1 collection 0 object 19" ;
+        "Institution1Collection0Object19 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object19 rights holder" ;
+    dcterms:subject "Institution1Collection0Object19 subject" ;
+    dcterms:title "Institution1Collection0Object19" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object19Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object19Image1> .
 
 <http://example.com/institution1/collection0/object2> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 2 description" ;
+    dcterms:description "Institution1Collection0Object2 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 2 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 2 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 2 subject" ;
-    dcterms:title "Institution 1 collection 0 object 2" ;
+        "Institution1Collection0Object2 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object2 rights holder" ;
+    dcterms:subject "Institution1Collection0Object2 subject" ;
+    dcterms:title "Institution1Collection0Object2" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object2Image1> .
 
 <http://example.com/institution1/collection0/object3> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 3 description" ;
+    dcterms:description "Institution1Collection0Object3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 3 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 3 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 3 subject" ;
-    dcterms:title "Institution 1 collection 0 object 3" ;
+        "Institution1Collection0Object3 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object3 rights holder" ;
+    dcterms:subject "Institution1Collection0Object3 subject" ;
+    dcterms:title "Institution1Collection0Object3" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object3Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object3Image1> .
 
 <http://example.com/institution1/collection0/object4> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 4 description" ;
+    dcterms:description "Institution1Collection0Object4 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 4 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 4 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 4 subject" ;
-    dcterms:title "Institution 1 collection 0 object 4" ;
+        "Institution1Collection0Object4 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object4 rights holder" ;
+    dcterms:subject "Institution1Collection0Object4 subject" ;
+    dcterms:title "Institution1Collection0Object4" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object4Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object4Image1> .
 
 <http://example.com/institution1/collection0/object5> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 5 description" ;
+    dcterms:description "Institution1Collection0Object5 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 5 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 5 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 5 subject" ;
-    dcterms:title "Institution 1 collection 0 object 5" ;
+        "Institution1Collection0Object5 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object5 rights holder" ;
+    dcterms:subject "Institution1Collection0Object5 subject" ;
+    dcterms:title "Institution1Collection0Object5" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object5Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object5Image1> .
 
 <http://example.com/institution1/collection0/object6> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 6 description" ;
+    dcterms:description "Institution1Collection0Object6 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 6 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 6 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 6 subject" ;
-    dcterms:title "Institution 1 collection 0 object 6" ;
+        "Institution1Collection0Object6 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object6 rights holder" ;
+    dcterms:subject "Institution1Collection0Object6 subject" ;
+    dcterms:title "Institution1Collection0Object6" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object6Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object6Image1> .
 
 <http://example.com/institution1/collection0/object7> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 7 description" ;
+    dcterms:description "Institution1Collection0Object7 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 7 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 7 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 7 subject" ;
-    dcterms:title "Institution 1 collection 0 object 7" ;
+        "Institution1Collection0Object7 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object7 rights holder" ;
+    dcterms:subject "Institution1Collection0Object7 subject" ;
+    dcterms:title "Institution1Collection0Object7" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object7Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object7Image1> .
 
 <http://example.com/institution1/collection0/object8> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 8 description" ;
+    dcterms:description "Institution1Collection0Object8 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 8 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 8 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 8 subject" ;
-    dcterms:title "Institution 1 collection 0 object 8" ;
+        "Institution1Collection0Object8 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object8 rights holder" ;
+    dcterms:subject "Institution1Collection0Object8 subject" ;
+    dcterms:title "Institution1Collection0Object8" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object8Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object8Image1> .
 
 <http://example.com/institution1/collection0/object9> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 0 object 9 description" ;
+    dcterms:description "Institution1Collection0Object9 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 0 object 9 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 0 object 9 rights holder" ;
-    dcterms:subject "Institution 1 collection 0 object 9 subject" ;
-    dcterms:title "Institution 1 collection 0 object 9" ;
+        "Institution1Collection0Object9 rights" ;
+    dcterms:rightsHolder "Institution1Collection0Object9 rights holder" ;
+    dcterms:subject "Institution1Collection0Object9 subject" ;
+    dcterms:title "Institution1Collection0Object9" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection0Object9Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection0Object9Image1> .
 
 <http://example.com/institution1/collection1> a paradicms:Collection ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 rights holder" ;
-    dcterms:title "Institution 1 collection 1" ;
+        "Institution1Collection1 rights" ;
+    dcterms:rightsHolder "Institution1Collection1 rights holder" ;
+    dcterms:title "Institution1Collection1" ;
     paradicms:object <http://example.com/institution1/collection1/object0>,
         <http://example.com/institution1/collection1/object1>,
         <http://example.com/institution1/collection1/object10>,
@@ -754,202 +754,202 @@
         <http://example.com/institution1/shared/object4> .
 
 <http://example.com/institution1/collection1/object0> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 0 description" ;
+    dcterms:description "Institution1Collection1Object0 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 0 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 0 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 0 subject" ;
-    dcterms:title "Institution 1 collection 1 object 0" ;
+        "Institution1Collection1Object0 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object0 rights holder" ;
+    dcterms:subject "Institution1Collection1Object0 subject" ;
+    dcterms:title "Institution1Collection1Object0" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object0Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object0Image1> .
 
 <http://example.com/institution1/collection1/object1> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 1 description" ;
+    dcterms:description "Institution1Collection1Object1 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 1 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 1 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 1 subject" ;
-    dcterms:title "Institution 1 collection 1 object 1" ;
+        "Institution1Collection1Object1 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object1 rights holder" ;
+    dcterms:subject "Institution1Collection1Object1 subject" ;
+    dcterms:title "Institution1Collection1Object1" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object1Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object1Image1> .
 
 <http://example.com/institution1/collection1/object10> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 10 description" ;
+    dcterms:description "Institution1Collection1Object10 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 10 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 10 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 10 subject" ;
-    dcterms:title "Institution 1 collection 1 object 10" ;
+        "Institution1Collection1Object10 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object10 rights holder" ;
+    dcterms:subject "Institution1Collection1Object10 subject" ;
+    dcterms:title "Institution1Collection1Object10" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object10Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object10Image1> .
 
 <http://example.com/institution1/collection1/object11> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 11 description" ;
+    dcterms:description "Institution1Collection1Object11 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 11 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 11 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 11 subject" ;
-    dcterms:title "Institution 1 collection 1 object 11" ;
+        "Institution1Collection1Object11 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object11 rights holder" ;
+    dcterms:subject "Institution1Collection1Object11 subject" ;
+    dcterms:title "Institution1Collection1Object11" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object11Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object11Image1> .
 
 <http://example.com/institution1/collection1/object12> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 12 description" ;
+    dcterms:description "Institution1Collection1Object12 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 12 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 12 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 12 subject" ;
-    dcterms:title "Institution 1 collection 1 object 12" ;
+        "Institution1Collection1Object12 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object12 rights holder" ;
+    dcterms:subject "Institution1Collection1Object12 subject" ;
+    dcterms:title "Institution1Collection1Object12" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object12Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object12Image1> .
 
 <http://example.com/institution1/collection1/object13> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 13 description" ;
+    dcterms:description "Institution1Collection1Object13 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 13 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 13 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 13 subject" ;
-    dcterms:title "Institution 1 collection 1 object 13" ;
+        "Institution1Collection1Object13 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object13 rights holder" ;
+    dcterms:subject "Institution1Collection1Object13 subject" ;
+    dcterms:title "Institution1Collection1Object13" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object13Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object13Image1> .
 
 <http://example.com/institution1/collection1/object14> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 14 description" ;
+    dcterms:description "Institution1Collection1Object14 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 14 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 14 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 14 subject" ;
-    dcterms:title "Institution 1 collection 1 object 14" ;
+        "Institution1Collection1Object14 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object14 rights holder" ;
+    dcterms:subject "Institution1Collection1Object14 subject" ;
+    dcterms:title "Institution1Collection1Object14" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object14Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object14Image1> .
 
 <http://example.com/institution1/collection1/object15> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 15 description" ;
+    dcterms:description "Institution1Collection1Object15 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 15 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 15 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 15 subject" ;
-    dcterms:title "Institution 1 collection 1 object 15" ;
+        "Institution1Collection1Object15 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object15 rights holder" ;
+    dcterms:subject "Institution1Collection1Object15 subject" ;
+    dcterms:title "Institution1Collection1Object15" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object15Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object15Image1> .
 
 <http://example.com/institution1/collection1/object16> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 16 description" ;
+    dcterms:description "Institution1Collection1Object16 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 16 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 16 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 16 subject" ;
-    dcterms:title "Institution 1 collection 1 object 16" ;
+        "Institution1Collection1Object16 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object16 rights holder" ;
+    dcterms:subject "Institution1Collection1Object16 subject" ;
+    dcterms:title "Institution1Collection1Object16" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object16Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object16Image1> .
 
 <http://example.com/institution1/collection1/object17> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 17 description" ;
+    dcterms:description "Institution1Collection1Object17 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 17 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 17 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 17 subject" ;
-    dcterms:title "Institution 1 collection 1 object 17" ;
+        "Institution1Collection1Object17 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object17 rights holder" ;
+    dcterms:subject "Institution1Collection1Object17 subject" ;
+    dcterms:title "Institution1Collection1Object17" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object17Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object17Image1> .
 
 <http://example.com/institution1/collection1/object18> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 18 description" ;
+    dcterms:description "Institution1Collection1Object18 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 18 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 18 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 18 subject" ;
-    dcterms:title "Institution 1 collection 1 object 18" ;
+        "Institution1Collection1Object18 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object18 rights holder" ;
+    dcterms:subject "Institution1Collection1Object18 subject" ;
+    dcterms:title "Institution1Collection1Object18" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object18Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object18Image1> .
 
 <http://example.com/institution1/collection1/object19> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 19 description" ;
+    dcterms:description "Institution1Collection1Object19 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 19 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 19 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 19 subject" ;
-    dcterms:title "Institution 1 collection 1 object 19" ;
+        "Institution1Collection1Object19 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object19 rights holder" ;
+    dcterms:subject "Institution1Collection1Object19 subject" ;
+    dcterms:title "Institution1Collection1Object19" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object19Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object19Image1> .
 
 <http://example.com/institution1/collection1/object2> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 2 description" ;
+    dcterms:description "Institution1Collection1Object2 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 2 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 2 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 2 subject" ;
-    dcterms:title "Institution 1 collection 1 object 2" ;
+        "Institution1Collection1Object2 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object2 rights holder" ;
+    dcterms:subject "Institution1Collection1Object2 subject" ;
+    dcterms:title "Institution1Collection1Object2" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object2Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object2Image1> .
 
 <http://example.com/institution1/collection1/object3> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 3 description" ;
+    dcterms:description "Institution1Collection1Object3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 3 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 3 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 3 subject" ;
-    dcterms:title "Institution 1 collection 1 object 3" ;
+        "Institution1Collection1Object3 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object3 rights holder" ;
+    dcterms:subject "Institution1Collection1Object3 subject" ;
+    dcterms:title "Institution1Collection1Object3" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object3Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object3Image1> .
 
 <http://example.com/institution1/collection1/object4> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 4 description" ;
+    dcterms:description "Institution1Collection1Object4 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 4 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 4 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 4 subject" ;
-    dcterms:title "Institution 1 collection 1 object 4" ;
+        "Institution1Collection1Object4 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object4 rights holder" ;
+    dcterms:subject "Institution1Collection1Object4 subject" ;
+    dcterms:title "Institution1Collection1Object4" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object4Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object4Image1> .
 
 <http://example.com/institution1/collection1/object5> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 5 description" ;
+    dcterms:description "Institution1Collection1Object5 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 5 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 5 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 5 subject" ;
-    dcterms:title "Institution 1 collection 1 object 5" ;
+        "Institution1Collection1Object5 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object5 rights holder" ;
+    dcterms:subject "Institution1Collection1Object5 subject" ;
+    dcterms:title "Institution1Collection1Object5" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object5Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object5Image1> .
 
 <http://example.com/institution1/collection1/object6> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 6 description" ;
+    dcterms:description "Institution1Collection1Object6 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 6 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 6 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 6 subject" ;
-    dcterms:title "Institution 1 collection 1 object 6" ;
+        "Institution1Collection1Object6 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object6 rights holder" ;
+    dcterms:subject "Institution1Collection1Object6 subject" ;
+    dcterms:title "Institution1Collection1Object6" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object6Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object6Image1> .
 
 <http://example.com/institution1/collection1/object7> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 7 description" ;
+    dcterms:description "Institution1Collection1Object7 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 7 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 7 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 7 subject" ;
-    dcterms:title "Institution 1 collection 1 object 7" ;
+        "Institution1Collection1Object7 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object7 rights holder" ;
+    dcterms:subject "Institution1Collection1Object7 subject" ;
+    dcterms:title "Institution1Collection1Object7" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object7Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object7Image1> .
 
 <http://example.com/institution1/collection1/object8> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 8 description" ;
+    dcterms:description "Institution1Collection1Object8 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 8 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 8 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 8 subject" ;
-    dcterms:title "Institution 1 collection 1 object 8" ;
+        "Institution1Collection1Object8 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object8 rights holder" ;
+    dcterms:subject "Institution1Collection1Object8 subject" ;
+    dcterms:title "Institution1Collection1Object8" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object8Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object8Image1> .
 
 <http://example.com/institution1/collection1/object9> a paradicms:Object ;
-    dcterms:description "Institution 1 collection 1 object 9 description" ;
+    dcterms:description "Institution1Collection1Object9 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 collection 1 object 9 rights" ;
-    dcterms:rightsHolder "Institution 1 collection 1 object 9 rights holder" ;
-    dcterms:subject "Institution 1 collection 1 object 9 subject" ;
-    dcterms:title "Institution 1 collection 1 object 9" ;
+        "Institution1Collection1Object9 rights" ;
+    dcterms:rightsHolder "Institution1Collection1Object9 rights holder" ;
+    dcterms:subject "Institution1Collection1Object9 subject" ;
+    dcterms:title "Institution1Collection1Object9" ;
     foaf:depiction <https://place-hold.it/1000x1000?text=Institution1Collection1Object9Image0>,
         <https://place-hold.it/1000x1000?text=Institution1Collection1Object9Image1> .
 
@@ -1433,65 +1433,65 @@
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution0Collection1Object9Image1>,
         <https://place-hold.it/75x75?text=Institution0Collection1Object9Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject0Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image0>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject0Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject0Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject0Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image1>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject0Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject0Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject1Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image0>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject1Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject1Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject1Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image1>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject1Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject1Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject2Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image0>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject2Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject2Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject2Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image1>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject2Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject2Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject3Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image0>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject3Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject3Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject3Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image1>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject3Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject3Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject4Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image0>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject4Image0>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject4Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution0SharedObject4Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image1>,
-        <https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution0SharedObject4Image1>,
+        <https://place-hold.it/75x75?text=Institution0SharedObject4Image1> .
 
 <https://place-hold.it/1000x1000?text=Institution1Collection0Object0Image0> a paradicms:Image ;
     exif:height 1000 ;
@@ -1973,65 +1973,65 @@
     foaf:thumbnail <https://place-hold.it/600x600?text=Institution1Collection1Object9Image1>,
         <https://place-hold.it/75x75?text=Institution1Collection1Object9Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject0Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image0>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject0Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject0Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject0Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image1>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject0Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject0Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject1Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image0>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject1Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject1Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject1Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image1>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject1Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject1Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject2Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image0>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject2Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject2Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject2Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image1>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject2Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject2Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject3Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image0>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject3Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject3Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject3Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image1>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject3Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject3Image1> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image0> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject4Image0> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image0>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image0> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject4Image0>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject4Image0> .
 
-<https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image1> a paradicms:Image ;
+<https://place-hold.it/1000x1000?text=Institution1SharedObject4Image1> a paradicms:Image ;
     exif:height 1000 ;
     exif:width 1000 ;
-    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image1>,
-        <https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image1> .
+    foaf:thumbnail <https://place-hold.it/600x600?text=Institution1SharedObject4Image1>,
+        <https://place-hold.it/75x75?text=Institution1SharedObject4Image1> .
 
 <https://place-hold.it/600x600?text=Institution0Collection0Object0Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
@@ -2353,43 +2353,43 @@
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject0Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject0Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject0Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject1Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject1Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject1Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject2Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject2Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject2Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject3Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject3Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject3Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject4Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution0CollectionsharedObject4Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution0SharedObject4Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
@@ -2713,43 +2713,43 @@
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject0Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject0Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject0Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject1Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject1Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject1Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject2Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject2Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject2Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject3Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject3Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject3Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image0> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject4Image0> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
-<https://place-hold.it/600x600?text=Institution1CollectionsharedObject4Image1> a paradicms:Image ;
+<https://place-hold.it/600x600?text=Institution1SharedObject4Image1> a paradicms:Image ;
     paradicms:imageMaxHeight 600 ;
     paradicms:imageMaxWidth 600 .
 
@@ -3073,43 +3073,43 @@
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject0Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject0Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject0Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject1Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject1Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject1Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject2Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject2Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject2Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject3Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject3Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject3Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject4Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution0CollectionsharedObject4Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution0SharedObject4Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
@@ -3433,143 +3433,143 @@
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject0Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject0Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject0Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject1Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject1Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject1Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject2Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject2Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject2Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject3Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject3Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject3Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image0> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject4Image0> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
-<https://place-hold.it/75x75?text=Institution1CollectionsharedObject4Image1> a paradicms:Image ;
+<https://place-hold.it/75x75?text=Institution1SharedObject4Image1> a paradicms:Image ;
     exif:height 75 ;
     exif:width 75 .
 
 <http://example.com/institution0/shared/object0> a paradicms:Object ;
-    dcterms:description "Institution 0 shared object 0 description" ;
+    dcterms:description "Institution0SharedObject0 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 shared object 0 rights" ;
-    dcterms:rightsHolder "Institution 0 shared object 0 rights holder" ;
-    dcterms:subject "Institution 0 shared object 0 subject" ;
-    dcterms:title "Institution 0 shared object 0" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject0Image1> .
+        "Institution0SharedObject0 rights" ;
+    dcterms:rightsHolder "Institution0SharedObject0 rights holder" ;
+    dcterms:subject "Institution0SharedObject0 subject" ;
+    dcterms:title "Institution0SharedObject0" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0SharedObject0Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0SharedObject0Image1> .
 
 <http://example.com/institution0/shared/object1> a paradicms:Object ;
-    dcterms:description "Institution 0 shared object 1 description" ;
+    dcterms:description "Institution0SharedObject1 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 shared object 1 rights" ;
-    dcterms:rightsHolder "Institution 0 shared object 1 rights holder" ;
-    dcterms:subject "Institution 0 shared object 1 subject" ;
-    dcterms:title "Institution 0 shared object 1" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject1Image1> .
+        "Institution0SharedObject1 rights" ;
+    dcterms:rightsHolder "Institution0SharedObject1 rights holder" ;
+    dcterms:subject "Institution0SharedObject1 subject" ;
+    dcterms:title "Institution0SharedObject1" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0SharedObject1Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0SharedObject1Image1> .
 
 <http://example.com/institution0/shared/object2> a paradicms:Object ;
-    dcterms:description "Institution 0 shared object 2 description" ;
+    dcterms:description "Institution0SharedObject2 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 shared object 2 rights" ;
-    dcterms:rightsHolder "Institution 0 shared object 2 rights holder" ;
-    dcterms:subject "Institution 0 shared object 2 subject" ;
-    dcterms:title "Institution 0 shared object 2" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject2Image1> .
+        "Institution0SharedObject2 rights" ;
+    dcterms:rightsHolder "Institution0SharedObject2 rights holder" ;
+    dcterms:subject "Institution0SharedObject2 subject" ;
+    dcterms:title "Institution0SharedObject2" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0SharedObject2Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0SharedObject2Image1> .
 
 <http://example.com/institution0/shared/object3> a paradicms:Object ;
-    dcterms:description "Institution 0 shared object 3 description" ;
+    dcterms:description "Institution0SharedObject3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 shared object 3 rights" ;
-    dcterms:rightsHolder "Institution 0 shared object 3 rights holder" ;
-    dcterms:subject "Institution 0 shared object 3 subject" ;
-    dcterms:title "Institution 0 shared object 3" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject3Image1> .
+        "Institution0SharedObject3 rights" ;
+    dcterms:rightsHolder "Institution0SharedObject3 rights holder" ;
+    dcterms:subject "Institution0SharedObject3 subject" ;
+    dcterms:title "Institution0SharedObject3" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0SharedObject3Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0SharedObject3Image1> .
 
 <http://example.com/institution0/shared/object4> a paradicms:Object ;
-    dcterms:description "Institution 0 shared object 4 description" ;
+    dcterms:description "Institution0SharedObject4 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 0 shared object 4 rights" ;
-    dcterms:rightsHolder "Institution 0 shared object 4 rights holder" ;
-    dcterms:subject "Institution 0 shared object 4 subject" ;
-    dcterms:title "Institution 0 shared object 4" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image0>,
-        <https://place-hold.it/1000x1000?text=Institution0CollectionsharedObject4Image1> .
+        "Institution0SharedObject4 rights" ;
+    dcterms:rightsHolder "Institution0SharedObject4 rights holder" ;
+    dcterms:subject "Institution0SharedObject4 subject" ;
+    dcterms:title "Institution0SharedObject4" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution0SharedObject4Image0>,
+        <https://place-hold.it/1000x1000?text=Institution0SharedObject4Image1> .
 
 <http://example.com/institution1/shared/object0> a paradicms:Object ;
-    dcterms:description "Institution 1 shared object 0 description" ;
+    dcterms:description "Institution1SharedObject0 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 shared object 0 rights" ;
-    dcterms:rightsHolder "Institution 1 shared object 0 rights holder" ;
-    dcterms:subject "Institution 1 shared object 0 subject" ;
-    dcterms:title "Institution 1 shared object 0" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject0Image1> .
+        "Institution1SharedObject0 rights" ;
+    dcterms:rightsHolder "Institution1SharedObject0 rights holder" ;
+    dcterms:subject "Institution1SharedObject0 subject" ;
+    dcterms:title "Institution1SharedObject0" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1SharedObject0Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1SharedObject0Image1> .
 
 <http://example.com/institution1/shared/object1> a paradicms:Object ;
-    dcterms:description "Institution 1 shared object 1 description" ;
+    dcterms:description "Institution1SharedObject1 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 shared object 1 rights" ;
-    dcterms:rightsHolder "Institution 1 shared object 1 rights holder" ;
-    dcterms:subject "Institution 1 shared object 1 subject" ;
-    dcterms:title "Institution 1 shared object 1" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject1Image1> .
+        "Institution1SharedObject1 rights" ;
+    dcterms:rightsHolder "Institution1SharedObject1 rights holder" ;
+    dcterms:subject "Institution1SharedObject1 subject" ;
+    dcterms:title "Institution1SharedObject1" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1SharedObject1Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1SharedObject1Image1> .
 
 <http://example.com/institution1/shared/object2> a paradicms:Object ;
-    dcterms:description "Institution 1 shared object 2 description" ;
+    dcterms:description "Institution1SharedObject2 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 shared object 2 rights" ;
-    dcterms:rightsHolder "Institution 1 shared object 2 rights holder" ;
-    dcterms:subject "Institution 1 shared object 2 subject" ;
-    dcterms:title "Institution 1 shared object 2" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject2Image1> .
+        "Institution1SharedObject2 rights" ;
+    dcterms:rightsHolder "Institution1SharedObject2 rights holder" ;
+    dcterms:subject "Institution1SharedObject2 subject" ;
+    dcterms:title "Institution1SharedObject2" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1SharedObject2Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1SharedObject2Image1> .
 
 <http://example.com/institution1/shared/object3> a paradicms:Object ;
-    dcterms:description "Institution 1 shared object 3 description" ;
+    dcterms:description "Institution1SharedObject3 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 shared object 3 rights" ;
-    dcterms:rightsHolder "Institution 1 shared object 3 rights holder" ;
-    dcterms:subject "Institution 1 shared object 3 subject" ;
-    dcterms:title "Institution 1 shared object 3" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject3Image1> .
+        "Institution1SharedObject3 rights" ;
+    dcterms:rightsHolder "Institution1SharedObject3 rights holder" ;
+    dcterms:subject "Institution1SharedObject3 subject" ;
+    dcterms:title "Institution1SharedObject3" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1SharedObject3Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1SharedObject3Image1> .
 
 <http://example.com/institution1/shared/object4> a paradicms:Object ;
-    dcterms:description "Institution 1 shared object 4 description" ;
+    dcterms:description "Institution1SharedObject4 description" ;
     dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution 1 shared object 4 rights" ;
-    dcterms:rightsHolder "Institution 1 shared object 4 rights holder" ;
-    dcterms:subject "Institution 1 shared object 4 subject" ;
-    dcterms:title "Institution 1 shared object 4" ;
-    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image0>,
-        <https://place-hold.it/1000x1000?text=Institution1CollectionsharedObject4Image1> .
+        "Institution1SharedObject4 rights" ;
+    dcterms:rightsHolder "Institution1SharedObject4 rights holder" ;
+    dcterms:subject "Institution1SharedObject4 subject" ;
+    dcterms:title "Institution1SharedObject4" ;
+    foaf:depiction <https://place-hold.it/1000x1000?text=Institution1SharedObject4Image0>,
+        <https://place-hold.it/1000x1000?text=Institution1SharedObject4Image1> .
 
