@@ -19,6 +19,7 @@
     "gatsby-plugin-use-query-params": "^1.0.1",
     "gatsby-source-filesystem": "^2.1.0",
     "gatsby-transformer-json": "^2.2.0",
+    "query-string": "^6.13.1",
     "qs": "^6.9.4",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
