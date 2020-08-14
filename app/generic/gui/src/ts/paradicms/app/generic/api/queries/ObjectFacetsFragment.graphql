@@ -1,9 +1,0 @@
-fragment ObjectFacetsFragment on ObjectFacets {
-  culturalContexts
-  materials
-  spatials
-  subjects
-  techniques
-  temporals
-  types
-}

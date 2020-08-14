@@ -1,8 +1,0 @@
-#import "./SearchResultsObjectsFragment.graphql"
-
-query SearchResultsRefinementQuery($limit: Int!, $offset: Int!, $query: ObjectQuery!) {
-  objects(limit: $limit, offset: $offset, query: $query ) {
-    ...SearchResultsObjectsFragment
-  }
-  objectsCount(query: $query)
-}
