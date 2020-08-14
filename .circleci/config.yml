@@ -48,6 +48,8 @@ jobs:
       - run:
           name: Build
           command: |
+            npm install
+            npm run lerna:bootstrap
             cd lib/ts/gatsby-base
             npm run build
             cd ../gatsby-material-ui
