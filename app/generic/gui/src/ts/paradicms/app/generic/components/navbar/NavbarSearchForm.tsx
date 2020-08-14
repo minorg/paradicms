@@ -34,7 +34,6 @@ export const NavbarSearchForm: React.FunctionComponent<{
   const classes = useStyles();
 
   const onClickSearchButton = () => {
-    console.info("On click search button");
     setState(prevState => Object.assign({}, prevState, {text: ""}));
     onSearch(state.text);
   };

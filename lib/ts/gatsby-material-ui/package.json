@@ -1,0 +1,31 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/gatsby-material-ui",
+  "description": "Paradicms Gatsby.js material-ui library",
+  "dependencies": {
+    "@material-ui/core": "4.11.0",
+    "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@paradicms/gatsby-base": "1.0.3",
+    "gatsby-plugin-material-ui": "^2.1.9",
+    "gatsby-plugin-prefetch-google-fonts": "^1.4.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "prettier": "^1.19.1"
+  },
+  "license": "GPLv3",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -w"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.3"
+}

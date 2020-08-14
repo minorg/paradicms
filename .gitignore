@@ -1,5 +1,6 @@
 application.auth0.conf
 dist/
+__generated__/
 /lerna-debug.log
 logs/
 node_modules/
