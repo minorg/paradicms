@@ -81,7 +81,7 @@ workflows:
             cd ~/project/gui/generic
             rm -fr public
             cp -p -R ~/dist/generic-gui public
-          cache-key: `cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/generic/package.json" }}-{{ checksum "~/project/integration/generic/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-base/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-material-ui/package.json" }}`
+          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/generic/package.json" }}-{{ checksum "~/project/integration/generic/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-base/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-material-ui/package.json" }}'
           requires:
             - ts
           working_directory: integration/generic
