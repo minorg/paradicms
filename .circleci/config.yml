@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: ts-cache-v1-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/gatsby-base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
+          key: ts-cache-v2-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/gatsby-base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
       - run:
           command: |
             if [ ! -d ./node_modules ]; then
@@ -52,7 +52,7 @@ jobs:
             mkdir ~/dist
             cp -p -R public ~/dist/generic-gui
       - save_cache:
-          key: ts-cache-v1-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/gatsby-base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
+          key: ts-cache-v2-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/gatsby-base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
