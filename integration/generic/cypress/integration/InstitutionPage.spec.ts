@@ -1,10 +1,10 @@
-import {InstitutionOverviewPage} from "../support/pages/InstitutionOverviewPage";
-import {CollectionOverviewPage} from "../support/pages/CollectionOverviewPage";
+import {InstitutionPage} from "../support/pages/InstitutionPage";
+import {CollectionPage} from "../support/pages/CollectionPage";
 import {HomePage} from "../support/pages/HomePage";
 import {TestData} from "./TestData";
 
 describe("Institution overview", () => {
-  const page = new InstitutionOverviewPage(TestData.institution.uri);
+  const page = new InstitutionPage(TestData.institution.uri);
 
   beforeEach(() => page.visit());
 
@@ -27,7 +27,7 @@ describe("Institution overview", () => {
       institutionUri: TestData.institution.uri,
     };
     page.collectionLink(kwds).click();
-    cy.url().should("eq", new CollectionOverviewPage(kwds).absoluteUrl);
+    cy.url().should("eq", new CollectionPage(kwds).absoluteUrl);
   });
 
   it("should return home via breadcrumb", () => {

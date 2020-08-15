@@ -1,12 +1,11 @@
 import {Page} from "./Page";
-import {InstitutionOverviewPage} from "./InstitutionOverviewPage";
+import {InstitutionPage} from "./InstitutionPage";
 
 export class HomePage extends Page {
   readonly relativeUrl = "/";
 
   institutionLink(institutionUri: string) {
-    const institutionHref = new InstitutionOverviewPage(institutionUri)
-      .relativeUrl;
+    const institutionHref = new InstitutionPage(institutionUri).relativeUrl;
     return cy.get('a[href="' + institutionHref + '"]');
   }
 }

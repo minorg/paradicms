@@ -1,8 +1,8 @@
-import {ObjectOverviewPage} from "../support/pages/ObjectOverviewPage";
+import {ObjectPage} from "../support/pages/ObjectPage";
 import {TestData} from "./TestData";
 
 describe("Object overview", () => {
-  const page = new ObjectOverviewPage({
+  const page = new ObjectPage({
     collectionUri: TestData.collection.uri,
     institutionUri: TestData.institution.uri,
     objectUri: TestData.object.uri,

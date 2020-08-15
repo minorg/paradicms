@@ -1,5 +1,5 @@
 import {HomePage} from "../support/pages/HomePage";
-import {InstitutionOverviewPage} from "../support/pages/InstitutionOverviewPage";
+import {InstitutionPage} from "../support/pages/InstitutionPage";
 import {TestData} from "./TestData";
 
 describe("Home", () => {
@@ -21,7 +21,7 @@ describe("Home", () => {
     page.institutionLink(TestData.institution.uri).click();
     cy.url().should(
       "eq",
-      new InstitutionOverviewPage(TestData.institution.uri).absoluteUrl
+      new InstitutionPage(TestData.institution.uri).absoluteUrl
     );
   });
 });

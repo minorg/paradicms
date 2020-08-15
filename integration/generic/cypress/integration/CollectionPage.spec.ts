@@ -1,18 +1,24 @@
 import {TestData} from "./TestData";
-import {SearchResultsPage} from "../support/pages/SearchResultsPage";
+import {CollectionPage} from "../support/pages/CollectionPage";
 
-describe("Search results", () => {
-  const page = new SearchResultsPage("Test");
+describe("Collection overview", () => {
+  const page = new CollectionPage({
+    collectionUri: TestData.collection.uri,
+    institutionUri: TestData.institution.uri,
+  });
 
   beforeEach(() => page.visit());
 
-  it("should show the search text in the frame", () => {
-    page.frame.cardTitle.should("have.text", "Search: " + page.text);
+  it("should show the collection name in the frame", () => {
+    page.frame.cardTitle.should("have.text", TestData.collection.name);
   });
 
-  it("should have breadcrumbs to the search", () => {
+  it("should have breadcrumbs to the collection", () => {
     page.frame.breadcrumbItem(1).should("have.text", "Home");
-    page.frame.breadcrumbItem(2).should("have.text", "Search: " + page.text);
+    page.frame.breadcrumbItem(2).should("have.text", "Institutions");
+    page.frame.breadcrumbItem(3).should("have.text", TestData.institution.name);
+    page.frame.breadcrumbItem(4).should("have.text", "Collections");
+    page.frame.breadcrumbItem(5).should("have.text", TestData.collection.name);
   });
 
   it("should have all objects", () => {

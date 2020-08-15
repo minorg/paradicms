@@ -1,14 +1,14 @@
 import {Page} from "./Page";
-import {CollectionOverviewPage} from "./CollectionOverviewPage";
+import {CollectionPage} from "./CollectionPage";
 import sanitize from "sanitize-filename";
 
-export class InstitutionOverviewPage extends Page {
+export class InstitutionPage extends Page {
   constructor(readonly institutionUri: string) {
     super();
   }
 
   collectionLink(kwds: {collectionUri: string; institutionUri: string}) {
-    const collectionHref = new CollectionOverviewPage(kwds).relativeUrl;
+    const collectionHref = new CollectionPage(kwds).relativeUrl;
     return cy.get('a[href="' + collectionHref + '"]');
   }
 

@@ -1,7 +1,7 @@
 import {Page} from "./Page";
 import * as qs from "qs";
 import {TestData} from "../../integration/TestData";
-import {ObjectOverviewPage} from "./ObjectOverviewPage";
+import {ObjectPage} from "./ObjectPage";
 
 class StringFacet {
   constructor(private readonly id: string) {}
@@ -35,7 +35,7 @@ export class ObjectsGallery {
 
   getObjects(objects: typeof TestData.object[]): void {
     for (const object of objects) {
-      const objectLink = new ObjectOverviewPage({
+      const objectLink = new ObjectPage({
         collectionUri: TestData.collection.uri,
         institutionUri: TestData.institution.uri,
         objectUri: object.uri,
@@ -57,7 +57,7 @@ export class ObjectsGallery {
   }
 }
 
-export class SearchResultsPage extends Page {
+export class SearchPage extends Page {
   constructor(readonly text: string) {
     super();
   }

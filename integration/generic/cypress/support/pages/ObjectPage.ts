@@ -1,7 +1,7 @@
 import {Page} from "./Page";
 import sanitize from "sanitize-filename";
 
-export class ObjectOverviewPage extends Page {
+export class ObjectPage extends Page {
   constructor(kwds: {institutionUri: string; objectUri: string}) {
     super();
     this.institutionUri = kwds.institutionUri;
