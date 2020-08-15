@@ -94,5 +94,5 @@ workflows:
           store_artifacts: true
           wait-on: 'http-get://localhost:9000/index.html'
           working_directory: integration/generic
-#      - py
+      - py
       - ts
