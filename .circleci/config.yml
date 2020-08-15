@@ -68,25 +68,26 @@ workflows:
   version: 2
   build:
     jobs:
-#      - cypress/install:
-#          requires:
-#            - ts
-#          working_directory: app/generic/test/integration
-#      - cypress/run:
-#          attach-workspace: true
-#          post-steps:
-#            - store_test_results:
-#                path: app/generic/test/integration/results
-#          requires:
-#            - cypress/install
-#          start: |
-#            pwd
-#            cp ~/project/.circleci/cypress.json .
-#            apt-get update && apt-get install -y default-jre
-#            cd ~/dist/generic-app
-#            bin/generic-app -DtestIntegration
-#          store_artifacts: true
-#          wait-on: 'http-get://localhost:9000/index.html'
-#          working_directory: app/generic/test/integration
-      - py
+      - cypress/install:
+          requires:
+            - ts
+          working_directory: integration/generic
+      - cypress/run:
+          attach-workspace: true
+          post-steps:
+            - store_test_results:
+                path: integration/generic/results
+          requires:
+            - cypress/install
+          start: |
+            npm install -g gatsby
+            cp ~/project/.circleci/cypress.json .
+            cd ~/project/gui/generic
+            rm -fr public
+            cp -p -R ~/dist/generic-gui public
+            gatsby serve
+          store_artifacts: true
+          wait-on: 'http-get://localhost:9000/index.html'
+          working_directory: integration/generic
+#      - py
       - ts
