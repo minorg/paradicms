@@ -54,6 +54,7 @@ jobs:
             cd ../gatsby-material-ui
             npm run build
             cd ../../../gui/generic
+            export DATA_DIRECTORY_PATH=$PWD/src/data/test
             npm run build
             mkdir ~/dist
             mv public ~/dist/generic-gui
