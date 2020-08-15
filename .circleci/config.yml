@@ -50,7 +50,7 @@ jobs:
             export DATA_DIRECTORY_PATH=$PWD/src/data/test
             npm run build
             mkdir ~/dist
-            mv public ~/dist/generic-gui
+            cp -p -R public ~/dist/generic-gui
       - save_cache:
           key: ts-cache-v1-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/gatsby-base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
           paths:
