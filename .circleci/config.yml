@@ -80,8 +80,12 @@ workflows:
           requires:
             - cypress/install
           start: |
-            npm install -g gatsby
             cp ~/project/.circleci/cypress.json .
+            cd ~/project
+            if [ ! -d ./node_modules ]; then
+              npm install
+            fi
+            npm run lerna:bootstrap
             cd ~/project/gui/generic
             rm -fr public
             cp -p -R ~/dist/generic-gui public
