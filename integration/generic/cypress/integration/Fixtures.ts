@@ -10,6 +10,7 @@ export interface InstitutionFixture {
 }
 
 export interface ObjectFixture {
+  collectionUris: string[];
   institutionUri: string;
   title: string;
   uri: string;
