@@ -48,8 +48,6 @@ jobs:
       - run:
           name: Build
           command: |
-            npm install
-            npm run lerna:bootstrap
             cd lib/ts/gatsby-base
             find .
             npm run build
