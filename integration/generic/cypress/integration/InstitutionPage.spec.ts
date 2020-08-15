@@ -1,30 +1,45 @@
 import {InstitutionPage} from "../support/pages/InstitutionPage";
 import {CollectionPage} from "../support/pages/CollectionPage";
 import {HomePage} from "../support/pages/HomePage";
-import {TestData} from "./TestData";
+import {InstitutionFixture, Fixtures, CollectionFixture} from "./Fixtures";
 
 describe("Institution overview", () => {
-  const page = new InstitutionPage(TestData.institution.uri);
+  let institution: InstitutionFixture;
+  let institutionCollections: CollectionFixture[];
+  let page: InstitutionPage;
+
+  before(() => {
+    Fixtures.institutions.then(institutions => {
+      institution = institutions[0];
+      page = new InstitutionPage(institution.uri);
+      Fixtures.collections.then(collections => {
+        institutionCollections = collections.filter(
+          collection => collection.institutionUri === institution.uri
+        );
+      });
+    });
+  });
 
   beforeEach(() => page.visit());
 
   it("should show the institution name in the frame", () => {
     page.frame.cardTitle.should(
       "have.text",
-      TestData.institution.name + " - Collections"
+      institution.name + " - Collections"
     );
   });
 
   it("should have breadcrumbs to the institution", () => {
     page.frame.breadcrumbItem(1).should("have.text", "Home");
     page.frame.breadcrumbItem(2).should("have.text", "Institutions");
-    page.frame.breadcrumbItem(3).should("have.text", TestData.institution.name);
+    page.frame.breadcrumbItem(3).should("have.text", institution.name);
   });
 
   it("should have a collection link that leads to the collection overview page", () => {
+    const collection = institutionCollections[0];
     const kwds = {
-      collectionUri: TestData.collection.uri,
-      institutionUri: TestData.institution.uri,
+      collectionUri: collection.uri,
+      institutionUri: institution.uri,
     };
     page.collectionLink(kwds).click();
     cy.url().should("eq", new CollectionPage(kwds).absoluteUrl);

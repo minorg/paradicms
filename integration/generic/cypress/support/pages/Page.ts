@@ -11,7 +11,7 @@ class Frame {
 
   breadcrumbItem(n: number) {
     return cy.get(
-      '[data-cy="frame-breadcrumbs"] li:nth-of-type(' + (n * 2 - 1) + ")"
+      '[data-cy="breadcrumbs"] li:nth-of-type(' + (n * 2 - 1) + ")"
     );
   }
 
