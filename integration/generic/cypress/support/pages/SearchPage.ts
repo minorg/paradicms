@@ -1,6 +1,10 @@
 import {Page} from "./Page";
 import * as qs from "qs";
-import {TestData} from "../../integration/TestData";
+import {
+  Fixtures,
+  InstitutionFixture,
+  ObjectFixture,
+} from "../../integration/Fixtures";
 import {ObjectPage} from "./ObjectPage";
 
 class StringFacet {
@@ -11,7 +15,7 @@ class StringFacet {
       .get(
         '[data-cy="' +
           this.id +
-          '-facet"] .MuiButtonBase-root.MuiExpansionPanelSummary-root'
+          '-facet"] .MuiButtonBase-root.MuiAccordionSummary-root'
       )
       .click();
   }
@@ -33,19 +37,13 @@ export class ObjectsGallery {
     return cy.get('[data-cy="end-object-index"]');
   }
 
-  getObjects(objects: typeof TestData.object[]): void {
-    for (const object of objects) {
-      const objectLink = new ObjectPage({
-        collectionUri: TestData.collection.uri,
-        institutionUri: TestData.institution.uri,
-        objectUri: object.uri,
-      }).relativeUrl;
-      cy.get('a[href="' + objectLink + '"] .MuiCardHeader-title').should(
-        "have.text",
-        object.title
-      );
-      // cy.get("img[src=\"" + object.uri + "/image0/square_thumbnail\"]");
-    }
+  getObjectLink(object: ObjectFixture) {
+    const objectLink = new ObjectPage({
+      institutionUri: object.institutionUri,
+      objectTitle: object.title,
+      objectUri: object.uri,
+    }).relativeUrl;
+    return cy.get('a[href="' + objectLink + '"] .MuiCardHeader-title');
   }
 
   get objectsCount() {
@@ -65,5 +63,6 @@ export class SearchPage extends Page {
   readonly objectFacets = new ObjectFacets();
   readonly objectsGallery = new ObjectsGallery();
 
-  readonly relativeUrl = "/search?" + qs.stringify({text: this.text});
+  readonly relativeUrl =
+    "/search?" + qs.stringify({query: JSON.stringify({text: this.text})});
 }
