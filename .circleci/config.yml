@@ -70,17 +70,9 @@ workflows:
     jobs:
       - cypress/install:
           build: |
-            pwd
-            cp ~/project/.circleci/cypress.json .
             cd ~/project
-            find .
-            if [ ! -d ./node_modules ]; then
-              npm install
-            fi
+            npm install
             npm run lerna:bootstrap
-            cd ~/project/gui/generic
-            rm -fr public
-            cp -p -R ~/dist/generic-gui public
           cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/generic/package.json" }}-{{ checksum "~/project/integration/generic/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-base/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-material-ui/package.json" }}'
           requires:
             - ts
@@ -93,7 +85,11 @@ workflows:
           requires:
             - cypress/install
           start: |
+            pwd
+            cp ~/project/.circleci/cypress.json .
             cd ~/project/gui/generic
+            rm -fr public
+            cp -p -R ~/dist/generic-gui public
             npm run serve
           store_artifacts: true
           wait-on: 'http-get://localhost:9000/index.html'
