@@ -11,7 +11,7 @@ class Frame {
 
   breadcrumbItem(n: number) {
     return cy.get(
-      '[data-cy="frame-breadcrumbs"] li:nth-of-type(' + (n * 2 - 1) + ")"
+      '[data-cy="breadcrumbs"] li:nth-of-type(' + (n * 2 - 1) + ")"
     );
   }
 
@@ -22,10 +22,6 @@ class Frame {
 class Navbar {
   get homeLink() {
     return cy.get('[data-cy=navbar] a[href="/"]');
-  }
-
-  get loginLink() {
-    return cy.get('[data-cy=navbar] a[href^="/api/auth0/"]');
   }
 
   get searchButton() {

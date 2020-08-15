@@ -1,7 +1,8 @@
 import {Page} from "./Page";
-import {ObjectFacets, ObjectsGallery} from "./SearchResultsPage";
+import {ObjectFacets, ObjectsGallery} from "./SearchPage";
+import sanitize from "sanitize-filename";
 
-export class CollectionOverviewPage extends Page {
+export class CollectionPage extends Page {
   constructor(kwds: {collectionUri: string; institutionUri: string}) {
     super();
     this.collectionUri = kwds.collectionUri;
@@ -15,11 +16,8 @@ export class CollectionOverviewPage extends Page {
   readonly objectsGallery = new ObjectsGallery();
 
   get relativeUrl() {
-    return (
-      "/institution/" +
-      encodeURIComponent(this.institutionUri) +
-      "/collection/" +
-      encodeURIComponent(this.collectionUri)
-    );
+    return `/institution/${sanitize(this.institutionUri)}/collection/${sanitize(
+      this.collectionUri
+    )}/object/`;
   }
 }
