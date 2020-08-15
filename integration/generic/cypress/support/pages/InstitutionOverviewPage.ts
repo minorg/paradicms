@@ -1,5 +1,6 @@
 import {Page} from "./Page";
 import {CollectionOverviewPage} from "./CollectionOverviewPage";
+import sanitize from "sanitize-filename";
 
 export class InstitutionOverviewPage extends Page {
   constructor(readonly institutionUri: string) {
@@ -11,6 +12,5 @@ export class InstitutionOverviewPage extends Page {
     return cy.get('a[href="' + collectionHref + '"]');
   }
 
-  readonly relativeUrl =
-    "/institution/" + encodeURIComponent(this.institutionUri);
+  readonly relativeUrl = `/institution/${sanitize(this.institutionUri)}/`;
 }

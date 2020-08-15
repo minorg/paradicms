@@ -1,13 +1,9 @@
 import {Page} from "./Page";
+import sanitize from "sanitize-filename";
 
 export class ObjectOverviewPage extends Page {
-  constructor(kwds: {
-    collectionUri: string;
-    institutionUri: string;
-    objectUri: string;
-  }) {
+  constructor(kwds: {institutionUri: string; objectUri: string}) {
     super();
-    this.collectionUri = kwds.collectionUri;
     this.institutionUri = kwds.institutionUri;
     this.objectIndex = parseInt(
       kwds.objectUri.charAt(kwds.objectUri.length - 1)
@@ -15,7 +11,6 @@ export class ObjectOverviewPage extends Page {
     this.objectUri = kwds.objectUri;
   }
 
-  readonly collectionUri: string;
   readonly institutionUri: string;
   readonly objectIndex: number;
   readonly objectUri: string;
@@ -37,13 +32,8 @@ export class ObjectOverviewPage extends Page {
   }
 
   get relativeUrl() {
-    return (
-      "/institution/" +
-      encodeURIComponent(this.institutionUri) +
-      "/collection/" +
-      encodeURIComponent(this.collectionUri) +
-      "/object/" +
-      encodeURIComponent(this.objectUri)
-    );
+    return `/institution/${sanitize(this.institutionUri)}/object/${sanitize(
+      this.objectUri
+    )}/`;
   }
 }
