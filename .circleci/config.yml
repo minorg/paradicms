@@ -70,10 +70,8 @@ workflows:
     jobs:
       - cypress/install:
           cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/generic/package.json" }}-{{ checksum "~/project/integration/generic/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-base/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-material-ui/package.json" }}'
-          post-install: |
-            cd ~/project
-            npm install
-            npm run lerna:bootstrap
+          post-install:
+            - run: cd ~/project && npm install && npm run lerna:bootstrap
           requires:
             - ts
           working_directory: integration/generic
