@@ -51,6 +51,7 @@ jobs:
             npm install
             npm run lerna:bootstrap
             cd lib/ts/gatsby-base
+            find .
             npm run build
             cd ../gatsby-material-ui
             npm run build
