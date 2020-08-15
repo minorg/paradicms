@@ -24,10 +24,6 @@ class Navbar {
     return cy.get('[data-cy=navbar] a[href="/"]');
   }
 
-  get loginLink() {
-    return cy.get('[data-cy=navbar] a[href^="/api/auth0/"]');
-  }
-
   get searchButton() {
     return cy.get('[data-cy=navbar] [data-cy="search-button"]');
   }

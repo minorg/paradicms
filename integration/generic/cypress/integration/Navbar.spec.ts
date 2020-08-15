@@ -19,12 +19,6 @@ describe("Navbar", () => {
     cy.url().should("eq", new SearchPage(text).absoluteUrl);
   });
 
-  it("should have a login link", () => {
-    // Cypress doesn't allow you to navigate to a URL outside of the origin within a test.
-    // You have to go to the login directly.
-    page.frame.navbar.loginLink;
-  });
-
   it("should go back home after going elsewhere", () => {
     const text = "test";
     page.frame.navbar.search(text);
