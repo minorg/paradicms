@@ -34,6 +34,6 @@ export class ObjectPage extends Page {
   get relativeUrl() {
     return `/institution/${sanitize(this.institutionUri)}/object/${sanitize(
       this.objectUri
-    )}/`;
+    )}`;
   }
 }

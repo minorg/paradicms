@@ -1,7 +1,7 @@
 import {ObjectPage} from "../support/pages/ObjectPage";
 import {Fixtures, InstitutionFixture, ObjectFixture} from "./Fixtures";
 
-describe("Object overview", () => {
+describe("Object page", () => {
   let institution: InstitutionFixture;
   let object: ObjectFixture;
   let page: ObjectPage;

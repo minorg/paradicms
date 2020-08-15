@@ -3,7 +3,7 @@ import {CollectionPage} from "../support/pages/CollectionPage";
 import {HomePage} from "../support/pages/HomePage";
 import {InstitutionFixture, Fixtures, CollectionFixture} from "./Fixtures";
 
-describe("Institution overview", () => {
+describe("Institution page", () => {
   let institution: InstitutionFixture;
   let institutionCollections: CollectionFixture[];
   let page: InstitutionPage;
