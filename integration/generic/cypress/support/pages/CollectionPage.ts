@@ -18,6 +18,6 @@ export class CollectionPage extends Page {
   get relativeUrl() {
     return `/institution/${sanitize(this.institutionUri)}/collection/${sanitize(
       this.collectionUri
-    )}/`;
+    )}/object/`;
   }
 }
