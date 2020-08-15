@@ -7,6 +7,7 @@ node_modules/
 null/
 out/
 package-lock.json
+!/integration/generic/package-lock.json
 /project/project/
 /root/
 target/
