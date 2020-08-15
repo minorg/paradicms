@@ -49,10 +49,9 @@ jobs:
           name: Build
           command: |
             cd lib/ts/gatsby-base
-            find .
-            npm run build
+            PATH=$PATH:$PWD/node_modules/.bin npm run build
             cd ../gatsby-material-ui
-            npm run build
+            PATH=$PATH:$PWD/node_modules/.bin npm run build
             cd ../../../gui/generic
             npm run build
             mkdir ~/dist
