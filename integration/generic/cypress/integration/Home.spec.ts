@@ -1,9 +1,16 @@
 import {HomePage} from "../support/pages/HomePage";
 import {InstitutionPage} from "../support/pages/InstitutionPage";
-import {TestData} from "./TestData";
+import {Fixtures, InstitutionFixture} from "./Fixtures";
 
 describe("Home", () => {
+  let institutions: InstitutionFixture[];
   const page = new HomePage();
+
+  before(() => {
+    Fixtures.institutions.then(institutions_ => {
+      institutions = institutions_;
+    });
+  });
 
   beforeEach(() => page.visit());
 
@@ -12,16 +19,16 @@ describe("Home", () => {
   });
 
   it("should show institutions", () => {
-    page
-      .institutionLink(TestData.institution.uri)
-      .should("have.text", TestData.institution.name);
+    for (const institution of institutions) {
+      page
+        .institutionLink(institution.uri)
+        .should("have.text", institution.name);
+    }
   });
 
   it("should go to the institution page when clicking on an institution", () => {
-    page.institutionLink(TestData.institution.uri).click();
-    cy.url().should(
-      "eq",
-      new InstitutionPage(TestData.institution.uri).absoluteUrl
-    );
+    const institution = institutions[0];
+    page.institutionLink(institution.uri).click();
+    cy.url().should("eq", new InstitutionPage(institution.uri).absoluteUrl);
   });
 });
