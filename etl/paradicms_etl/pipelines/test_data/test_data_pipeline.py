@@ -19,14 +19,13 @@ class TestDataPipeline(_Pipeline):
             id=self.__ID,
             loader=CompositeLoader(
                 loaders=(
-                    RdfFileLoader(file_path=root_dir_path / "lib" / "scala" / "generic" / "src" / "main" / "resources" / "generic_test_data.ttl", pipeline_id=self.__ID),
                     JsonDirectoryLoader(
                         clean=True,
                         gatsby_js=True,
                         pipeline_id=self.__ID,
                         root_directory_path=root_dir_path / "gui" / "generic" / "src" / "data" / "test",
                         strategy=JsonDirectoryLoader.Strategy.FILE_PER_MODEL_TYPE
-                    )
+                    ),
                 ),
                 pipeline_id=self.__ID
             ),

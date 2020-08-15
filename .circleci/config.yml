@@ -20,76 +20,18 @@ jobs:
             - "/usr/local/bin"
             - "/usr/local/lib/python3.8/site-packages"
       - run:
-          name: "Run generic test data pipeline"
+          name: "Run test data pipeline"
           command: |
             cd etl
             export PYTHONPATH=$PWD
-            python3 paradicms_etl/pipelines/generic_test_data/generic_test_data_pipeline.py
-  scala:
-    docker:
-      - image: circleci/openjdk:11
-    steps:
-      - attach_workspace:
-          at: /tmp/workspace
-      - checkout
-      - restore_cache:
-          key: sbt-cache-v1
-      - run:
-          name: Set up GPG and sbt-pgp
-          command: |
-            # See https://discuss.circleci.com/t/gpg-keys-as-environment-variables/28641/3
-            echo -e "$OSSRH_GPG_KEY" | gpg --import
-            mkdir -p ~/.sbt/gpg
-            gpg -a --export-secret-keys >~/.sbt/gpg/secring.asc
-            mkdir -p ~/.sbt/1.0/plugins
-            echo 'addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.0")' >~/.sbt/1.0/plugins/pgp.sbt
-      - run:
-          name: Write OSSRH credentials
-          command: |
-            mkdir -p ~/.sbt/1.0
-            echo "credentials += Credentials(\"Sonatype Nexus Repository Manager\", \"oss.sonatype.org\", \"$SONATYPE_USERNAME\", \"$SONATYPE_PASSWORD\")" >>~/.sbt/1.0/sonatype.sbt
-            echo "pgpPassphrase := Some(Array[Char]())" >>~/.sbt/1.0/sonatype.sbt
-      - run:
-          name: Create test-results directory
-          command: mkdir -p test-results/scala
-      - run:
-          name: Build and test
-          command: |
-            echo -e "auth0.clientSecret=$AUTH0_CLIENT_SECRET\nauth0.clientId=$AUTH0_CLIENT_ID\nauth0.domain=$AUTH0_DOMAIN\nauth0.callbackURL=\"http://localhost:9000/api/auth0/loginCallback\"\nauth0.audience=\"\"" >app/generic/conf/application.auth0.conf
-            cp -p -R /tmp/workspace/dist/generic-gui app/generic/public
-            sbt test "project genericApp" playUpdateSecret dist
-            cp app/generic/target/test-reports/*.xml ~/project/test-results/scala
-            cd app/generic/target/universal && unzip -qq generic-app*.zip && rm generic-app*.zip && mkdir ~/dist && mv generic-app-*-SNAPSHOT ~/dist/generic-app
-      - store_test_results:
-          path: test-results
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - dist/generic-app
-      - run:
-          name: Publish (master branch only)
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              sbt publishSigned
-            fi
-      - run:
-          name: Clear secret data before caching
-          command: |
-            rm -fr ~/.sbt/gpg
-            rm ~/.sbt/1.0/sonatype.sbt
-      - save_cache:
-          key: sbt-cache-v1
-          paths:
-            - "~/.ivy2/cache"
-            - "~/.sbt"
-            - "~/.m2"
+            python3 paradicms_etl/pipelines/test_data/test_data_pipeline.py
   ts:
     docker:
       - image: circleci/node:10
     steps:
       - checkout
       - restore_cache:
-          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
+          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/gatsby-base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
       - run:
           command: |
             if [ ! -d ./node_modules ]; then
@@ -97,19 +39,25 @@ jobs:
             fi
             npm run lerna:bootstrap
       - save_cache:
-          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "app/generic/gui/package.json" }}-{{ checksum "lib/ts/base/package.json" }}
+          key: ts-dependency-cache-v1-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/gatsby-base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
           paths:
             - ./node_modules
-            - ./lib/ts/base/node_modules
+            - ./gui/generic/node_modules
+            - ./lib/ts/gatsby-base/node_modules
+            - ./lib/ts/gatsby-material-ui/node_modules
       - run:
           name: Build
           command: |
-            cd lib/ts/base
+            cd lib/ts/gatsby-base
+            export PATH=$PATH:$PWD/node_modules/.bin
             npm run build
-            cd ../../../app/generic/gui
+            cd ../gatsby-material-ui
+            npm run build
+            cd ../../../gui/generic
+            export DATA_DIRECTORY_PATH=$PWD/src/data/test
             npm run build
             mkdir ~/dist
-            mv dist ~/dist/generic-gui
+            mv public ~/dist/generic-gui
       - persist_to_workspace:
           root: ~/
           paths:
@@ -120,29 +68,25 @@ workflows:
   version: 2
   build:
     jobs:
+#      - cypress/install:
+#          requires:
+#            - ts
+#          working_directory: app/generic/test/integration
+#      - cypress/run:
+#          attach-workspace: true
+#          post-steps:
+#            - store_test_results:
+#                path: app/generic/test/integration/results
+#          requires:
+#            - cypress/install
+#          start: |
+#            pwd
+#            cp ~/project/.circleci/cypress.json .
+#            apt-get update && apt-get install -y default-jre
+#            cd ~/dist/generic-app
+#            bin/generic-app -DtestIntegration
+#          store_artifacts: true
+#          wait-on: 'http-get://localhost:9000/index.html'
+#          working_directory: app/generic/test/integration
       - py
       - ts
-      - scala:
-          requires:
-            - ts
-      - cypress/install:
-          requires:
-            - scala
-            - ts
-          working_directory: app/generic/test/integration
-      - cypress/run:
-          attach-workspace: true
-          post-steps:
-            - store_test_results:
-                path: app/generic/test/integration/results
-          requires:
-            - cypress/install
-          start: |
-            pwd
-            cp ~/project/.circleci/cypress.json .
-            apt-get update && apt-get install -y default-jre
-            cd ~/dist/generic-app
-            bin/generic-app -DtestIntegration
-          store_artifacts: true
-          wait-on: 'http-get://localhost:9000/index.html'
-          working_directory: app/generic/test/integration

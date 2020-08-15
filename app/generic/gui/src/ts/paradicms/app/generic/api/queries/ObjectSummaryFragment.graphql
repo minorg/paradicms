@@ -1,8 +1,0 @@
-fragment ObjectSummaryFragment on Object {
-  description
-  title
-  thumbnail(maxDimensions: {height: 200, width: 200}) {
-    url
-  }
-  uri
-}
