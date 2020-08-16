@@ -1,5 +1,5 @@
 from typing import Union
 
-from rdflib import URIRef
-
-PropertyValue = Union[str, URIRef]
+# JSON scalar types
+# PropertyValue = Union[bool, float, int, str]
+PropertyValue = str
