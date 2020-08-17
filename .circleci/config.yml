@@ -27,7 +27,7 @@ jobs:
             python3 paradicms_etl/pipelines/test_data/test_data_pipeline.py
   ts:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
     steps:
       - checkout
       - restore_cache:
@@ -38,6 +38,7 @@ jobs:
             rm -fr ~/.cache
             rm -fr ~/.npm
             rm -fr node_modules
+            rm -fr gui/generic/.cache
             rm -fr gui/generic/node_modules
             rm -fr lib/ts/base/node_modules
             rm -fr lib/ts/material-ui/node_modules
