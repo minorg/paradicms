@@ -8,7 +8,7 @@
   "exclude": [
     "./node_modules/*"
   ],
-  "extends": "../gatsby-base/tsconfig.base.json",
+  "extends": "../base/tsconfig.base.json",
   "include": [
     "./src/**/*"
   ]

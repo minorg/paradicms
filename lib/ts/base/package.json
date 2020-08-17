@@ -1,7 +1,7 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/gatsby-base",
-  "description": "Paradicms Gatsby.js base library",
+  "name": "@paradicms/base",
+  "description": "Paradicms base library",
   "dependencies": {
     "@types/lunr": "^2.3.3",
     "@types/node": "^10.17.28",
