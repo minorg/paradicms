@@ -33,6 +33,15 @@ jobs:
       - restore_cache:
           key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}
       - run:
+          name: Clean out cache
+          command: |
+            rm -fr ~/.cache
+            rm -fr ~/.npm
+            rm -fr node_modules
+            rm -fr gui/generic/node_modules
+            rm -fr lib/ts/base/node_modules
+            rm -fr lib/ts/material-ui/node_modules
+      - run:
           command: |
             if [ ! -d ./node_modules ]; then
               npm install
