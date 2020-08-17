@@ -2,7 +2,7 @@ import * as React from "react";
 import {Location, globalHistory} from "@reach/router";
 import {QueryParamProvider} from "use-query-params";
 
-export const wrapRootElement: React.FunctionComponent<{
+export const QueryParamProviderRootElementWrapper: React.FunctionComponent<{
   element: React.ReactNode;
 }> = ({element}) => (
   <Location>
