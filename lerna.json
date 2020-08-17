@@ -2,7 +2,7 @@
   "packages": [
     "gui/*",
     "lib/ts/base",
-    "lib/ts/gatsby-material-ui"
+    "lib/ts/material-ui"
   ],
   "version": "1.0.1"
 }

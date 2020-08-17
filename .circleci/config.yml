@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: ts-cache-v3-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
+          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}
       - run:
           command: |
             if [ ! -d ./node_modules ]; then
@@ -44,7 +44,7 @@ jobs:
             cd lib/ts/base
             export PATH=$PATH:$PWD/node_modules/.bin
             npm run build
-            cd ../gatsby-material-ui
+            cd ../material-ui
             npm run build
             cd ../../../gui/generic
             export DATA_DIRECTORY_PATH=$PWD/src/data/test
@@ -52,14 +52,14 @@ jobs:
             mkdir ~/dist
             cp -p -R public ~/dist/generic-gui
       - save_cache:
-          key: ts-cache-v3-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/gatsby-material-ui/package.json" }}
+          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
             - ./node_modules
             - ./gui/generic/node_modules
             - ./lib/ts/base/node_modules
-            - ./lib/ts/gatsby-material-ui/node_modules
+            - ./lib/ts/material-ui/node_modules
       - persist_to_workspace:
           root: ~/
           paths:
@@ -71,7 +71,7 @@ workflows:
   build:
     jobs:
       - cypress/install:
-          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/generic/package.json" }}-{{ checksum "~/project/integration/generic/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/gatsby-material-ui/package.json" }}'
+          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/generic/package.json" }}-{{ checksum "~/project/integration/generic/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}'
           post-install:
             - run: cd ~/project && npm install && npm run lerna:bootstrap
           requires:

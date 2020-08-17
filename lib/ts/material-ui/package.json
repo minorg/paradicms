@@ -1,7 +1,7 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/gatsby-material-ui",
-  "description": "Paradicms Gatsby.js material-ui library",
+  "name": "@paradicms/material-ui",
+  "description": "Paradicms material-ui library",
   "dependencies": {
     "@material-ui/core": "4.11.0",
     "@material-ui/icons": "4.9.1",
