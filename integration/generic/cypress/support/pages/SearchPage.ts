@@ -29,6 +29,7 @@ class StringFacet {
 }
 
 export class ObjectFacets {
+  readonly creator = new StringFacet("creator");
   readonly subject = new StringFacet("subject");
 }
 

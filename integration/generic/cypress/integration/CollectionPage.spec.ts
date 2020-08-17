@@ -73,8 +73,8 @@ describe("Collection page", () => {
   });
 
   it("should unselect one subject and see one fewer object", () => {
-    page.objectFacets.subject.toggleOpen();
-    page.objectFacets.subject.toggleValue("Subject 0");
+    page.objectFacets.creator.toggleOpen();
+    page.objectFacets.creator.toggleValue("Creator 0");
     page.objectsGallery.getObjectLink(objects[0]).should("not.exist");
     page.objectsGallery.startObjectIndex.should("have.text", "1");
     page.objectsGallery.endObjectIndex.should(
