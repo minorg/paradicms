@@ -31,7 +31,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}
+          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
       - run:
           name: Clean out cache
           command: |
@@ -56,13 +56,15 @@ jobs:
             npm run build
             cd ../material-ui
             npm run build
+            cd ../models
+            npm run build
             cd ../../../gui/generic
             export DATA_DIRECTORY_PATH=$PWD/src/data/test
             npm run build
             mkdir ~/dist
             cp -p -R public ~/dist/generic-gui
       - save_cache:
-          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}
+          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
