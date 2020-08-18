@@ -1,4 +1,4 @@
-import {PropertyDefinition} from "~/models/PropertyDefinition";
+import {PropertyDefinition} from "./PropertyDefinition";
 
 export interface ObjectPropertyFacet {
   readonly definition: PropertyDefinition;

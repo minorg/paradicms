@@ -1,5 +1,5 @@
-import {Image} from "~/models/Image";
-import {ImageDimensions} from "~/models/ImageDimensions";
+import {Image} from "./Image";
+import {ImageDimensions} from "./ImageDimensions";
 
 export class Images {
   static indexByObjectUri(

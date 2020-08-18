@@ -10,8 +10,8 @@
 //   | "uri"
 // >;
 
-import {Property} from "~/models/Property";
-import {Rights} from "~/models/Rights";
+import {Property} from "./Property";
+import {Rights} from "./Rights";
 
 export interface Object {
   readonly collectionUris: readonly string[];

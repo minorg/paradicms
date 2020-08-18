@@ -1,4 +1,4 @@
-import {Rights} from "~/models/Rights";
+import {Rights} from "./Rights";
 
 export interface Institution {
   readonly name: string;

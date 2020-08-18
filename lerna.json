@@ -1,8 +1,7 @@
 {
   "packages": [
     "gui/*",
-    "lib/ts/base",
-    "lib/ts/material-ui"
+    "lib/ts/*"
   ],
-  "version": "1.0.1"
+  "version": "1.0.3"
 }

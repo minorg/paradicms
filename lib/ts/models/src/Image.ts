@@ -1,4 +1,4 @@
-import {ImageDimensions} from "~/models/ImageDimensions";
+import {ImageDimensions} from "./ImageDimensions";
 
 export interface Image {
   readonly exactDimensions?: ImageDimensions | null;

@@ -1,8 +1,8 @@
-import {Image} from "~/models/Image";
-import {Collection} from "~/models/Collection";
-import {Institution} from "~/models/Institution";
-import {Property} from "~/models/Property";
-import {Rights} from "~/models/Rights";
+import {Image} from "./Image";
+import {Collection} from "./Collection";
+import {Institution} from "./Institution";
+import {Property} from "./Property";
+import {Rights} from "./Rights";
 
 export interface JoinedObject {
   readonly collections: readonly Collection[];
