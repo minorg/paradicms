@@ -51,12 +51,15 @@ jobs:
       - run:
           name: Build
           command: |
+            # lib build order matters
             cd lib/ts/base
             export PATH=$PATH:$PWD/node_modules/.bin
             npm run build
-            cd ../material-ui
-            npm run build
             cd ../models
+            npm run build
+            cd ../lunr
+            npm run build
+            cd ../material-ui
             npm run build
             cd ../../../gui/generic
             export DATA_DIRECTORY_PATH=$PWD/src/data/test
