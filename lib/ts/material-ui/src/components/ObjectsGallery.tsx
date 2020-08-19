@@ -1,11 +1,13 @@
 import * as React from "react";
 import {Grid} from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
-import {JoinedObject} from "@paradicms/models";
-import {ObjectCard} from "~/components/ObjectCard";
+import {Institution, JoinedObject} from "@paradicms/models";
+import {ObjectCard} from "./ObjectCard";
 
 export const ObjectsGallery: React.FunctionComponent<{
   currentPage: number; // From 0
+  getInstitutionHref?: (institution: Institution) => string;
+  getObjectHref: (object: JoinedObject) => string;
   maxPage: number; // From 0
   objects: JoinedObject[];
   objectsPerPage: number;
@@ -13,6 +15,8 @@ export const ObjectsGallery: React.FunctionComponent<{
   onChangePage: (page: number) => void;
 }> = ({
   currentPage,
+  getInstitutionHref,
+  getObjectHref,
   maxPage,
   objects,
   objectsPerPage,
@@ -37,7 +41,15 @@ export const ObjectsGallery: React.FunctionComponent<{
       <Grid container spacing={8}>
         {objects.map(object => (
           <Grid item key={object.uri}>
-            <ObjectCard object={object} />
+            <ObjectCard
+              institutionHref={
+                getInstitutionHref
+                  ? getInstitutionHref(object.institution)
+                  : undefined
+              }
+              object={object}
+              objectHref={getObjectHref(object)}
+            />
           </Grid>
         ))}
       </Grid>

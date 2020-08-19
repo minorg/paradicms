@@ -1,11 +1,11 @@
 import * as React from "react";
 import {
-  Card,
-  CardContent,
-  CardHeader,
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Card,
+  CardContent,
+  CardHeader,
   Grid,
   List,
   ListItem,
@@ -18,11 +18,8 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Link} from "gatsby";
-import {Hrefs} from "~/Hrefs";
-import {JoinedObject} from "@paradicms/models";
-import {Images} from "@paradicms/models";
-import {RightsTable} from "~/components/RightsTable";
-import {Image} from "@paradicms/models";
+import {Image, Images, JoinedObject} from "@paradicms/models";
+import {RightsTable} from "./RightsTable";
 
 const useStyles = makeStyles(theme => ({
   expansionPanelText: {
@@ -32,12 +29,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ObjectCard: React.FunctionComponent<{
-  includeInstitution?: boolean;
+  institutionHref?: string;
   object: JoinedObject;
-}> = ({includeInstitution, object}) => {
+  objectHref: string;
+}> = ({institutionHref, object, objectHref}) => {
   const classes = useStyles();
-
-  const objectHref = Hrefs.institution(object.institution).object(object);
 
   const descriptions = (object.properties ?? [])
     .filter(property => property.key == "description")
@@ -73,7 +69,7 @@ export const ObjectCard: React.FunctionComponent<{
               </div>
             </Grid>
           ) : null}
-          {includeInstitution ? (
+          {institutionHref ? (
             <Grid item>
               <Table>
                 <TableBody>
@@ -82,7 +78,7 @@ export const ObjectCard: React.FunctionComponent<{
                       <strong>Institution</strong>
                     </TableCell>
                     <TableCell>
-                      <Link to={Hrefs.institution(object.institution).home}>
+                      <Link to={institutionHref}>
                         {object.institution.name}
                       </Link>
                     </TableCell>

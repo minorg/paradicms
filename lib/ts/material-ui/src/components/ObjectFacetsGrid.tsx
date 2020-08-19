@@ -1,15 +1,17 @@
 import * as React from "react";
 import {
   Accordion,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
   Grid,
 } from "@material-ui/core";
-import {ObjectFilters} from "@paradicms/models";
-import {ObjectFacets} from "@paradicms/models";
-import {StringFilter} from "@paradicms/models";
-import {PropertyFilter} from "@paradicms/models";
-import {StringFacetForm} from "~/components/StringFacetForm";
+import {
+  ObjectFacets,
+  ObjectFilters,
+  PropertyFilter,
+  StringFilter,
+} from "@paradicms/models";
+import {StringFacetForm} from "./StringFacetForm";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const FacetExpansionPanel: React.FunctionComponent<React.PropsWithChildren<{

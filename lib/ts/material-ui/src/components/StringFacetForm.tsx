@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as _ from "lodash";
 import {invariant} from "ts-invariant";
 import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
 import {StringFilter} from "@paradicms/models";
