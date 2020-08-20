@@ -1,7 +1,6 @@
 import {ITSConfigFn} from "gatsby-plugin-ts-config";
 import {FileSystemConfig} from "gatsby-source-filesystem";
 import * as path from "path";
-import {ObjectIndex} from "~/ObjectIndex";
 
 const gatsbyConfig: ITSConfigFn<
   "config",
@@ -33,10 +32,6 @@ const gatsbyConfig: ITSConfigFn<
       title: "Paradicms",
     },
     plugins: [
-      {
-        resolve: `gatsby-plugin-lunr`,
-        options: ObjectIndex.configOptions,
-      },
       "gatsby-plugin-material-ui",
       {
         resolve: `gatsby-plugin-prefetch-google-fonts`,
@@ -57,7 +52,6 @@ const gatsbyConfig: ITSConfigFn<
         },
       },
       `gatsby-plugin-tsconfig-paths`,
-      "gatsby-plugin-use-query-params",
       {
         resolve: "gatsby-source-filesystem",
         options: {

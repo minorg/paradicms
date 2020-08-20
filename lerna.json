@@ -1,8 +1,7 @@
 {
   "packages": [
     "gui/*",
-    "lib/ts/gatsby-base",
-    "lib/ts/gatsby-material-ui"
+    "lib/ts/*"
   ],
-  "version": "1.0.1"
+  "version": "1.0.3"
 }
