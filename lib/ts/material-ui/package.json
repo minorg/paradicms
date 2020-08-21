@@ -8,7 +8,9 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@paradicms/base": "1.0.3",
     "@paradicms/models": "1.0.3",
+    "@types/fontfaceobserver": "^0.0.6",
     "@types/react-medium-image-zoom": "^3.0.0",
+    "fontfaceobserver": "^2.1.0",
     "react-material-ui-carousel": "1.4.5",
     "react-medium-image-zoom": "3.1.2"
   },
