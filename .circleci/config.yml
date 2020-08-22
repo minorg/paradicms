@@ -63,6 +63,7 @@ jobs:
             npm run build
             cd ../../../gui/union
             export DATA_DIRECTORY_PATH=$PWD/data/test
+            npm run build
             npm run export
             mkdir ~/dist
             mv out ~/dist/union-gui
