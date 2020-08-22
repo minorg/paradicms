@@ -6,22 +6,28 @@ import {ObjectCard} from "./ObjectCard";
 
 export const ObjectsGallery: React.FunctionComponent<{
   currentPage: number; // From 0
-  getInstitutionHref?: (institution: Institution) => string;
-  getObjectHref: (object: JoinedObject) => string;
   maxPage: number; // From 0
   objects: JoinedObject[];
   objectsPerPage: number;
   objectsTotal: number;
   onChangePage: (page: number) => void;
+  renderInstitutionLink?: (
+    institution: Institution,
+    children: React.ReactNode
+  ) => React.ReactNode;
+  renderObjectLink: (
+    object: JoinedObject,
+    children: React.ReactNode
+  ) => React.ReactNode;
 }> = ({
   currentPage,
-  getInstitutionHref,
-  getObjectHref,
   maxPage,
   objects,
   objectsPerPage,
   objectsTotal,
   onChangePage,
+  renderInstitutionLink,
+  renderObjectLink,
 }) => (
   <Grid container direction="column" spacing={4}>
     <Grid item>
@@ -42,13 +48,9 @@ export const ObjectsGallery: React.FunctionComponent<{
         {objects.map(object => (
           <Grid item key={object.uri}>
             <ObjectCard
-              institutionHref={
-                getInstitutionHref
-                  ? getInstitutionHref(object.institution)
-                  : undefined
-              }
               object={object}
-              objectHref={getObjectHref(object)}
+              renderInstitutionLink={renderInstitutionLink}
+              renderObjectLink={renderObjectLink}
             />
           </Grid>
         ))}

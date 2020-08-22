@@ -24,8 +24,7 @@ class TestDataPipeline(_Pipeline):
                         pipeline_id=self.__ID,
                         loaded_data_dir_path=root_dir_path
                         / "gui"
-                        / "generic"
-                        / "src"
+                        / "union"
                         / "data"
                         / "test",
                     ),
@@ -34,7 +33,7 @@ class TestDataPipeline(_Pipeline):
                         pipeline_id=self.__ID,
                         loaded_data_dir_path=root_dir_path
                         / "integration"
-                        / "generic"
+                        / "union"
                         / "cypress"
                         / "fixtures",
                     ),

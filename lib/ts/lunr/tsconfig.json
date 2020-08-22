@@ -3,6 +3,7 @@
     "baseUrl": "./src",
     "declaration": true,
     "declarationMap": true,
+    "esModuleInterop": true,
     "outDir": "./dist"
   },
   "exclude": [

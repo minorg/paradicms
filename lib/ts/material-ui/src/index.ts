@@ -1,3 +1,4 @@
+export * from "./Fonts";
 export * from "./Footer";
 export * from "./NavbarSearchForm";
 export * from "./ObjectCard";

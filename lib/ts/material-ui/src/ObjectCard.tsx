@@ -17,8 +17,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {Link} from "gatsby";
-import {Image, Images, JoinedObject} from "@paradicms/models";
+import {Image, Images, Institution, JoinedObject} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
 
 const useStyles = makeStyles(theme => ({
@@ -29,10 +28,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ObjectCard: React.FunctionComponent<{
-  institutionHref?: string;
   object: JoinedObject;
-  objectHref: string;
-}> = ({institutionHref, object, objectHref}) => {
+  renderInstitutionLink?: (
+    institution: Institution,
+    children: React.ReactNode
+  ) => React.ReactNode;
+  renderObjectLink: (
+    object: JoinedObject,
+    children: React.ReactNode
+  ) => React.ReactNode;
+}> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const classes = useStyles();
 
   const descriptions = (object.properties ?? [])
@@ -55,21 +60,22 @@ export const ObjectCard: React.FunctionComponent<{
 
   return (
     <Card>
-      <CardHeader component="a" href={objectHref} title={object.title!} />
+      <CardHeader title={renderObjectLink(object, <>{object.title}</>)} />
       <CardContent>
         <Grid container direction="column" spacing={2}>
           {thumbnail ? (
             <Grid item>
               <div style={{height: 200, width: 200}}>
                 <figure className="figure text-center w-100">
-                  <Link to={objectHref}>
+                  {renderObjectLink(
+                    object,
                     <img className="figure-img rounded" src={thumbnail.uri} />
-                  </Link>
+                  )}
                 </figure>
               </div>
             </Grid>
           ) : null}
-          {institutionHref ? (
+          {renderInstitutionLink ? (
             <Grid item>
               <Table>
                 <TableBody>
@@ -78,9 +84,10 @@ export const ObjectCard: React.FunctionComponent<{
                       <strong>Institution</strong>
                     </TableCell>
                     <TableCell>
-                      <Link to={institutionHref}>
-                        {object.institution.name}
-                      </Link>
+                      {renderInstitutionLink(
+                        object.institution,
+                        <span>{object.institution.name}</span>
+                      )}
                     </TableCell>
                   </TableRow>
                 </TableBody>
