@@ -31,15 +31,15 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
+          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
 #      - run:
 #          name: Clean out cache
 #          command: |
 #            rm -fr ~/.cache
 #            rm -fr ~/.npm
 #            rm -fr node_modules
-#            rm -fr gui/generic/.cache
-#            rm -fr gui/generic/node_modules
+#            rm -fr gui/union/.cache
+#            rm -fr gui/union/node_modules
 #            rm -fr lib/ts/base/node_modules
 #            rm -fr lib/ts/material-ui/node_modules
       - run:
@@ -61,6 +61,8 @@ jobs:
             npm run build
             cd ../material-ui
             npm run build
+            cd ../next
+            npm run build
             cd ../../../gui/union
             export DATA_DIRECTORY_PATH=$PWD/data/test
             npm run build
@@ -68,7 +70,7 @@ jobs:
             mkdir ~/dist
             mv out ~/dist/union-gui
       - save_cache:
-          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/generic/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
+          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
