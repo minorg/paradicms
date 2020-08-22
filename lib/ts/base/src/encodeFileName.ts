@@ -1,4 +1,4 @@
-import basex from "base-x";
+const basex = require("base-x");
 const base58 = basex(
   "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 );

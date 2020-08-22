@@ -1,6 +1,6 @@
 import {Page} from "./Page";
 import {ObjectFacets, ObjectsGallery} from "./SearchPage";
-import {encodeFileName} from "../../../../../gui/union/lib/encodeFileName";
+import {encodeFileName} from "../../../../../lib/ts/base/src";
 
 export class CollectionPage extends Page {
   constructor(kwds: {collectionUri: string; institutionUri: string}) {

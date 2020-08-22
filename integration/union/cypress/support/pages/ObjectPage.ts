@@ -1,5 +1,5 @@
 import {Page} from "./Page";
-import {encodeFileName} from "../../../../../gui/union/lib/encodeFileName";
+import {encodeFileName} from "../../../../../lib/ts/base/src";
 
 export class ObjectPage extends Page {
   constructor(kwds: {
