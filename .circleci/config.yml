@@ -89,7 +89,7 @@ workflows:
       - cypress/install:
           cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/union/package.json" }}-{{ checksum "~/project/integration/union/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}'
           post-install:
-            - run: cd ~/project && npm install && npm run lerna:bootstrap && npm install -g serve
+            - run: cd ~/project && npm install && npm run lerna:bootstrap
           requires:
             - ts
           working_directory: integration/union
@@ -102,7 +102,8 @@ workflows:
             - cypress/install
           start: |
             cp ~/project/.circleci/cypress.json .
-            serve ~/dist/union-gui
+            cd ~/dist/union-gui
+            npm run serve
           store_artifacts: true
           wait-on: 'http-get://localhost:9000/index.html'
           working_directory: integration/union
