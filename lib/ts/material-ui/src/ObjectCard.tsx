@@ -60,7 +60,7 @@ export const ObjectCard: React.FunctionComponent<{
 
   return (
     <Card>
-      <CardHeader title={object.title!} />
+      <CardHeader title={renderObjectLink(object, <>{object.title}</>)} />
       <CardContent>
         <Grid container direction="column" spacing={2}>
           {thumbnail ? (

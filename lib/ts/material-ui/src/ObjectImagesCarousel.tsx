@@ -4,7 +4,7 @@ import Carousel from "react-material-ui-carousel";
 import {Image, Images} from "@paradicms/models";
 
 export const ObjectImagesCarousel: React.FunctionComponent<{
-  images: Image[];
+  images: readonly Image[];
 }> = ({images}) => {
   const imagesByOriginalImageUri = Images.indexByOriginalImageUri(images);
   return (
