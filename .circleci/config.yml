@@ -105,7 +105,7 @@ workflows:
             cd ~/project/gui/union
             ./node_modules/.bin/serve -n ~/dist/union-gui
           store_artifacts: true
-          wait-on: 'http-get://localhost:9000/index.html'
+          wait-on: 'http-get://localhost:5000/index.html'
           working_directory: integration/union
       - py
       - ts
