@@ -79,7 +79,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - dist/generic-gui
+            - dist/union-gui
 orbs:
   cypress: cypress-io/cypress@1
 workflows:
@@ -87,7 +87,7 @@ workflows:
   build:
     jobs:
       - cypress/install:
-          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/union/package.json" }}-{{ checksum "~/project/integration/generic/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}'
+          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/union/package.json" }}-{{ checksum "~/project/integration/union/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}'
           post-install:
             - run: cd ~/project && npm install && npm run lerna:bootstrap && npm install -g serve
           requires:
