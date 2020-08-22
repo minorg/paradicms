@@ -32,7 +32,6 @@
     ".eslintignore",
     ".eslintrc.js",
     ".graphqlconfig",
-    "graphql-codegen-config.yml",
     "README.md",
     ".prettierrc",
     "tsconfig.base.json"
