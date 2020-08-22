@@ -21,5 +21,8 @@ to link together the `packages` and install their dependencies.
 
 All of the web applications are structured similarly. After completing the one-time setup, 
 
-    cd app/generic/gui
+    cd gui/union
+    npm run build
     npm start
+
+Then open a web browser to [http://localhost:3000](http://localhost:3000).
