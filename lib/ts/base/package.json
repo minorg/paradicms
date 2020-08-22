@@ -14,7 +14,6 @@
     "react-dom": "^16.9.0",
     "react-error-overlay": "^6.0.7",
     "react-helmet": "^6.0.0",
-    "sanitize-filename": "1.6.3",
     "ts-invariant": "0.4.4",
     "use-query-params": "^1.1.6"
   },
