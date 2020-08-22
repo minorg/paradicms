@@ -102,8 +102,8 @@ workflows:
             - cypress/install
           start: |
             cp ~/project/.circleci/cypress.json .
-            cd ~/dist/union-gui
-            npm run serve
+            cd ~/project/gui/union
+            ./node_modules/.bin/serve ~/dist/union-gui
           store_artifacts: true
           wait-on: 'http-get://localhost:9000/index.html'
           working_directory: integration/union
