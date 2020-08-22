@@ -1,5 +1,5 @@
 {
-  "name": "generic-gui-integration",
+  "name": "union-gui-integration",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,7 +15,6 @@
     "cypress": "^4.12.1",
     "cypress-intellij-reporter": "0.0.4",
     "qs": "^6.9.4",
-    "sanitize-filename": "^1.6.3",
     "typescript": "^3.9.7"
   }
 }

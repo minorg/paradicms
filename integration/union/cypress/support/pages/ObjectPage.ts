@@ -1,5 +1,5 @@
 import {Page} from "./Page";
-import sanitize from "sanitize-filename";
+import {encodeFileName} from "../../../../../gui/union/lib/encodeFileName";
 
 export class ObjectPage extends Page {
   constructor(kwds: {
@@ -32,8 +32,8 @@ export class ObjectPage extends Page {
   // }
 
   get relativeUrl() {
-    return `/institution/${sanitize(this.institutionUri)}/object/${sanitize(
-      this.objectUri
-    )}`;
+    return `/institution/${encodeFileName(
+      this.institutionUri
+    )}/object/${encodeFileName(this.objectUri)}`;
   }
 }

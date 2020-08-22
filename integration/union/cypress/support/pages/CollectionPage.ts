@@ -1,6 +1,6 @@
 import {Page} from "./Page";
 import {ObjectFacets, ObjectsGallery} from "./SearchPage";
-import sanitize from "sanitize-filename";
+import {encodeFileName} from "../../../../../gui/union/lib/encodeFileName";
 
 export class CollectionPage extends Page {
   constructor(kwds: {collectionUri: string; institutionUri: string}) {
@@ -16,8 +16,8 @@ export class CollectionPage extends Page {
   readonly objectsGallery = new ObjectsGallery();
 
   get relativeUrl() {
-    return `/institution/${sanitize(this.institutionUri)}/collection/${sanitize(
-      this.collectionUri
-    )}/object/`;
+    return `/institution/${encodeFileName(
+      this.institutionUri
+    )}/collection/${encodeFileName(this.collectionUri)}`;
   }
 }

@@ -65,5 +65,5 @@ export class SearchPage extends Page {
   readonly objectsGallery = new ObjectsGallery();
 
   readonly relativeUrl =
-    "/search/?" + qs.stringify({query: JSON.stringify({text: this.text})});
+    "/search?" + qs.stringify({query: JSON.stringify({text: this.text})});
 }
