@@ -44,7 +44,7 @@ export class ObjectsGallery {
       objectTitle: object.title,
       objectUri: object.uri,
     }).relativeUrl;
-    return cy.get('a[href="' + objectLink + '"] .MuiCardHeader-title');
+    return cy.get('.MuiCardHeader-title a[href="' + objectLink + '"]');
   }
 
   get objectsCount() {
