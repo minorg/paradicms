@@ -18,6 +18,6 @@ export class CollectionPage extends Page {
   get relativeUrl() {
     return `/institution/${encodeFileName(
       this.institutionUri
-    )}/collection/${encodeFileName(this.collectionUri)}`;
+    )}/collection/${encodeFileName(this.collectionUri)}/`;
   }
 }
