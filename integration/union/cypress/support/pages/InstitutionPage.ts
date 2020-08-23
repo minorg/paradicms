@@ -12,5 +12,5 @@ export class InstitutionPage extends Page {
     return cy.get('a[href="' + collectionHref + '"]');
   }
 
-  readonly relativeUrl = `/institution/${encodeFileName(this.institutionUri)}`;
+  readonly relativeUrl = `/institution/${encodeFileName(this.institutionUri)}/`;
 }
