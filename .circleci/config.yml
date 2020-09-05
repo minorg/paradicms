@@ -24,7 +24,7 @@ jobs:
           command: |
             cd etl
             export PYTHONPATH=$PWD
-            python3 paradicms_etl/pipelines/test_data/test_data_pipeline.py
+            python3 paradicms_etl/pipelines/test_data_pipeline.py
   ts:
     docker:
       - image: circleci/node:12
