@@ -7,7 +7,13 @@ from paradicms_etl._pipeline_phase import _PipelinePhase
 
 
 class _Loader(_PipelinePhase):
-    def __init__(self, *, data_dir_path: Optional[Path] = None, loaded_data_dir_path: Optional[Path] = None, **kwds):
+    def __init__(
+        self,
+        *,
+        data_dir_path: Optional[Path] = None,
+        loaded_data_dir_path: Optional[Path] = None,
+        **kwds
+    ):
         """
         Construct a loader.
 
@@ -17,10 +23,7 @@ class _Loader(_PipelinePhase):
         """
 
         _PipelinePhase.__init__(self, **kwds)
-        if loaded_data_dir_path is None:
-            if data_dir_path is None:
-                data_dir_path = self._DATA_DIR_PATH_DEFAULT
-            loaded_data_dir_path = data_dir_path / self._pipeline_id / "loaded"
+        self.__data_dir_path = data_dir_path
         self.__loaded_data_dir_path = loaded_data_dir_path
 
     @abstractmethod
@@ -39,5 +42,11 @@ class _Loader(_PipelinePhase):
         A loader does not have to use this directory. It can load data into an external database, for example.
         """
 
-        self.__loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
-        return self.__loaded_data_dir_path
+        if self.__loaded_data_dir_path is not None:
+            loaded_data_dir_path = self.__loaded_data_dir_path
+        elif self.__data_dir_path is not None:
+            loaded_data_dir_path = self.__data_dir_path / self._pipeline_id / "loaded"
+        else:
+            raise ValueError("must specify loaded_data_dir_path or data_dir_path")
+        loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
+        return loaded_data_dir_path
