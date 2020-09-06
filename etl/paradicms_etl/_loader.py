@@ -26,11 +26,15 @@ class _Loader(_PipelinePhase):
         self.__data_dir_path = data_dir_path
         self.__loaded_data_dir_path = loaded_data_dir_path
 
+    def flush(self):
+        """
+        Flush any buffered data.
+        """
+
     @abstractmethod
-    def load(self, *, force: bool, models: Generator[_Model, None, None]):
+    def load(self, *, models: Generator[_Model, None, None]):
         """
         Load models from the given generator.
-        :param force: force loading, ignoring any cached data
         :param models: generator of models to load, normally the result of the transformer
         """
 
@@ -48,5 +52,6 @@ class _Loader(_PipelinePhase):
             loaded_data_dir_path = self.__data_dir_path / self._pipeline_id / "loaded"
         else:
             raise ValueError("must specify loaded_data_dir_path or data_dir_path")
+        loaded_data_dir_path = loaded_data_dir_path.absolute()
         loaded_data_dir_path.mkdir(parents=True, exist_ok=True)
         return loaded_data_dir_path

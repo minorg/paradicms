@@ -29,11 +29,10 @@ class Rights:
             return None
         if len(holders) > 1:
             raise NotImplementedError("more than one rights holder")
-        return \
-            Rights(
-                holder=holders[0] if holders else None,
-                statements = tuple(statements) if statements else None,
-            )
+        return Rights(
+            holder=holders[0] if holders else None,
+            statements=tuple(statements) if statements else None,
+        )
 
     def to_rdf(self, *, add_to_resource: Resource) -> None:
         if self.holder is not None:
