@@ -41,7 +41,7 @@ export const ObjectCard: React.FunctionComponent<{
   const classes = useStyles();
 
   const descriptions = (object.properties ?? [])
-    .filter(property => property.key == "description")
+    .filter(property => property.propertyDefinitionUri.endsWith("description"))
     .map(property => property.value);
 
   let thumbnail: Image | undefined;

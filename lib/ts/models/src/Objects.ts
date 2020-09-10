@@ -25,7 +25,7 @@ export class Objects {
       for (const object of objectsWithProperties) {
         let includeObject = false;
         for (const property of object.properties!) {
-          if (property.key === propertyDefinition.key) {
+          if (property.propertyDefinitionUri === propertyDefinition.uri) {
             facetValues.push(property.value);
             includeObject = true;
           }
@@ -121,7 +121,11 @@ export class Objects {
           filter: propertyFilter,
           getObjectValues: object =>
             (object.properties ?? [])
-              .filter(property => property.key === propertyFilter.key)
+              .filter(
+                property =>
+                  property.propertyDefinitionUri ===
+                  propertyFilter.propertyDefinitionUri
+              )
               .map(property => property.value),
           objects,
         });
