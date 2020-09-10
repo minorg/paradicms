@@ -35,7 +35,10 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
   filters: ObjectFilters;
   onChange: (filters: ObjectFilters) => void;
 }> = ({facets, filters, onChange}) => {
-  const onChangePropertyFilter = (key: string, newState?: StringFilter) => {
+  const onChangePropertyFilter = (
+    propertyDefinitionUri: string,
+    newState?: StringFilter
+  ) => {
     const {properties: oldProperties, ...oldFiltersWithoutProperties} = filters;
 
     let newPropertyFilters: PropertyFilter[];
@@ -44,11 +47,12 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
     } else {
       // Remove the key's filter and then add it back
       newPropertyFilters = oldProperties.filter(
-        propertyFilter => propertyFilter.key !== key
+        propertyFilter =>
+          propertyFilter.propertyDefinitionUri !== propertyDefinitionUri
       );
     }
     if (newState) {
-      newPropertyFilters.push({key, ...newState});
+      newPropertyFilters.push({propertyDefinitionUri, ...newState});
     }
 
     let newFilters: ObjectFilters;
@@ -67,19 +71,20 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
   return (
     <Grid container direction="column" spacing={4}>
       {(facets.properties ?? []).map(propertyFacet => (
-        <Grid item key={propertyFacet.definition.key}>
+        <Grid item key={propertyFacet.definition.uri}>
           <FacetExpansionPanel
-            id={propertyFacet.definition.key}
+            id={propertyFacet.definition.uri}
             title={propertyFacet.definition.labelSingular}
           >
             <StringFacetForm
               valueUniverse={propertyFacet.values}
               currentState={filters.properties?.find(
                 propertyFilter =>
-                  propertyFilter.key === propertyFacet.definition.key
+                  propertyFilter.propertyDefinitionUri ===
+                  propertyFacet.definition.uri
               )}
               onChange={newState =>
-                onChangePropertyFilter(propertyFacet.definition.key, newState)
+                onChangePropertyFilter(propertyFacet.definition.uri, newState)
               }
             />
           </FacetExpansionPanel>
