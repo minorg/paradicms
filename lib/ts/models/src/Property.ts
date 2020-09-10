@@ -1,4 +1,4 @@
 export interface Property {
-  readonly property_definition_uri: string;
+  readonly propertyDefinitionUri: string;
   readonly value: string;
 }
