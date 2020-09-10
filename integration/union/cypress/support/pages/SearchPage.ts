@@ -29,8 +29,8 @@ class StringFacet {
 }
 
 export class ObjectFacets {
-  readonly creator = new StringFacet("creator");
-  readonly subject = new StringFacet("subject");
+  readonly creator = new StringFacet("http://purl.org/dc/terms/creator");
+  readonly subject = new StringFacet("http://purl.org/dc/terms/subject");
 }
 
 export class ObjectsGallery {
