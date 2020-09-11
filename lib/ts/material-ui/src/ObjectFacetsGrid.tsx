@@ -74,7 +74,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
         <Grid item key={propertyFacet.definition.uri}>
           <FacetExpansionPanel
             id={propertyFacet.definition.uri}
-            title={propertyFacet.definition.labelSingular}
+            title={propertyFacet.definition.label}
           >
             <StringFacetForm
               valueUniverse={propertyFacet.values}

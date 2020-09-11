@@ -1,5 +1,5 @@
 export interface PropertyDefinition {
   readonly faceted?: boolean | null;
-  readonly labelSingular: string;
+  readonly label: string;
   readonly uri: string;
 }
