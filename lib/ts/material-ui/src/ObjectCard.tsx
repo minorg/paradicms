@@ -40,10 +40,6 @@ export const ObjectCard: React.FunctionComponent<{
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const classes = useStyles();
 
-  const descriptions = (object.properties ?? [])
-    .filter(property => property.propertyDefinitionUri.endsWith("description"))
-    .map(property => property.value);
-
   let thumbnail: Image | undefined;
   const objectImagesByOriginalImageUri = Images.indexByOriginalImageUri(
     object.images
@@ -94,24 +90,14 @@ export const ObjectCard: React.FunctionComponent<{
               </Table>
             </Grid>
           ) : null}
-          {descriptions.length > 0 ? (
+          {object.abstract ? (
             <Grid item>
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  Description
+                  Summary
                 </AccordionSummary>
                 <AccordionDetails className={classes.expansionPanelText}>
-                  {descriptions.length === 1 ? (
-                    <span>{descriptions[0]}</span>
-                  ) : (
-                    <List>
-                      {descriptions.map((description, descriptionIndex) => (
-                        <ListItem key={descriptionIndex}>
-                          <ListItemText>{description}</ListItemText>
-                        </ListItem>
-                      ))}
-                    </List>
-                  )}
+                  {object.abstract}
                 </AccordionDetails>
               </Accordion>
             </Grid>
