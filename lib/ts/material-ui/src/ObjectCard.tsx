@@ -7,9 +7,6 @@ import {
   CardContent,
   CardHeader,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
   makeStyles,
   Table,
   TableBody,
@@ -18,12 +15,23 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Image, Images, Institution, JoinedObject} from "@paradicms/models";
-import {RightsTable} from "./RightsTable";
+import {RightsValueLink} from "./RightsValueLink";
 
 const useStyles = makeStyles(theme => ({
   expansionPanelText: {
     fontSize: "x-small",
     maxWidth: "32em",
+  },
+  thumbnailImg: {
+    maxHeight: "200px",
+    maxWidth: "200px",
+  },
+  rightsTableCell: {
+    fontSize: "x-small",
+    padding: theme.spacing(1),
+  },
+  title: {
+    textAlign: "center",
   },
 }));
 
@@ -56,19 +64,24 @@ export const ObjectCard: React.FunctionComponent<{
 
   return (
     <Card>
-      <CardHeader title={renderObjectLink(object, <>{object.title}</>)} />
+      <CardHeader
+        className={classes.title}
+        title={renderObjectLink(object, <>{object.title}</>)}
+      />
       <CardContent>
         <Grid container direction="column" spacing={2}>
           {thumbnail ? (
-            <Grid item>
-              <div style={{height: 200, width: 200}}>
-                <figure className="figure text-center w-100">
-                  {renderObjectLink(
-                    object,
-                    <img className="figure-img rounded" src={thumbnail.uri} />
-                  )}
-                </figure>
-              </div>
+            <Grid item container alignItems="center" justify="center">
+              <Grid item>
+                {renderObjectLink(
+                  object,
+                  <img
+                    className={classes.thumbnailImg}
+                    src={thumbnail.uri}
+                    title={object.title}
+                  />
+                )}
+              </Grid>
             </Grid>
           ) : null}
           {renderInstitutionLink ? (
@@ -109,7 +122,38 @@ export const ObjectCard: React.FunctionComponent<{
                   Rights
                 </AccordionSummary>
                 <AccordionDetails className={classes.expansionPanelText}>
-                  <RightsTable rights={object.rights} />
+                  <Table className={classes.rightsTable}>
+                    {object.rights.statement ? (
+                      <TableRow>
+                        <TableCell className={classes.rightsTableCell}>
+                          Statement
+                        </TableCell>
+                        <TableCell className={classes.rightsTableCell}>
+                          <RightsValueLink value={object.rights.statement} />
+                        </TableCell>
+                      </TableRow>
+                    ) : null}
+                    {object.rights.holder ? (
+                      <TableRow>
+                        <TableCell className={classes.rightsTableCell}>
+                          Holder
+                        </TableCell>
+                        <TableCell className={classes.rightsTableCell}>
+                          <RightsValueLink value={object.rights.holder} />
+                        </TableCell>
+                      </TableRow>
+                    ) : null}
+                    {object.rights.license ? (
+                      <TableRow>
+                        <TableCell className={classes.rightsTableCell}>
+                          License
+                        </TableCell>
+                        <TableCell className={classes.rightsTableCell}>
+                          <RightsValueLink value={object.rights.license} />
+                        </TableCell>
+                      </TableRow>
+                    ) : null}
+                  </Table>
                 </AccordionDetails>
               </Accordion>
             </Grid>
