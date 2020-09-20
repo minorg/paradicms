@@ -15,10 +15,13 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Image, Images, Institution, JoinedObject} from "@paradicms/models";
-import {RightsValueLink} from "./RightsValueLink";
+import {RightsTable} from "./RightsTable";
 
 const useStyles = makeStyles(theme => ({
-  expansionPanelText: {
+  accordionTitle: {
+    fontSize: "smaller",
+  },
+  objectSummary: {
     fontSize: "x-small",
     maxWidth: "32em",
   },
@@ -70,20 +73,22 @@ export const ObjectCard: React.FunctionComponent<{
       />
       <CardContent>
         <Grid container direction="column" spacing={2}>
-          {thumbnail ? (
-            <Grid item container alignItems="center" justify="center">
-              <Grid item>
-                {renderObjectLink(
-                  object,
-                  <img
-                    className={classes.thumbnailImg}
-                    src={thumbnail.uri}
-                    title={object.title}
-                  />
-                )}
-              </Grid>
+          <Grid item container alignItems="center" justify="center">
+            <Grid item>
+              {renderObjectLink(
+                object,
+                <img
+                  className={classes.thumbnailImg}
+                  src={
+                    thumbnail
+                      ? thumbnail.uri
+                      : "https://place-hold.it/200x200?text=Missing%20thumbnail"
+                  }
+                  title={object.title}
+                />
+              )}
             </Grid>
-          ) : null}
+          </Grid>
           {renderInstitutionLink ? (
             <Grid item>
               <Table>
@@ -106,11 +111,32 @@ export const ObjectCard: React.FunctionComponent<{
           {object.abstract ? (
             <Grid item>
               <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <AccordionSummary
+                  className={classes.accordionTitle}
+                  expandIcon={<ExpandMoreIcon />}
+                >
                   Summary
                 </AccordionSummary>
-                <AccordionDetails className={classes.expansionPanelText}>
+                <AccordionDetails className={classes.objectSummary}>
                   {object.abstract}
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+          ) : null}
+          {thumbnail && thumbnail.rights ? (
+            <Grid item>
+              <Accordion>
+                <AccordionSummary
+                  className={classes.accordionTitle}
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  Image rights
+                </AccordionSummary>
+                <AccordionDetails>
+                  <RightsTable
+                    cellClassName={classes.rightsTableCell}
+                    rights={thumbnail.rights}
+                  ></RightsTable>
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -118,42 +144,17 @@ export const ObjectCard: React.FunctionComponent<{
           {object.rights ? (
             <Grid item>
               <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  Rights
+                <AccordionSummary
+                  className={classes.accordionTitle}
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  Metadata rights
                 </AccordionSummary>
-                <AccordionDetails className={classes.expansionPanelText}>
-                  <Table className={classes.rightsTable}>
-                    {object.rights.statement ? (
-                      <TableRow>
-                        <TableCell className={classes.rightsTableCell}>
-                          Statement
-                        </TableCell>
-                        <TableCell className={classes.rightsTableCell}>
-                          <RightsValueLink value={object.rights.statement} />
-                        </TableCell>
-                      </TableRow>
-                    ) : null}
-                    {object.rights.holder ? (
-                      <TableRow>
-                        <TableCell className={classes.rightsTableCell}>
-                          Holder
-                        </TableCell>
-                        <TableCell className={classes.rightsTableCell}>
-                          <RightsValueLink value={object.rights.holder} />
-                        </TableCell>
-                      </TableRow>
-                    ) : null}
-                    {object.rights.license ? (
-                      <TableRow>
-                        <TableCell className={classes.rightsTableCell}>
-                          License
-                        </TableCell>
-                        <TableCell className={classes.rightsTableCell}>
-                          <RightsValueLink value={object.rights.license} />
-                        </TableCell>
-                      </TableRow>
-                    ) : null}
-                  </Table>
+                <AccordionDetails>
+                  <RightsTable
+                    cellClassName={classes.rightsTableCell}
+                    rights={object.rights}
+                  ></RightsTable>
                 </AccordionDetails>
               </Accordion>
             </Grid>

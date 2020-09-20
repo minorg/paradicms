@@ -12,18 +12,20 @@ import {RightsValue} from "@paradicms/models/dist/RightsValue";
 import {RightsValueLink} from "./RightsValueLink";
 
 const RightsTableRow: React.FunctionComponent<{
+  cellClassName?: string;
   label: string;
+  rowClassName?: string;
   value?: RightsValue | null;
-}> = ({label, value}) => {
+}> = ({cellClassName, label, rowClassName, value}) => {
   if (!value) {
     return null;
   }
   return (
-    <TableRow>
-      <TableCell>
+    <TableRow className={rowClassName}>
+      <TableCell className={cellClassName}>
         <strong>{label}</strong>
       </TableCell>
-      <TableCell>
+      <TableCell className={cellClassName}>
         <RightsValueLink value={value} />
       </TableCell>
     </TableRow>
@@ -31,15 +33,33 @@ const RightsTableRow: React.FunctionComponent<{
 };
 
 export const RightsTable: React.FunctionComponent<{
+  cellClassName?: string;
   rights: Rights;
-}> = ({rights}) => {
+  rowClassName?: string;
+  tableClassName?: string;
+}> = ({cellClassName, rights, rowClassName, tableClassName}) => {
   return (
     <TableContainer component={Paper}>
-      <Table>
+      <Table className={tableClassName}>
         <TableBody>
-          <RightsTableRow label="Rights statement" value={rights.statement} />
-          <RightsTableRow label="Rights holder" value={rights.holder} />
-          <RightsTableRow label="License" value={rights.license} />
+          <RightsTableRow
+            cellClassName={cellClassName}
+            label="Statement"
+            rowClassName={rowClassName}
+            value={rights.statement}
+          />
+          <RightsTableRow
+            cellClassName={cellClassName}
+            label="Holder"
+            rowClassName={rowClassName}
+            value={rights.holder}
+          />
+          <RightsTableRow
+            cellClassName={cellClassName}
+            label="License"
+            rowClassName={rowClassName}
+            value={rights.license}
+          />
         </TableBody>
       </Table>
     </TableContainer>
