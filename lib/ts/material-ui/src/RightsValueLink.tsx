@@ -15,11 +15,16 @@ export const RightsValueLink: React.FunctionComponent<{value: RightsValue}> = ({
         text = "Public Domain Mark 1.0";
         break;
       }
+      case "https://creativecommons.org/licenses/by-sa/2.0/": {
+        text = "CC BY-SA 2.0";
+        break;
+      }
       case "https://opendatacommons.org/licenses/by/1-0/": {
         text = "ODC-BY v1.0";
         break;
       }
-      case "https://rightsstatements.org/page/InC/1.0/": {
+      case "http://rightsstatements.org/vocab/InC/1.0/":
+      case "https://rightsstatements.org/vocab/InC/1.0/": {
         text = "In copyright";
         break;
       }
