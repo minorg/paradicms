@@ -1,6 +1,17 @@
 import {RightsValue} from "@paradicms/models/dist/RightsValue";
 import * as React from "react";
 
+// const RIGHTS_URI_TEXTS: {[index: string]: string} = {
+//   "https://creativecommons.org/publicdomain/mark/1.0/":
+//     "Public Domain Mark 1.0",
+//   "https://creativecommons.org/licenses/by-sa/2.0/": "CC BY-SA 2.0",
+//   "https://creativecommons.org/licenses/by-sa/3.0/": "CC BY-SA 3.0",
+//   "https://creativecommons.org/licenses/by/2.0/": "CC BY 2.0",
+//   "https://opendatacommons.org/licenses/by/1-0/": "ODC BY 1.0",
+//   "http://rightsstatements.org/vocab/InC/1.0/": "In copyright",
+//   "https://rightsstatements.org/vocab/InC/1.0/": "In copyright",
+// };
+
 export const RightsValueLink: React.FunctionComponent<{value: RightsValue}> = ({
   value,
 }) => {
@@ -10,30 +21,7 @@ export const RightsValueLink: React.FunctionComponent<{value: RightsValue}> = ({
   } else if (text) {
     return <span>{text}</span>;
   } else if (uri) {
-    switch (uri) {
-      case "https://creativecommons.org/publicdomain/mark/1.0/": {
-        text = "Public Domain Mark 1.0";
-        break;
-      }
-      case "https://creativecommons.org/licenses/by-sa/2.0/": {
-        text = "CC BY-SA 2.0";
-        break;
-      }
-      case "https://opendatacommons.org/licenses/by/1-0/": {
-        text = "ODC-BY v1.0";
-        break;
-      }
-      case "http://rightsstatements.org/vocab/InC/1.0/":
-      case "https://rightsstatements.org/vocab/InC/1.0/": {
-        text = "In copyright";
-        break;
-      }
-      default: {
-        text = uri;
-        break;
-      }
-    }
-    return <a href={uri}>{text}</a>;
+    return <a href={uri}>{uri}</a>;
   } else {
     return null;
   }

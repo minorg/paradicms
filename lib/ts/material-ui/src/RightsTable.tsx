@@ -50,6 +50,12 @@ export const RightsTable: React.FunctionComponent<{
           />
           <RightsTableRow
             cellClassName={cellClassName}
+            label="Creator"
+            rowClassName={rowClassName}
+            value={rights.creator}
+          />
+          <RightsTableRow
+            cellClassName={cellClassName}
             label="Holder"
             rowClassName={rowClassName}
             value={rights.holder}
