@@ -1,4 +1,5 @@
 import {ImageDimensions} from "./ImageDimensions";
+import {Rights} from "./Rights";
 
 export interface Image {
   readonly exactDimensions?: ImageDimensions | null;
@@ -6,5 +7,6 @@ export interface Image {
   readonly maxDimensions?: ImageDimensions | null;
   readonly objectUri: string;
   readonly originalImageUri?: string | null;
+  readonly rights?: Rights | null;
   readonly uri: string;
 }
