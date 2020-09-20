@@ -24,7 +24,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
             maxDimensions: {height: 600, width: 600},
           });
           return (
-            <Grid item>
+            <Grid item key={originalImageUri}>
               <ImageZoom
                 image={{
                   className: "img",
@@ -36,7 +36,6 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                     maxWidth: 600,
                   },
                 }}
-                key={originalImageUri}
                 zoomImage={{
                   className: "img--zoomed",
                   src: originalImageUri,
