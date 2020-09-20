@@ -1,4 +1,7 @@
+import {RightsValue} from "./RightsValue";
+
 export interface Rights {
-  holder?: string | null;
-  statements?: readonly string[] | null;
+  holder?: RightsValue | null;
+  license?: RightsValue | null;
+  statement?: RightsValue | null;
 }
