@@ -5,6 +5,7 @@ import {Property} from "./Property";
 import {Rights} from "./Rights";
 
 export interface JoinedObject {
+  readonly abstract?: string | null;
   readonly collections: readonly Collection[];
   readonly images: readonly Image[];
   readonly institution: Institution;

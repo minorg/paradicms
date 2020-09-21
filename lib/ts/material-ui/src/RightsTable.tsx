@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  makeStyles,
   Paper,
   Table,
   TableBody,
@@ -9,66 +8,64 @@ import {
   TableRow,
 } from "@material-ui/core";
 import {Rights} from "@paradicms/models";
+import {RightsValue} from "@paradicms/models/dist/RightsValue";
+import {RightsValueLink} from "./RightsValueLink";
 
-const isUrl = (uri: string) =>
-  uri.startsWith("http://") || uri.startsWith("https://");
-
-const useStyles = makeStyles(theme => ({
-  cell: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-  },
-  table: {
-    width: "100%",
-  },
-}));
+const RightsTableRow: React.FunctionComponent<{
+  cellClassName?: string;
+  label: string;
+  rowClassName?: string;
+  value?: RightsValue | null;
+}> = ({cellClassName, label, rowClassName, value}) => {
+  if (!value) {
+    return null;
+  }
+  return (
+    <TableRow className={rowClassName}>
+      <TableCell className={cellClassName}>
+        <strong>{label}</strong>
+      </TableCell>
+      <TableCell className={cellClassName}>
+        <RightsValueLink value={value} />
+      </TableCell>
+    </TableRow>
+  );
+};
 
 export const RightsTable: React.FunctionComponent<{
-  className?: string;
+  cellClassName?: string;
   rights: Rights;
-}> = ({className, rights}) => {
-  const classes = useStyles();
-
+  rowClassName?: string;
+  tableClassName?: string;
+}> = ({cellClassName, rights, rowClassName, tableClassName}) => {
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table}>
+      <Table className={tableClassName}>
         <TableBody>
-          {rights.statements?.map((statement, statementIndex) => (
-            <TableRow key={statementIndex}>
-              <TableCell className={classes.cell}>
-                <strong>Rights statement</strong>
-              </TableCell>
-              <TableCell className={classes.cell}>
-                {isUrl(statement) ? (
-                  <a href={statement}>{statement}</a>
-                ) : (
-                  <React.Fragment>{statement}</React.Fragment>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-          {rights.holder ? (
-            <TableRow>
-              <TableCell className={classes.cell}>
-                <strong>Rights holder</strong>
-              </TableCell>
-              <TableCell className={classes.cell}>{rights.holder}</TableCell>
-            </TableRow>
-          ) : null}
-          {/*{rights.license ? (*/}
-          {/*  <TableRow>*/}
-          {/*    <TableCell className={classes.cell}>*/}
-          {/*      <strong>License</strong>*/}
-          {/*    </TableCell>*/}
-          {/*    <TableCell className={classes.cell}>*/}
-          {/*      {Uris.isUrl(rights.license) ? (*/}
-          {/*        <a href={rights.license}>{rights.license}</a>*/}
-          {/*      ) : (*/}
-          {/*        <React.Fragment>{rights.license}</React.Fragment>*/}
-          {/*      )}*/}
-          {/*    </TableCell>*/}
-          {/*  </TableRow>*/}
-          {/*) : null}*/}
+          <RightsTableRow
+            cellClassName={cellClassName}
+            label="Statement"
+            rowClassName={rowClassName}
+            value={rights.statement}
+          />
+          <RightsTableRow
+            cellClassName={cellClassName}
+            label="Creator"
+            rowClassName={rowClassName}
+            value={rights.creator}
+          />
+          <RightsTableRow
+            cellClassName={cellClassName}
+            label="Holder"
+            rowClassName={rowClassName}
+            value={rights.holder}
+          />
+          <RightsTableRow
+            cellClassName={cellClassName}
+            label="License"
+            rowClassName={rowClassName}
+            value={rights.license}
+          />
         </TableBody>
       </Table>
     </TableContainer>

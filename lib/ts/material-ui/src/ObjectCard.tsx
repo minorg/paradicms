@@ -7,9 +7,6 @@ import {
   CardContent,
   CardHeader,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
   makeStyles,
   Table,
   TableBody,
@@ -19,11 +16,26 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Image, Images, Institution, JoinedObject} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
+import {invariant} from "ts-invariant";
 
 const useStyles = makeStyles(theme => ({
-  expansionPanelText: {
+  accordionTitle: {
+    fontSize: "smaller",
+  },
+  objectSummary: {
     fontSize: "x-small",
     maxWidth: "32em",
+  },
+  thumbnailImg: {
+    maxHeight: "200px",
+    maxWidth: "200px",
+  },
+  rightsTableCell: {
+    fontSize: "x-small",
+    padding: theme.spacing(1),
+  },
+  title: {
+    textAlign: "center",
   },
 }));
 
@@ -40,9 +52,7 @@ export const ObjectCard: React.FunctionComponent<{
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const classes = useStyles();
 
-  const descriptions = (object.properties ?? [])
-    .filter(property => property.propertyDefinitionUri.endsWith("description"))
-    .map(property => property.value);
+  invariant(object.images != null, "object images must be set");
 
   let thumbnail: Image | undefined;
   const objectImagesByOriginalImageUri = Images.indexByOriginalImageUri(
@@ -60,21 +70,28 @@ export const ObjectCard: React.FunctionComponent<{
 
   return (
     <Card>
-      <CardHeader title={renderObjectLink(object, <>{object.title}</>)} />
+      <CardHeader
+        className={classes.title}
+        title={renderObjectLink(object, <>{object.title}</>)}
+      />
       <CardContent>
         <Grid container direction="column" spacing={2}>
-          {thumbnail ? (
+          <Grid item container alignItems="center" justify="center">
             <Grid item>
-              <div style={{height: 200, width: 200}}>
-                <figure className="figure text-center w-100">
-                  {renderObjectLink(
-                    object,
-                    <img className="figure-img rounded" src={thumbnail.uri} />
-                  )}
-                </figure>
-              </div>
+              {renderObjectLink(
+                object,
+                <img
+                  className={classes.thumbnailImg}
+                  src={
+                    thumbnail
+                      ? thumbnail.uri
+                      : "https://place-hold.it/200x200?text=Missing%20thumbnail"
+                  }
+                  title={object.title}
+                />
+              )}
             </Grid>
-          ) : null}
+          </Grid>
           {renderInstitutionLink ? (
             <Grid item>
               <Table>
@@ -94,24 +111,35 @@ export const ObjectCard: React.FunctionComponent<{
               </Table>
             </Grid>
           ) : null}
-          {descriptions.length > 0 ? (
+          {object.abstract ? (
             <Grid item>
               <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  Description
+                <AccordionSummary
+                  className={classes.accordionTitle}
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  Summary
                 </AccordionSummary>
-                <AccordionDetails className={classes.expansionPanelText}>
-                  {descriptions.length === 1 ? (
-                    <span>{descriptions[0]}</span>
-                  ) : (
-                    <List>
-                      {descriptions.map((description, descriptionIndex) => (
-                        <ListItem key={descriptionIndex}>
-                          <ListItemText>{description}</ListItemText>
-                        </ListItem>
-                      ))}
-                    </List>
-                  )}
+                <AccordionDetails className={classes.objectSummary}>
+                  {object.abstract}
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+          ) : null}
+          {thumbnail && thumbnail.rights ? (
+            <Grid item>
+              <Accordion>
+                <AccordionSummary
+                  className={classes.accordionTitle}
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  Image rights
+                </AccordionSummary>
+                <AccordionDetails>
+                  <RightsTable
+                    cellClassName={classes.rightsTableCell}
+                    rights={thumbnail.rights}
+                  ></RightsTable>
                 </AccordionDetails>
               </Accordion>
             </Grid>
@@ -119,11 +147,17 @@ export const ObjectCard: React.FunctionComponent<{
           {object.rights ? (
             <Grid item>
               <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  Rights
+                <AccordionSummary
+                  className={classes.accordionTitle}
+                  expandIcon={<ExpandMoreIcon />}
+                >
+                  Metadata rights
                 </AccordionSummary>
-                <AccordionDetails className={classes.expansionPanelText}>
-                  <RightsTable rights={object.rights} />
+                <AccordionDetails>
+                  <RightsTable
+                    cellClassName={classes.rightsTableCell}
+                    rights={object.rights}
+                  ></RightsTable>
                 </AccordionDetails>
               </Accordion>
             </Grid>

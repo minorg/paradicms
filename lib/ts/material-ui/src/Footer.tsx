@@ -38,12 +38,6 @@ export const Footer: React.FunctionComponent<{
             </a>
           </p>
         </Grid>
-        <Grid item>
-          <p className={classes.footerParagraph}>
-            &copy; Copyright 2020,&nbsp;
-            <a href={author.url}>{author.name}</a>. All rights reserved
-          </p>
-        </Grid>
       </Grid>
     </footer>
   );
