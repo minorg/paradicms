@@ -2,15 +2,15 @@ import {Image} from "./Image";
 import {ImageDimensions} from "./ImageDimensions";
 
 export class Images {
-  static indexByObjectUri(
+  static indexByDepictsUri(
     images: readonly Image[]
   ): {[index: string]: readonly Image[]} {
     return images.reduce((map, image) => {
-      const existingImages = map[image.objectUri];
+      const existingImages = map[image.depictsUri];
       if (existingImages) {
         existingImages.push(image);
       } else {
-        map[image.objectUri] = [image];
+        map[image.depictsUri] = [image];
       }
       return map;
     }, {} as {[index: string]: Image[]});
