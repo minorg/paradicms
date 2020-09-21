@@ -42,7 +42,7 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                   style: originalImage?.exactDimensions ?? undefined,
                 }}
               />
-              {originalImage.rights ? (
+              {originalImage && originalImage.rights ? (
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     Image rights
