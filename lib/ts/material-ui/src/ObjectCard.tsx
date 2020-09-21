@@ -16,6 +16,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Image, Images, Institution, JoinedObject} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
+import {invariant} from "ts-invariant";
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {
@@ -50,6 +51,8 @@ export const ObjectCard: React.FunctionComponent<{
   ) => React.ReactNode;
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const classes = useStyles();
+
+  invariant(object.images != null, "object images must be set");
 
   let thumbnail: Image | undefined;
   const objectImagesByOriginalImageUri = Images.indexByOriginalImageUri(
