@@ -44,7 +44,7 @@ const CollectionPage: React.FunctionComponent<{
   const joinedFilteredObjects: readonly JoinedObject[] = Objects.join({
     collectionsByUri: Models.indexByUri([collection]),
     institutionsByUri: Models.indexByUri([institution]),
-    imagesByObjectUri: Images.indexByObjectUri(institutionImages),
+    imagesByDepictsUri: Images.indexByDepictsUri(institutionImages),
     objects: filteredObjects,
   });
 
@@ -92,14 +92,14 @@ export default CollectionPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: {params: {collectionUri: string; institutionUri: string}}[] = [];
-  for (const institutionUri of Data.institutionUris) {
-    for (const collectionUri of Data.collectionUrisByInstitutionUri(
-      institutionUri
+  for (const institution of Data.institutions) {
+    for (const collection of Data.collections.filter(
+      collection => collection.institutionUri == institution.uri
     )) {
       paths.push({
         params: {
-          collectionUri: encodeFileName(collectionUri),
-          institutionUri: encodeFileName(institutionUri),
+          collectionUri: encodeFileName(collection.uri),
+          institutionUri: encodeFileName(institution.uri),
         },
       });
     }
@@ -117,10 +117,20 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 
   return {
     props: {
-      collection: Data.collectionByUri(collectionUri),
-      collectionObjects: Data.objectsByCollectionUri(collectionUri),
-      institution: Data.institutionByUri(institutionUri),
-      institutionImages: Data.imagesByInstitutionUri(institutionUri),
+      collection: Data.collections.find(
+        collection => collection.uri === collectionUri
+      )!,
+      collectionObjects: Data.objects.filter(object =>
+        object.collectionUris.some(
+          objectCollectionUri => objectCollectionUri === collectionUri
+        )
+      ),
+      institution: Data.institutions.find(
+        institution => institution.uri === institutionUri
+      )!,
+      institutionImages: Data.images.filter(
+        image => image.institutionUri === institutionUri
+      ),
       propertyDefinitions: Data.propertyDefinitions,
     },
   };

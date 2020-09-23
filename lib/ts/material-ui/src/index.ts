@@ -1,3 +1,5 @@
+export * from "./CollectionCard";
+export * from "./CollectionsGallery";
 export * from "./Footer";
 export * from "./NavbarSearchForm";
 export * from "./ObjectCard";

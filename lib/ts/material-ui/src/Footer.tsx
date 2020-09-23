@@ -11,13 +11,9 @@ const useStyles = makeStyles(theme => {
 });
 
 export const Footer: React.FunctionComponent<{
-  author: {
-    email: string;
-    name: string;
-    url: string;
-  };
+  contactUrl: string;
   gitHubUrl: string;
-}> = ({author, gitHubUrl}) => {
+}> = ({contactUrl, gitHubUrl}) => {
   const classes = useStyles();
   return (
     <footer>
@@ -29,7 +25,7 @@ export const Footer: React.FunctionComponent<{
         </Grid>
         <Grid item>
           <p className={classes.footerParagraph}>
-            <a data-cy="contact-link" href={"mailto:" + author.email}>
+            <a data-cy="contact-link" href={contactUrl}>
               Contact
             </a>
             &nbsp;|&nbsp;
