@@ -7,9 +7,8 @@ export class InstitutionPage extends Page {
     super();
   }
 
-  collectionLink(kwds: {collectionUri: string; institutionUri: string}) {
-    const collectionHref = new CollectionPage(kwds).relativeUrl;
-    return cy.get('a[href="' + collectionHref + '"]');
+  collectionLink(collectionUri: string) {
+    return cy.get(`[data-cy="collection-link-${collectionUri}"]`).first();
   }
 
   readonly relativeUrl = `/institution/${encodeFileName(this.institutionUri)}/`;
