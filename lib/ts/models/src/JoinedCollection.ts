@@ -1,5 +1,5 @@
-import {Institution} from "Institution";
-import {Image} from "Image";
+import {Institution} from "./Institution";
+import {Image} from "./Image";
 
 export interface JoinedCollection {
   readonly images: readonly Image[];

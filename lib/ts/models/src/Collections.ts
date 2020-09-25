@@ -2,7 +2,7 @@ import {Collection} from "./Collection";
 import {Institution} from "./Institution";
 import {Object} from "./Object";
 import {Image} from "./Image";
-import {JoinedCollection} from "JoinedCollection";
+import {JoinedCollection} from "./JoinedCollection";
 
 export class Collections {
   static join(kwds: {
