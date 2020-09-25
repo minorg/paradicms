@@ -37,12 +37,14 @@ describe("Institution page", () => {
 
   it("should have a collection link that leads to the collection overview page", () => {
     const collection = institutionCollections[0];
-    const kwds = {
-      collectionUri: collection.uri,
-      institutionUri: institution.uri,
-    };
-    page.collectionLink(kwds).click();
-    cy.url().should("eq", new CollectionPage(kwds).absoluteUrl);
+    page.collectionLink(collection.uri).click();
+    cy.url().should(
+      "eq",
+      new CollectionPage({
+        institutionUri: institution.uri,
+        collectionUri: collection.uri,
+      }).absoluteUrl
+    );
   });
 
   it("should return home via breadcrumb", () => {
