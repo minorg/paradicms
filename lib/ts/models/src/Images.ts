@@ -33,9 +33,57 @@ export class Images {
 
   static selectThumbnail(kwds: {
     images: readonly Image[];
-    maxDimensions: ImageDimensions;
+    minDimensions?: ImageDimensions;
+    maxDimensions?: ImageDimensions;
+    targetDimensions: ImageDimensions;
   }): Image | undefined {
-    const {images, maxDimensions} = kwds;
+    const {images, minDimensions, maxDimensions, targetDimensions} = kwds;
+
+    const candidateImages: {
+      image: Image;
+      imageDimensions: ImageDimensions;
+    }[] = [];
+    for (const image of images) {
+      let imageDimensions: ImageDimensions;
+      if (image.exactDimensions) {
+        imageDimensions = image.exactDimensions;
+      } else if (image.maxDimensions) {
+        imageDimensions = image.maxDimensions;
+      } else {
+        continue;
+      }
+
+      if (maxDimensions) {
+        if (imageDimensions.height > maxDimensions.height) {
+          continue;
+        }
+        if (imageDimensions.width > maxDimensions.width) {
+          continue;
+        }
+      }
+
+      if (minDimensions) {
+        if (imageDimensions.height < minDimensions.height) {
+          continue;
+        }
+        if (imageDimensions.width < minDimensions.width) {
+          continue;
+        }
+      }
+
+      candidateImages.push({
+        image,
+        imageDimensions,
+      });
+    }
+
+    if (candidateImages.length === 0) {
+      // console.debug("no candidate images, returning undefined");
+      return undefined;
+    } else if (candidateImages.length === 1) {
+      // console.debug("single candidate image");
+      return candidateImages[0].image;
+    }
 
     const contains = (
       leftDimensions: ImageDimensions,
@@ -44,36 +92,35 @@ export class Images {
       leftDimensions.width >= rightDimensions.width &&
       leftDimensions.height >= rightDimensions.height;
 
-    const candidateImages: [Image, ImageDimensions][] = [];
-    for (const image of images) {
-      if (image.exactDimensions) {
-        if (contains(maxDimensions, image.exactDimensions)) {
-          candidateImages.push([image, image.exactDimensions]);
-        }
-      } else if (image.maxDimensions) {
-        if (contains(maxDimensions, image.maxDimensions)) {
-          candidateImages.push([image, image.maxDimensions]);
-        }
-      }
-    }
-
-    if (candidateImages.length === 0) {
-      return undefined;
-    } else if (candidateImages.length === 1) {
-      return candidateImages[0][0];
-    }
-
+    // Sort images smallest to largest
+    // An image A is considered larger than another image B if A's dimensions contain B's dimensions
+    // Otherwise the images are considered equal.
     candidateImages.sort((left, right) => {
-      if (contains(left[1], right[1])) {
+      if (contains(left.imageDimensions, right.imageDimensions)) {
         return 1;
-      } else if (contains(right[1], left[1])) {
+      } else if (contains(right.imageDimensions, left.imageDimensions)) {
         return -1;
       } else {
         return 0;
       }
     });
 
-    const thumbnail = candidateImages[candidateImages.length - 1][0];
-    return thumbnail;
+    // Find the smallest image that contains the target dimensions.
+    // We prefer to scale an image down instead of up.
+    // This may lead to choosing very large images. In that case maxDimensions should be used to exclude very large images as candidates.
+    for (const candidateImage of candidateImages) {
+      if (contains(candidateImage.imageDimensions, targetDimensions)) {
+        // console.debug(
+        //   "choosing smallest candidate image that's larger than target dimensions"
+        // );
+        return candidateImage.image;
+      }
+    }
+
+    // All candidate images are smaller than the target, return the largest of them
+    // console.debug(
+    //   "choosing largest candidate image that's smaller than target dimensions"
+    // );
+    return candidateImages[candidateImages.length - 1].image;
   }
 }
