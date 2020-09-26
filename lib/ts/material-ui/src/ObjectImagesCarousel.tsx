@@ -13,18 +13,23 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
   const imagesByOriginalImageUri = Images.indexByOriginalImageUri(images);
   return (
     <Carousel autoPlay={false}>
-      <Grid container alignContent="center" justify="center">
-        {Object.keys(imagesByOriginalImageUri).map(originalImageUri => {
-          const images = imagesByOriginalImageUri[originalImageUri];
-          const originalImage = images.find(
-            image => image.uri === originalImageUri
-          );
-          const thumbnail = Images.selectThumbnail({
-            images,
-            maxDimensions: {height: 600, width: 600},
-          });
-          return (
-            <Grid item key={originalImageUri}>
+      {Object.keys(imagesByOriginalImageUri).map(originalImageUri => {
+        const images = imagesByOriginalImageUri[originalImageUri];
+        const originalImage = images.find(
+          image => image.uri === originalImageUri
+        );
+        const thumbnail = Images.selectThumbnail({
+          images,
+          targetDimensions: {height: 600, width: 600},
+        });
+        return (
+          <Grid
+            container
+            alignContent="center"
+            justify="center"
+            key={originalImageUri}
+          >
+            <Grid item>
               <ImageZoom
                 image={{
                   className: "img",
@@ -53,9 +58,9 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                 </Accordion>
               ) : null}
             </Grid>
-          );
-        })}
-      </Grid>
+          </Grid>
+        );
+      })}
     </Carousel>
   );
 };

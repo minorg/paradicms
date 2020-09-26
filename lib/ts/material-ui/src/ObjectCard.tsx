@@ -61,7 +61,7 @@ export const ObjectCard: React.FunctionComponent<{
   for (const originalImageUri of Object.keys(objectImagesByOriginalImageUri)) {
     thumbnail = Images.selectThumbnail({
       images: objectImagesByOriginalImageUri[originalImageUri],
-      maxDimensions: {height: 200, width: 200},
+      targetDimensions: {height: 200, width: 200},
     });
     if (thumbnail) {
       break;

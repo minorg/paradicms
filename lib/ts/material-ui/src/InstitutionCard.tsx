@@ -37,7 +37,7 @@ export const InstitutionCard: React.FunctionComponent<{
   )) {
     thumbnail = Images.selectThumbnail({
       images: institutionImagesByOriginalImageUri[originalImageUri],
-      maxDimensions: {height: 200, width: 200},
+      targetDimensions: {height: 200, width: 200},
     });
     if (thumbnail) {
       break;

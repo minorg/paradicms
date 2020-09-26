@@ -37,7 +37,7 @@ export const CollectionCard: React.FunctionComponent<{
   )) {
     thumbnail = Images.selectThumbnail({
       images: collectionImagesByOriginalImageUri[originalImageUri],
-      maxDimensions: {height: 200, width: 200},
+      targetDimensions: {height: 200, width: 200},
     });
     if (thumbnail) {
       break;
