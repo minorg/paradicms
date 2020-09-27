@@ -61,7 +61,7 @@ jobs:
             npm run build
             cd ../material-ui
             npm run build
-            cd ../next
+            cd ../material-ui-next
             npm run build
             cd ../../../gui/union
             export DATA_DIRECTORY_PATH=$PWD/data/test
