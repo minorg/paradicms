@@ -58,7 +58,7 @@ describe("Collection page", () => {
   it("should have all objects", () => {
     for (const object of objects.slice(0, OBJECTS_PER_PAGE)) {
       page.objectsGallery
-        .getObjectLink(object)
+        .getObjectLink({object, stripTrailingSlash: true})
         .should("have.text", object.title);
     }
     page.objectsGallery.startObjectIndex.should("have.text", "1");
@@ -75,7 +75,9 @@ describe("Collection page", () => {
   it("should unselect one subject and see one fewer object", () => {
     page.objectFacets.creator.toggleOpen();
     page.objectFacets.creator.toggleValue("Creator 0");
-    page.objectsGallery.getObjectLink(objects[0]).should("not.exist");
+    page.objectsGallery
+      .getObjectLink({object: objects[0], stripTrailingSlash: true})
+      .should("not.exist");
     page.objectsGallery.startObjectIndex.should("have.text", "1");
     page.objectsGallery.endObjectIndex.should(
       "have.text",

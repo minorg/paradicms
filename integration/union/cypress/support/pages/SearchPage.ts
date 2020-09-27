@@ -38,13 +38,16 @@ export class ObjectsGallery {
     return cy.get('[data-cy="end-object-index"]');
   }
 
-  getObjectLink(object: ObjectFixture) {
+  getObjectLink(kwds: {object: ObjectFixture; stripTrailingSlash?: boolean}) {
+    const {object, stripTrailingSlash} = kwds;
     let objectLink = new ObjectPage({
       institutionUri: object.institutionUri,
       objectTitle: object.title,
       objectUri: object.uri,
     }).relativeUrl;
-    objectLink = objectLink.substr(0, objectLink.length - 1);
+    if (stripTrailingSlash) {
+      objectLink = objectLink.substr(0, objectLink.length - 1);
+    }
     return cy.get('.MuiCardHeader-title a[href="' + objectLink + '"]');
   }
 
