@@ -39,11 +39,12 @@ export class ObjectsGallery {
   }
 
   getObjectLink(object: ObjectFixture) {
-    const objectLink = new ObjectPage({
+    let objectLink = new ObjectPage({
       institutionUri: object.institutionUri,
       objectTitle: object.title,
       objectUri: object.uri,
     }).relativeUrl;
+    objectLink = objectLink.substr(0, objectLink.length - 1);
     return cy.get('.MuiCardHeader-title a[href="' + objectLink + '"]');
   }
 
