@@ -2,19 +2,19 @@ version: 2.1
 jobs:
   py:
     docker:
-      - image: circleci/python:3.8
+      - image: circleci/python:3.8-node
     steps:
       - checkout
       - run:
           name: "Change system directory permissions"
           command: sudo chown -R circleci:circleci /usr/local/bin /usr/local/lib/python3.8/site-packages
       - restore_cache:
-          key: py-dependencies-{{ .Branch }}-{{ checksum "etl/requirements.txt" }}
+          key: py-dependencies-v1-{{ checksum "etl/requirements.txt" }}
       - run:
           name: "Install requirements"
           command: pip install -r etl/requirements.txt
       - save_cache:
-          key: py-dependencies-{{ .Branch }}-{{ checksum "etl/requirements.txt" }}
+          key: py-dependencies-v1-{{ checksum "etl/requirements.txt" }}
           paths:
             - "~/.cache/pip"
             - "/usr/local/bin"
@@ -25,13 +25,21 @@ jobs:
             cd etl
             export PYTHONPATH=$PWD
             python3 paradicms_etl/pipelines/test_data_pipeline.py
+      - run:
+          name: "Run unit tests"
+          command: |
+            cd etl
+            mkdir test-results
+            pytest --junitxml=test-results/junit.xml
+      - store_test_results:
+          path: etl/test-results
   ts:
     docker:
-      - image: circleci/node:12
+      - image: circleci/python:3.8-node
     steps:
       - checkout
       - restore_cache:
-          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
 #      - run:
 #          name: Clean out cache
 #          command: |
@@ -43,6 +51,7 @@ jobs:
 #            rm -fr lib/ts/base/node_modules
 #            rm -fr lib/ts/material-ui/node_modules
       - run:
+          name: "Install ts requirements"
           command: |
             if [ ! -d ./node_modules ]; then
               npm install
@@ -70,7 +79,7 @@ jobs:
             mkdir ~/dist
             mv out ~/dist/union-gui
       - save_cache:
-          key: ts-cache-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/models/package.json" }}
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
@@ -82,6 +91,28 @@ jobs:
           root: ~/
           paths:
             - dist/union-gui
+      - run:
+          name: "Change Python system directory permissions"
+          command: sudo chown -R circleci:circleci /usr/local/bin /usr/local/lib/python3.8/site-packages
+      - restore_cache:
+          key: py-dependencies-v1-{{ checksum "etl/requirements.txt" }}
+      - run:
+          name: "Install Python requirements"
+          command: pip install -r etl/requirements.txt
+      - save_cache:
+          key: py-dependencies-v1-{{ checksum "etl/requirements.txt" }}
+          paths:
+            - "~/.cache/pip"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.8/site-packages"
+      - run:
+          name: "Run GUI loader tests"
+          command: |
+            mkdir -p test-results
+            cd etl
+            pytest --junitxml=../test-results/etl.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py test/paradicms_etl_test/loaders/gui/gui_loader_test.py
+      - store_test_results:
+          path: test-results
 orbs:
   cypress: cypress-io/cypress@1
 workflows:
