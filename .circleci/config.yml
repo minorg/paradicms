@@ -35,7 +35,7 @@ jobs:
           path: etl/test-results
   ts:
     docker:
-      - image: circleci/python3.8-node
+      - image: circleci/python:3.8-node
     steps:
       - checkout
       - restore_cache:
