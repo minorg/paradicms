@@ -91,6 +91,20 @@ jobs:
           paths:
             - dist/union-gui
       - run:
+          name: "Change Python system directory permissions"
+          command: sudo chown -R circleci:circleci /usr/local/bin /usr/local/lib/python3.8/site-packages
+      - restore_cache:
+          key: py-dependencies-{{ .Branch }}-{{ checksum "etl/requirements.txt" }}
+      - run:
+          name: "Install Python requirements"
+          command: pip install -r etl/requirements.txt
+      - save_cache:
+          key: py-dependencies-{{ .Branch }}-{{ checksum "etl/requirements.txt" }}
+          paths:
+            - "~/.cache/pip"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.8/site-packages"
+      - run:
           name: "Run GUI loader tests"
           command: |
             mkdir -p test-results
