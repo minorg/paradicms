@@ -110,7 +110,7 @@ jobs:
           command: |
             mkdir -p test-results
             cd etl
-            pytest --junitxml=../test-results/etl.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py
+            pytest --junitxml=../test-results/etl.xml test/paradicms_etl_test/loaders/gui/gui_builder_test.py test/paradicms_etl_test/loaders/gui/gui_loader_test.py
       - store_test_results:
           path: test-results
 orbs:
