@@ -25,6 +25,14 @@ jobs:
             cd etl
             export PYTHONPATH=$PWD
             python3 paradicms_etl/pipelines/test_data_pipeline.py
+      - run:
+          name: "Run unit tests"
+          command: |
+            cd etl
+            mkdir test-results
+            pytest --junitxml=test-results/junit.xml
+       - store_test_results:
+           path: etl/test-results
   ts:
     docker:
       - image: circleci/node:12
