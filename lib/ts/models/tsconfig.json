@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "downlevelIteration": true,
     "outDir": "./dist"
   },
   "exclude": [

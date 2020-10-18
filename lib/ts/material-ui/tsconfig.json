@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "downlevelIteration": true,
-    "jsx": "react",
     "outDir": "./dist"
   },
   "exclude": [

@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
     "noImplicitThis": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
