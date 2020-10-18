@@ -14,9 +14,8 @@ import {
   TableRow,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {Image, Images, Institution, JoinedObject} from "@paradicms/models";
+import {Images, Institution, JoinedObject} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
-import {invariant} from "ts-invariant";
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {
@@ -52,21 +51,10 @@ export const ObjectCard: React.FunctionComponent<{
 }> = ({object, renderInstitutionLink, renderObjectLink}) => {
   const classes = useStyles();
 
-  invariant(object.images != null, "object images must be set");
-
-  let thumbnail: Image | undefined;
-  const objectImagesByOriginalImageUri = Images.indexByOriginalImageUri(
-    object.images
-  );
-  for (const originalImageUri of Object.keys(objectImagesByOriginalImageUri)) {
-    thumbnail = Images.selectThumbnail({
-      images: objectImagesByOriginalImageUri[originalImageUri],
-      targetDimensions: {height: 200, width: 200},
-    });
-    if (thumbnail) {
-      break;
-    }
-  }
+  const thumbnail = Images.selectThumbnail({
+    images: object.images,
+    targetDimensions: {height: 200, width: 200},
+  });
 
   return (
     <Card>
