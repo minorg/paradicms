@@ -14,9 +14,8 @@ import {
   TableRow,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {Image, Images, Institution, JoinedObject} from "@paradicms/models";
+import {Images, Institution, JoinedObject} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
-import {invariant} from "ts-invariant";
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {

@@ -6,7 +6,7 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core";
-import {Image, Images} from "@paradicms/models";
+import {Images} from "@paradicms/models";
 import {JoinedCollection} from "@paradicms/models/dist/JoinedCollection";
 
 const useStyles = makeStyles(theme => ({
