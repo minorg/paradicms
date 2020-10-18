@@ -57,7 +57,7 @@ export class StringFilterState {
   }
 
   excludeValue(value: string): void {
-    this.change(true, value);
+    this.change(false, value);
   }
 
   includeValue(value: string): void {
