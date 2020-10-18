@@ -12,6 +12,7 @@ export * from "./Models";
 export * from "./Object";
 export * from "./ObjectFacets";
 export * from "./ObjectFilters";
+export * from "./ObjectFiltersState";
 export * from "./ObjectPropertyFacet";
 export * from "./ObjectQuery";
 export * from "./Objects";

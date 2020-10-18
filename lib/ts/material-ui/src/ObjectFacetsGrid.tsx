@@ -8,8 +8,7 @@ import {
 import {
   ObjectFacets,
   ObjectFilters,
-  PropertyFilter,
-  StringFilter,
+  ObjectFiltersState,
 } from "@paradicms/models";
 import {StringFacetForm} from "./StringFacetForm";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -35,38 +34,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
   filters: ObjectFilters;
   onChange: (filters: ObjectFilters) => void;
 }> = ({facets, filters, onChange}) => {
-  const onChangePropertyFilter = (
-    propertyDefinitionUri: string,
-    newState?: StringFilter
-  ) => {
-    const {properties: oldProperties, ...oldFiltersWithoutProperties} = filters;
-
-    let newPropertyFilters: PropertyFilter[];
-    if (!oldProperties) {
-      newPropertyFilters = [];
-    } else {
-      // Remove the key's filter and then add it back
-      newPropertyFilters = oldProperties.filter(
-        propertyFilter =>
-          propertyFilter.propertyDefinitionUri !== propertyDefinitionUri
-      );
-    }
-    if (newState) {
-      newPropertyFilters.push({propertyDefinitionUri, ...newState});
-    }
-
-    let newFilters: ObjectFilters;
-    if (newPropertyFilters.length === 0) {
-      newFilters = oldFiltersWithoutProperties;
-    } else {
-      newFilters = {
-        ...oldFiltersWithoutProperties,
-        properties: newPropertyFilters,
-      };
-    }
-
-    onChange(newFilters);
-  };
+  const filtersState = new ObjectFiltersState(filters);
 
   return (
     <Grid container direction="column" spacing={4}>
@@ -78,14 +46,22 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
           >
             <StringFacetForm
               valueUniverse={propertyFacet.values}
-              currentState={filters.properties?.find(
-                propertyFilter =>
-                  propertyFilter.propertyDefinitionUri ===
-                  propertyFacet.definition.uri
+              currentState={filtersState.getPropertyFilter(
+                propertyFacet.definition.uri
               )}
-              onChange={newState =>
-                onChangePropertyFilter(propertyFacet.definition.uri, newState)
-              }
+              onChange={newState => {
+                if (newState) {
+                  filtersState.setPropertyFilter({
+                    propertyDefinitionUri: propertyFacet.definition.uri,
+                    ...newState,
+                  });
+                } else {
+                  filtersState.removePropertyFilter(
+                    propertyFacet.definition.uri
+                  );
+                }
+                onChange(filtersState.snapshot);
+              }}
             />
           </FacetExpansionPanel>
         </Grid>
