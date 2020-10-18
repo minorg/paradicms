@@ -20,3 +20,4 @@ export * from "./PropertyDefinition";
 export * from "./PropertyFilter";
 export * from "./Rights";
 export * from "./StringFilter";
+export * from "./StringFilterState";
