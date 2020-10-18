@@ -1,6 +1,6 @@
 import {AppProps} from "next/app";
 import Head from "next/head";
-import {QueryParamProvider} from "./QueryParamProvider";
+import {QueryParamProvider} from "@paradicms/next";
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 

@@ -11,7 +11,7 @@ const QueryParamProviderComponent = (props: {children?: React.ReactNode}) => {
 
   const location = useMemo(
     () =>
-      process.browser
+      (process as any).browser
         ? window.location
         : ({
             search: router.asPath.replace(/[^?]+/u, ""),
