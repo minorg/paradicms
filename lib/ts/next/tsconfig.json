@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "esModuleInterop": true,
     "outDir": "./dist"
   },
   "exclude": [
@@ -8,6 +9,7 @@
   ],
   "extends": "../base/tsconfig.base.json",
   "include": [
+    "next-env.d.ts",
     "./src/**/*"
   ]
 }
