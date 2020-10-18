@@ -1,0 +1,27 @@
+{
+  "author": "Minor Gordon",
+  "name": "@paradicms/bootstrap",
+  "description": "Paradicms Bootstrap library",
+  "dependencies": {
+    "@paradicms/base": "1.0.3",
+    "@paradicms/models": "1.0.3",
+    "reactstrap": "^8.5.1",
+    "@types/react-medium-image-zoom": "^3.0.0",
+    "@types/reactstrap": "^8.5.1",
+    "react-medium-image-zoom": "3.1.2"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  },
+  "license": "GPLv3",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "tsc -w"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.3"
+}
