@@ -28,21 +28,10 @@ export const InstitutionCard: React.FunctionComponent<{
 }> = ({institution, renderInstitutionLink}) => {
   const classes = useStyles();
 
-  let thumbnail: Image | undefined;
-  const institutionImagesByOriginalImageUri = Images.indexByOriginalImageUri(
-    institution.images
-  );
-  for (const originalImageUri of Object.keys(
-    institutionImagesByOriginalImageUri
-  )) {
-    thumbnail = Images.selectThumbnail({
-      images: institutionImagesByOriginalImageUri[originalImageUri],
-      targetDimensions: {height: 200, width: 200},
-    });
-    if (thumbnail) {
-      break;
-    }
-  }
+  const thumbnail = Images.selectThumbnail({
+    images: institution.images,
+    targetDimensions: {height: 200, width: 200},
+  });
 
   return (
     <Card>

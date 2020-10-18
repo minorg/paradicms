@@ -28,21 +28,10 @@ export const CollectionCard: React.FunctionComponent<{
 }> = ({collection, renderCollectionLink}) => {
   const classes = useStyles();
 
-  let thumbnail: Image | undefined;
-  const collectionImagesByOriginalImageUri = Images.indexByOriginalImageUri(
-    collection.images
-  );
-  for (const originalImageUri of Object.keys(
-    collectionImagesByOriginalImageUri
-  )) {
-    thumbnail = Images.selectThumbnail({
-      images: collectionImagesByOriginalImageUri[originalImageUri],
-      targetDimensions: {height: 200, width: 200},
-    });
-    if (thumbnail) {
-      break;
-    }
-  }
+  const thumbnail = Images.selectThumbnail({
+    images: collection.images,
+    targetDimensions: {height: 200, width: 200},
+  });
 
   return (
     <Card>
