@@ -75,7 +75,7 @@ jobs:
             cd ../material-ui-next
             npm run build
             cd ../../../gui/union
-            export DATA_DIRECTORY_PATH=$PWD/data/test
+            export DATA_DIRECTORY_PATH=~/project/etl/data/test_data/loaded
             npm run build
             npm run export
             mkdir ~/dist
