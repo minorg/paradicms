@@ -3,6 +3,7 @@ dist/
 __generated__/
 /lerna-debug.log
 logs/
+.next/
 node_modules/
 null/
 out/
