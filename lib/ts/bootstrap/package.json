@@ -3,6 +3,9 @@
   "name": "@paradicms/bootstrap",
   "description": "Paradicms Bootstrap library",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
     "@paradicms/base": "1.0.3",
     "@paradicms/models": "1.0.3",
     "bootstrap": "^4.5.3",
