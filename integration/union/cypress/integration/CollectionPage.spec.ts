@@ -55,7 +55,7 @@ describe("Collection page", () => {
   it("should have all objects", () => {
     for (const object of objects.slice(0, OBJECTS_PER_PAGE)) {
       page.objectsGallery
-        .getObjectLink({object, stripTrailingSlash: false})
+        .getObjectLink({object, stripTrailingSlash: true})
         .should("have.text", object.title);
     }
     // page.objectsGallery.startObjectIndex.should("have.text", "1");
