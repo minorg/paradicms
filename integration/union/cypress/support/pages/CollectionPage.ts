@@ -9,10 +9,19 @@ export class CollectionPage extends Page {
     this.institutionUri = kwds.institutionUri;
   }
 
+  get collectionTitle() {
+    return cy.get("[data-cy=collection-title]");
+  }
+
   readonly collectionUri: string;
   readonly institutionUri: string;
 
   readonly objectFacets = new ObjectFacets();
+
+  get objectsCount() {
+    return cy.get("[data-cy=objects-count]");
+  }
+
   readonly objectsGallery = new ObjectsGallery();
 
   get relativeUrl() {
