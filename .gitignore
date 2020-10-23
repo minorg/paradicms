@@ -1,14 +1,9 @@
-application.auth0.conf
+debug.log
 dist/
-__generated__/
 /lerna-debug.log
-logs/
 .next/
 node_modules/
 null/
 out/
 package-lock.json
 !/integration/union/package-lock.json
-/project/project/
-/root/
-target/
