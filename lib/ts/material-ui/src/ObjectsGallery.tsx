@@ -30,19 +30,6 @@ export const ObjectsGallery: React.FunctionComponent<{
   return (
     <Grid container direction="column" spacing={4}>
       <Grid item>
-        <p className="muted">
-          Showing objects{" "}
-          <span data-cy="start-object-index">
-            {page * OBJECTS_PER_PAGE + 1}
-          </span>{" "}
-          &mdash;{" "}
-          <span data-cy="end-object-index">
-            {page * OBJECTS_PER_PAGE + objects.length}
-          </span>{" "}
-          of <span data-cy="objects-count">{objects.length}</span>
-        </p>
-      </Grid>
-      <Grid item>
         <Grid container spacing={8}>
           {objects
             .slice(page * OBJECTS_PER_PAGE, (page + 1) * OBJECTS_PER_PAGE)
