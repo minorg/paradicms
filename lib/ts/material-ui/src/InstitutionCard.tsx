@@ -50,7 +50,10 @@ export const InstitutionCard: React.FunctionComponent<{
                   src={
                     thumbnail
                       ? thumbnail.uri
-                      : "https://place-hold.it/200x200?text=Missing%20thumbnail"
+                      : Images.placeholderUrl({
+                          dimensions: {height: 200, width: 200},
+                          text: "Missing thumbnail",
+                        })
                   }
                   title={institution.name}
                 />

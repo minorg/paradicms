@@ -31,6 +31,16 @@ export class Images {
     }, {} as {[index: string]: Image[]});
   }
 
+  static placeholderUrl(kwds: {
+    dimensions: ImageDimensions;
+    text: string;
+  }): string {
+    const {dimensions, text} = kwds;
+    return `https://place-hold.it/${dimensions.width}x${
+      dimensions.height
+    }?text=${encodeURIComponent(text)}`;
+  }
+
   /**
    * Select a thumbnail from an array of images, given target, minimum, and maximum dimensions.
    *
