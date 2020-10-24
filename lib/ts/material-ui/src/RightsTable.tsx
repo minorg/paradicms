@@ -8,8 +8,7 @@ import {
   TableRow,
 } from "@material-ui/core";
 import {Rights} from "@paradicms/models";
-import {RightsValue} from "@paradicms/models/dist/RightsValue";
-import {RightsValueLink} from "./RightsValueLink";
+import {RightsValue} from "@paradicms/models";
 
 const RightsTableRow: React.FunctionComponent<{
   cellClassName?: string;
@@ -30,6 +29,21 @@ const RightsTableRow: React.FunctionComponent<{
       </TableCell>
     </TableRow>
   );
+};
+
+const RightsValueLink: React.FunctionComponent<{value: RightsValue}> = ({
+  value,
+}) => {
+  let {text, uri} = value;
+  if (text && uri) {
+    return <a href={uri}>{text}</a>;
+  } else if (text) {
+    return <span>{text}</span>;
+  } else if (uri) {
+    return <a href={uri}>{uri}</a>;
+  } else {
+    return null;
+  }
 };
 
 export const RightsTable: React.FunctionComponent<{

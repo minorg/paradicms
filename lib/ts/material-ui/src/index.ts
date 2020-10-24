@@ -9,5 +9,4 @@ export * from "./ObjectFacetsGrid";
 export * from "./ObjectImagesCarousel";
 export * from "./ObjectsGallery";
 export * from "./RightsTable";
-export * from "./RightsValueLink";
 export * from "./StringFacetForm";

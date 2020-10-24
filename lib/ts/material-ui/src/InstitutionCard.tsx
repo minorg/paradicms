@@ -7,7 +7,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import {Images} from "@paradicms/models";
-import {JoinedInstitution} from "@paradicms/models/dist/JoinedInstitution";
+import {JoinedInstitution} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   thumbnailImg: {
