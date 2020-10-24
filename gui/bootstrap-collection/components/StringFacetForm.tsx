@@ -1,11 +1,11 @@
 import * as React from "react";
-import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
 import {StringFilter, StringFilterState} from "@paradicms/models";
+import {FormGroup, Input, ListGroup, ListGroupItem, Label} from "reactstrap";
 
 export const StringFacetForm: React.FunctionComponent<{
   currentState?: StringFilter; // value id's only
   onChange: (newState?: StringFilter) => void;
-  valueUniverse: {[index: string]: string}; // value id: value label
+  valueUniverse: {[index: string]: string}; // valueId: value label
 }> = ({currentState, onChange, valueUniverse}) => {
   const state = new StringFilterState({
     filter: currentState,
@@ -13,7 +13,7 @@ export const StringFacetForm: React.FunctionComponent<{
   });
 
   return (
-    <List>
+    <ListGroup>
       {Object.keys(valueUniverse).map(valueId => {
         const valueLabel = valueUniverse[valueId];
 
@@ -30,20 +30,21 @@ export const StringFacetForm: React.FunctionComponent<{
         };
 
         return (
-          <ListItem className="w-100" key={valueId}>
-            <FormControlLabel
-              control={
-                <Checkbox
+          <ListGroupItem className="w-100" key={valueId}>
+            <FormGroup check>
+              <Label check>
+                <Input
                   checked={state.includesValue(valueId)}
+                  data-cy={"facet-value-" + valueId}
                   onChange={onChangeValue}
+                  type="checkbox"
                 />
-              }
-              data-cy={"facet-value-" + valueId}
-              label={valueLabel}
-            />
-          </ListItem>
+                {valueLabel}
+              </Label>
+            </FormGroup>
+          </ListGroupItem>
         );
       })}
-    </List>
+    </ListGroup>
   );
 };

@@ -35,7 +35,6 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
             </AccordionSummary>
             <AccordionDetails>
               <StringFacetForm
-                valueUniverse={propertyFacet.values}
                 currentState={filtersState.getPropertyFilter(
                   propertyFacet.definition.uri
                 )}
@@ -52,6 +51,13 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                   }
                   onChange(filtersState.snapshot);
                 }}
+                valueUniverse={propertyFacet.values.reduce(
+                  (valueUniverse: {[index: string]: string}, value: string) => {
+                    valueUniverse[value] = value;
+                    return valueUniverse;
+                  },
+                  {}
+                )}
               />
             </AccordionDetails>
           </Accordion>{" "}
