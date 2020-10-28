@@ -3,6 +3,9 @@ jobs:
   py:
     docker:
       - image: circleci/python:3.8-node
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - run:
@@ -36,6 +39,9 @@ jobs:
   ts:
     docker:
       - image: circleci/python:3.8-node
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - restore_cache:
