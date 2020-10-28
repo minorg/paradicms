@@ -32,13 +32,18 @@ export class ObjectIndex {
     this.objectsByUri = objectsByUri;
 
     this.index = lunr(function() {
+      this.field("abstract");
       this.field("title");
       for (const field of Object.values(fieldsByPropertyDefinitionUri)) {
         this.field(field.name);
       }
       this.ref("uri");
+
       for (const object of objects) {
         const doc: any = {title: object.title, uri: object.uri};
+        if (object.abstract) {
+          doc.abstract = object.abstract;
+        }
         if (object.properties && object.properties.length > 0) {
           for (const objectProperty of object.properties) {
             const field =
