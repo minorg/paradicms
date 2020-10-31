@@ -3,6 +3,9 @@ jobs:
   py:
     docker:
       - image: circleci/python:3.8-node
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - run:
@@ -36,10 +39,13 @@ jobs:
   ts:
     docker:
       - image: circleci/python:3.8-node
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
     steps:
       - checkout
       - restore_cache:
-          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
 #      - run:
 #          name: Clean out cache
 #          command: |
@@ -70,23 +76,30 @@ jobs:
             npm run build
             cd ../material-ui
             npm run build
+            cd ../next
+            npm run build
             cd ../material-ui-next
             npm run build
             cd ../../../gui/union
-            export DATA_DIRECTORY_PATH=$PWD/data/test
+            export DATA_DIRECTORY_PATH=~/project/etl/data/test_data/loaded
             npm run build
             npm run export
             mkdir ~/dist
             mv out ~/dist/union-gui
       - save_cache:
-          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
             - ./node_modules
             - ./gui/union/node_modules
             - ./lib/ts/base/node_modules
+            - ./lib/ts/bootstrap/node_modules
+            - ./lib/ts/lunr/node_modules
             - ./lib/ts/material-ui/node_modules
+            - ./lib/ts/material-ui-next/node_modules
+            - ./lib/ts/models/node_modules
+            - ./lib/ts/next/node_modules
       - persist_to_workspace:
           root: ~/
           paths:

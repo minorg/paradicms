@@ -41,10 +41,7 @@ describe("Collection page", () => {
   beforeEach(() => page.visit());
 
   it("should show the collection name in the frame", () => {
-    page.frame.cardTitle.should(
-      "have.text",
-      "Collection - " + collection.title
-    );
+    page.collectionTitle.should("have.text", collection.title);
   });
 
   it("should have breadcrumbs to the collection", () => {
@@ -61,15 +58,12 @@ describe("Collection page", () => {
         .getObjectLink({object, stripTrailingSlash: true})
         .should("have.text", object.title);
     }
-    page.objectsGallery.startObjectIndex.should("have.text", "1");
-    page.objectsGallery.endObjectIndex.should(
-      "have.text",
-      OBJECTS_PER_PAGE.toString()
-    );
-    page.objectsGallery.objectsCount.should(
-      "have.text",
-      objects.length.toString()
-    );
+    // page.objectsGallery.startObjectIndex.should("have.text", "1");
+    // page.objectsGallery.endObjectIndex.should(
+    //   "have.text",
+    //   OBJECTS_PER_PAGE.toString()
+    // );
+    page.objectsCount.should("have.text", objects.length.toString());
   });
 
   it("should unselect one subject and see one fewer object", () => {
@@ -78,12 +72,12 @@ describe("Collection page", () => {
     page.objectsGallery
       .getObjectLink({object: objects[0], stripTrailingSlash: true})
       .should("not.exist");
-    page.objectsGallery.startObjectIndex.should("have.text", "1");
-    page.objectsGallery.endObjectIndex.should(
-      "have.text",
-      OBJECTS_PER_PAGE.toString()
-    );
-    page.objectsGallery.objectsCount.should(
+    // page.objectsGallery.startObjectIndex.should("have.text", "1");
+    // page.objectsGallery.endObjectIndex.should(
+    //   "have.text",
+    //   OBJECTS_PER_PAGE.toString()
+    // );
+    page.objectsCount.should(
       "have.text",
       (OBJECTS_PER_COLLECTION - 5).toString()
     );

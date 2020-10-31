@@ -34,10 +34,6 @@ export class ObjectFacets {
 }
 
 export class ObjectsGallery {
-  get endObjectIndex() {
-    return cy.get('[data-cy="end-object-index"]');
-  }
-
   getObjectLink(kwds: {object: ObjectFixture; stripTrailingSlash?: boolean}) {
     const {object, stripTrailingSlash} = kwds;
     let objectLink = new ObjectPage({
@@ -50,14 +46,6 @@ export class ObjectsGallery {
     }
     return cy.get('.MuiCardHeader-title a[href="' + objectLink + '"]');
   }
-
-  get objectsCount() {
-    return cy.get('[data-cy="objects-count"]');
-  }
-
-  get startObjectIndex() {
-    return cy.get('[data-cy="start-object-index"]');
-  }
 }
 
 export class SearchPage extends Page {
@@ -65,8 +53,16 @@ export class SearchPage extends Page {
     super();
   }
 
+  get objectsCount() {
+    return cy.get("[data-cy=objects-count]");
+  }
+
   readonly objectFacets = new ObjectFacets();
   readonly objectsGallery = new ObjectsGallery();
+
+  get queryText() {
+    return cy.get("[data-cy=query-text]");
+  }
 
   readonly relativeUrl =
     "/search/?" + qs.stringify({query: JSON.stringify({text: this.text})});

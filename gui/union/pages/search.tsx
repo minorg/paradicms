@@ -42,10 +42,10 @@ const SearchPage: React.FunctionComponent<{
   const offset = queryParams.offset ?? OFFSET_DEFAULT;
   const query = queryParams.query ?? {};
 
-  const [index, setIndex] = React.useState<ObjectIndex>();
-  React.useEffect(() => {
-    setIndex(new ObjectIndex(objects));
-  }, []);
+  const index = React.useMemo(
+    () => new ObjectIndex(objects, propertyDefinitions),
+    [objects, propertyDefinitions]
+  );
 
   const collectionsByUri = React.useMemo(() => Models.indexByUri(collections), [
     collections,
@@ -113,7 +113,13 @@ const SearchPage: React.FunctionComponent<{
       cardTitle={
         query.text ? (
           <span>
-            Search results for <i data-cy="query-text">{query.text}</i>
+            <span data-cy="objects-count">
+              {joinedFilteredResultObjects.length}
+            </span>
+            &nbsp;
+            <span>search results for</span>
+            &nbsp;
+            <i data-cy="query-text">{query.text}</i>
           </span>
         ) : (
           "Search results"
@@ -131,7 +137,7 @@ const SearchPage: React.FunctionComponent<{
           <Grid container>
             <Grid item xs={10}>
               <ObjectsGallery
-                joinedObjects={joinedFilteredResultObjects ?? []}
+                objects={joinedFilteredResultObjects ?? []}
                 renderInstitution={true}
               />
             </Grid>

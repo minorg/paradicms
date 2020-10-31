@@ -7,7 +7,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import {Images} from "@paradicms/models";
-import {JoinedInstitution} from "@paradicms/models/dist/JoinedInstitution";
+import {JoinedInstitution} from "@paradicms/models";
 
 const useStyles = makeStyles(theme => ({
   thumbnailImg: {
@@ -50,7 +50,10 @@ export const InstitutionCard: React.FunctionComponent<{
                   src={
                     thumbnail
                       ? thumbnail.uri
-                      : "https://place-hold.it/200x200?text=Missing%20thumbnail"
+                      : Images.placeholderUrl({
+                          dimensions: {height: 200, width: 200},
+                          text: "Missing thumbnail",
+                        })
                   }
                   title={institution.name}
                 />

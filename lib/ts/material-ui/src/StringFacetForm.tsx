@@ -5,18 +5,8 @@ import {StringFilter, StringFilterState} from "@paradicms/models";
 export const StringFacetForm: React.FunctionComponent<{
   currentState?: StringFilter; // value id's only
   onChange: (newState?: StringFilter) => void;
-  valueUniverse: {[index: string]: string} | readonly string[]; // value id: value label or the same
-}> = ({currentState, onChange, valueUniverse: valueUniverseArrayOrObject}) => {
-  let valueUniverse: {[index: string]: string};
-  if (Array.isArray(valueUniverseArrayOrObject)) {
-    valueUniverse = valueUniverseArrayOrObject.reduce((map, valueId) => {
-      map[valueId] = valueId;
-      return map;
-    }, {} as {[index: string]: string});
-  } else {
-    valueUniverse = valueUniverseArrayOrObject as {[index: string]: string};
-  }
-
+  valueUniverse: {[index: string]: string}; // value id: value label
+}> = ({currentState, onChange, valueUniverse}) => {
   const state = new StringFilterState({
     filter: currentState,
     valueUniverse: Object.keys(valueUniverse),

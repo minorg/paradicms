@@ -35,7 +35,10 @@ export const ObjectImagesCarousel: React.FunctionComponent<{
                   className: "img",
                   src: thumbnail
                     ? thumbnail.uri
-                    : "https://place-hold.it/600x600?text=Missing%20thumbnail",
+                    : Images.placeholderUrl({
+                        dimensions: {height: 600, width: 600},
+                        text: "Missing thumbnail",
+                      }),
                   style: {
                     maxHeight: 600,
                     maxWidth: 600,

@@ -1,9 +1,10 @@
-import {memo, useMemo} from "react";
-import * as React from "react";
+import React, {memo, useMemo} from "react";
 import {useRouter} from "next/router";
 import {QueryParamProvider as ContextProvider} from "use-query-params";
 
-const QueryParamProviderComponent = (props: {children?: React.ReactNode}) => {
+export const QueryParamProviderComponent = (props: {
+  children?: React.ReactNode;
+}) => {
   const {children, ...rest} = props;
   const router = useRouter();
   const match = router.asPath.match(/[^?]+/);
@@ -23,13 +24,13 @@ const QueryParamProviderComponent = (props: {children?: React.ReactNode}) => {
     () => ({
       push: ({search}: Location) =>
         router.push(
-          `${router.pathname}${search}`,
+          {pathname: router.pathname, query: router.query},
           {search, pathname},
           {shallow: true}
         ),
       replace: ({search}: Location) =>
         router.replace(
-          `${router.pathname}${search}`,
+          {pathname: router.pathname, query: router.query},
           {search, pathname},
           {shallow: true}
         ),

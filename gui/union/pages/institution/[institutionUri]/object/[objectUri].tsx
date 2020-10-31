@@ -5,10 +5,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
 } from "@material-ui/core";
 import {
   Image,
@@ -16,18 +12,29 @@ import {
   Object,
   PropertyDefinition,
 } from "@paradicms/models";
-import {ObjectImagesCarousel, RightsTable} from "@paradicms/material-ui";
+import {
+  ObjectImagesCarousel,
+  PropertiesTable,
+  RightsTable,
+} from "@paradicms/material-ui";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {Data} from "lib/Data";
 import {decodeFileName, encodeFileName} from "@paradicms/base";
 import {GetStaticPaths, GetStaticProps} from "next";
 
-const ObjectPage: React.FunctionComponent<{
+interface StaticProps {
   institution: Institution;
   object: Object;
   objectImages: readonly Image[];
   propertyDefinitions: readonly PropertyDefinition[];
-}> = ({institution, object, objectImages, propertyDefinitions}) => {
+}
+
+const ObjectPage: React.FunctionComponent<StaticProps> = ({
+  institution,
+  object,
+  objectImages,
+  propertyDefinitions,
+}) => {
   const rights = object.rights ?? institution.rights ?? undefined;
 
   return (
@@ -46,37 +53,10 @@ const ObjectPage: React.FunctionComponent<{
                 <h3>Properties</h3>
               </AccordionSummary>
               <AccordionDetails>
-                <Table>
-                  <TableBody>
-                    {propertyDefinitions
-                      .concat()
-                      .sort((left, right) => left.uri.localeCompare(right.uri))
-                      .map(propertyDefinition => {
-                        const properties = object.properties!.filter(
-                          property =>
-                            property.propertyDefinitionUri ===
-                            propertyDefinition.uri
-                        );
-                        if (properties.length === 0) {
-                          return null;
-                        }
-                        return (
-                          <React.Fragment key={propertyDefinition.uri}>
-                            {properties.map((property, propertyIndex) => (
-                              <TableRow
-                                key={`property-${propertyDefinition.uri}-${propertyIndex}`}
-                              >
-                                <TableCell>
-                                  <strong>{propertyDefinition.label}</strong>
-                                </TableCell>
-                                <TableCell>{property.value}</TableCell>
-                              </TableRow>
-                            ))}
-                          </React.Fragment>
-                        );
-                      })}
-                  </TableBody>
-                </Table>
+                <PropertiesTable
+                  properties={object.properties}
+                  propertyDefinitions={propertyDefinitions}
+                />
               </AccordionDetails>
             </Accordion>
           </Grid>
@@ -121,7 +101,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({params}) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}): Promise<{props: StaticProps}> => {
   const institutionUri = decodeFileName(params!.institutionUri as string);
   const objectUri = decodeFileName(params!.objectUri as string);
 
@@ -130,7 +112,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
       institution: Data.institutions.find(
         institution => institution.uri === institutionUri
       )!,
-      object: Data.objects.find(object => object.uri === objectUri),
+      object: Data.objects.find(object => object.uri === objectUri)!,
       objectImages: Data.images.filter(image => image.depictsUri === objectUri),
       propertyDefinitions: Data.propertyDefinitions,
     },

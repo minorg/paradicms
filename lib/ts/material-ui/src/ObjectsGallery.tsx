@@ -4,13 +4,12 @@ import {Pagination} from "@material-ui/lab";
 import {Institution, JoinedObject} from "@paradicms/models";
 import {ObjectCard} from "./ObjectCard";
 
+const OBJECTS_PER_PAGE = 10;
+
 export const ObjectsGallery: React.FunctionComponent<{
-  currentPage: number; // From 0
-  maxPage: number; // From 0
-  objects: JoinedObject[];
-  objectsPerPage: number;
-  objectsTotal: number;
+  objects: readonly JoinedObject[];
   onChangePage: (page: number) => void;
+  page: number; // From 0
   renderInstitutionLink?: (
     institution: Institution,
     children: React.ReactNode
@@ -20,50 +19,40 @@ export const ObjectsGallery: React.FunctionComponent<{
     children: React.ReactNode
   ) => React.ReactNode;
 }> = ({
-  currentPage,
-  maxPage,
   objects,
-  objectsPerPage,
-  objectsTotal,
   onChangePage,
+  page,
   renderInstitutionLink,
   renderObjectLink,
-}) => (
-  <Grid container direction="column" spacing={4}>
-    <Grid item>
-      <p className="muted">
-        Showing objects{" "}
-        <span data-cy="start-object-index">
-          {currentPage * objectsPerPage + 1}
-        </span>{" "}
-        &mdash;{" "}
-        <span data-cy="end-object-index">
-          {currentPage * objectsPerPage + objects.length}
-        </span>{" "}
-        of <span data-cy="objects-count">{objectsTotal}</span>
-      </p>
-    </Grid>
-    <Grid item>
-      <Grid container spacing={8}>
-        {objects.map(object => (
-          <Grid item key={object.uri}>
-            <ObjectCard
-              object={object}
-              renderInstitutionLink={renderInstitutionLink}
-              renderObjectLink={renderObjectLink}
-            />
-          </Grid>
-        ))}
+}) => {
+  const maxPage = Math.ceil(objects.length / OBJECTS_PER_PAGE) - 1;
+
+  return (
+    <Grid container direction="column" spacing={4}>
+      <Grid item>
+        <Grid container spacing={8}>
+          {objects
+            .slice(page * OBJECTS_PER_PAGE, (page + 1) * OBJECTS_PER_PAGE)
+            .map(object => (
+              <Grid item key={object.uri}>
+                <ObjectCard
+                  object={object}
+                  renderInstitutionLink={renderInstitutionLink}
+                  renderObjectLink={renderObjectLink}
+                />
+              </Grid>
+            ))}
+        </Grid>
       </Grid>
+      {maxPage > 0 ? (
+        <Grid item style={{alignSelf: "center"}}>
+          <Pagination
+            count={maxPage + 1}
+            page={page + 1}
+            onChange={(_, value) => onChangePage(value - 1)}
+          />
+        </Grid>
+      ) : null}
     </Grid>
-    {maxPage > 0 ? (
-      <Grid item style={{alignSelf: "center"}}>
-        <Pagination
-          count={maxPage + 1}
-          page={currentPage + 1}
-          onChange={(_, value) => onChangePage(value - 1)}
-        />
-      </Grid>
-    ) : null}
-  </Grid>
-);
+  );
+};

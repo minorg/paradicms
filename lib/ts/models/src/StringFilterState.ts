@@ -30,6 +30,11 @@ export class StringFilterState {
         this.includeValueSet.add(valueId);
       }
     });
+
+    // console.debug("Exclude value set: " + [...this.excludeValueSet]);
+    // console.debug("Include value set: " + [...this.includeValueSet]);
+    // console.debug("Value universe: " + this.valueUniverse);
+
     if (
       this.includeValueSet.size + this.excludeValueSet.size !==
       this.valueUniverse.length

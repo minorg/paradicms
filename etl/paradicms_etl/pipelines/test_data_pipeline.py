@@ -29,6 +29,7 @@ class TestDataPipeline(_Pipeline):
         __CULTURAL_CONTEXTS = tuple(f"Cultural context {i}" for i in range(10))
         __EXTENTS = tuple(f"Extent {i}" for i in range(10))
         __LANGUAGES = tuple(f"Language {i}" for i in range(10))
+        __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
         __MATERIALS = tuple(f"Material {i}" for i in range(10))
         __MEDIA = tuple(f"Medium {i}" for i in range(10))
         __PUBLISHERS = tuple(f"Publisher {i}" for i in range(10))
@@ -61,11 +62,20 @@ class TestDataPipeline(_Pipeline):
         def __generate_images(
             self, *, depicts_uri: URIRef, institution: Institution, text_prefix: str
         ):
+            rights = Rights(
+                holder=f"{institution.name} rights holder",
+                statement=RightsValue(
+                    text=f"{institution.name} rights",
+                    uri=self.__RIGHTS_STATEMENT_URI,
+                ),
+            )
+
             for image_i in range(2):
                 original = Image.create(
                     depicts_uri=depicts_uri,
                     exact_dimensions=ImageDimensions(height=1000, width=1000),
                     institution_uri=institution.uri,
+                    rights=rights,
                     uri=URIRef(
                         f"https://place-hold.it/1000x1000?text={text_prefix}Image{image_i}"
                     ),
@@ -81,6 +91,7 @@ class TestDataPipeline(_Pipeline):
                         exact_dimensions=thumbnail_dimensions,
                         institution_uri=institution.uri,
                         original_image_uri=original.uri,
+                        rights=rights,
                         uri=URIRef(
                             f"https://place-hold.it/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}?text={text_prefix}Image{image_i}"
                         ),
@@ -190,8 +201,17 @@ class TestDataPipeline(_Pipeline):
                 )
                 for date_i in range(2)
             )
+            properties.append(
+                Property(
+                    PropertyDefinitions.DESCRIPTION,
+                    self.__LOREM_IPSUM,
+                )
+            )
             properties.extend(
-                Property(PropertyDefinitions.DESCRIPTION, f"{title} description {i}",)
+                Property(
+                    PropertyDefinitions.DESCRIPTION,
+                    f"{title} description {i}",
+                )
                 for i in range(2)
             )
             properties.extend(
@@ -247,7 +267,7 @@ class TestDataPipeline(_Pipeline):
             )
 
             object_ = Object(
-                abstract=f"{title} abstract",
+                abstract=self.__LOREM_IPSUM,
                 collection_uris=collection_uris,
                 institution_uri=institution.uri,
                 properties=tuple(properties),
@@ -292,12 +312,8 @@ class TestDataPipeline(_Pipeline):
                 loaders=(
                     JsonDirectoryLoader(
                         clean=True,
+                        data_dir_path=root_dir_path / "etl" / "data",
                         pipeline_id=self.__ID,
-                        loaded_data_dir_path=root_dir_path
-                        / "gui"
-                        / "union"
-                        / "data"
-                        / "test",
                     ),
                     JsonDirectoryLoader(
                         clean=True,
