@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: "x-small",
     padding: theme.spacing(1),
   },
+  root: {
+    width: "400px",
+  },
   title: {
     textAlign: "center",
   },
@@ -57,7 +60,7 @@ export const ObjectCard: React.FunctionComponent<{
   });
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardHeader
         className={classes.title}
         title={renderObjectLink(object, <>{object.title}</>)}

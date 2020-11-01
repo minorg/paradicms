@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
     maxHeight: "200px",
     maxWidth: "200px",
   },
+  root: {
+    width: "400px",
+  },
   title: {
     textAlign: "center",
   },
@@ -34,7 +37,7 @@ export const CollectionCard: React.FunctionComponent<{
   });
 
   return (
-    <Card>
+    <Card className={classes.root}>
       <CardHeader
         className={classes.title}
         title={renderCollectionLink(collection, <>{collection.title}</>)}
