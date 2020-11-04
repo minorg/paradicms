@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent} from "react";
 import {
   fade,
   IconButton,
@@ -39,26 +39,16 @@ export const NavbarSearchForm: React.FunctionComponent<{
   className?: string;
   onSearch: (text: string) => void;
 }> = ({className, onSearch}) => {
-  const [state, setState] = useState<{text: string}>({text: ""});
   const classes = useStyles();
-
-  const onClickSearchButton = () => {
-    setState(prevState => Object.assign({}, prevState, {text: ""}));
-    onSearch(state.text);
-  };
-  const onSubmit = (ev: FormEvent<HTMLFormElement>) => {
-    ev.preventDefault(); // Prevent the form from being submitted normally, which messes everything up.
-    onClickSearchButton();
-  };
-  const onTextChange = (ev: ChangeEvent<HTMLInputElement>) => {
-    const text = ev.target.value;
-    setState(prevState => Object.assign({}, prevState, {text}));
-  };
+  const [text, setText] = React.useState<string>("");
 
   return (
     <form
       className={classes.search}
-      onSubmit={onSubmit}
+      onSubmit={e => {
+        e.preventDefault();
+        onSearch(text);
+      }}
       style={{display: "inline-block"}}
     >
       <InputBase
@@ -68,10 +58,10 @@ export const NavbarSearchForm: React.FunctionComponent<{
           input: classes.inputInput,
         }}
         data-cy="search-input"
-        onChange={onTextChange}
+        onChange={e => setText(e.target.value)}
         inputProps={{"aria-label": "search"}}
       />
-      <IconButton data-cy="search-button" onClick={onClickSearchButton}>
+      <IconButton data-cy="search-button" type="submit">
         <SearchIcon />
       </IconButton>
     </form>
