@@ -45,17 +45,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
-#      - run:
-#          name: Clean out cache
-#          command: |
-#            rm -fr ~/.cache
-#            rm -fr ~/.npm
-#            rm -fr node_modules
-#            rm -fr gui/union/.cache
-#            rm -fr gui/union/node_modules
-#            rm -fr lib/ts/base/node_modules
-#            rm -fr lib/ts/material-ui/node_modules
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/bootstrap-collection/package.json" }}-{{ checksum "gui/material-ui-union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
       - run:
           name: "Install ts requirements"
           command: |
@@ -80,19 +70,24 @@ jobs:
             npm run build
             cd ../material-ui-next
             npm run build
-            cd ../../../gui/union
             export DATA_DIRECTORY_PATH=~/project/etl/data/test_data/loaded
+            mkdir ~/dist
+            cd ~/project/gui/bootstrap-collection
             npm run build
             npm run export
-            mkdir ~/dist
-            mv out ~/dist/union-gui
+            mv out ~/dist/bootstrap-collection-gui
+            cd ../material-ui-union
+            npm run build
+            npm run export
+            mv out ~/dist/material-ui-union-gui
       - save_cache:
-          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/bootstrap-collection/package.json" }}-{{ checksum "gui/material-ui-union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
             - ./node_modules
-            - ./gui/union/node_modules
+            - ./gui/bootstrap-collection/node_modules
+            - ./gui/material-ui-union/node_modules
             - ./lib/ts/base/node_modules
             - ./lib/ts/bootstrap/node_modules
             - ./lib/ts/lunr/node_modules
@@ -103,7 +98,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - dist/union-gui
+            - dist/material-ui-union-gui
       - run:
           name: "Change Python system directory permissions"
           command: sudo chown -R circleci:circleci /usr/local/bin /usr/local/lib/python3.8/site-packages
@@ -133,24 +128,24 @@ workflows:
   build:
     jobs:
       - cypress/install:
-          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/union/package.json" }}-{{ checksum "~/project/integration/union/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}'
+          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/material-ui-union/package.json" }}-{{ checksum "~/project/integration/material-ui-union/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}'
           post-install:
             - run: cd ~/project && npm install && npm run lerna:bootstrap
           requires:
             - ts
-          working_directory: integration/union
+          working_directory: integration/material-ui-union
       - cypress/run:
           attach-workspace: true
           post-steps:
             - store_test_results:
-                path: integration/union/results
+                path: integration/material-ui-union/results
           requires:
             - cypress/install
           start: |
             cp ~/project/.circleci/cypress.json .
-            ~/project/node_modules/.bin/serve -n ~/dist/union-gui
+            ~/project/node_modules/.bin/serve -n ~/dist/material-ui-union-gui
           store_artifacts: true
           wait-on: 'http-get://localhost:5000/index.html'
-          working_directory: integration/union
+          working_directory: integration/material-ui-union
       - py
       - ts

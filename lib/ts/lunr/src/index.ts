@@ -1,2 +1,2 @@
-export * from "./ObjectFacetedSearch";
+export * from "./ObjectFacetedSearchQuery";
 export * from "./ObjectIndex";

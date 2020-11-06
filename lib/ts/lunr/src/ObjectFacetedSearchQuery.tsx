@@ -17,7 +17,7 @@ import {ObjectIndex} from "./ObjectIndex";
 /**
  * Component that encapsulates the logic of searching, filtering, joining, and faceting objects, then calls a render prop with the results.
  */
-export const ObjectFacetedSearch: React.FunctionComponent<{
+export const ObjectFacetedSearchQuery: React.FunctionComponent<{
   children: (kwds: {
     objectFacets: ObjectFacets;
     objects: readonly JoinedObject[];
