@@ -5,10 +5,13 @@ const OBJECTS_PER_PAGE = 10;
 
 describe("Search results", () => {
   let objects: ObjectFixture[];
-  const page = new SearchPage("Test");
+  const page = new SearchPage("Lorem");
 
   before(() => {
-    Fixtures.objects.then(objects_ => (objects = objects_));
+    Fixtures.objects.then(objects_ => {
+      objects = objects_;
+      objects.sort((left, right) => left.uri.localeCompare(right.uri));
+    });
   });
 
   beforeEach(() => page.visit());

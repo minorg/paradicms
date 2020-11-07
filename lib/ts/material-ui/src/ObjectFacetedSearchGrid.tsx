@@ -44,23 +44,24 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
   renderInstitutionLink,
   renderObjectLink,
   query,
-}) => (
-  <ObjectFacetedSearchQuery
-    collections={collections}
-    images={images}
-    institutions={institutions}
-    objects={objects}
-    propertyDefinitions={propertyDefinitions}
-    query={query}
-  >
-    {({objectFacets, objects}) => (
-      <Grid container direction="column" spacing={2}>
-        <Grid item>
-          <Grid container>
-            <Grid item xs={10}>
-              {objects.length > 0 ? (
-                <>
-                  Grid
+}) => {
+  const totalObjectsCount = objects.length;
+
+  return (
+    <ObjectFacetedSearchQuery
+      collections={collections}
+      images={images}
+      institutions={institutions}
+      objects={objects}
+      propertyDefinitions={propertyDefinitions}
+      query={query}
+    >
+      {({objectFacets, objects}) => (
+        <Grid container direction="column" spacing={2}>
+          <Grid item>
+            <Grid container>
+              <Grid item xs={10}>
+                {objects.length > 0 ? (
                   <ObjectsGallery
                     objects={objects}
                     onChangePage={onChangePage}
@@ -68,25 +69,38 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
                     renderInstitutionLink={renderInstitutionLink}
                     renderObjectLink={renderObjectLink}
                   />
-                </>
-              ) : (
-                <h2 style={{textAlign: "center"}}>
-                  No matching objects found.
-                </h2>
-              )}
-            </Grid>
-            <Grid item xs={2}>
-              {objects.length > 0 ? (
-                <ObjectFacetsGrid
-                  facets={objectFacets}
-                  filters={query.filters ?? {}}
-                  onChange={onChangeFilters}
-                />
-              ) : null}
+                ) : (
+                  <h2 style={{textAlign: "center"}}>
+                    No matching objects found.
+                  </h2>
+                )}
+              </Grid>
+              <Grid item xs={2}>
+                {objects.length > 0 ? (
+                  <Grid container direction="column" spacing={2}>
+                    <Grid item style={{textAlign: "center"}}>
+                      <span>Showing&nbsp;</span>
+                      <span data-cy="objects-count">{objects.length}</span>
+                      <span>&nbsp;of&nbsp;</span>
+                      <span data-cy="total-objects-count">
+                        {totalObjectsCount}
+                      </span>
+                      <span>&nbsp;objects</span>
+                    </Grid>
+                    <Grid item>
+                      <ObjectFacetsGrid
+                        facets={objectFacets}
+                        filters={query.filters ?? {}}
+                        onChange={onChangeFilters}
+                      />
+                    </Grid>
+                  </Grid>
+                ) : null}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    )}
-  </ObjectFacetedSearchQuery>
-);
+      )}
+    </ObjectFacetedSearchQuery>
+  );
+};
