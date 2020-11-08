@@ -135,11 +135,11 @@ export class Objects {
     return objects;
   }
 
-  static indexByCollectionUri(kwds: {
-    objects: readonly Object[];
-  }): {[index: string]: readonly Object[]} {
+  static indexByCollectionUri(
+    objects: readonly Object[]
+  ): {[index: string]: readonly Object[]} {
     const result: {[index: string]: Object[]} = {};
-    for (const object of kwds.objects) {
+    for (const object of objects) {
       for (const collectionUri of object.collectionUris) {
         let collectionObjects = result[collectionUri];
         if (!collectionObjects) {
