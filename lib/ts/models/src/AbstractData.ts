@@ -17,6 +17,7 @@ export abstract class AbstractData {
   readonly guiMetadata: GuiMetadata | null;
   readonly images: readonly Image[];
   readonly imagesByDepictsUri: {[index: string]: readonly Image[]};
+  readonly imagesByInstitutionUri: {[index: string]: readonly Image[]};
   readonly institutions: readonly Institution[];
   private readonly institutionsByUri: {[index: string]: Institution};
   readonly objects: readonly Object[];
@@ -37,6 +38,7 @@ export abstract class AbstractData {
 
     this.images = this.readModels<Image>("image");
     this.imagesByDepictsUri = Images.indexByDepictsUri(this.images);
+    this.imagesByInstitutionUri = Models.indexByInstitutionUri(this.images);
 
     this.institutions = this.readModels<Institution>("institution");
     this.institutionsByUri = Models.indexByUri(this.institutions);

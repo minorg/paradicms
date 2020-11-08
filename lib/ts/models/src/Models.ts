@@ -1,5 +1,3 @@
-import {Collection} from "Collection";
-
 export class Models {
   static indexByInstitutionUri<T extends {institutionUri: string}>(
     models: readonly T[]

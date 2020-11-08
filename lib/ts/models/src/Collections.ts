@@ -18,21 +18,6 @@ export class Collections {
       objectsByCollectionUri,
     } = kwds;
     return collections.map(collection => {
-      let collectionImages = imagesByDepictsUri[collection.uri];
-      if (!collectionImages) {
-        const collectionObjects = objectsByCollectionUri[collection.uri];
-        if (collectionObjects) {
-          for (const object of collectionObjects) {
-            const objectImages = imagesByDepictsUri[object.uri];
-            if (objectImages) {
-              // Use the images of the first object with images as the collection's images
-              collectionImages = objectImages;
-              break;
-            }
-          }
-        }
-      }
-
       const institution = institutionsByUri[collection.institutionUri];
       if (!institution) {
         throw new EvalError(
@@ -42,11 +27,42 @@ export class Collections {
 
       return {
         collections,
-        images: collectionImages ?? [],
+        images: Collections.selectCollectionImages({
+          collection,
+          imagesByDepictsUri,
+          objectsByCollectionUri,
+        }),
         institution,
         title: collection.title,
         uri: collection.uri,
       };
     });
+  }
+
+  static selectCollectionImages(kwds: {
+    collection: Collection;
+    imagesByDepictsUri: {[index: string]: readonly Image[]};
+    objectsByCollectionUri: {[index: string]: readonly Object[]};
+  }): readonly Image[] {
+    const {collection, imagesByDepictsUri, objectsByCollectionUri} = kwds;
+    let collectionImages = imagesByDepictsUri[collection.uri];
+    if (collectionImages) {
+      return collectionImages;
+    }
+
+    const collectionObjects = objectsByCollectionUri[collection.uri];
+    if (!collectionObjects) {
+      return [];
+    }
+
+    for (const object of collectionObjects) {
+      const objectImages = imagesByDepictsUri[object.uri];
+      if (objectImages) {
+        // Use the images of the first object with images as the collection's images
+        return objectImages;
+      }
+    }
+
+    return [];
   }
 }
