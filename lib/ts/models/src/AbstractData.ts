@@ -6,30 +6,26 @@ import {Object} from "./Object";
 import {PropertyDefinition} from "./PropertyDefinition";
 
 export abstract class AbstractData {
-  get collections(): readonly Collection[] {
-    return this.models<Collection>("collection");
+  readonly collections: readonly Collection[];
+  readonly guiMetadata: GuiMetadata | null;
+  readonly images: readonly Image[];
+  readonly institutions: readonly Institution[];
+  readonly objects: readonly Object[];
+  readonly propertyDefinitions: readonly PropertyDefinition[];
+
+  protected constructor() {
+    this.collections = this.readModels<Collection>("collection");
+    const guiMetadata = this.readModels<GuiMetadata>("guiMetadata");
+    this.guiMetadata = guiMetadata.length > 0 ? guiMetadata[0] : null;
+    this.images = this.readModels<Image>("image");
+    this.institutions = this.readModels<Institution>("institution");
+    this.objects = this.readModels<Object>("object");
+    this.propertyDefinitions = this.readModels<PropertyDefinition>(
+      "propertyDefinition"
+    );
   }
 
-  get guiMetadata(): GuiMetadata | null {
-    const models = this.models<GuiMetadata>("guiMetadata");
-    return models.length > 0 ? models[0] : null;
-  }
-
-  get images(): readonly Image[] {
-    return this.models<Image>("image");
-  }
-
-  get institutions(): readonly Institution[] {
-    return this.models<Institution>("institution");
-  }
-
-  protected abstract models<ModelT>(fileBaseName: string): readonly ModelT[];
-
-  get objects(): readonly Object[] {
-    return this.models<Object>("object");
-  }
-
-  get propertyDefinitions(): readonly PropertyDefinition[] {
-    return this.models<PropertyDefinition>("propertyDefinition");
-  }
+  protected abstract readModels<ModelT>(
+    fileBaseName: string
+  ): readonly ModelT[];
 }
