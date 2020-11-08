@@ -59,7 +59,7 @@ export const ObjectFacetedSearchQuery: React.FunctionComponent<{
       return null;
     }
 
-    console.info("query " + JSON.stringify(query));
+    // console.info("query " + JSON.stringify(query));
 
     const searchedObjects: readonly Object[] = query.text
       ? index.search(query.text)
