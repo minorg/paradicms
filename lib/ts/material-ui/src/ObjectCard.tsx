@@ -14,8 +14,18 @@ import {
   TableRow,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {Images, Institution, JoinedObject} from "@paradicms/models";
+import {
+  ImageDimensions,
+  Images,
+  Institution,
+  JoinedObject,
+} from "@paradicms/models";
 import {RightsTable} from "./RightsTable";
+
+export const THUMBNAIL_TARGET_DIMENSIONS: ImageDimensions = {
+  height: 200,
+  width: 200,
+};
 
 const useStyles = makeStyles(theme => ({
   accordionTitle: {
@@ -56,7 +66,7 @@ export const ObjectCard: React.FunctionComponent<{
 
   const thumbnail = Images.selectThumbnail({
     images: object.images,
-    targetDimensions: {height: 200, width: 200},
+    targetDimensions: THUMBNAIL_TARGET_DIMENSIONS,
   });
 
   return (
@@ -77,7 +87,7 @@ export const ObjectCard: React.FunctionComponent<{
                     thumbnail
                       ? thumbnail.uri
                       : Images.placeholderUrl({
-                          dimensions: {height: 200, width: 200},
+                          dimensions: THUMBNAIL_TARGET_DIMENSIONS,
                           text: "Missing thumbnail",
                         })
                   }
