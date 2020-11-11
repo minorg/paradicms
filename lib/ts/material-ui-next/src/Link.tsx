@@ -11,10 +11,7 @@ export type LinkImplProps =
       Pick<NextLinkProps, "href" | "as" | "prefetch">)
   | HTMLAnchorElement;
 
-const LinkImpl = (
-  {href, as, prefetch, ...props}: NextLinkProps,
-  ref: LinkRef
-) => {
+const LinkImpl = ({href, prefetch, ...props}: NextLinkProps, ref: LinkRef) => {
   invariant(href, "href must be defined");
   return (
     <NextLink href={href} as={as} prefetch={prefetch} passHref>
