@@ -29,7 +29,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
           item
           key={propertyFacet.definition.uri}
         >
-          <Accordion>
+          <Accordion TransitionProps={{unmountOnExit: true}}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               {propertyFacet.definition.label}
             </AccordionSummary>
