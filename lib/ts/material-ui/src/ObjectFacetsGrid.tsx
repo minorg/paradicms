@@ -21,7 +21,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
   const filtersState = new ObjectFiltersState(filters);
 
   return (
-    <Grid container direction="column" spacing={4}>
+    <Grid container direction="column" spacing={2}>
       {(facets.properties ?? []).map(propertyFacet => (
         <Grid
           className="facet"
@@ -29,7 +29,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
           item
           key={propertyFacet.definition.uri}
         >
-          <Accordion>
+          <Accordion TransitionProps={{unmountOnExit: true}}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               {propertyFacet.definition.label}
             </AccordionSummary>

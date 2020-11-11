@@ -1,7 +1,5 @@
+from datetime import datetime
 from typing import Dict, Optional, Tuple
-
-import dateparser
-from rdflib import URIRef
 
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.models.collection import Collection
@@ -11,6 +9,9 @@ from paradicms_etl.models.object import Object
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definitions import PropertyDefinitions
 from paradicms_etl.models.rights import Rights
+from pyformance import MetricsRegistry
+from rdflib import URIRef
+from tqdm import tqdm
 
 ElementTextTree = Dict[str, Dict[str, str]]
 
@@ -32,10 +33,13 @@ class OmekaClassicTransformer(_Transformer):
         self._fullsize_max_height_px = fullsize_max_height_px
         self._fullsize_max_width_px = fullsize_max_width_px
         self.__institution_kwds = kwds
+        self._metrics_registry = MetricsRegistry()
         self._square_thumbnail_height_px = square_thumbnail_height_px
         self._square_thumbnail_width_px = square_thumbnail_width_px
         self._thumbnail_max_height_px = thumbnail_max_height_px
         self._thumbnail_max_width_px = thumbnail_max_width_px
+        self.__transform_item_timer = self._metrics_registry.timer("transform_item")
+        self.__transform_file_timer = self._metrics_registry.timer("transform_file")
 
     def transform(self, collections, files, items):
         yield from PropertyDefinitions.as_tuple()
@@ -46,7 +50,7 @@ class OmekaClassicTransformer(_Transformer):
         yield institution
 
         collection_uris_by_id = {}
-        for collection in collections:
+        for collection in tqdm(collections, desc="Omeka collections"):
             transformed_collection = self._transform_collection(
                 institution_uri=institution.uri, omeka_collection=collection
             )
@@ -56,30 +60,36 @@ class OmekaClassicTransformer(_Transformer):
             collection_uris_by_id[collection["id"]] = transformed_collection.uri
 
         files_by_item_id = {}
-        for file_ in files:
+        for file_ in tqdm(files, desc="Omeka files"):
             files_by_item_id.setdefault(file_["item"]["id"], []).append(file_)
 
-        for item in items:
+        for item in tqdm(items, desc="Omeka items"):
             if not item["public"]:
                 self._logger.debug("item %s private, skipping", item["id"])
                 continue
 
-            transformed_item = self._transform_item(
-                collection_uris_by_id=collection_uris_by_id,
-                institution_uri=institution.uri,
-                item=item,
-            )
+            with self.__transform_item_timer.time():
+                transformed_item = self._transform_item(
+                    collection_uris_by_id=collection_uris_by_id,
+                    institution_uri=institution.uri,
+                    item=item,
+                )
             if transformed_item is None:
                 continue
 
             yield transformed_item
 
             for file_ in files_by_item_id.get(item["id"], []):
-                yield from self._transform_file(
-                    file_=file_,
-                    institution_uri=institution.uri,
-                    object_uri=transformed_item.uri,
-                )
+                with self.__transform_file_timer.time():
+                    transformed_files = self._transform_file(
+                        file_=file_,
+                        institution_uri=institution.uri,
+                        object_uri=transformed_item.uri,
+                    )
+                yield from transformed_files
+
+        for key, value in self._metrics_registry.dump_metrics().items():
+            self._logger.info("%s: %s", key, value)
 
     def _get_element_texts_as_tree(self, omeka_resource) -> ElementTextTree:
         result = {}
@@ -101,7 +111,7 @@ class OmekaClassicTransformer(_Transformer):
             PropertyDefinitions.ALTERNATIVE_TITLE,
         ):
             for property_i, property in enumerate(properties):
-                if property.key == title_property_definition.key:
+                if property.property_definition_uri == title_property_definition.uri:
                     remaining_properties = list(properties[:property_i]) + list(
                         properties[property_i + 1 :]
                     )
@@ -147,7 +157,7 @@ class OmekaClassicTransformer(_Transformer):
         #
         # The items JSON from the API has display name element identifiers instead of the Dublin Core URIs,
         # so we have to map back here.
-        properties = []
+        properties = set()
         for key, property_definition in (
             ("Alternative Title", PropertyDefinitions.ALTERNATIVE_TITLE),
             ("Contributor", PropertyDefinitions.CONTRIBUTOR),
@@ -178,7 +188,7 @@ class OmekaClassicTransformer(_Transformer):
             ("Type", PropertyDefinitions.TYPE),
         ):
             for value in dc_element_text_tree.pop(key, []):
-                properties.append(Property(property_definition, value))
+                properties.add(Property(property_definition, value))
 
         if dc_element_text_tree:
             self._logger.warn(
@@ -199,29 +209,33 @@ class OmekaClassicTransformer(_Transformer):
         if not file_["mime_type"].startswith("image/"):
             return tuple()
 
+        file_exact_dimensions = None
+        file_metadata = file_["metadata"]
+        if isinstance(file_metadata, dict):
+            # Some files have no metadata
+            file_metadata_video = file_metadata["video"]
+            if isinstance(file_metadata_video, dict):
+                file_exact_dimensions = ImageDimensions(
+                    height=file_metadata_video["resolution_y"],
+                    width=file_metadata_video["resolution_x"],
+                )
+            else:
+                self._logger.debug(
+                    "file %s has no resolution in its metadata", file_["id"]
+                )
+        else:
+            self._logger.debug("file %s has no metadata", file_["id"])
+
+        file_added = datetime.fromisoformat(file_["added"])
+        file_modified = datetime.fromisoformat(file_["modified"])
+
         images = []
-        original_image = None
         for key, url in file_["file_urls"].items():
             if url is None:
                 continue
             exact_dimensions = max_dimensions = None
             if key == "original":
-                file_metadata = file_["metadata"]
-                if isinstance(file_metadata, dict):
-                    # Some files have no metadata
-                    file_metadata_video = file_metadata["video"]
-                    if isinstance(file_metadata_video, dict):
-                        height = file_metadata_video["resolution_y"]
-                        # assert isinstance(height, int)
-                        width = file_metadata_video["resolution_x"]
-                        # assert isinstance(width, int)
-                        exact_dimensions = ImageDimensions(height=height, width=width)
-                    else:
-                        self._logger.debug(
-                            "file %s has no resolution in its metadata", file_["id"]
-                        )
-                else:
-                    self._logger.debug("file %s has no metadata", file_["id"])
+                exact_dimensions = file_exact_dimensions
                 original_image_uri = None
             else:
                 if key == "square_thumbnail":
@@ -237,17 +251,13 @@ class OmekaClassicTransformer(_Transformer):
                 original_image_uri = URIRef(file_["file_urls"]["original"])
 
             image = Image.create(
-                created=dateparser.parse(
-                    file_["added"], settings={"STRICT_PARSING": True}
-                ),
+                created=file_added,
                 depicts_uri=object_uri,
                 exact_dimensions=exact_dimensions,
                 format=file_["mime_type"],
                 institution_uri=institution_uri,
                 max_dimensions=max_dimensions,
-                modified=dateparser.parse(
-                    file_["modified"], settings={"STRICT_PARSING": True}
-                ),
+                modified=file_modified,
                 original_image_uri=original_image_uri,
                 uri=URIRef(url),
             )
@@ -268,15 +278,15 @@ class OmekaClassicTransformer(_Transformer):
             return None
 
         item_element_text_tree = self._get_element_texts_as_tree(item)
-        properties = []
-        properties.extend(
-            self._transform_dublin_core_elements(
-                element_text_tree=item_element_text_tree
-            )
-        )
-        properties.extend(
-            self._transform_item_type_metadata(element_text_tree=item_element_text_tree)
-        )
+        properties = set()
+        for property_ in self._transform_dublin_core_elements(
+            element_text_tree=item_element_text_tree
+        ):
+            properties.add(property_)
+        for property_ in self._transform_item_type_metadata(
+            element_text_tree=item_element_text_tree
+        ):
+            properties.add(property_)
         properties = tuple(properties)
         self._log_unknown_element_texts(item_element_text_tree)
         title, properties = self._get_title(properties)

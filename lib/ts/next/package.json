@@ -3,7 +3,7 @@
   "name": "@paradicms/next",
   "description": "Paradicms Next.js library",
   "dependencies": {
-    "next": "9.5.2"
+    "next": "10.0.1"
   },
   "devDependencies": {
     "react-refresh": "^0.8.3",

@@ -21,7 +21,7 @@ to link together the `packages` and install their dependencies.
 
 All of the web applications are structured similarly. After completing the one-time setup, 
 
-    cd gui/union
+    cd gui/material-ui-union
     npm run build
     npm start
 

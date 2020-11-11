@@ -5,6 +5,7 @@ export * from "./InstitutionCard";
 export * from "./InstitutionsGallery";
 export * from "./NavbarSearchForm";
 export * from "./ObjectCard";
+export * from "./ObjectFacetedSearchGrid";
 export * from "./ObjectFacetsGrid";
 export * from "./ObjectImagesCarousel";
 export * from "./ObjectsGallery";

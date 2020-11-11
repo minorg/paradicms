@@ -1,5 +1,7 @@
+export * from "./AbstractData";
 export * from "./Collection";
 export * from "./Collections";
+export * from "./GuiMetadata";
 export * from "./Image";
 export * from "./ImageDimensions";
 export * from "./Images";

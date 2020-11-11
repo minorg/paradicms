@@ -10,6 +10,7 @@ from paradicms_etl._extractor import _Extractor
 from paradicms_etl._loader import _Loader
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.loaders.default_loader import DefaultLoader
+from paradicms_etl.transformers.validation_transformer import ValidationTransformer
 
 
 class _Pipeline(ABC):
@@ -20,7 +21,7 @@ class _Pipeline(ABC):
         id: str,
         transformer: _Transformer,
         loader: Optional[_Loader] = None,
-        **kwds
+        **kwds,
     ):
         """
         Construct an extract-transform-load pipeline.
@@ -78,15 +79,18 @@ class _Pipeline(ABC):
 
     @classmethod
     def _add_institution_arguments(cls, arg_parser: ArgParser) -> None:
+        arg_parser.add_argument("--institution-image-uri")
         arg_parser.add_argument("--institution-name", required=True)
-        arg_parser.add_argument("--institution-rights", required=True)
+        arg_parser.add_argument("--institution-rights")
         arg_parser.add_argument("--institution-uri", required=True)
 
     def extract_transform(self, *, force_extract: bool = False):
         extract_kwds = self.extractor.extract(force=force_extract)
         if not extract_kwds:
             extract_kwds = {}
-        return self.transformer.transform(**extract_kwds)
+        return ValidationTransformer(pipeline_id=self.__id).transform(
+            self.transformer.transform(**extract_kwds)
+        )
 
     def extract_transform_load(self, *, force_extract: bool = False):
         models = self.extract_transform(force_extract=force_extract)
@@ -122,10 +126,7 @@ class _Pipeline(ABC):
 
         pipeline_kwds = args.copy()
         for key in ("force", "force_extract", "logging_level"):
-            try:
-                pipeline_kwds.pop(key)
-            except KeyError:
-                pass
+            pipeline_kwds.pop(key, None)
         data_dir_path = pipeline_kwds.get("data_dir_path")
         if data_dir_path is not None:
             pipeline_kwds["data_dir_path"] = Path(data_dir_path)

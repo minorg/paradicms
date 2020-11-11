@@ -6,6 +6,9 @@
     "@paradicms/material-ui": "1.0.3",
     "@paradicms/next": "1.0.3"
   },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  },
   "license": "GPLv3",
   "files": [
     "dist"
