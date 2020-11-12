@@ -14,7 +14,7 @@ export type LinkImplProps =
 const LinkImpl = ({href, prefetch, ...props}: NextLinkProps, ref: LinkRef) => {
   invariant(href, "href must be defined");
   return (
-    <NextLink href={href} as={as} prefetch={prefetch} passHref>
+    <NextLink href={href} prefetch={prefetch} passHref>
       <MuiLink ref={ref} {...props} />
     </NextLink>
   );
