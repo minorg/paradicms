@@ -56,16 +56,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                     }
                     onChange(filtersState.snapshot);
                   }}
-                  valueUniverse={propertyFacet.values.reduce(
-                    (
-                      valueUniverse: {[index: string]: string},
-                      value: string
-                    ) => {
-                      valueUniverse[value] = value;
-                      return valueUniverse;
-                    },
-                    {}
-                  )}
+                  valueUniverse={propertyFacet.values}
                 />
               </AccordionDetails>
             </Accordion>{" "}
