@@ -21,12 +21,17 @@ export class Objects {
         continue;
       }
       const facetObjects: Object[] = [];
-      const facetValues: string[] = [];
+      const facetValues: {[index: string]: number} = {};
       for (const object of objectsWithProperties) {
         let includeObject = false;
         for (const property of object.properties!) {
           if (property.propertyDefinitionUri === propertyDefinition.uri) {
-            facetValues.push(property.value);
+            const count = facetValues[property.value];
+            if (!count) {
+              facetValues[property.value] = 1;
+            } else {
+              facetValues[property.value] = count + 1;
+            }
             includeObject = true;
           }
         }
@@ -38,7 +43,10 @@ export class Objects {
         propertyFacets.push({
           definition: propertyDefinition,
           objects: facetObjects,
-          values: facetValues,
+          values: Object.keys(facetValues).map(facetValue => ({
+            count: facetValues[facetValue],
+            value: facetValue,
+          })),
         });
       }
     }

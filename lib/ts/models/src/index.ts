@@ -23,5 +23,6 @@ export * from "./PropertyDefinition";
 export * from "./PropertyFilter";
 export * from "./Rights";
 export * from "./RightsValue";
+export * from "./StringFacetValue";
 export * from "./StringFilter";
 export * from "./StringFilterState";
