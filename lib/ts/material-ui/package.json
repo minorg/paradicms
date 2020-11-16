@@ -9,7 +9,9 @@
     "@paradicms/base": "1.0.3",
     "@paradicms/models": "1.0.3",
     "@paradicms/lunr": "1.0.3",
+    "@types/mui-datatables": "^3.7.0",
     "@types/react-medium-image-zoom": "^3.0.0",
+    "mui-datatables": "^3.7.1",
     "react-material-ui-carousel": "1.4.5",
     "react-medium-image-zoom": "3.1.2"
   },
