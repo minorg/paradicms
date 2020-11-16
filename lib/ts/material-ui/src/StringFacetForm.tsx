@@ -114,6 +114,9 @@ export const StringFacetForm: React.FunctionComponent<{
       rowsPerPageOptions: [],
       rowsSelected: datatableRowsSelected,
       search: "false",
+      setRowProps: (row, dataIndex) => ({
+        "data-cy": "facet-value-" + datatableData[dataIndex].value,
+      }),
       setTableProps: () => ({
         // padding: "none",
         size: "small",
