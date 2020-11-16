@@ -56,6 +56,7 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                     }
                     onChange(filtersState.snapshot);
                   }}
+                  title={propertyFacet.definition.label}
                   valueUniverse={propertyFacet.values}
                 />
               </AccordionDetails>
