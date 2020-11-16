@@ -22,8 +22,9 @@ class StringFacet {
 
   toggleValue(value: string) {
     return cy
-      .get('[data-cy="' + this.id + '-facet"]')
-      .contains(value)
+      .get(`[data-cy="${this.id}-facet"]`)
+      .find(`[data-cy="facet-value-${value}"]`)
+      .find('input[type="checkbox"]')
       .click();
   }
 }

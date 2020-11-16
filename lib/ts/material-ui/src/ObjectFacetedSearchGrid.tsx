@@ -76,8 +76,8 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
                 )}
               </Grid>
               <Grid item xs={2}>
-                {objects.length > 0 ? (
-                  <Grid container direction="column" spacing={2}>
+                <Grid container direction="column" spacing={2}>
+                  {objects.length > 0 ? (
                     <Grid item style={{textAlign: "center"}}>
                       <span>Showing&nbsp;</span>
                       <span data-cy="objects-count">{objects.length}</span>
@@ -87,15 +87,15 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
                       </span>
                       <span>&nbsp;objects</span>
                     </Grid>
-                    <Grid item>
-                      <ObjectFacetsGrid
-                        facets={objectFacets}
-                        filters={query.filters ?? {}}
-                        onChange={onChangeFilters}
-                      />
-                    </Grid>
+                  ) : null}
+                  <Grid item>
+                    <ObjectFacetsGrid
+                      facets={objectFacets}
+                      filters={query.filters ?? {}}
+                      onChange={onChangeFilters}
+                    />
                   </Grid>
-                ) : null}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
