@@ -1,54 +1,136 @@
 import * as React from "react";
-import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
+// import {Checkbox, FormControlLabel, List, ListItem} from "@material-ui/core";
 import {
   StringFacetValue,
   StringFilter,
   StringFilterState,
+  // StringFilterState,
 } from "@paradicms/models";
+import MUIDatatable, {
+  MUIDataTableColumnDef,
+  MUIDataTableOptions,
+} from "mui-datatables";
+import {createMuiTheme, ThemeProvider} from "@material-ui/core";
+
+const theme = createMuiTheme({
+  overrides: {
+    MUIDataTableToolbar: {
+      root: {
+        display: "none",
+      },
+    },
+    MUIDataTableToolbarSelect: {
+      root: {
+        display: "none",
+      },
+    },
+  } as any,
+});
 
 export const StringFacetForm: React.FunctionComponent<{
   currentState?: StringFilter; // value id's only
   onChange: (newState?: StringFilter) => void;
+  title: string;
   valueUniverse: readonly StringFacetValue[];
-}> = ({currentState, onChange, valueUniverse}) => {
+}> = ({currentState, onChange, title, valueUniverse}) => {
+  const datatableColumns: MUIDataTableColumnDef[] = React.useMemo(
+    () => [
+      {
+        name: "value",
+        label: title,
+        options: {
+          customBodyRender: (value, tableMeta) => {
+            const label = tableMeta.rowData[2];
+            return label ?? value;
+          },
+          sort: true,
+        },
+      },
+      {
+        name: "count",
+        label: "Count",
+        options: {
+          sort: true,
+        },
+      },
+      {
+        name: "label",
+        label: "",
+        options: {
+          display: false,
+        },
+      },
+    ],
+    []
+  );
+
+  const datatableData = React.useMemo(
+    () =>
+      valueUniverse.concat().sort((left, right) => right.count - left.count),
+    [valueUniverse]
+  );
+
+  const datatableRowsPerPage = 5;
+
   const state = new StringFilterState({
     filter: currentState,
     valueUniverse: valueUniverse.map(value => value.value),
   });
 
-  return (
-    <List>
-      {valueUniverse
-        .concat()
-        .sort((left, right) => right.count - left.count)
-        .map(value => {
-          const onChangeValue = (
-            e: React.ChangeEvent<HTMLInputElement>
-          ): void => {
-            const newChecked = e.target.checked;
-            if (newChecked) {
-              state.includeValue(value.value);
-            } else {
-              state.excludeValue(value.value);
-            }
-            onChange(state.snapshot);
-          };
+  const datatableRowsSelected = Array.from(
+    Array(datatableData.length).keys()
+  ).filter(dataIndex => state.includesValue(datatableData[dataIndex].value));
 
-          return (
-            <ListItem className="w-100" key={value.value}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={state.includesValue(value.value)}
-                    onChange={onChangeValue}
-                  />
-                }
-                data-cy={"facet-value-" + value.value}
-                label={`${value.label ?? value.value} (${value.count})`}
-              />
-            </ListItem>
-          );
-        })}
-    </List>
+  const datatableOptions: MUIDataTableOptions = React.useMemo(
+    () => ({
+      // customToolbarSelect: () => ({}),
+      download: "false",
+      filter: "false",
+      fixedHeader: false,
+      onRowSelectionChange: (
+        currentRowsSelected,
+        allRowsSelected,
+        rowsSelected
+      ) => {
+        const newState = new StringFilterState({
+          valueUniverse: valueUniverse.map(value => value.value),
+        });
+        const rowsSelectedSet = new Set<number>(rowsSelected!);
+        for (let dataIndex = 0; dataIndex < datatableData.length; dataIndex++) {
+          const value = datatableData[dataIndex].value;
+          if (rowsSelectedSet.has(dataIndex)) {
+            newState.includeValue(value);
+          } else {
+            newState.excludeValue(value);
+          }
+        }
+        onChange(newState.snapshot);
+      },
+      onRowsDelete: () => false,
+      pagination: datatableData.length > datatableRowsPerPage,
+      print: "false",
+      responsive: "standard",
+      rowsPerPage: datatableRowsPerPage,
+      rowsPerPageOptions: [],
+      rowsSelected: datatableRowsSelected,
+      search: "false",
+      setTableProps: () => ({
+        // padding: "none",
+        size: "small",
+      }),
+      viewColumns: "false",
+    }),
+    [datatableData]
+  );
+
+  return (
+    <ThemeProvider theme={theme}>
+      <MUIDatatable
+        columns={datatableColumns}
+        data={datatableData}
+        options={datatableOptions}
+        title=""
+      />
+    </ThemeProvider>
   );
 };
