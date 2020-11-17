@@ -1,16 +1,26 @@
-import {ObjectFilters} from "ObjectFilters";
-import {PropertyFilter} from "PropertyFilter";
-import {Property} from "Property";
+import {ObjectFilters} from "./ObjectFilters";
+import {PropertyFilter} from "./PropertyFilter";
+import {Property} from "./Property";
+import {StringFilterState} from "./StringFilterState";
+import {ObjectFacets} from "./ObjectFacets";
 
 export class ObjectFiltersState {
-  constructor(private objectFilters: ObjectFilters) {
-    this.objectFilters = objectFilters;
+  private readonly facets: ObjectFacets;
+  private filters: ObjectFilters;
+
+  constructor(kwds: {facets: ObjectFacets; filters: ObjectFilters}) {
+    this.facets = kwds.facets;
+    this.filters = kwds.filters;
   }
 
-  getExcludedProperties(): readonly Property[] {
+  excludeProperty(property: Property): void {
+    this.includeOrExcludeProperty(false, property);
+  }
+
+  get excludedProperties(): readonly Property[] {
     const excludedProperties: Property[] = [];
-    if (this.objectFilters.properties) {
-      for (const propertyFilter of this.objectFilters.properties) {
+    if (this.filters.properties) {
+      for (const propertyFilter of this.filters.properties) {
         if (!propertyFilter.exclude) {
           continue;
         }
@@ -25,10 +35,10 @@ export class ObjectFiltersState {
     return excludedProperties;
   }
 
-  getIncludedProperties(): readonly Property[] {
+  get includedProperties(): readonly Property[] {
     const includedProperties: Property[] = [];
-    if (this.objectFilters.properties) {
-      for (const propertyFilter of this.objectFilters.properties) {
+    if (this.filters.properties) {
+      for (const propertyFilter of this.filters.properties) {
         if (!propertyFilter.include) {
           continue;
         }
@@ -43,10 +53,46 @@ export class ObjectFiltersState {
     return includedProperties;
   }
 
-  getPropertyFilter(propertyDefinitionUri: string): PropertyFilter | undefined {
-    return this.objectFilters.properties?.find(
+  includeProperty(property: Property): void {
+    this.includeOrExcludeProperty(true, property);
+  }
+
+  private includeOrExcludeProperty(include: boolean, property: Property): void {
+    let propertyFilter = this.propertyFilter(property.propertyDefinitionUri);
+    const propertyFilterState = new StringFilterState({
+      filter: propertyFilter,
+      valueUniverse: this.propertyValueUniverse(property.propertyDefinitionUri),
+    });
+    propertyFilterState.includeValue(property.value);
+    const propertyFilterStateSnapshot = propertyFilterState.snapshot;
+    if (propertyFilterStateSnapshot) {
+      this.setPropertyFilter({
+        propertyDefinitionUri: property.propertyDefinitionUri,
+        ...propertyFilterStateSnapshot,
+      });
+    } else {
+      this.removePropertyFilter(property.propertyDefinitionUri);
+    }
+  }
+
+  propertyFilter(propertyDefinitionUri: string): PropertyFilter | undefined {
+    return this.filters.properties?.find(
       propertyFilter =>
         propertyFilter.propertyDefinitionUri === propertyDefinitionUri
+    );
+  }
+
+  propertyValueUniverse(propertyDefinitionUri: string): readonly string[] {
+    if (!this.facets.properties) {
+      throw new EvalError("expected facets to have properties");
+    }
+    for (const propertyFacet of this.facets.properties) {
+      if (propertyFacet.definition.uri === propertyDefinitionUri) {
+        return propertyFacet.values.map(value => value.value);
+      }
+    }
+    throw new EvalError(
+      `unable to find property facet for ${propertyDefinitionUri}`
     );
   }
 
@@ -56,7 +102,7 @@ export class ObjectFiltersState {
     const {
       properties: oldPropertyFilters,
       ...otherObjectFilters
-    } = this.objectFilters;
+    } = this.filters;
     if (!oldPropertyFilters) {
       console.debug("no property filters to remove");
       return;
@@ -72,13 +118,13 @@ export class ObjectFiltersState {
 
     if (newPropertyFilters.length === 0) {
       console.debug("removed all property filters");
-      this.objectFilters = otherObjectFilters;
+      this.filters = otherObjectFilters;
     } else {
       console.debug(
         "new property filters:",
         JSON.stringify(newPropertyFilters)
       );
-      this.objectFilters = {
+      this.filters = {
         ...otherObjectFilters,
         properties: newPropertyFilters,
       };
@@ -89,7 +135,7 @@ export class ObjectFiltersState {
     const {
       properties: oldPropertyFilters,
       ...otherObjectFilters
-    } = this.objectFilters;
+    } = this.filters;
 
     console.debug("old property filters:", JSON.stringify(oldPropertyFilters));
 
@@ -108,13 +154,13 @@ export class ObjectFiltersState {
 
     console.debug("new property filters:", JSON.stringify(newPropertyFilters));
 
-    this.objectFilters = {
+    this.filters = {
       ...otherObjectFilters,
       properties: newPropertyFilters,
     };
   }
 
   get snapshot(): ObjectFilters {
-    return this.objectFilters;
+    return this.filters;
   }
 }

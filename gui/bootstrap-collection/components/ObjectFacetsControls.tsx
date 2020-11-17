@@ -1,46 +1,37 @@
 import * as React from "react";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Grid,
-} from "@material-ui/core";
-import {
   ObjectFacets,
   ObjectFilters,
   ObjectFiltersState,
 } from "@paradicms/models";
-import {StringFacetForm} from "./StringFacetForm";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {Col, Container, Row} from "reactstrap";
+import {Accordion} from "components/Accordion";
+import {StringFacetControls} from "components/StringFacetControls";
 
-export const ObjectFacetsGrid: React.FunctionComponent<{
+export const ObjectFacetsControls: React.FunctionComponent<{
   facets: ObjectFacets;
   filters: ObjectFilters;
   onChange: (filters: ObjectFilters) => void;
 }> = ({facets, filters, onChange}) => {
-  const filtersState = new ObjectFiltersState(filters);
+  const filtersState = new ObjectFiltersState({facets, filters});
 
   return (
-    <Grid container direction="column" spacing={2}>
+    <Container fluid>
       {(facets.properties ?? [])
         .concat()
         .sort((left, right) =>
           left.definition.label.localeCompare(right.definition.label)
         )
         .map(propertyFacet => (
-          <Grid
+          <Row
             className="facet"
             data-cy={propertyFacet.definition.uri + "-facet"}
-            item
             key={propertyFacet.definition.uri}
           >
-            <Accordion TransitionProps={{unmountOnExit: true}}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                {propertyFacet.definition.label}
-              </AccordionSummary>
-              <AccordionDetails>
-                <StringFacetForm
-                  currentState={filtersState.getPropertyFilter(
+            <Col xs={12}>
+              <Accordion title={propertyFacet.definition.label}>
+                <StringFacetControls
+                  currentState={filtersState.propertyFilter(
                     propertyFacet.definition.uri
                   )}
                   onChange={newState => {
@@ -56,13 +47,12 @@ export const ObjectFacetsGrid: React.FunctionComponent<{
                     }
                     onChange(filtersState.snapshot);
                   }}
-                  title={propertyFacet.definition.label}
                   valueUniverse={propertyFacet.values}
                 />
-              </AccordionDetails>
-            </Accordion>{" "}
-          </Grid>
+              </Accordion>
+            </Col>
+          </Row>
         ))}
-    </Grid>
+    </Container>
   );
 };

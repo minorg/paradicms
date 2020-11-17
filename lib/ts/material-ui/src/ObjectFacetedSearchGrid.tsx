@@ -11,8 +11,9 @@ import {
 import * as React from "react";
 import {ObjectFacetedSearchQuery} from "@paradicms/lunr";
 import {Grid} from "@material-ui/core";
-import {ObjectFacetsGrid} from "./ObjectFacetsGrid";
+import {ObjectFacetsControls} from "./ObjectFacetsControls";
 import {ObjectsGallery} from "./ObjectsGallery";
+import {ObjectFiltersChips} from "./ObjectFiltersChips";
 
 export const ObjectFacetedSearchGrid: React.FunctionComponent<{
   collections: readonly Collection[];
@@ -78,18 +79,28 @@ export const ObjectFacetedSearchGrid: React.FunctionComponent<{
               <Grid item xs={2}>
                 <Grid container direction="column" spacing={2}>
                   {objects.length > 0 ? (
-                    <Grid item style={{textAlign: "center"}}>
-                      <span>Showing&nbsp;</span>
-                      <span data-cy="objects-count">{objects.length}</span>
-                      <span>&nbsp;of&nbsp;</span>
-                      <span data-cy="total-objects-count">
-                        {totalObjectsCount}
-                      </span>
-                      <span>&nbsp;objects</span>
-                    </Grid>
+                    <>
+                      <Grid item>
+                        <ObjectFiltersChips
+                          facets={objectFacets}
+                          filters={query.filters ?? {}}
+                          onChange={onChangeFilters}
+                          propertyDefinitions={propertyDefinitions}
+                        />
+                      </Grid>
+                      <Grid item style={{textAlign: "center"}}>
+                        <span>Showing&nbsp;</span>
+                        <span data-cy="objects-count">{objects.length}</span>
+                        <span>&nbsp;of&nbsp;</span>
+                        <span data-cy="total-objects-count">
+                          {totalObjectsCount}
+                        </span>
+                        <span>&nbsp;objects</span>
+                      </Grid>
+                    </>
                   ) : null}
                   <Grid item>
-                    <ObjectFacetsGrid
+                    <ObjectFacetsControls
                       facets={objectFacets}
                       filters={query.filters ?? {}}
                       onChange={onChangeFilters}
