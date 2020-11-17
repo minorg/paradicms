@@ -27,7 +27,7 @@ const theme = createMuiTheme({
   } as any,
 });
 
-export const StringFacetForm: React.FunctionComponent<{
+export const StringFacetControls: React.FunctionComponent<{
   currentState?: StringFilter; // value id's only
   onChange: (newState?: StringFilter) => void;
   title: string;
