@@ -61,8 +61,20 @@ export class StringFilterState {
     }
   }
 
+  excludeAll(): void {
+    for (const value of this.valueUniverse) {
+      this.excludeValue(value);
+    }
+  }
+
   excludeValue(value: string): void {
     this.change(false, value);
+  }
+
+  includeAll(): void {
+    for (const value of this.valueUniverse) {
+      this.includeValue(value);
+    }
   }
 
   includeValue(value: string): void {
