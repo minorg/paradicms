@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {describe} from "mocha";
 import {IndexedFormula} from "rdflib";
 import {parseTestData} from "./parseTestData";
-import {PARADICMS} from "../src/vocabularies";
+import {PropertyDefinitionRdfReader} from "../src/PropertyDefinitionRdfReader";
 
 describe("PropertyDefinition RDF reader", () => {
   let store: IndexedFormula;
@@ -13,12 +13,14 @@ describe("PropertyDefinition RDF reader", () => {
     store = parseTestData();
   });
 
-  it("should read test property definitions", () => {
-    const nodes = store.each(
-      undefined,
-      undefined,
-      PARADICMS.PropertyDefinition
-    );
-    expect(nodes).to.have.length(36);
+  it("should read all property definitions from the store", () => {
+    const models = PropertyDefinitionRdfReader.readAll(store);
+    expect(models).to.have.length(36);
+    models.forEach(model => {
+      expect(model.label.trim()).to.not.be.empty;
+      expect(model.uri.trim()).to.not.be.empty;
+    });
+    expect(models.some(model => model.faceted)).to.be.true;
+    expect(models.some(model => model.fullTextSearchable)).to.be.true;
   });
 });
