@@ -8,5 +8,6 @@ export class PARADICMS {
   static fullTextSearchable = PARADICMS.NS("fullTextSearchable");
 
   // Resources
+  static Institution = PARADICMS.NS("Institution");
   static PropertyDefinition = PARADICMS.NS("PropertyDefinition");
 }

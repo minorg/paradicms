@@ -4,12 +4,20 @@ import {XSD} from "./vocabularies";
 export class LiteralWrapper {
   constructor(readonly literal: Literal) {}
 
-  isBlank() {
+  isBlank(): boolean {
     return this.literal.value.trim().length === 0;
   }
 
+  isBoolean(): boolean {
+    return this.literal.datatype.equals(XSD.boolean_);
+  }
+
+  isString(): boolean {
+    return this.literal.datatype.equals(XSD.string_);
+  }
+
   toBoolean(): boolean {
-    if (!this.literal.datatype.equals(XSD.boolean_)) {
+    if (!this.isBoolean()) {
       throw new RangeError("literal is not a boolean");
     }
     switch (this.literal.value) {
