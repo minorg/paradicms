@@ -7,4 +7,5 @@ export class DCTERMS {
   static license = DCTERMS.NS("license");
   static rights = DCTERMS.NS("rights");
   static rightsHolder = DCTERMS.NS("rightsHolder");
+  static title = DCTERMS.NS("title");
 }

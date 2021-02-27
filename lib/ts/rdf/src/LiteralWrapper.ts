@@ -1,5 +1,6 @@
 import {Literal} from "rdflib/lib/tf-types";
 import {XSD} from "./vocabularies";
+import {RdfReaderException} from "./RdfReaderException";
 
 export class LiteralWrapper {
   constructor(readonly literal: Literal) {}
@@ -28,7 +29,9 @@ export class LiteralWrapper {
       case "true":
         return true;
       default:
-        throw new RangeError(this.literal.value);
+        throw new RdfReaderException(
+          "literal does not have a boolean value: " + this.literal.value
+        );
     }
   }
 

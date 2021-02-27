@@ -3,6 +3,7 @@ import {NamedNode} from "rdflib/lib/tf-types";
 import {RDF} from "./vocabularies";
 import {ModelNode} from "./ModelNode";
 import {LiteralWrapper} from "./LiteralWrapper";
+import {RdfReaderException} from "./RdfReaderException";
 
 export abstract class ModelRdfReader<ModelT> {
   protected constructor(
@@ -13,9 +14,11 @@ export abstract class ModelRdfReader<ModelT> {
   get nodeUri(): string {
     switch (this.node.termType) {
       case "BlankNode":
-        throw new EvalError("tried to get URI of blank node");
+        throw new RdfReaderException("tried to get URI of blank node");
       case "NamedNode":
         return this.node.value;
+      default:
+        throw new EvalError();
     }
   }
 
@@ -30,7 +33,7 @@ export abstract class ModelRdfReader<ModelT> {
         case "NamedNode":
           break;
         default:
-          throw new EvalError(
+          throw new RdfReaderException(
             `expected BlankNode or NamedNode, actual ${node.termType}`
           );
       }
