@@ -7,13 +7,16 @@ export class PARADICMS {
   static collection = PARADICMS.NS("collection");
   static faceted = PARADICMS.NS("faceted");
   static fullTextSearchable = PARADICMS.NS("fullTextSearchable");
+  static institution = PARADICMS.NS("institution");
   static guiDocumentTitle = PARADICMS.NS("guiDocumentTitle");
   static guiNavbarTitle = PARADICMS.NS("guiNavbarTitle");
-  static object = PARADICMS.NS("object");
+  static imageMaxHeight = PARADICMS.NS("imageMaxHeight");
+  static imageMaxWidth = PARADICMS.NS("imageMaxWidth");
 
   // Resources
   static Collection = PARADICMS.NS("Collection");
   static GuiMetadata = PARADICMS.NS("GuiMetadata");
+  static Image = PARADICMS.NS("Image");
   static Institution = PARADICMS.NS("Institution");
   static PropertyDefinition = PARADICMS.NS("PropertyDefinition");
 }

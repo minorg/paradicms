@@ -13,6 +13,10 @@ export class LiteralWrapper {
     return this.literal.datatype.equals(XSD.boolean_);
   }
 
+  isInteger(): boolean {
+    return this.literal.datatype.equals(XSD.integer);
+  }
+
   isString(): boolean {
     return this.literal.datatype.equals(XSD.string_);
   }
@@ -33,6 +37,13 @@ export class LiteralWrapper {
           "literal does not have a boolean value: " + this.literal.value
         );
     }
+  }
+
+  toInteger(): number {
+    if (!this.isInteger()) {
+      throw new RangeError("literal is not an integer");
+    }
+    return parseInt(this.literal.value);
   }
 
   toString(): string {
