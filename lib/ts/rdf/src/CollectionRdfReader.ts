@@ -13,7 +13,7 @@ export class CollectionRdfReader extends ModelRdfReader<Collection> {
     );
     if (!institutionNode) {
       throw new RdfReaderException(
-        "missing (<institution>, collection, <collection>) statement"
+        "missing (<institution>, paradicms:collection, <collection>) statement"
       );
     }
     if (institutionNode.termType !== "NamedNode") {

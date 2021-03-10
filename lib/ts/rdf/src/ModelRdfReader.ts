@@ -56,6 +56,23 @@ export abstract class ModelRdfReader<ModelT> {
     return undefined;
   }
 
+  protected readParentNamedNode(parentToChildProperty: NamedNode): NamedNode {
+    const parentNode = this.store.any(
+      undefined,
+      parentToChildProperty,
+      this.node
+    );
+    if (!parentNode) {
+      throw new RdfReaderException(
+        `missing (<parent named node>, <${parentToChildProperty.value}>, <${this.node.value}>) statement`
+      );
+    }
+    if (parentNode.termType !== "NamedNode") {
+      throw new RdfReaderException("expected parent node to be a named node");
+    }
+    return parentNode as NamedNode;
+  }
+
   protected readRequiredLiteral(property: NamedNode): LiteralWrapper {
     const literal = this.readOptionalLiteral(property);
     if (!literal) {
