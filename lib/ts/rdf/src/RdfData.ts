@@ -15,7 +15,7 @@ import {ImageRdfReader} from "./ImageRdfReader";
 import {InstitutionRdfReader} from "./InstitutionRdfReader";
 import {ObjectRdfReader} from "./ObjectRdfReader";
 import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
-import {graph, IndexedFormula, parse} from "rdflib";
+import {IndexedFormula} from "rdflib";
 
 export class RdfData {
   readonly collections: readonly Collection[];
@@ -62,12 +62,6 @@ export class RdfData {
 
   collectionByUri(uri: string): Collection {
     return this.modelByUri(this.collectionsByUri, uri);
-  }
-
-  static parse(rdf: string, contentType: string): RdfData {
-    const store = graph();
-    parse(rdf, store, "http://example.org", contentType);
-    return new RdfData(store);
   }
 
   institutionByUri(uri: string): Institution {

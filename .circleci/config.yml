@@ -72,7 +72,7 @@ jobs:
             npm run build
             cd ../material-ui-next
             npm run build
-            export DATA_DIRECTORY_PATH=~/project/etl/data/test_data/loaded
+            export DATA_TTL_FILE_PATH=~/project/etl/data/test_data/loaded/data.ttl
             mkdir ~/dist
             cd ~/project/gui/bootstrap-collection
             npm run build
