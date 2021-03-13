@@ -9,15 +9,15 @@ import {
   Objects,
   PropertyDefinition,
 } from "@paradicms/models";
-import {IndexedFormula} from "rdflib";
-import {CollectionRdfReader} from "CollectionRdfReader";
-import {GuiMetadataRdfReader} from "GuiMetadataRdfReader";
-import {ImageRdfReader} from "ImageRdfReader";
-import {InstitutionRdfReader} from "InstitutionRdfReader";
-import {ObjectRdfReader} from "ObjectRdfReader";
-import {PropertyDefinitionRdfReader} from "PropertyDefinitionRdfReader";
+import {CollectionRdfReader} from "./CollectionRdfReader";
+import {GuiMetadataRdfReader} from "./GuiMetadataRdfReader";
+import {ImageRdfReader} from "./ImageRdfReader";
+import {InstitutionRdfReader} from "./InstitutionRdfReader";
+import {ObjectRdfReader} from "./ObjectRdfReader";
+import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
+import {graph, IndexedFormula, parse} from "rdflib";
 
-export class Data {
+export class RdfData {
   readonly collections: readonly Collection[];
   readonly collectionsByInstitutionUri: {
     [index: string]: readonly Collection[];
@@ -62,6 +62,12 @@ export class Data {
 
   collectionByUri(uri: string): Collection {
     return this.modelByUri(this.collectionsByUri, uri);
+  }
+
+  static parse(rdf: string, contentType: string): RdfData {
+    const store = graph();
+    parse(rdf, store, "http://example.org", contentType);
+    return new RdfData(store);
   }
 
   institutionByUri(uri: string): Institution {
