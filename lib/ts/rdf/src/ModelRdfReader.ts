@@ -11,6 +11,10 @@ export abstract class ModelRdfReader<ModelT> {
     protected readonly store: IndexedFormula
   ) {}
 
+  protected deleteUndefined(model: ModelT): ModelT {
+    return JSON.parse(JSON.stringify(model));
+  }
+
   get nodeUri(): string {
     switch (this.node.termType) {
       case "BlankNode":

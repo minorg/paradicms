@@ -8,7 +8,7 @@ import {RdfReaderException} from "./RdfReaderException";
 
 export class ImageRdfReader extends ModelRdfReader<Image> {
   read(): Image {
-    return {
+    return this.deleteUndefined({
       depictsUri: this.readRequiredParentNamedNode(FOAF.depicts).value,
       exactDimensions: this.readImageDimensions(EXIF.height, EXIF.width),
       institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
@@ -21,7 +21,7 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
         ?.value,
       rights: new RightsRdfReader(this.node, this.store).read(),
       uri: this.nodeUri,
-    };
+    });
   }
 
   private readImageDimensions(

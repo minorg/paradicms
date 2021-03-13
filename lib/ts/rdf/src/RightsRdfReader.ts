@@ -12,12 +12,12 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
     const license = this.readRightsValue(DCTERMS.license);
     const statement = this.readRightsValue(DCTERMS.rights);
     if (creator || holder || license || statement) {
-      return {
+      return this.deleteUndefined({
         creator,
         holder,
         license,
         statement,
-      };
+      });
     } else {
       return undefined;
     }

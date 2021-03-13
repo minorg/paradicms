@@ -5,14 +5,14 @@ import {IndexedFormula} from "rdflib";
 
 export class GuiMetadataRdfReader extends ModelRdfReader<GuiMetadata> {
   read(): GuiMetadata {
-    return {
+    return this.deleteUndefined({
       documentTitle: this.readOptionalLiteral(
         PARADICMS.guiDocumentTitle
       )?.toString(),
       navbarTitle: this.readOptionalLiteral(
         PARADICMS.guiNavbarTitle
       )?.toString(),
-    };
+    });
   }
 
   static readAll(store: IndexedFormula) {

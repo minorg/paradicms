@@ -7,14 +7,14 @@ export class PropertyDefinitionRdfReader extends ModelRdfReader<
   PropertyDefinition
 > {
   read(): PropertyDefinition {
-    return {
+    return this.deleteUndefined({
       faceted: this.readOptionalLiteral(PARADICMS.faceted)?.toBoolean(),
       label: this.readRequiredLiteral(RDFS.label).toString(),
       fullTextSearchable: this.readOptionalLiteral(
         PARADICMS.fullTextSearchable
       )?.toBoolean(),
       uri: this.nodeUri,
-    };
+    });
   }
 
   static readAll(store: IndexedFormula) {

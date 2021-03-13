@@ -32,7 +32,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       }
     }
 
-    return {
+    return this.deleteUndefined({
       abstract: this.readOptionalLiteral(DCTERMS.abstract)?.toString(),
       collectionUris: this.readAllParentNamedNodes(PARADICMS.collection).map(
         node => node.value
@@ -42,7 +42,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       rights: new RightsRdfReader(this.node, this.store).read(),
       title: this.readRequiredLiteral(DCTERMS.title).toString(),
       uri: this.nodeUri,
-    };
+    });
   }
 
   static readAll(
