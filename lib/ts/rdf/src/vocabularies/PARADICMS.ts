@@ -18,5 +18,6 @@ export class PARADICMS {
   static GuiMetadata = PARADICMS.NS("GuiMetadata");
   static Image = PARADICMS.NS("Image");
   static Institution = PARADICMS.NS("Institution");
+  static Object = PARADICMS.NS("Object");
   static PropertyDefinition = PARADICMS.NS("PropertyDefinition");
 }

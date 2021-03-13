@@ -6,7 +6,8 @@ import {IndexedFormula} from "rdflib";
 export class CollectionRdfReader extends ModelRdfReader<Collection> {
   read(): Collection {
     return {
-      institutionUri: this.readParentNamedNode(PARADICMS.institution).value,
+      institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
+        .value,
       title: this.readRequiredLiteral(DCTERMS.title).toString(),
       uri: this.nodeUri,
     };

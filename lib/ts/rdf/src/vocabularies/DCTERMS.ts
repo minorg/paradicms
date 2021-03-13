@@ -3,6 +3,7 @@ import {Namespace} from "rdflib";
 export class DCTERMS {
   static NS = Namespace("http://purl.org/dc/terms/");
 
+  static abstract = DCTERMS.NS("abstract");
   static creator = DCTERMS.NS("creator");
   static license = DCTERMS.NS("license");
   static rights = DCTERMS.NS("rights");

@@ -41,6 +41,22 @@ export abstract class ModelRdfReader<ModelT> {
     });
   }
 
+  protected readAllParentNamedNodes(
+    childToParentProperty: NamedNode
+  ): NamedNode[] {
+    const parentNodes = this.store.each(
+      this.node,
+      childToParentProperty,
+      undefined
+    );
+    if (parentNodes.length === 0) {
+      return [];
+    }
+    return parentNodes
+      .filter(node => node.termType === "NamedNode")
+      .map(node => node as NamedNode);
+  }
+
   protected readOptionalLiteral(
     property: NamedNode
   ): LiteralWrapper | undefined {
@@ -56,23 +72,6 @@ export abstract class ModelRdfReader<ModelT> {
     return undefined;
   }
 
-  protected readParentNamedNode(childToParentProperty: NamedNode): NamedNode {
-    const parentNode = this.store.any(
-      this.node,
-      childToParentProperty,
-      undefined
-    );
-    if (!parentNode) {
-      throw new RdfReaderException(
-        `missing (<${this.node.value}>, <${childToParentProperty.value}>, <parent named node>) statement`
-      );
-    }
-    if (parentNode.termType !== "NamedNode") {
-      throw new RdfReaderException("expected parent node to be a named node");
-    }
-    return parentNode as NamedNode;
-  }
-
   protected readRequiredLiteral(property: NamedNode): LiteralWrapper {
     const literal = this.readOptionalLiteral(property);
     if (!literal) {
@@ -82,6 +81,20 @@ export abstract class ModelRdfReader<ModelT> {
       throw new EvalError("required property is blank " + property.value);
     }
     return literal;
+  }
+
+  protected readRequiredParentNamedNode(
+    childToParentProperty: NamedNode
+  ): NamedNode {
+    const parentNamedNodes = this.readAllParentNamedNodes(
+      childToParentProperty
+    );
+    if (parentNamedNodes.length === 0) {
+      throw new RdfReaderException(
+        `missing (<${this.node.value}>, <${childToParentProperty.value}>, <parent named node>) statement`
+      );
+    }
+    return parentNamedNodes[0];
   }
 
   abstract read(): ModelT;

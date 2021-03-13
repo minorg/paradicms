@@ -9,9 +9,10 @@ import {RdfReaderException} from "./RdfReaderException";
 export class ImageRdfReader extends ModelRdfReader<Image> {
   read(): Image {
     return {
-      depictsUri: this.readParentNamedNode(FOAF.depicts).value,
+      depictsUri: this.readRequiredParentNamedNode(FOAF.depicts).value,
       exactDimensions: this.readImageDimensions(EXIF.height, EXIF.width),
-      institutionUri: this.readParentNamedNode(PARADICMS.institution).value,
+      institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
+        .value,
       maxDimensions: this.readImageDimensions(
         PARADICMS.imageMaxHeight,
         PARADICMS.imageMaxWidth
