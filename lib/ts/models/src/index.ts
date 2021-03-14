@@ -1,4 +1,3 @@
-export * from "./AbstractData";
 export * from "./Collection";
 export * from "./Collections";
 export * from "./GuiMetadata";

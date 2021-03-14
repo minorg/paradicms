@@ -1,4 +1,4 @@
 export interface StringFilter {
-  readonly exclude?: readonly string[] | null;
-  readonly include?: readonly string[] | null;
+  readonly exclude?: readonly string[];
+  readonly include?: readonly string[];
 }

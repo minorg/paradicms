@@ -60,8 +60,8 @@ export class Objects {
     let {filters, objects} = kwds;
 
     const filterStrings = (kwds: {
-      filter: StringFilter | null | undefined;
-      getObjectValues: (object: Object) => readonly string[] | null | undefined;
+      filter?: StringFilter;
+      getObjectValues: (object: Object) => readonly string[] | undefined;
       objects: readonly Object[];
     }): readonly Object[] => {
       const {filter, getObjectValues, objects} = kwds;

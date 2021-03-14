@@ -45,7 +45,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/bootstrap-collection/package.json" }}-{{ checksum "gui/material-ui-union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/bootstrap-collection/package.json" }}-{{ checksum "gui/material-ui-union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}-{{ checksum "lib/ts/rdf/package.json" }}
       - run:
           name: "Install ts requirements"
           command: |
@@ -62,6 +62,8 @@ jobs:
             npm run build
             cd ../models
             npm run build
+            cd ../rdf
+            npm run build
             cd ../lunr
             npm run build
             cd ../material-ui
@@ -70,7 +72,7 @@ jobs:
             npm run build
             cd ../material-ui-next
             npm run build
-            export DATA_DIRECTORY_PATH=~/project/etl/data/test_data/loaded
+            export DATA_TTL_FILE_PATH=~/project/etl/data/test_data/loaded/data.ttl
             mkdir ~/dist
             cd ~/project/gui/bootstrap-collection
             npm run build
@@ -81,7 +83,7 @@ jobs:
             npm run export
             mv out ~/dist/material-ui-union-gui
       - save_cache:
-          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/bootstrap-collection/package.json" }}-{{ checksum "gui/material-ui-union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}
+          key: ts-dependencies-v4-{{ checksum "package.json" }}-{{ checksum "gui/bootstrap-collection/package.json" }}-{{ checksum "gui/material-ui-union/package.json" }}-{{ checksum "lib/ts/base/package.json" }}-{{ checksum "lib/ts/bootstrap/package.json" }}-{{ checksum "lib/ts/lunr/package.json" }}-{{ checksum "lib/ts/material-ui/package.json" }}-{{ checksum "lib/ts/material-ui-next/package.json" }}-{{ checksum "lib/ts/models/package.json" }}-{{ checksum "lib/ts/next/package.json" }}-{{ checksum "lib/ts/rdf/package.json" }}
           paths:
             - ~/.cache
             - ~/.npm
@@ -95,6 +97,7 @@ jobs:
             - ./lib/ts/material-ui-next/node_modules
             - ./lib/ts/models/node_modules
             - ./lib/ts/next/node_modules
+            - ./lib/ts/rdf/node_modules
       - persist_to_workspace:
           root: ~/
           paths:

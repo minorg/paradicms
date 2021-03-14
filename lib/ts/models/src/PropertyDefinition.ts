@@ -1,6 +1,6 @@
 export interface PropertyDefinition {
-  readonly faceted?: boolean | null;
-  readonly fullTextSearchable?: boolean | null;
+  readonly faceted?: boolean;
+  readonly fullTextSearchable?: boolean;
   readonly label: string;
   readonly uri: string;
 }

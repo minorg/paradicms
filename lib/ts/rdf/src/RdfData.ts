@@ -1,14 +1,23 @@
-import {Collection} from "./Collection";
-import {GuiMetadata} from "./GuiMetadata";
-import {Image} from "./Image";
-import {Institution} from "./Institution";
-import {Object} from "./Object";
-import {PropertyDefinition} from "./PropertyDefinition";
-import {Models} from "./Models";
-import {Objects} from "./Objects";
-import {Images} from "./Images";
+import {
+  Collection,
+  GuiMetadata,
+  Image,
+  Images,
+  Institution,
+  Models,
+  Object,
+  Objects,
+  PropertyDefinition,
+} from "@paradicms/models";
+import {CollectionRdfReader} from "./CollectionRdfReader";
+import {GuiMetadataRdfReader} from "./GuiMetadataRdfReader";
+import {ImageRdfReader} from "./ImageRdfReader";
+import {InstitutionRdfReader} from "./InstitutionRdfReader";
+import {ObjectRdfReader} from "./ObjectRdfReader";
+import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
+import {IndexedFormula} from "rdflib";
 
-export abstract class AbstractData {
+export class RdfData {
   readonly collections: readonly Collection[];
   readonly collectionsByInstitutionUri: {
     [index: string]: readonly Collection[];
@@ -26,31 +35,29 @@ export abstract class AbstractData {
   private readonly objectsByUri: {[index: string]: Object};
   readonly propertyDefinitions: readonly PropertyDefinition[];
 
-  protected constructor() {
-    this.collections = this.readModels<Collection>("collection");
+  constructor(store: IndexedFormula) {
+    this.collections = CollectionRdfReader.readAll(store);
     this.collectionsByUri = Models.indexByUri(this.collections);
     this.collectionsByInstitutionUri = Models.indexByInstitutionUri(
       this.collections
     );
 
-    const guiMetadata = this.readModels<GuiMetadata>("guiMetadata");
+    const guiMetadata = GuiMetadataRdfReader.readAll(store);
     this.guiMetadata = guiMetadata.length > 0 ? guiMetadata[0] : null;
 
-    this.images = this.readModels<Image>("image");
+    this.images = ImageRdfReader.readAll(store);
     this.imagesByDepictsUri = Images.indexByDepictsUri(this.images);
     this.imagesByInstitutionUri = Models.indexByInstitutionUri(this.images);
 
-    this.institutions = this.readModels<Institution>("institution");
+    this.institutions = InstitutionRdfReader.readAll(store);
     this.institutionsByUri = Models.indexByUri(this.institutions);
 
-    this.objects = this.readModels<Object>("object");
+    this.propertyDefinitions = PropertyDefinitionRdfReader.readAll(store);
+
+    this.objects = ObjectRdfReader.readAll(this.propertyDefinitions, store);
     this.objectsByUri = Models.indexByUri(this.objects);
     this.objectsByCollectionUri = Objects.indexByCollectionUri(this.objects);
     this.objectsByInstitutionUri = Models.indexByInstitutionUri(this.objects);
-
-    this.propertyDefinitions = this.readModels<PropertyDefinition>(
-      "propertyDefinition"
-    );
   }
 
   collectionByUri(uri: string): Collection {
@@ -75,8 +82,4 @@ export abstract class AbstractData {
   objectByUri(uri: string): Object {
     return this.modelByUri(this.objectsByUri, uri);
   }
-
-  protected abstract readModels<ModelT>(
-    fileBaseName: string
-  ): readonly ModelT[];
 }

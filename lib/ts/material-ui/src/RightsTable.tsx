@@ -14,7 +14,7 @@ const RightsTableRow: React.FunctionComponent<{
   cellClassName?: string;
   label: string;
   rowClassName?: string;
-  value?: RightsValue | null;
+  value?: RightsValue;
 }> = ({cellClassName, label, rowClassName, value}) => {
   if (!value) {
     return null;
