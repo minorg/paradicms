@@ -130,15 +130,20 @@ workflows:
   version: 2
   build:
     jobs:
+      - cypress/install:
+          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/material-ui-union/package.json" }}-{{ checksum "~/project/integration/material-ui-union/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/models/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}-{{ checksum "~/project/lib/ts/rdf/package.json" }}'
+          pre-steps:
+            - run: cd ~/project && npm install && npm run lerna:bootstrap
+          requires:
+            - ts
+          working_directory: integration/material-ui-union
       - cypress/run:
           attach-workspace: true
-          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/material-ui-union/package.json" }}-{{ checksum "~/project/integration/material-ui-union/package.json" }}-{{ checksum "~/project/lib/ts/models/package.json" }}-{{ checksum "~/project/lib/ts/rdf/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}'
-          install-command: cd ~/project && npm install && npm run lerna:bootstrap
           post-steps:
             - store_test_results:
                 path: integration/material-ui-union/results
           requires:
-            - ts
+            - cypress/install
           start: |
             cp ~/project/.circleci/cypress.json .
             ~/project/node_modules/.bin/serve -n ~/dist/material-ui-union-gui
