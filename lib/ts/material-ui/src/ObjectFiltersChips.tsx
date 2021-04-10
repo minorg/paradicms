@@ -38,11 +38,8 @@ export const ObjectFiltersChips: React.FunctionComponent<{
           label={
             <span>
               Exclude&nbsp;
-              {
-                propertyDefinitionsByUri[excludedProperty.propertyDefinitionUri]
-                  .label
-              }
-              : {excludedProperty.value}
+              {propertyDefinitionsByUri[excludedProperty.uri].label}:{" "}
+              {excludedProperty.value}
             </span>
           }
           onDelete={() => {
@@ -63,11 +60,8 @@ export const ObjectFiltersChips: React.FunctionComponent<{
           label={
             <span>
               Include&nbsp;
-              {
-                propertyDefinitionsByUri[includedProperty.propertyDefinitionUri]
-                  .label
-              }
-              : {includedProperty.value}
+              {propertyDefinitionsByUri[includedProperty.uri].label}:{" "}
+              {includedProperty.value}
             </span>
           }
           onDelete={() => {
