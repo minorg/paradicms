@@ -131,10 +131,10 @@ jobs:
 # The tests work locally.
 #orbs:
 #  cypress: cypress-io/cypress@1
-#workflows:
-#  version: 2
-#  build:
-#    jobs:
+workflows:
+  version: 2
+  build:
+    jobs:
 #      - cypress/install:
 #          cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/material-ui-union/package.json" }}-{{ checksum "~/project/integration/material-ui-union/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/models/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}-{{ checksum "~/project/lib/ts/rdf/package.json" }}'
 #          install-command: cd ~/project && npm install && npm run lerna:bootstrap
@@ -154,5 +154,5 @@ jobs:
 #          store_artifacts: true
 #          wait-on: 'http-get://localhost:5000/index.html'
 #          working_directory: integration/material-ui-union
-#      - py
-#      - ts
+      - py
+      - ts
