@@ -23,6 +23,7 @@ describe("Collection page", () => {
         institutionUri: institution.uri,
       });
       objects = testData.objectsByCollectionUri[collection.uri]!;
+    });
   });
 
   beforeEach(() => page.visit());
