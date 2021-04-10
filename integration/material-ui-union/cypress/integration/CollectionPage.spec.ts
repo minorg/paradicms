@@ -1,40 +1,28 @@
-import {
-  CollectionFixture,
-  Fixtures,
-  InstitutionFixture,
-  ObjectFixture,
-} from "./Fixtures";
 import {CollectionPage} from "../support/pages/CollectionPage";
+import {Collection, Institution, Object} from "@paradicms/models";
+import {TestData} from "../support/TestData";
 
 const OBJECTS_PER_COLLECTION = 25;
 const OBJECTS_PER_PAGE = 10;
 
 describe("Collection page", () => {
-  let collection: CollectionFixture;
-  let institution: InstitutionFixture;
-  let objects: ObjectFixture[];
+  let collection: Collection;
+  let institution: Institution;
+  let objects: readonly Object[];
   let page: CollectionPage;
 
   before(() => {
-    Fixtures.institutions.then(institutions => {
-      institution = institutions[0];
-      Fixtures.collections.then(collections => {
-        const institutionCollections = collections.filter(
-          collection => collection.institutionUri === institution.uri
-        );
-        collection = institutionCollections[0];
-        page = new CollectionPage({
-          collectionUri: collection.uri,
-          institutionUri: institution.uri,
-        });
-        Fixtures.objects.then(objects_ => {
-          objects = objects_.filter(object =>
-            object.collectionUris.some(
-              collectionUri => collectionUri === collection.uri
-            )
-          );
-        });
+    TestData.fixture.then(testData => {
+      institution = testData.institutions[0];
+      const institutionCollections = testData.collections.filter(
+        collection => collection.institutionUri === institution.uri
+      );
+      collection = testData.collectionsByInstitutionUri[institution.uri]![0];
+      page = new CollectionPage({
+        collectionUri: collection.uri,
+        institutionUri: institution.uri,
       });
+      objects = testData.objectsByCollectionUri[collection.uri]!;
     });
   });
 

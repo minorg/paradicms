@@ -1,14 +1,15 @@
 import {HomePage} from "../support/pages/HomePage";
 import {InstitutionPage} from "../support/pages/InstitutionPage";
-import {Fixtures, InstitutionFixture} from "./Fixtures";
+import {Institution} from "@paradicms/models";
+import {TestData} from "../support/TestData";
 
 describe("Home", () => {
-  let institutions: InstitutionFixture[];
+  let institutions: readonly Institution[];
   const page = new HomePage();
 
   before(() => {
-    Fixtures.institutions.then(institutions_ => {
-      institutions = institutions_;
+    TestData.fixture.then(testData => {
+      institutions = testData.institutions;
     });
   });
 

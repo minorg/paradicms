@@ -39,6 +39,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
       ),
       institutionUri: this.readRequiredParentNamedNode(PARADICMS.institution)
         .value,
+      properties,
       rights: new RightsRdfReader(this.node, this.store).read(),
       title: this.readRequiredLiteral(DCTERMS.title).toString(),
       uri: this.nodeUri,

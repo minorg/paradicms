@@ -22,6 +22,18 @@ describe("Object RDF reader", () => {
     models.forEach(model => {
       expect(model.collectionUris).to.not.be.empty;
       expect(model.institutionUri).to.not.be.empty;
+      expect(model.properties).to.not.be.empty;
+      model.properties!.forEach(property => {
+        expect(property.propertyDefinitionUri.trim()).to.not.be.empty;
+        expect(
+          propertyDefinitions.find(
+            propertyDefinition =>
+              propertyDefinition.uri === property.propertyDefinitionUri
+          )
+        ).to.not.be.undefined;
+        expect(property.value.trim()).to.not.be.empty;
+      });
+      expect(model.rights).to.not.be.undefined;
       expect(model.title.trim()).to.not.be.empty;
       expect(model.uri.trim()).to.not.be.empty;
     });

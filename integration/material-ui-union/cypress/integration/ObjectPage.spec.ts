@@ -1,24 +1,20 @@
 import {ObjectPage} from "../support/pages/ObjectPage";
-import {Fixtures, InstitutionFixture, ObjectFixture} from "./Fixtures";
+import {Institution, Object} from "@paradicms/models";
+import {TestData} from "../support/TestData";
 
 describe("Object page", () => {
-  let institution: InstitutionFixture;
-  let object: ObjectFixture;
+  let institution: Institution;
+  let object: Object;
   let page: ObjectPage;
 
   before(() => {
-    Fixtures.institutions.then(institutions => {
-      institution = institutions[0];
-      Fixtures.objects.then(objects => {
-        const institutionObjects = objects.filter(
-          object => object.institutionUri === institution.uri
-        );
-        object = institutionObjects[0];
-        page = new ObjectPage({
-          institutionUri: institution.uri,
-          objectTitle: object.title,
-          objectUri: object.uri,
-        });
+    TestData.fixture.then(testData => {
+      institution = testData.institutions[0];
+      object = testData.objectsByInstitutionUri[institution.uri]![0];
+      page = new ObjectPage({
+        institutionUri: institution.uri,
+        objectTitle: object.title,
+        objectUri: object.uri,
       });
     });
   });

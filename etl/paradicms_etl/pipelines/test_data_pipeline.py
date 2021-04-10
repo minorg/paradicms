@@ -8,7 +8,6 @@ from paradicms_etl._pipeline import _Pipeline
 from paradicms_etl._transformer import _Transformer
 from paradicms_etl.extractors.nop_extractor import NopExtractor
 from paradicms_etl.loaders.composite_loader import CompositeLoader
-from paradicms_etl.loaders.json_directory_loader import JsonDirectoryLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.gui_metadata import GuiMetadata
@@ -315,19 +314,14 @@ class TestDataPipeline(_Pipeline):
             id=self.__ID,
             loader=CompositeLoader(
                 loaders=(
-                    JsonDirectoryLoader(
-                        clean=True,
-                        data_dir_path=root_dir_path / "etl" / "data",
-                        pipeline_id=self.__ID,
-                    ),
-                    JsonDirectoryLoader(
-                        clean=True,
-                        pipeline_id=self.__ID,
-                        loaded_data_dir_path=root_dir_path
+                    RdfFileLoader(
+                        file_path=root_dir_path
                         / "integration"
                         / "material-ui-union"
                         / "cypress"
-                        / "fixtures",
+                        / "fixtures"
+                        / "data.ttl",
+                        pipeline_id=self.__ID,
                     ),
                     RdfFileLoader(
                         file_path=root_dir_path

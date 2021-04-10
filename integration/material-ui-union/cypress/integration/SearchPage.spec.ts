@@ -1,16 +1,18 @@
-import {Fixtures, ObjectFixture} from "./Fixtures";
 import {SearchPage} from "../support/pages/SearchPage";
+import {Object} from "@paradicms/models";
+import {TestData} from "../support/TestData";
 
 const OBJECTS_PER_PAGE = 10;
 
 describe("Search results", () => {
-  let objects: ObjectFixture[];
+  let objects: readonly Object[];
   const page = new SearchPage("Lorem");
 
   before(() => {
-    Fixtures.objects.then(objects_ => {
-      objects = objects_;
-      objects.sort((left, right) => left.uri.localeCompare(right.uri));
+    TestData.fixture.then(testData => {
+      objects = testData.objects
+        .concat()
+        .sort((left, right) => left.uri.localeCompare(right.uri));
     });
   });
 

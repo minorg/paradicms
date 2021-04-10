@@ -1,22 +1,21 @@
 import {InstitutionPage} from "../support/pages/InstitutionPage";
 import {CollectionPage} from "../support/pages/CollectionPage";
 import {HomePage} from "../support/pages/HomePage";
-import {InstitutionFixture, Fixtures, CollectionFixture} from "./Fixtures";
+import {Collection, Institution, Object} from "@paradicms/models";
+import {TestData} from "../support/TestData";
 
 describe("Institution page", () => {
-  let institution: InstitutionFixture;
-  let institutionCollections: CollectionFixture[];
+  let institution: Institution;
+  let institutionCollections: readonly Collection[];
   let page: InstitutionPage;
 
   before(() => {
-    Fixtures.institutions.then(institutions => {
-      institution = institutions[0];
+    TestData.fixture.then(testData => {
+      institution = testData.institutions[0];
       page = new InstitutionPage(institution.uri);
-      Fixtures.collections.then(collections => {
-        institutionCollections = collections.filter(
-          collection => collection.institutionUri === institution.uri
-        );
-      });
+      institutionCollections = testData.collectionsByInstitutionUri[
+        institution.uri
+      ]!;
     });
   });
 
