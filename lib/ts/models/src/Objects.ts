@@ -25,7 +25,7 @@ export class Objects {
       for (const object of objectsWithProperties) {
         let includeObject = false;
         for (const property of object.properties!) {
-          if (property.propertyDefinitionUri === propertyDefinition.uri) {
+          if (property.uri === propertyDefinition.uri) {
             const count = facetValues[property.value];
             if (!count) {
               facetValues[property.value] = 1;
@@ -131,8 +131,7 @@ export class Objects {
             (object.properties ?? [])
               .filter(
                 property =>
-                  property.propertyDefinitionUri ===
-                  propertyFilter.propertyDefinitionUri
+                  property.uri === propertyFilter.propertyDefinitionUri
               )
               .map(property => property.value),
           objects,

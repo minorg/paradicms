@@ -26,7 +26,7 @@ export class ObjectFiltersState {
         }
         for (const exclude of propertyFilter.exclude) {
           excludedProperties.push({
-            propertyDefinitionUri: propertyFilter.propertyDefinitionUri,
+            uri: propertyFilter.propertyDefinitionUri,
             value: exclude,
           });
         }
@@ -44,7 +44,7 @@ export class ObjectFiltersState {
         }
         for (const include of propertyFilter.include) {
           includedProperties.push({
-            propertyDefinitionUri: propertyFilter.propertyDefinitionUri,
+            uri: propertyFilter.propertyDefinitionUri,
             value: include,
           });
         }
@@ -58,20 +58,20 @@ export class ObjectFiltersState {
   }
 
   private includeOrExcludeProperty(include: boolean, property: Property): void {
-    let propertyFilter = this.propertyFilter(property.propertyDefinitionUri);
+    let propertyFilter = this.propertyFilter(property.uri);
     const propertyFilterState = new StringFilterState({
       filter: propertyFilter,
-      valueUniverse: this.propertyValueUniverse(property.propertyDefinitionUri),
+      valueUniverse: this.propertyValueUniverse(property.uri),
     });
     propertyFilterState.includeValue(property.value);
     const propertyFilterStateSnapshot = propertyFilterState.snapshot;
     if (propertyFilterStateSnapshot) {
       this.setPropertyFilter({
-        propertyDefinitionUri: property.propertyDefinitionUri,
+        propertyDefinitionUri: property.uri,
         ...propertyFilterStateSnapshot,
       });
     } else {
-      this.removePropertyFilter(property.propertyDefinitionUri);
+      this.removePropertyFilter(property.uri);
     }
   }
 

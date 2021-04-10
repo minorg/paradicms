@@ -24,11 +24,10 @@ describe("Object RDF reader", () => {
       expect(model.institutionUri).to.not.be.empty;
       expect(model.properties).to.not.be.empty;
       model.properties!.forEach(property => {
-        expect(property.propertyDefinitionUri.trim()).to.not.be.empty;
+        expect(property.uri.trim()).to.not.be.empty;
         expect(
           propertyDefinitions.find(
-            propertyDefinition =>
-              propertyDefinition.uri === property.propertyDefinitionUri
+            propertyDefinition => propertyDefinition.uri === property.uri
           )
         ).to.not.be.undefined;
         expect(property.value.trim()).to.not.be.empty;
