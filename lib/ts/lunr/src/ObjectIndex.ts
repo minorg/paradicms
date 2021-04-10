@@ -46,10 +46,7 @@ export class ObjectIndex {
         }
         if (object.properties && object.properties.length > 0) {
           for (const objectProperty of object.properties) {
-            const field =
-              fieldsByPropertyDefinitionUri[
-                objectProperty.propertyDefinitionUri
-              ];
+            const field = fieldsByPropertyDefinitionUri[objectProperty.uri];
             if (!field) {
               continue;
             }
