@@ -26,7 +26,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
           continue;
         }
         properties.push({
-          propertyDefinitionUri: propertyDefinition.uri,
+          uri: propertyDefinition.uri,
           value: (node as Literal).value,
         });
       }
