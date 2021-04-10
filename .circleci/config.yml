@@ -132,8 +132,7 @@ workflows:
     jobs:
       - cypress/install:
           cache-key: 'cache-{{ arch }}-{{ .Branch }}-{{ checksum "~/project/package.json" }}-{{ checksum "~/project/gui/material-ui-union/package.json" }}-{{ checksum "~/project/integration/material-ui-union/package.json" }}-{{ checksum "~/project/lib/ts/base/package.json" }}-{{ checksum "~/project/lib/ts/models/package.json" }}-{{ checksum "~/project/lib/ts/material-ui/package.json" }}-{{ checksum "~/project/lib/ts/rdf/package.json" }}'
-          pre-steps:
-            - run: cd ~/project && npm install && npm run lerna:bootstrap
+          build: cd ~/project && npm install && npm run lerna:bootstrap
           requires:
             - ts
           working_directory: integration/material-ui-union
