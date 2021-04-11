@@ -63,7 +63,7 @@ export class ObjectFiltersState {
       filter: propertyFilter,
       valueUniverse: this.propertyValueUniverse(property.uri),
     });
-    propertyFilterState.includeValue(property.value);
+    propertyFilterState.includeValue(property.value.toString());
     const propertyFilterStateSnapshot = propertyFilterState.snapshot;
     if (propertyFilterStateSnapshot) {
       this.setPropertyFilter({

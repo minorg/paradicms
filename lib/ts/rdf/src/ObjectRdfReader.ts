@@ -4,6 +4,8 @@ import {DCTERMS, PARADICMS} from "./vocabularies";
 import {IndexedFormula, Literal, NamedNode} from "rdflib";
 import {RightsRdfReader} from "./RightsRdfReader";
 import {ModelNode} from "ModelNode";
+import {PropertyValue} from "@paradicms/models/dist/PropertyValue";
+import {LiteralWrapper} from "./LiteralWrapper";
 
 export class ObjectRdfReader extends ModelRdfReader<Object> {
   constructor(
@@ -25,9 +27,27 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
         if (node.termType !== "Literal") {
           continue;
         }
+        const literal = new LiteralWrapper(node as Literal);
+        let value: PropertyValue;
+        if (literal.isBoolean()) {
+          value = literal.toBoolean();
+        } else if (literal.isInteger()) {
+          value = literal.toInteger();
+        } else if (literal.isString()) {
+          value = literal.toString();
+        } else {
+          console.warn(
+            "unknown literal datatype",
+            literal.literal.datatype,
+            "for property",
+            propertyDefinition.uri
+          );
+          continue;
+        }
+
         properties.push({
           uri: propertyDefinition.uri,
-          value: (node as Literal).value,
+          value,
         });
       }
     }
