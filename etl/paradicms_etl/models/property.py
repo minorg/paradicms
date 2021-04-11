@@ -1,26 +1,30 @@
 from dataclasses import dataclass
-from typing import Union
+from typing import Any, Union
 
-from rdflib import URIRef
+from rdflib import Literal, URIRef
 
 from paradicms_etl.models.property_definition import PropertyDefinition
 
 
 @dataclass(init=True, unsafe_hash=True)
 class Property:
-    property_definition_uri: URIRef
-    value: str
+    uri: URIRef
+    value: Literal
 
     def __init__(
-        self, property_definition: Union[PropertyDefinition, URIRef], value: str
+        self,
+        uri: Union[PropertyDefinition, URIRef],
+        value: Union[bool, int, str, Literal],
     ):
-        if isinstance(property_definition, PropertyDefinition):
-            self.property_definition_uri = property_definition.uri
-        elif isinstance(property_definition, URIRef):
-            self.property_definition_uri = property_definition
+        if isinstance(uri, PropertyDefinition):
+            property_definition = uri
+            self.uri = property_definition.uri
+        elif isinstance(uri, URIRef):
+            self.uri = uri
         else:
-            raise TypeError(type(property_definition))
+            raise TypeError(type(uri))
 
-        if not isinstance(value, str):
-            raise TypeError("value not a string")
-        self.value = value
+        if isinstance(value, Literal):
+            self.value = value
+        else:
+            self.value = Literal(value)

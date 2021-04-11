@@ -25,12 +25,12 @@ export class Objects {
       for (const object of objectsWithProperties) {
         let includeObject = false;
         for (const property of object.properties!) {
-          if (property.propertyDefinitionUri === propertyDefinition.uri) {
-            const count = facetValues[property.value];
+          if (property.uri === propertyDefinition.uri) {
+            const count = facetValues[property.value.toString()];
             if (!count) {
-              facetValues[property.value] = 1;
+              facetValues[property.value.toString()] = 1;
             } else {
-              facetValues[property.value] = count + 1;
+              facetValues[property.value.toString()] = count + 1;
             }
             includeObject = true;
           }
@@ -131,10 +131,9 @@ export class Objects {
             (object.properties ?? [])
               .filter(
                 property =>
-                  property.propertyDefinitionUri ===
-                  propertyFilter.propertyDefinitionUri
+                  property.uri === propertyFilter.propertyDefinitionUri
               )
-              .map(property => property.value),
+              .map(property => property.value.toString()),
           objects,
         });
       }
