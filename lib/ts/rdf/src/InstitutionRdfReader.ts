@@ -10,7 +10,8 @@ export class InstitutionRdfReader extends ModelRdfReader<Institution> {
     return {
       name: this.readRequiredLiteral(FOAF.name_).toString(),
       rights: checkNotNullish(
-        new RightsRdfReader(this.node, this.store).read()
+        new RightsRdfReader(this.node, this.store).read(),
+        "institution must have a non-nullish rights"
       ),
       uri: this.nodeUri,
     };
