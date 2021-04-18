@@ -17,10 +17,11 @@ describe("RightsStatement RDF reader", () => {
     const models = RightsStatementRdfReader.readAll(store);
     expect(models).to.have.length(15);
     models.forEach(model => {
-      expect(model.definition!.trim()).to.not.be.empty;
-      expect(model.description!.trim()).to.not.be.empty;
       expect(model.identifier.trim()).to.not.be.empty;
+      expect(model.prefLabel.trim()).to.not.be.empty;
       expect(model.uri.trim()).to.not.be.empty;
     });
+    expect(models.some(model => !!model.definition)).to.be.true;
+    expect(models.some(model => !!model.description)).to.be.true;
   });
 });
