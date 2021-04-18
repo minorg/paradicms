@@ -4,5 +4,6 @@ export * from "./FOAF";
 export * from "./PARADICMS";
 export * from "./RDF";
 export * from "./RDFS";
+export * from "./SKOS";
 export * from "./VRA";
 export * from "./XSD";
