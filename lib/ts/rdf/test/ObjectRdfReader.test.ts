@@ -30,7 +30,9 @@ describe("Object RDF reader", () => {
             propertyDefinition => propertyDefinition.uri === property.uri
           )
         ).to.not.be.undefined;
-        expect(property.value.trim()).to.not.be.empty;
+        if (typeof property.value === "string") {
+          expect(property.value.trim()).to.not.be.empty;
+        }
       });
       expect(model.rights).to.not.be.undefined;
       expect(model.title.trim()).to.not.be.empty;
