@@ -4,13 +4,27 @@ import {Rights, RightsValue} from "@paradicms/models";
 import {DCTERMS} from "./vocabularies";
 import {NamedNode} from "rdflib/lib/tf-types";
 import {LiteralWrapper} from "./LiteralWrapper";
+import {RightsStatementRdfReader} from "RightsStatementRdfReader";
 
 export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
   read(): Rights | undefined {
     const creator = this.readRightsValue(DCTERMS.creator);
+
     const holder = this.readRightsValue(DCTERMS.rightsHolder);
+
     const license = this.readRightsValue(DCTERMS.license);
-    const statement = this.readRightsValue(DCTERMS.rights);
+
+    const statement = this.readRightsValue(
+      DCTERMS.rights,
+      RightsStatementRdfReader.readAll(this.store).reduce(
+        (defaultTextsByUri, rightsStatement) => {
+          defaultTextsByUri[rightsStatement.uri] = rightsStatement.prefLabel;
+          return defaultTextsByUri;
+        },
+        {} as {[index: string]: string}
+      )
+    );
+
     if (creator || holder || license || statement) {
       return this.deleteUndefined({
         creator,
@@ -23,7 +37,10 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
     }
   }
 
-  private readRightsValue(property: NamedNode): RightsValue | undefined {
+  private readRightsValue(
+    property: NamedNode,
+    defaultTextsByUri?: {[index: string]: string}
+  ): RightsValue | undefined {
     let text: string | undefined;
     let uri: string | undefined;
 
@@ -46,10 +63,23 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
       }
     }
 
-    if (text || uri) {
-      return {text, uri};
-    } else {
+    if (!text && !uri) {
       return undefined;
     }
+
+    if (!text && uri) {
+      if (defaultTextsByUri) {
+        text = defaultTextsByUri[uri];
+      }
+      if (!text) {
+        text = uri;
+      }
+    }
+
+    if (!text) {
+      throw new EvalError();
+    }
+
+    return {text, uri};
   }
 }

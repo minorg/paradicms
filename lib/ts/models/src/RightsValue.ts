@@ -1,4 +1,5 @@
 export interface RightsValue {
-  text?: string;
+  // If text is not present in the data it is populated in the deserializer.
+  text: string;
   uri?: string;
 }
