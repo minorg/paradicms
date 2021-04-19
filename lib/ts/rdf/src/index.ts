@@ -7,3 +7,4 @@ export * from "./ModelRdfReader";
 export * from "./ObjectRdfReader";
 export * from "./PropertyDefinitionRdfReader";
 export * from "./RdfData";
+export * from "./RightsStatementRdfReader";

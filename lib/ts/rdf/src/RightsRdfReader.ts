@@ -4,7 +4,7 @@ import {Rights, RightsValue} from "@paradicms/models";
 import {DCTERMS} from "./vocabularies";
 import {NamedNode} from "rdflib/lib/tf-types";
 import {LiteralWrapper} from "./LiteralWrapper";
-import {RightsStatementRdfReader} from "RightsStatementRdfReader";
+import {RightsStatementRdfReader} from "./RightsStatementRdfReader";
 
 export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
   read(): Rights | undefined {
@@ -54,7 +54,10 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
         case "Literal":
           const literal = new LiteralWrapper(node as rdflibLiteral);
           if (literal.isString()) {
-            text = literal.toString();
+            text = literal.toString().trim();
+            if (text.length === 0) {
+              text = undefined;
+            }
           }
           break;
         case "NamedNode":
@@ -71,12 +74,12 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
       if (defaultTextsByUri) {
         text = defaultTextsByUri[uri];
       }
-      if (!text) {
+      if (!text || text.length === 0) {
         text = uri;
       }
     }
 
-    if (!text) {
+    if (!text || text.length === 0) {
       throw new EvalError();
     }
 
