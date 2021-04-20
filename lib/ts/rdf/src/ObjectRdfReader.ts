@@ -1,5 +1,6 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {
+  Models,
   Object,
   Property,
   PropertyDefinition,
@@ -88,13 +89,9 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
   }
 
   static readAll(store: IndexedFormula) {
-    const propertyDefinitionsByUri = PropertyDefinitionRdfReader.readAll(
-      store
-    ).reduce((propertyDefinitionsByUri, propertyDefinition) => {
-      propertyDefinitionsByUri[propertyDefinition.uri] = propertyDefinition;
-      return propertyDefinitionsByUri;
-    }, {} as {[index: string]: PropertyDefinition});
-
+    const propertyDefinitionsByUri = Models.indexByUri(
+      PropertyDefinitionRdfReader.readAll(store)
+    );
     const rightsStatements = RightsStatementRdfReader.readAll(store);
 
     return ModelRdfReader._readAll<Object>(
