@@ -92,6 +92,11 @@ jobs:
             - ./lib/ts/models/node_modules
             - ./lib/ts/next/node_modules
             - ./lib/ts/rdf/node_modules
+      - run:
+          name: Test
+          command: |
+            cd lib/ts/rdf
+            npm run test
       - persist_to_workspace:
           root: ~/
           paths:

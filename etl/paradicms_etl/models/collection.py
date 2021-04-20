@@ -9,7 +9,6 @@ from paradicms_etl.models._named_model import _NamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.namespace import CMS
-from paradicms_etl.utils.properties_to_rdf import properties_to_rdf
 
 
 @dataclass(frozen=True)
@@ -21,17 +20,10 @@ class Collection(_NamedModel):
     abstract: Optional[str] = None
     properties: Tuple[Property, ...] = ()
 
-    def to_rdf(
-        self, *, graph: Graph, property_definitions: Tuple[PropertyDefinition, ...]
-    ) -> Resource:
-        resource = _NamedModel.to_rdf(
-            self, graph=graph, property_definitions=property_definitions
-        )
+    def to_rdf(self, *, graph: Graph) -> Resource:
+        resource = _NamedModel.to_rdf(self, graph=graph)
         resource.add(CMS.institution, self.institution_uri)
-        properties_to_rdf(
-            properties=self.properties,
-            property_definitions=property_definitions,
-            resource=resource,
-        )
+        for property_ in self.properties:
+            resource.add(property_.uri, property_.value)
         resource.add(DCTERMS.title, Literal(self.title))
         return resource

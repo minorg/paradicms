@@ -3,11 +3,16 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix paradicms: <http://www.paradicms.org/ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix vra: <http://purl.org/vra/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 dcterms:alternative a paradicms:PropertyDefinition ;
     rdfs:label "Alternative title" ;
+    paradicms:fullTextSearchable true .
+
+dcterms:bibliographicCitation a paradicms:PropertyDefinition ;
+    rdfs:label "Bibliographic citation" ;
     paradicms:fullTextSearchable true .
 
 dcterms:contributor a paradicms:PropertyDefinition ;
@@ -146,6 +151,171 @@ vra:worktype a paradicms:PropertyDefinition ;
     rdfs:label "Work type" ;
     paradicms:faceted true ;
     paradicms:fullTextSearchable true .
+
+<http://rightsstatements.org/vocab/CNE/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item." ;
+    dcterms:identifier "CNE" ;
+    skos:definition """The copyright and related rights status of this Item has not been evaluated.
+
+  Please refer to the organization that has made the Item available for more information.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "Copyright Not Evaluated" ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that intends to make the Item available has not undertaken an effort to determine the copyright status of the underlying Work." .
+
+<http://rightsstatements.org/vocab/InC-NC/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that non-commercial use is allowed without the need to obtain additional permission." ;
+    dcterms:identifier "InC-NC" ;
+    skos:definition """This Item is protected by copyright and/or related rights.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for non-commercial uses.
+
+  For other uses you need to obtain permission from the rights-holder(s).""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "In Copyright - Non-Commercial Use Permitted" ;
+    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for non-commercial purposes without obtaining permission first." .
+
+<http://rightsstatements.org/vocab/InC-OW-EU/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as an ‘Orphan Work’ under the terms of the EU Orphan Works Directive." ;
+    dcterms:identifier "InC-OW-EU" ;
+    skos:definition """This Item has been identified as an orphan work in the country of first publication and in line with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of orphan works.
+
+  For this Item, either (a) no rights-holder(s) have been identified or (b) one or more rights-holder(s) have been identified but none have been located even though a diligent search for the rights-holder(s) has been conducted. The results of the diligent search are available in the EU Orphan Works Database.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
+    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s), please notify the organization that has made the Item available.",
+        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "In Copyright - EU Orphan Work" ;
+    skos:scopeNote "This Rights Statement is intended for use with Items for which the underlying Work has been identified as an Orphan Work in accordance with Directive 2012/28/EU of the European Parliament and of the Council of 25 October 2012 on certain permitted uses of Orphan Works. It can only be applied to Items derived from Works that are covered by the Directive: Works published in the form of books, journals, newspapers, magazines or other writings as well as cinematographic or audiovisual works and phonograms (note: this excludes photography and visual arts). It can only be applied by organizations that are beneficiaries of the Directive: publicly accessible libraries, educational establishments and museums, archives, film or audio heritage institutions and public-service broadcasting organizations, established in one of the EU member states. The beneficiary is also expected to have registered the work in the EU Orphan Works Database maintained by EUIPO." .
+
+<http://rightsstatements.org/vocab/InC-RUU/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement has been identified as in copyright, but its rights-holder(s) either cannot be identified or cannot be located." ;
+    dcterms:identifier "InC-RUU" ;
+    skos:definition """This Item is protected by copyright and/or related rights. However, for this Item, either (a) no rights-holder(s) have been identified or (b) one or more rights-holder(s) have been identified but none have been located.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
+    skos:note "If you have any information that can contribute to identifying or locating the rights-holder(s) please notify the organization that has made the Item available.",
+        "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "In Copyright - Rights-holder(s) Unlocatable or Unidentifiable" ;
+    skos:scopeNote "This Rights Statement is intended for use with an Item that has been identified as in copyright but for which no rights-holder(s) has been identified or located after some reasonable investigation. This Rights Statement should only be used if the organization that intends to make the Item available is reasonably sure that the underlying Work is in copyright. This Rights Statement is not intended for use by EU-based organizations who have identified works as Orphan Works in accordance with the EU Orphan Works Directive (they must use InC-OW-EU instead)." .
+
+<http://rightsstatements.org/vocab/InC/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright." ;
+    dcterms:identifier "InC" ;
+    skos:definition """This Item is protected by copyright and/or related rights.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.
+
+  For other uses you need to obtain permission from the rights-holder(s).""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "In Copyright" ;
+    skos:scopeNote "This Rights Statement can be used for an Item that is in copyright. Using this statement implies that the organization making this Item available has determined that the Item is in copyright and either is the rights-holder, has obtained permission from the rights-holder(s) to make their Work(s) available, or makes the Item available under an exception or limitation to copyright (including Fair Use) that entitles it to make the Item available." .
+
+<http://rightsstatements.org/vocab/NKC/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the organization that has published the Item believes that no copyright or related rights are known to exist for the Item, but that a conclusive determination could not be made." ;
+    dcterms:identifier "NKC" ;
+    skos:definition """The organization that has made the Item available reasonably believes that the Item is not restricted by copyright or related rights, but a conclusive determination could not be made.
+
+  Please refer to the organization that has made the Item available for more information.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "No Known Copyright" ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status has not been determined conclusively, but for which the organization that intends to make the Item available has reasonable cause to believe that the underlying Work is not covered by copyright or related rights anymore. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work." .
+
+<http://rightsstatements.org/vocab/NoC-CR/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to restrict certain forms of use by third parties." ;
+    dcterms:identifier "NoC-CR" ;
+    skos:definition """Use of this Item is not restricted by copyright and/or related rights.
+
+  As part of the acquisition or digitization of this Work, the organization that has made the Item available is contractually required to limit the use of this Item. Limitations may include, but are not limited to, privacy issues, cultural protections, digitization agreements or donor agreements.
+
+  Please refer to the organization that has made the Item available for more information.""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "No Copyright - Contractual Restrictions" ;
+    skos:scopeNote "This Rights Statement can only be used for Items that are in the Public Domain but for which the organization that intends to make the Item available has entered into contractual agreement that requires it to take steps to restrict third party uses of the Item. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the contractual restrictions that apply to the use of the Item." .
+
+<http://rightsstatements.org/vocab/NoC-NC/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but the organization that has published the Item is contractually required to allow only non-commercial use by third parties." ;
+    dcterms:identifier "NoC-NC" ;
+    skos:definition """This Work has been digitized in a public-private partnership. As part of this partnership, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties.
+
+  You can, without permission, copy, modify, distribute, display, or perform the Item, for non-commercial uses. For any other permissible uses, please review the terms and conditions of the organization that has made the Item available.""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy, or moral rights may limit how you may use the material." ;
+    skos:prefLabel "No Copyright - Non-Commercial Use Only" ;
+    skos:scopeNote "This Rights Statement can only be used for Works that are in the Public Domain and have been digitized in a public-private partnership as part of which, the partners have agreed to limit commercial uses of this digital representation of the Work by third parties. It has been developed specifically to allow the inclusion of Works that have been digitized as part of the partnerships between European Libraries and Google, but can in theory be applied to Items that have been digitized in similar public-private partnerships." .
+
+<http://rightsstatements.org/vocab/NoC-OKLR/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the underlying Work is in the Public Domain, but that there are known restrictions imposed by laws other than copyright and/or related rights on the use of the Item by third parties." ;
+    dcterms:identifier "NoC-OKLR" ;
+    skos:definition """Use of this Item is not restricted by copyright and/or related rights.
+
+  In one or more jurisdictions, laws other than copyright are known to impose restrictions on the use of this Item.
+
+  Please refer to the organization that has made the Item available for more information.""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "No Copyright - Other Known Legal Restrictions" ;
+    skos:scopeNote "This Rights Statement should be used for Items that are in the Public Domain but that cannot be freely re-used as the consequence of known legal restrictions that prevent the organization that intends to make the Item available from allowing free re-use of the Item, such as cultural heritage or traditional cultural expression protections. In order for this Rights Statement to be conclusive, the organization that intends to make the Item available should provide a link to a page detailing the legal restrictions that limit re-use of the Item." .
+
+<http://rightsstatements.org/vocab/NoC-US/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item is in the Public Domain under the laws of the United States, but that a determination was not made as to its copyright status under the copyright laws of other countries." ;
+    dcterms:identifier "NoC-US" ;
+    skos:definition """The organization that has made the Item available believes that the Item is in the Public Domain under the laws of the United States, but a determination was not made as to its copyright status under the copyright laws of other countries. The Item may not be in the Public Domain under the laws of other countries.
+
+  Please refer to the organization that has made the Item available for more information.""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "No Copyright - United States" ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the organization that intends to make the Item available has determined are free of copyright under the laws of the United States. This Rights Statement should not be used for Orphan Works (which are assumed to be in-copyright) or for Items where the organization that intends to make the Item available has not undertaken an effort to ascertain the copyright status of the underlying Work." .
+
+<http://rightsstatements.org/vocab/UND/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the organization that has made the Item available has reviewed the copyright and related rights status of the Item, but was unable to determine the copyright status of the Item." ;
+    dcterms:identifier "UND" ;
+    skos:definition """The copyright and related rights status of this Item has been reviewed by the organization that has made the Item available, but the organization was unable to make a conclusive determination as to the copyright status of the Item.
+
+  Please refer to the organization that has made the Item available for more information.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use.""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "Copyright Undetermined" ;
+    skos:scopeNote "This Rights Statement should be used for Items for which the copyright status is unknown and for which the organization that has made the Item available has undertaken an (unsuccessful) effort to determine the copyright status of the underlying Work. Typically, this Rights Statement is used when the organization is missing key facts essential to making an accurate copyright status determination." .
+
+<http://rightsstatements.org/vocab/collection-ic/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "None" ;
+    dcterms:identifier "collection-ic" ;
+    skos:prefLabel "Statements for works that are in copyright" .
+
+<http://rightsstatements.org/vocab/collection-nc/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "None" ;
+    dcterms:identifier "collection-nc" ;
+    skos:prefLabel "Statements for works that are not in copyright" .
+
+<http://rightsstatements.org/vocab/collection-other/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "None" ;
+    dcterms:identifier "collection-other" ;
+    skos:prefLabel "Statements for works where the copyright status is unclear" .
 
 paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     paradicms:guiDocumentTitle "Test data" ;
@@ -3933,8 +4103,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object0 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object0 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -3978,8 +4147,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object1 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object1 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -4023,8 +4191,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object10 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object10 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object10 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -4068,8 +4235,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object11 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object11 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object11 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -4113,8 +4279,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object12 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object12 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object12 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -4158,8 +4323,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object13 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object13 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object13 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -4203,8 +4367,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object14 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object14 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object14 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -4248,8 +4411,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object15 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object15 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object15 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -4293,8 +4455,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object16 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object16 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object16 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -4338,8 +4499,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object17 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object17 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object17 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -4383,8 +4543,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object18 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object18 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object18 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -4428,8 +4587,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object19 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object19 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object19 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -4473,8 +4631,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object2 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object2 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object2 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -4518,8 +4675,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object3 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object3 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object3 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -4563,8 +4719,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object4 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object4 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object4 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -4608,8 +4763,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object5 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object5 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object5 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -4653,8 +4807,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object6 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object6 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object6 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -4698,8 +4851,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object7 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object7 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object7 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -4743,8 +4895,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object8 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object8 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object8 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -4788,8 +4939,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection0Object9 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection0Object9 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection0Object9 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -4833,8 +4983,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object0 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object0 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -4878,8 +5027,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object1 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object1 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -4923,8 +5071,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object10 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object10 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object10 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -4968,8 +5115,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object11 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object11 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object11 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -5013,8 +5159,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object12 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object12 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object12 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -5058,8 +5203,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object13 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object13 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object13 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -5103,8 +5247,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object14 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object14 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object14 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -5148,8 +5291,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object15 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object15 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object15 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -5193,8 +5335,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object16 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object16 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object16 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -5238,8 +5379,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object17 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object17 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object17 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -5283,8 +5423,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object18 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object18 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object18 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -5328,8 +5467,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object19 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object19 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object19 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -5373,8 +5511,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object2 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object2 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object2 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -5418,8 +5555,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object3 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object3 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object3 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -5463,8 +5599,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object4 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object4 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object4 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -5508,8 +5643,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object5 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object5 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object5 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -5553,8 +5687,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object6 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object6 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object6 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -5598,8 +5731,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object7 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object7 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object7 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -5643,8 +5775,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object8 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object8 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object8 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -5688,8 +5819,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0Collection1Object9 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0Collection1Object9 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0Collection1Object9 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -5733,8 +5863,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0SharedObject0 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0SharedObject0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedObject0 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -5779,8 +5908,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0SharedObject1 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0SharedObject1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedObject1 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -5825,8 +5953,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0SharedObject2 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0SharedObject2 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedObject2 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -5871,8 +5998,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0SharedObject3 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0SharedObject3 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedObject3 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -5917,8 +6043,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution0SharedObject4 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0SharedObject4 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0SharedObject4 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -5963,8 +6088,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object0 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object0 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -6008,8 +6132,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object1 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object1 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -6053,8 +6176,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object10 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object10 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object10 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -6098,8 +6220,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object11 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object11 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object11 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -6143,8 +6264,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object12 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object12 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object12 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -6188,8 +6308,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object13 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object13 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object13 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -6233,8 +6352,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object14 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object14 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object14 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -6278,8 +6396,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object15 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object15 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object15 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -6323,8 +6440,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object16 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object16 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object16 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -6368,8 +6484,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object17 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object17 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object17 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -6413,8 +6528,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object18 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object18 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object18 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -6458,8 +6572,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object19 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object19 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object19 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -6503,8 +6616,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object2 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object2 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object2 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -6548,8 +6660,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object3 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object3 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object3 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -6593,8 +6704,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object4 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object4 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object4 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -6638,8 +6748,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object5 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object5 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object5 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -6683,8 +6792,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object6 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object6 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object6 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -6728,8 +6836,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object7 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object7 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object7 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -6773,8 +6880,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object8 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object8 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object8 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -6818,8 +6924,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection0Object9 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection0Object9 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection0Object9 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -6863,8 +6968,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object0 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object0 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -6908,8 +7012,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object1 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object1 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -6953,8 +7056,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object10 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object10 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object10 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -6998,8 +7100,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object11 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object11 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object11 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -7043,8 +7144,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object12 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object12 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object12 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -7088,8 +7188,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object13 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object13 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object13 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -7133,8 +7232,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object14 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object14 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object14 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -7178,8 +7276,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object15 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object15 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object15 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -7223,8 +7320,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object16 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object16 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object16 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -7268,8 +7364,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object17 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object17 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object17 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -7313,8 +7408,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object18 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object18 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object18 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -7358,8 +7452,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object19 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object19 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object19 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -7403,8 +7496,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object2 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object2 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object2 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -7448,8 +7540,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object3 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object3 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object3 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -7493,8 +7584,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object4 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object4 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object4 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -7538,8 +7628,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object5 provenance 1" ;
     dcterms:publisher "Publisher 5",
         "Publisher 6" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object5 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object5 rights holder" ;
     dcterms:source "Source 5",
         "Source 6" ;
@@ -7583,8 +7672,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object6 provenance 1" ;
     dcterms:publisher "Publisher 6",
         "Publisher 7" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object6 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object6 rights holder" ;
     dcterms:source "Source 6",
         "Source 7" ;
@@ -7628,8 +7716,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object7 provenance 1" ;
     dcterms:publisher "Publisher 7",
         "Publisher 8" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object7 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object7 rights holder" ;
     dcterms:source "Source 7",
         "Source 8" ;
@@ -7673,8 +7760,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object8 provenance 1" ;
     dcterms:publisher "Publisher 8",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object8 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object8 rights holder" ;
     dcterms:source "Source 8",
         "Source 9" ;
@@ -7718,8 +7804,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1Collection1Object9 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 9" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1Collection1Object9 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1Collection1Object9 rights holder" ;
     dcterms:source "Source 0",
         "Source 9" ;
@@ -7763,8 +7848,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1SharedObject0 provenance 1" ;
     dcterms:publisher "Publisher 0",
         "Publisher 1" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1SharedObject0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedObject0 rights holder" ;
     dcterms:source "Source 0",
         "Source 1" ;
@@ -7809,8 +7893,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1SharedObject1 provenance 1" ;
     dcterms:publisher "Publisher 1",
         "Publisher 2" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1SharedObject1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedObject1 rights holder" ;
     dcterms:source "Source 1",
         "Source 2" ;
@@ -7855,8 +7938,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1SharedObject2 provenance 1" ;
     dcterms:publisher "Publisher 2",
         "Publisher 3" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1SharedObject2 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedObject2 rights holder" ;
     dcterms:source "Source 2",
         "Source 3" ;
@@ -7901,8 +7983,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1SharedObject3 provenance 1" ;
     dcterms:publisher "Publisher 3",
         "Publisher 4" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1SharedObject3 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedObject3 rights holder" ;
     dcterms:source "Source 3",
         "Source 4" ;
@@ -7947,8 +8028,7 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
         "Institution1SharedObject4 provenance 1" ;
     dcterms:publisher "Publisher 4",
         "Publisher 5" ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1SharedObject4 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1SharedObject4 rights holder" ;
     dcterms:source "Source 4",
         "Source 5" ;
@@ -7987,15 +8067,27 @@ paradicms:guiMetadataInstance a paradicms:GuiMetadata ;
     dcterms:title "Institution1Collection1" ;
     paradicms:institution <http://example.com/institution1> .
 
+<http://rightsstatements.org/vocab/InC-EDU/1.0/> a paradicms:RightsStatement ;
+    dcterms:description "This Rights Statement indicates that the Item labeled with this Rights Statement is in copyright but that educational use is allowed without the need to obtain additional permission." ;
+    dcterms:identifier "InC-EDU" ;
+    skos:definition """This Item is protected by copyright and/or related rights.
+
+  You are free to use this Item in any way that is permitted by the copyright and related rights legislation that applies to your use. In addition, no permission is required from the rights-holder(s) for educational uses.
+
+  For other uses, you need to obtain permission from the rights-holder(s).""" ;
+    skos:note "Unless expressly stated otherwise, the organization that has made this Item available makes no warranties about the Item and cannot guarantee the accuracy of this Rights Statement. You are responsible for your own use.",
+        "You may find additional information about the copyright status of the Item on the website of the organization that has made the Item available.",
+        "You may need to obtain other permissions for your intended use. For example, other rights such as publicity, privacy or moral rights may limit how you may use the material." ;
+    skos:prefLabel "In Copyright - Educational Use Permitted" ;
+    skos:scopeNote "This Rights Statement can be used only for copyrighted Items for which the organization making the Item available is the rights-holder or has been explicitly authorized by the rights-holder(s) to allow third parties to use their Work(s) for educational purposes without first obtaining permission." .
+
 <http://example.com/institution0> a paradicms:Institution ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution0 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution0 rights holder" ;
     foaf:name "Institution0" .
 
 <http://example.com/institution1> a paradicms:Institution ;
-    dcterms:rights <https://rightsstatements.org/page/InC-EDU/1.0/?language=en>,
-        "Institution1 rights" ;
+    dcterms:rights <http://rightsstatements.org/vocab/InC-EDU/1.0/> ;
     dcterms:rightsHolder "Institution1 rights holder" ;
     foaf:name "Institution1" .
 

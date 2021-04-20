@@ -17,7 +17,7 @@ describe("Object RDF reader", () => {
   it("should read all objects from the store", function(this: any) {
     this.timeout(10000);
     const propertyDefinitions = PropertyDefinitionRdfReader.readAll(store);
-    const models = ObjectRdfReader.readAll(propertyDefinitions, store);
+    const models = ObjectRdfReader.readAll(store);
     expect(models).to.have.length(90);
     models.forEach(model => {
       expect(model.collectionUris).to.not.be.empty;
@@ -30,7 +30,9 @@ describe("Object RDF reader", () => {
             propertyDefinition => propertyDefinition.uri === property.uri
           )
         ).to.not.be.undefined;
-        expect(property.value.trim()).to.not.be.empty;
+        if (typeof property.value === "string") {
+          expect(property.value.trim()).to.not.be.empty;
+        }
       });
       expect(model.rights).to.not.be.undefined;
       expect(model.title.trim()).to.not.be.empty;

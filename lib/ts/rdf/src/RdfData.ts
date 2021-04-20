@@ -8,6 +8,7 @@ import {
   Object,
   Objects,
   PropertyDefinition,
+  RightsStatement,
 } from "@paradicms/models";
 import {CollectionRdfReader} from "./CollectionRdfReader";
 import {GuiMetadataRdfReader} from "./GuiMetadataRdfReader";
@@ -16,6 +17,7 @@ import {InstitutionRdfReader} from "./InstitutionRdfReader";
 import {ObjectRdfReader} from "./ObjectRdfReader";
 import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
 import {IndexedFormula} from "rdflib";
+import {RightsStatementRdfReader} from "./RightsStatementRdfReader";
 
 export class RdfData {
   readonly collections: readonly Collection[];
@@ -34,6 +36,7 @@ export class RdfData {
   readonly objectsByInstitutionUri: {[index: string]: readonly Object[]};
   private readonly objectsByUri: {[index: string]: Object};
   readonly propertyDefinitions: readonly PropertyDefinition[];
+  readonly rightsStatements: readonly RightsStatement[];
 
   constructor(store: IndexedFormula) {
     this.collections = CollectionRdfReader.readAll(store);
@@ -53,8 +56,9 @@ export class RdfData {
     this.institutionsByUri = Models.indexByUri(this.institutions);
 
     this.propertyDefinitions = PropertyDefinitionRdfReader.readAll(store);
+    this.rightsStatements = RightsStatementRdfReader.readAll(store);
 
-    this.objects = ObjectRdfReader.readAll(this.propertyDefinitions, store);
+    this.objects = ObjectRdfReader.readAll(store);
     this.objectsByUri = Models.indexByUri(this.objects);
     this.objectsByCollectionUri = Objects.indexByCollectionUri(this.objects);
     this.objectsByInstitutionUri = Models.indexByInstitutionUri(this.objects);

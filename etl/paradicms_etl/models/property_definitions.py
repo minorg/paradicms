@@ -2,16 +2,24 @@ from typing import Tuple
 
 from rdflib.namespace import DCTERMS
 
+from paradicms_etl.models._model_singletons import _ModelSingletons
 from paradicms_etl.models.property_definition import PropertyDefinition
 from paradicms_etl.namespace import VRA
 
 
-class PropertyDefinitions:
+class PropertyDefinitions(_ModelSingletons):
+    _MODEL_CLASS = PropertyDefinition
+
     # Dublin Core Terms
     ALTERNATIVE_TITLE = PropertyDefinition(
         full_text_searchable=True,
         label="Alternative title",
         uri=DCTERMS.alternative,
+    )
+    BIBLIOGRAPHIC_CITATION = PropertyDefinition(
+        full_text_searchable=True,
+        label="Bibliographic citation",
+        uri=DCTERMS.bibliographicCitation,
     )
     CONTRIBUTOR = PropertyDefinition(
         full_text_searchable=True,
@@ -181,12 +189,3 @@ class PropertyDefinitions:
         label="Work type",
         uri=VRA.worktype,
     )
-
-    @classmethod
-    def as_tuple(cls) -> Tuple[PropertyDefinition, ...]:
-        tuple_ = []
-        for __attr in dir(PropertyDefinitions):
-            __value = getattr(PropertyDefinitions, __attr)
-            if isinstance(__value, PropertyDefinition):
-                tuple_.append(__value)
-        return tuple(tuple_)
