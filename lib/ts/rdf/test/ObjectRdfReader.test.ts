@@ -17,7 +17,7 @@ describe("Object RDF reader", () => {
   it("should read all objects from the store", function(this: any) {
     this.timeout(10000);
     const propertyDefinitions = PropertyDefinitionRdfReader.readAll(store);
-    const models = ObjectRdfReader.readAll(propertyDefinitions, store);
+    const models = ObjectRdfReader.readAll(store);
     expect(models).to.have.length(90);
     models.forEach(model => {
       expect(model.collectionUris).to.not.be.empty;

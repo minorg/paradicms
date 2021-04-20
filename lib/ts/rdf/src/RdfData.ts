@@ -56,13 +56,12 @@ export class RdfData {
     this.institutionsByUri = Models.indexByUri(this.institutions);
 
     this.propertyDefinitions = PropertyDefinitionRdfReader.readAll(store);
+    this.rightsStatements = RightsStatementRdfReader.readAll(store);
 
-    this.objects = ObjectRdfReader.readAll(this.propertyDefinitions, store);
+    this.objects = ObjectRdfReader.readAll(store);
     this.objectsByUri = Models.indexByUri(this.objects);
     this.objectsByCollectionUri = Objects.indexByCollectionUri(this.objects);
     this.objectsByInstitutionUri = Models.indexByInstitutionUri(this.objects);
-
-    this.rightsStatements = RightsStatementRdfReader.readAll(store);
   }
 
   collectionByUri(uri: string): Collection {

@@ -1,12 +1,50 @@
-import {Literal as rdflibLiteral} from "rdflib";
+import {IndexedFormula, Literal as rdflibLiteral} from "rdflib";
 import {ModelRdfReader} from "./ModelRdfReader";
-import {Rights, RightsValue} from "@paradicms/models";
+import {Rights, RightsStatement, RightsValue} from "@paradicms/models";
 import {DCTERMS} from "./vocabularies";
-import {NamedNode} from "rdflib/lib/tf-types";
+import {NamedNode, Quad} from "rdflib/lib/tf-types";
 import {LiteralWrapper} from "./LiteralWrapper";
-import {RightsStatementRdfReader} from "./RightsStatementRdfReader";
+import {ModelNode} from "ModelNode";
 
 export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
+  private readonly nodeStatementsByPredicateUri: {
+    [index: string]: readonly Quad[];
+  };
+
+  constructor(
+    node: ModelNode,
+    private readonly rightsStatements: readonly RightsStatement[],
+    store: IndexedFormula,
+    nodeStatements?: readonly Quad[]
+  ) {
+    super(node, store);
+
+    if (!nodeStatements) {
+      nodeStatements = this.store.match(this.node);
+    }
+
+    // Cache the node's statements from the store rather than doing multiple .each queries for each predicate
+    this.nodeStatementsByPredicateUri = nodeStatements.reduce(
+      (nodeStatementsByPredicateUri, statement) => {
+        if (statement.predicate.termType === "NamedNode") {
+          const existing =
+            nodeStatementsByPredicateUri[statement.predicate.value];
+          if (existing) {
+            nodeStatementsByPredicateUri[
+              statement.predicate.value
+            ] = existing.concat(statement);
+          } else {
+            nodeStatementsByPredicateUri[statement.predicate.value] = [
+              statement,
+            ];
+          }
+        }
+        return nodeStatementsByPredicateUri;
+      },
+      {} as {[index: string]: readonly Quad[]}
+    );
+  }
+
   read(): Rights | undefined {
     const creator = this.readRightsValue(DCTERMS.creator);
 
@@ -16,13 +54,10 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
 
     const statement = this.readRightsValue(
       DCTERMS.rights,
-      RightsStatementRdfReader.readAll(this.store).reduce(
-        (defaultTextsByUri, rightsStatement) => {
-          defaultTextsByUri[rightsStatement.uri] = rightsStatement.prefLabel;
-          return defaultTextsByUri;
-        },
-        {} as {[index: string]: string}
-      )
+      this.rightsStatements.reduce((defaultTextsByUri, rightsStatement) => {
+        defaultTextsByUri[rightsStatement.uri] = rightsStatement.prefLabel;
+        return defaultTextsByUri;
+      }, {} as {[index: string]: string})
     );
 
     if (creator || holder || license || statement) {
@@ -44,15 +79,22 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
     let text: string | undefined;
     let uri: string | undefined;
 
-    const nodes = this.store.each(this.node, property, undefined);
-    if (nodes.length === 0) {
+    // const nodes = this.store.each(this.node, property, undefined);
+    // if (nodes.length === 0) {
+    //   return undefined;
+    // }
+
+    const nodeStatements = this.nodeStatementsByPredicateUri[property.value];
+    if (!nodeStatements) {
       return undefined;
     }
 
-    for (const node of nodes) {
-      switch (node.termType) {
+    for (const nodeStatement of nodeStatements) {
+      const object = nodeStatement.object;
+
+      switch (object.termType) {
         case "Literal":
-          const literal = new LiteralWrapper(node as rdflibLiteral);
+          const literal = new LiteralWrapper(object as rdflibLiteral);
           if (literal.isString()) {
             text = literal.toString().trim();
             if (text.length === 0) {
@@ -61,7 +103,7 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
           }
           break;
         case "NamedNode":
-          uri = node.value;
+          uri = object.value;
           break;
       }
     }
