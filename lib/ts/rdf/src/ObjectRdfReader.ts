@@ -1,5 +1,6 @@
 import {ModelRdfReader} from "./ModelRdfReader";
 import {
+  License,
   Models,
   Object,
   Property,
@@ -14,9 +15,11 @@ import {PropertyValue} from "@paradicms/models/dist/PropertyValue";
 import {LiteralWrapper} from "./LiteralWrapper";
 import {PropertyDefinitionRdfReader} from "./PropertyDefinitionRdfReader";
 import {RightsStatementRdfReader} from "./RightsStatementRdfReader";
+import {LicenseRdfReader} from "./LicenseRdfReader";
 
 export class ObjectRdfReader extends ModelRdfReader<Object> {
   constructor(
+    private readonly licenses: readonly License[],
     node: ModelNode,
     private readonly propertyDefinitionsByUri: {
       [index: string]: PropertyDefinition;
@@ -78,6 +81,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
         .value,
       properties,
       rights: new RightsRdfReader(
+        this.licenses,
         this.node,
         this.rightsStatements,
         this.store,
@@ -89,6 +93,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
   }
 
   static readAll(store: IndexedFormula) {
+    const licenses = LicenseRdfReader.readAll(store);
     const propertyDefinitionsByUri = Models.indexByUri(
       PropertyDefinitionRdfReader.readAll(store)
     );
@@ -97,6 +102,7 @@ export class ObjectRdfReader extends ModelRdfReader<Object> {
     return ModelRdfReader._readAll<Object>(
       node =>
         new ObjectRdfReader(
+          licenses,
           node,
           propertyDefinitionsByUri,
           rightsStatements,

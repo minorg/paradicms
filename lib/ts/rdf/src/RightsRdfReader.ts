@@ -1,6 +1,6 @@
 import {IndexedFormula, Literal as rdflibLiteral} from "rdflib";
 import {ModelRdfReader} from "./ModelRdfReader";
-import {Rights, RightsStatement, RightsValue} from "@paradicms/models";
+import {License, Rights, RightsStatement, RightsValue} from "@paradicms/models";
 import {DCTERMS} from "./vocabularies";
 import {NamedNode, Quad} from "rdflib/lib/tf-types";
 import {LiteralWrapper} from "./LiteralWrapper";
@@ -12,6 +12,7 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
   };
 
   constructor(
+    private readonly licenses: readonly License[],
     node: ModelNode,
     private readonly rightsStatements: readonly RightsStatement[],
     store: IndexedFormula,
@@ -50,7 +51,13 @@ export class RightsRdfReader extends ModelRdfReader<Rights | undefined> {
 
     const holder = this.readRightsValue(DCTERMS.rightsHolder);
 
-    const license = this.readRightsValue(DCTERMS.license);
+    const license = this.readRightsValue(
+      DCTERMS.license,
+      this.licenses.reduce((defaultTextsByUri, license) => {
+        defaultTextsByUri[license.uri] = license.title;
+        return defaultTextsByUri;
+      }, {} as {[index: string]: string})
+    );
 
     const statement = this.readRightsValue(
       DCTERMS.rights,

@@ -1,5 +1,10 @@
 import {ModelRdfReader} from "./ModelRdfReader";
-import {Image, ImageDimensions, RightsStatement} from "@paradicms/models";
+import {
+  Image,
+  ImageDimensions,
+  License,
+  RightsStatement,
+} from "@paradicms/models";
 import {EXIF, FOAF, PARADICMS} from "./vocabularies";
 import {IndexedFormula} from "rdflib";
 import {RightsRdfReader} from "./RightsRdfReader";
@@ -7,9 +12,11 @@ import {NamedNode} from "rdflib/lib/tf-types";
 import {RdfReaderException} from "./RdfReaderException";
 import {ModelNode} from "./ModelNode";
 import {RightsStatementRdfReader} from "./RightsStatementRdfReader";
+import {LicenseRdfReader} from "./LicenseRdfReader";
 
 export class ImageRdfReader extends ModelRdfReader<Image> {
   constructor(
+    private readonly licenses: readonly License[],
     node: ModelNode,
     private readonly rightsStatements: readonly RightsStatement[],
     store: IndexedFormula
@@ -30,6 +37,7 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
       originalImageUri: this.store.any(undefined, FOAF.thumbnail, this.node)
         ?.value,
       rights: new RightsRdfReader(
+        this.licenses,
         this.node,
         this.rightsStatements,
         this.store
@@ -66,9 +74,10 @@ export class ImageRdfReader extends ModelRdfReader<Image> {
   }
 
   static readAll(store: IndexedFormula) {
+    const licenses = LicenseRdfReader.readAll(store);
     const rightsStatements = RightsStatementRdfReader.readAll(store);
     return ModelRdfReader._readAll<Image>(
-      node => new ImageRdfReader(node, rightsStatements, store),
+      node => new ImageRdfReader(licenses, node, rightsStatements, store),
       store,
       PARADICMS.Image
     );
