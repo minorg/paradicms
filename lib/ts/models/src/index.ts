@@ -9,6 +9,7 @@ export * from "./Institutions";
 export * from "./JoinedCollection";
 export * from "./JoinedInstitution";
 export * from "./JoinedObject";
+export * from "./License";
 export * from "./Models";
 export * from "./Object";
 export * from "./ObjectFacets";
